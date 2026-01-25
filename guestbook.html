@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Message Board | APSC</title>
+    <link rel="icon" href="apsc_new_logo.ico" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --brand-blue: #0056D2;
+            --text-main: #1d1d1f;
+            --text-sub: #6e6e73;
+            --bg-body: #ffffff;
+            --border-color: #f5f5f7;
+            --transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* --- 语言切换 --- */
+        .lang-switcher {
+            background: #fff; padding: 12px 0; text-align: center; border-bottom: 1px solid var(--border-color);
+        }
+        .lang-btn {
+            background: none; border: none; font-size: 10px; font-weight: 600;
+            letter-spacing: 0.1em; color: var(--text-sub); margin: 0 10px;
+            cursor: pointer; transition: var(--transition);
+        }
+        .lang-btn.active { color: var(--brand-blue); }
+
+        /* --- 导航栏 (带磨砂效果) --- */
+        nav {
+            background: rgba(255,255,255,0.85);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            position: sticky; top: 0; z-index: 1000;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .nav-container {
+            max-width: 1300px; margin: 0 auto;
+            display: flex; justify-content: space-between; align-items: center; padding: 12px 40px;
+            position: relative;
+        }
+        .nav-brand-link img { height: 35px; transition: var(--transition); }
+        .nav-brand-link:hover { opacity: 0.7; }
+        .nav-links { display: flex; list-style: none; gap: 25px; align-items: center; }
+        .nav-links a { text-decoration: none; color: var(--text-main); font-size: 13px; font-weight: 500; transition: var(--transition); }
+        .nav-links a:hover { color: var(--brand-blue); }
+        
+        .btn-donate-nav {
+            border: 1px solid var(--brand-blue);
+            padding: 6px 15px; border-radius: 50px;
+            color: var(--brand-blue) !important;
+        }
+        .btn-donate-nav:hover { background: var(--brand-blue); color: #fff !important; }
+
+        /* --- 汉堡菜单关键动画 CSS --- */
+        .hamburger { display: none; cursor: pointer; width: 30px; height: 20px; position: relative; z-index: 1001; }
+        .hamburger span { display: block; width: 100%; height: 2px; background-color: var(--text-main); position: absolute; transition: var(--transition); border-radius: 2px; }
+        .hamburger span:nth-child(1) { top: 0; }
+        .hamburger span:nth-child(2) { top: 9px; }
+        .hamburger span:nth-child(3) { top: 18px; }
+        .hamburger.active span:nth-child(1) { transform: rotate(45deg); top: 9px; }
+        .hamburger.active span:nth-child(2) { opacity: 0; }
+        .hamburger.active span:nth-child(3) { transform: rotate(-45deg); top: 9px; }
+
+        /* --- 留言板主体区域 --- */
+        .wrapper { max-width: 700px; margin: 0 auto; padding: 80px 40px; min-height: 60vh; }
+        .form-header { text-align: center; margin-bottom: 50px; }
+        .form-header h1 { font-size: 3rem; font-weight: 800; letter-spacing: -0.05em; margin-bottom: 15px; }
+        .form-header p { color: var(--text-sub); font-size: 1.15rem; }
+
+        .guestbook-form {
+            background: #fbfbfd; border: 1px solid var(--border-color);
+            padding: 40px; border-radius: 24px; box-shadow: 0 10px 40px rgba(0,0,0,0.02);
+        }
+        .form-group { margin-bottom: 25px; }
+        .form-group label { display: block; font-size: 11px; font-weight: 700; color: var(--text-sub); margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.05em; }
+        .form-group input, .form-group textarea {
+            width: 100%; padding: 16px; border-radius: 14px; border: 1px solid #d2d2d7;
+            font-size: 16px; font-family: inherit; transition: var(--transition);
+        }
+        .form-group input:focus, .form-group textarea:focus {
+            outline: none; border-color: var(--brand-blue); box-shadow: 0 0 0 4px rgba(0,86,210,0.1);
+        }
+        
+        .submit-btn {
+            width: 100%; background: var(--brand-blue); color: #fff; border: none;
+            padding: 18px; border-radius: 14px; font-size: 16px; font-weight: 600;
+            cursor: pointer; transition: var(--transition);
+        }
+        .submit-btn:hover { background: #0046b0; transform: scale(1.02); }
+        .submit-btn:disabled { background: #a1a1a6; cursor: not-allowed; transform: none; }
+        
+        #gb-status { margin-top: 20px; text-align: center; font-size: 14px; font-weight: 500; min-height: 24px; }
+
+        /* --- Footer --- */
+        footer { padding: 80px 0 60px; border-top: 1px solid var(--border-color); text-align: center; background: #fbfbfd; }
+        .social-icons { display: flex; justify-content: center; gap: 30px; margin-bottom: 30px; }
+        .social-icons img { width: 26px; height: 26px; filter: grayscale(1); opacity: 0.5; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .social-icons a:hover img { filter: grayscale(0); opacity: 1; transform: translateY(-8px) scale(1.2); }
+        .footer-text { font-size: 11px; color: #aaa; letter-spacing: 0.05em; margin-bottom: 15px; }
+        .footer-legal { display: flex; justify-content: center; gap: 20px; }
+        .footer-legal a { font-size: 11px; color: #86868b; text-decoration: none; transition: var(--transition); }
+        .footer-legal a:hover { color: var(--brand-blue); text-decoration: underline; }
+
+        /* --- 响应式适配 --- */
+        @media (max-width: 900px) {
+            .nav-container { padding: 12px 20px; }
+            .hamburger { display: block; }
+            .nav-links {
+                position: absolute; top: 100%; left: 0; width: 100%; background: rgba(255, 255, 255, 0.98); 
+                backdrop-filter: blur(20px); flex-direction: column; padding: 20px 0; gap: 0; opacity: 0; 
+                transform: translateY(-20px); pointer-events: none; transition: all 0.3s ease;
+            }
+            .nav-links.active { opacity: 1; transform: translateY(0); pointer-events: auto; }
+            .nav-links a { display: block; padding: 18px 0; font-size: 16px; }
+            .btn-donate-nav { margin: 10px 40px; background: var(--brand-blue); color: #fff !important; }
+            .form-header h1 { font-size: 2.2rem; }
+            .wrapper { padding: 60px 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="lang-switcher">
+        <button class="lang-btn active" onclick="updateLang('en')">ENGLISH</button>
+        <button class="lang-btn" onclick="updateLang('zh-hans')">简体中文</button>
+        <button class="lang-btn" onclick="updateLang('zh-hant')">繁體中文</button>
+        <button class="lang-btn" onclick="updateLang('ko')">한국어</button>
+        <button class="lang-btn" onclick="updateLang('ja')">日本語</button>
+        <button class="lang-btn" onclick="updateLang('es')">ESPAÑOL</button>
+        <button class="lang-btn" onclick="updateLang('fr')">FRANÇAIS</button>
+    </div>
+
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="nav-brand-link"><img src="APSC_LOGO.png" alt="APSC Logo"></a>
+            <div class="hamburger" id="hamburger-btn"><span></span><span></span><span></span></div>
+            <ul class="nav-links" id="nav-menu">
+                <li><a href="index.html" data-key="nav-home">Home</a></li>
+                <li><a href="about.html" data-key="nav-about">About</a></li>
+                <li><a href="contact.html" data-key="nav-contact">Contact</a></li>
+                <li><a href="announcements.html" data-key="nav-announcement">Announcements</a></li>
+                <li><a href="meetings.html" data-key="nav-meetings">Meetings</a></li>
+                <li><a href="support.html" data-key="nav-support">Get Support</a></li>
+                <li><a href="guestbook.html" data-key="nav-feedback">Feedback</a></li>
+                <li><a href="index.html#support" class="btn-donate-nav" data-key="nav-donate" onclick="closeMenu()">Donate</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="wrapper">
+        <div class="form-header">
+            <h1 data-key="form-h">Message Board</h1>
+            <p data-key="form-sub">We want to hear from you! Leave your thoughts below.</p>
+        </div>
+
+        <form id="guestbook-form" class="guestbook-form">
+            <div class="form-group">
+                <label for="name" data-key="form-name">Name (Optional)</label>
+                <input type="text" id="name" name="name" placeholder="...">
+            </div>
+            <div class="form-group">
+                <label for="email" data-key="form-email">Email (Optional)</label>
+                <input type="email" id="email" name="email" placeholder="example@email.com">
+            </div>
+            <div class="form-group">
+                <label for="message" data-key="form-msg">Message (Required)</label>
+                <textarea id="message" name="message" rows="8" required placeholder="..."></textarea>
+            </div>
+            <button type="submit" id="gb-submit" class="submit-btn" data-key="form-btn">Submit Message</button>
+            <div id="gb-status"></div>
+        </form>
+    </main>
+
+    <footer>
+        <div class="social-icons">
+            <a href="https://www.instagram.com/apsc_chs/" target="_blank"><img src="instagram_icon.png" alt="Instagram"></a>
+            <a href="https://www.tiktok.com/@asian.peer.support.club" target="_blank"><img src="tiktok_icon.png" alt="TikTok"></a>
+            <a href="https://youtube.com/@asianpeersupportclub" target="_blank"><img src="youtube_icon.png" alt="YouTube"></a>
+            <a href="https://www.facebook.com/share/1JPeJSg5Lu/" target="_blank"><img src="facebook_icon.png" alt="Facebook"></a>
+        </div>
+        <p class="footer-text">© 2025 ASIAN PEER SUPPORT CLUB | CLARKSBURG HIGH SCHOOL</p>
+        <div class="footer-legal">
+            <a href="Privacy_Policy.html" data-key="nav-privacy">Privacy Policy</a>
+            <a href="Terms_of_Use.html" data-key="nav-terms">Terms of Use</a>
+        </div>
+    </footer>
+
+    <script>
+        // --- 核心留言板 URL ---
+        const WEBAPP_URL = "https://script.google.com/macros/s/AKfycbySK4gSDWQMBw97-sDtdjJzV9nmzsq9inX1wQWW0KDNT1BpOg-yyS7XAWeD7x5s3d4/exec";
+
+        // --- 导航栏逻辑 ---
+        const hamburger = document.getElementById('hamburger-btn');
+        const navMenu = document.getElementById('nav-menu');
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+        function closeMenu() {
+            hamburger.classList.remove('active');
+            navMenu.classList.remove('active');
+        }
+
+        // --- 多语言翻译字典 ---
+        const i18n = {
+            'en': {
+                'nav-home': 'Home', 'nav-about': 'About', 'nav-contact': 'Contact', 'nav-announcement': 'Announcements', 'nav-meetings': 'Meetings', 'nav-support': 'Get Support', 'nav-feedback': 'Feedback', 'nav-donate': 'Donate', 'nav-privacy': 'Privacy Policy', 'nav-terms': 'Terms of Use',
+                'form-h': 'Message Board', 'form-sub': 'We want to hear from you! Leave your thoughts below.',
+                'form-name': 'Name (Optional)', 'form-email': 'Email (Optional)', 'form-msg': 'Message (Required)', 'form-btn': 'Submit Message',
+                'status-loading': 'Submitting...', 'status-success': 'Success! Thank you for your message.', 'status-error': 'Submission failed, please try again.'
+            },
+            'zh-hans': {
+                'nav-home': '首页', 'nav-about': '关于我们', 'nav-contact': '联系我们', 'nav-announcement': '公告通知', 'nav-meetings': '会议安排', 'nav-support': '获取帮助', 'nav-feedback': '反馈', 'nav-donate': '捐赠支持', 'nav-privacy': '隐私政策', 'nav-terms': '使用条款',
+                'form-h': '留言板', 'form-sub': '期待您的声音！请在下方留言。',
+                'form-name': '姓名（选填）', 'form-email': '邮箱（选填）', 'form-msg': '内容（必填）', 'form-btn': '提交留言',
+                'status-loading': '提交中...', 'status-success': '提交成功，感谢您的反馈！', 'status-error': '提交失败，请重试。'
+            },
+            'zh-hant': {
+                'nav-home': '首頁', 'nav-about': '關於我們', 'nav-contact': '聯絡我們', 'nav-announcement': '公告通知', 'nav-meetings': '會議安排', 'nav-support': '獲取幫助', 'nav-feedback': '回饋', 'nav-donate': '捐贈支持', 'nav-privacy': '隱私政策', 'nav-terms': '使用條款',
+                'form-h': '留言板', 'form-sub': '期待您的聲音！請在下方留言。',
+                'form-name': '姓名（選填）', 'form-email': '郵箱（選填）', 'form-msg': '內容（必填）', 'form-btn': '提交留言',
+                'status-loading': '提交中...', 'status-success': '提交成功，感謝您的回饋！', 'status-error': '提交失敗，請重試。'
+            },
+            'ko': {
+                'nav-home': '홈', 'nav-about': '정보', 'nav-contact': '문의하기', 'nav-announcement': '공지사항', 'nav-meetings': '회의 일정', 'nav-support': '지원 받기', 'nav-feedback': '피드백', 'nav-donate': '기부', 'nav-privacy': '개인정보', 'nav-terms': '이용약관',
+                'form-h': '게시판', 'form-sub': '여러분의 의견을 들려주세요!',
+                'form-name': '성함 (선택)', 'form-email': '이메일 (선택)', 'form-msg': '메시지 (필수)', 'form-btn': '제출하기',
+                'status-loading': '제출 중...', 'status-success': '성공! 감사합니다.', 'status-error': '실패했습니다. 다시 시도해주세요.'
+            },
+            'ja': {
+                'nav-home': 'ホーム', 'nav-about': '詳細', 'nav-contact': 'お問い合わせ', 'nav-announcement': 'お知らせ', 'nav-meetings': '会議予定', 'nav-support': 'サポートを受ける', 'nav-feedback': '感想', 'nav-donate': '寄付', 'nav-privacy': 'ポリシー', 'nav-terms': '規約',
+                'form-h': '掲示板', 'form-sub': '皆様のご意見をお聞かせください！',
+                'form-name': 'お名前 (任意)', 'form-email': 'メール (任意)', 'form-msg': 'メッセージ (必須)', 'form-btn': '送信する',
+                'status-loading': '送信中...', 'status-success': '送信完了、ありがとうございます。', 'status-error': 'エラーが発生しました。'
+            },
+            'es': {
+                'nav-home': 'Inicio', 'nav-about': 'Acerca de', 'nav-contact': 'Contacto', 'nav-announcement': 'Anuncios',  'nav-meetings': 'Reuniones', 'nav-support': 'Obtener Soporte', 'nav-feedback': 'Comentarios', 'nav-donate': 'Donar', 'nav-privacy': 'Privacidad', 'nav-terms': 'Términos',
+                'form-h': 'Tablón de Mensajes', 'form-sub': '¡Queremos saber de ti! Déjanos tu mensaje.',
+                'form-name': 'Nombre (Opcional)', 'form-email': 'Email (Opcional)', 'form-msg': 'Mensaje (Requerido)', 'form-btn': 'Enviar Mensaje',
+                'status-loading': 'Enviando...', 'status-success': '¡Éxito! Gracias por tu mensaje.', 'status-error': 'Error, intenta de nuevo.'
+            },
+            'fr': {
+                'nav-home': 'Accueil', 'nav-about': 'À propos', 'nav-contact': 'Contact', 'nav-announcement': 'Annonces', 'nav-meetings': 'Réunions', 'nav-support': 'Obtenir de l\'aide', 'nav-feedback': 'Avis', 'nav-donate': 'Donner', 'nav-privacy': 'Confidentialité', 'nav-terms': 'Conditions',
+                'form-h': 'Livre d\'or', 'form-sub': 'Votre avis nous intéresse !',
+                'form-name': 'Nom (Optionnel)', 'form-email': 'Email (Optionnel)', 'form-msg': 'Message (Requis)', 'form-btn': 'Envoyer',
+                'status-loading': 'Envoi...', 'status-success': 'Succès ! Merci.', 'status-error': 'Échec de l\'envoi.'
+            }
+        };
+
+        let currentLang = 'en';
+
+          function updateLang(lang) {
+        // 保存到会话存储 (关闭标签页后消失)
+        sessionStorage.setItem('selectedLang', lang);
+
+        // 更新按钮 UI 状态
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            // 根据按钮的内容或点击的参数来匹配高亮
+            if (btn.getAttribute('onclick').includes(`'${lang}'`)) {
+                btn.classList.add('active');
+            } else {
+                btn.classList.remove('active');
+            }
+        });
+
+        // 执行翻译
+        document.querySelectorAll('[data-key]').forEach(el => {
+            const key = el.getAttribute('data-key');
+            if (i18n[lang] && i18n[lang][key]) {
+                el.innerText = i18n[lang][key];
+            }
+        });
+    }
+
+    // 4. 页面加载时自动初始化
+    window.addEventListener('DOMContentLoaded', () => {
+        const savedLang = sessionStorage.getItem('selectedLang');
+        // 如果有保存的语言且不是默认的英文，则应用它
+        if (savedLang && savedLang !== 'en') {
+            updateLang(savedLang);
+        }
+    });
+
+        // --- 留言表单异步提交逻辑 ---
+        const form = document.getElementById("guestbook-form");
+        const status = document.getElementById("gb-status");
+        const submitBtn = document.getElementById("gb-submit");
+
+        form.addEventListener("submit", async function (e) {
+            e.preventDefault();
+            const message = document.getElementById("message").value.trim();
+            if (!message) return;
+
+            submitBtn.disabled = true;
+            submitBtn.textContent = i18n[currentLang]['status-loading'];
+            status.textContent = i18n[currentLang]['status-loading'];
+            status.style.color = "#86868b";
+
+            try {
+                const body = new URLSearchParams({
+                    name: document.getElementById("name").value,
+                    email: document.getElementById("email").value,
+                    message: message
+                }).toString();
+                
+                const res = await fetch(WEBAPP_URL, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8" },
+                    body: body,
+                });
+
+                const data = await res.json();
+                if (data.result === "success") {
+                    status.style.color = "#008000";
+                    status.textContent = i18n[currentLang]['status-success'];
+                    form.reset();
+                } else { throw new Error(); }
+            } catch (err) {
+                status.style.color = "#FF3B30";
+                status.textContent = i18n[currentLang]['status-error'];
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = i18n[currentLang]['form-btn'];
+            }
+        });
+    </script>
+</body>
+</html>

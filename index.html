@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asian Peer Support Club | APSC</title>
+    <link rel="icon" href="apsc_new_logo.ico" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --brand-blue: #0056D2;
+            --text-main: #1d1d1f;
+            --text-sub: #6e6e73;
+            --bg-body: #ffffff;
+            --border-color: #f5f5f7;
+            --transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+            scroll-behavior: smooth;
+        }
+
+        /* --- 顶部语言切换 --- */
+        .lang-switcher {
+            background: #fff;
+            padding: 12px 0;
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .lang-btn {
+            background: none; border: none; font-size: 10px; font-weight: 600;
+            letter-spacing: 0.1em; color: var(--text-sub); margin: 0 10px;
+            cursor: pointer; transition: var(--transition);
+        }
+        .lang-btn.active { color: var(--brand-blue); }
+
+        /* --- 导航栏 --- */
+        nav {
+            background: rgba(255,255,255,0.85);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            position: sticky; top: 0; z-index: 1000;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .nav-container {
+            max-width: 1300px; margin: 0 auto;
+            display: flex; justify-content: space-between; align-items: center; padding: 12px 40px;
+            position: relative;
+        }
+        .nav-brand-link img { height: 35px; transition: var(--transition); }
+        .nav-brand-link:hover { opacity: 0.7; }
+        .nav-links { display: flex; list-style: none; gap: 25px; align-items: center; }
+        .nav-links a { text-decoration: none; color: var(--text-main); font-size: 13px; font-weight: 500; transition: var(--transition); }
+        .nav-links a:hover { color: var(--brand-blue); }
+        
+        .btn-donate-nav {
+            border: 1px solid var(--brand-blue);
+            padding: 6px 15px;
+            border-radius: 50px;
+            color: var(--brand-blue) !important;
+        }
+        .btn-donate-nav:hover { background: var(--brand-blue); color: #fff !important; }
+
+        .hamburger { display: none; cursor: pointer; width: 30px; height: 20px; position: relative; z-index: 1001; }
+        .hamburger span { display: block; width: 100%; height: 2px; background-color: var(--text-main); position: absolute; transition: var(--transition); border-radius: 2px; }
+        .hamburger span:nth-child(1) { top: 0; }
+        .hamburger span:nth-child(2) { top: 9px; }
+        .hamburger span:nth-child(3) { top: 18px; }
+        .hamburger.active span:nth-child(1) { transform: rotate(45deg); top: 9px; }
+        .hamburger.active span:nth-child(2) { opacity: 0; }
+        .hamburger.active span:nth-child(3) { transform: rotate(-45deg); top: 9px; }
+
+        /* --- Banner --- */
+        .hero-banner {
+            width: 100%; height: 75vh; position: relative;
+            background: #fff; display: flex; align-items: center; justify-content: center; overflow: hidden;
+        }
+        .hero-banner img.bg {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            object-fit: cover; opacity: 0.5;
+            -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 30%, transparent 100%);
+            mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 30%, transparent 100%);
+        }
+        .hero-content { position: relative; z-index: 10; text-align: center; padding: 0 20px; }
+        .hero-logo-large { width: 180px; margin-bottom: 25px; }
+        .hero-title { font-size: 3.5rem; font-weight: 800; letter-spacing: -0.05em; margin-bottom: 30px; line-height: 1.1; }
+        .cta-btn {
+            display: inline-block; background: var(--brand-blue); color: #fff;
+            padding: 16px 40px; border-radius: 100px; text-decoration: none;
+            font-weight: 600; font-size: 14px; box-shadow: 0 10px 25px rgba(0,86,210,0.15);
+            transition: var(--transition);
+        }
+        .cta-btn:hover { transform: scale(1.05); background: #0046b0; }
+
+        /* --- 内容区块 --- */
+        .wrapper { max-width: 1100px; margin: 0 auto; padding: 80px 40px; }
+        .grid-section { display: grid; grid-template-columns: 1.1fr 1fr; gap: 80px; align-items: center; margin-bottom: 120px; }
+        .img-frame { width: 100%; border-radius: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.05); }
+        .section-title { font-size: 2.5rem; margin-bottom: 20px; font-weight: 800; letter-spacing: -0.03em; }
+        .section-p { color: var(--text-sub); font-size: 1.15rem; margin-bottom: 15px; }
+
+        .media-sub-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; max-width: 900px; margin: 20px auto 40px; }
+        .sub-media-item { width: 100%; height: 280px; border-radius: 16px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.05); border: 1px solid var(--border-color); }
+        .sub-media-item img, .sub-media-item iframe { width: 100%; height: 100%; object-fit: cover; border: none; }
+
+        /* 捐赠板块 */
+        .support-section {
+            background: #fbfbfd; border-radius: 24px; padding: 80px 40px;
+            text-align: center; margin-bottom: 60px; border: 1px solid var(--border-color);
+        }
+        .qr-img { width: 220px; height: auto; margin: 30px auto; border-radius: 16px; box-shadow: 0 15px 35px rgba(0,0,0,0.1); }
+        .direct-link-btn { display: inline-block; margin-top: 20px; color: var(--brand-blue); text-decoration: none; font-weight: 600; font-size: 16px; transition: var(--transition); }
+        .direct-link-btn:hover { color: #0046b0; transform: translateX(5px); }
+
+        .meeting-box { background: #fbfbfd; padding: 60px; border-radius: 24px; text-align: center; border: 1px solid var(--border-color); }
+
+        /* --- Footer --- */
+        footer { padding: 80px 0 60px; border-top: 1px solid var(--border-color); text-align: center; background: #fbfbfd; }
+        .social-icons { display: flex; justify-content: center; gap: 30px; margin-bottom: 30px; }
+        .social-icons img { width: 26px; height: 26px; filter: grayscale(1); opacity: 0.5; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .social-icons a:hover img { filter: grayscale(0); opacity: 1; transform: translateY(-8px) scale(1.2); }
+        .footer-text { font-size: 11px; color: #aaa; letter-spacing: 0.05em; margin-bottom: 15px; }
+        .footer-legal { display: flex; justify-content: center; gap: 20px; }
+        .footer-legal a { font-size: 11px; color: #86868b; text-decoration: none; transition: var(--transition); }
+        .footer-legal a:hover { color: var(--brand-blue); text-decoration: underline; }
+        .footer-legal .separator { color: #eee; user-select: none; }
+
+        @media (max-width: 900px) {
+            .nav-container { padding: 12px 20px; }
+            .grid-section { grid-template-columns: 1fr; text-align: center; gap: 40px; }
+            .hero-title { font-size: 2.5rem; }
+            .media-sub-grid { grid-template-columns: 1fr; }
+            .hamburger { display: block; }
+            .nav-links {
+                position: absolute; top: 100%; left: 0; width: 100%; background: rgba(255, 255, 255, 0.98); 
+                backdrop-filter: blur(20px); flex-direction: column; padding: 20px 0; gap: 0; opacity: 0; 
+                transform: translateY(-20px); pointer-events: none; transition: all 0.3s ease;
+            }
+            .nav-links.active { opacity: 1; transform: translateY(0); pointer-events: auto; }
+            .nav-links a { display: block; padding: 18px 0; font-size: 16px; }
+            .btn-donate-nav { margin: 10px 40px; background: var(--brand-blue); color: #fff !important; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="lang-switcher">
+        <button class="lang-btn active" onclick="updateLang('en')">ENGLISH</button>
+        <button class="lang-btn" onclick="updateLang('zh-hans')">简体中文</button>
+        <button class="lang-btn" onclick="updateLang('zh-hant')">繁體中文</button>
+        <button class="lang-btn" onclick="updateLang('ko')">한국어</button>
+        <button class="lang-btn" onclick="updateLang('ja')">日本語</button>
+        <button class="lang-btn" onclick="updateLang('es')">ESPAÑOL</button>
+        <button class="lang-btn" onclick="updateLang('fr')">FRANÇAIS</button>
+    </div>
+
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="nav-brand-link"><img src="APSC_LOGO.png" alt="APSC Logo"></a>
+            <div class="hamburger" id="hamburger-btn"><span></span><span></span><span></span></div>
+            <ul class="nav-links" id="nav-menu">
+                <li><a href="about.html" data-key="nav-about">About</a></li>
+                <li><a href="contact.html" data-key="nav-contact">Contact</a></li>
+                <li><a href="#meeting-section" data-key="nav-meeting">Meetings</a></li>
+                <li><a href="announcements.html" data-key="nav-ann">Announcements</a></li>
+                <li><a href="support.html" data-key="nav-support">Get Support</a></li>
+                <li><a href="guestbook.html" data-key="nav-feedback">Feedback</a></li>
+                <li><a href="#support" class="btn-donate-nav" data-key="nav-donate" onclick="closeMenu()">Donate</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <header class="hero-banner">
+        <img src="banner_image.jpg" class="bg">
+        <div class="hero-content">
+            <img src="apsc_new_logo.png" class="hero-logo-large">
+            <h1 class="hero-title" data-key="hero-title">Experience Culture.<br>Find Your Community.</h1>
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSewbthoNNrEnw1DsBZh5CwyCMrs92ZlfiHQqXSYuCM-1y4vhA/viewform?usp=header" class="cta-btn" data-key="cta">Join Us</a>
+        </div>
+    </header>
+
+    <main class="wrapper">
+        
+        <section id="newyear-section" style="text-align: center; margin-bottom: 120px;">
+            <h2 class="section-title" data-key="newyear-h">Celebrating 2025 & Welcoming 2026</h2>
+            <p class="section-p" data-key="newyear-p">Reflecting on our milestones and looking forward to a bright new year.</p>
+            
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 50px; margin-top: 40px;">
+                
+                <div style="position: relative; width: 100%; max-width: 450px; border-radius: 20px; overflow: hidden; box-shadow: 0 25px 50px rgba(0,0,0,0.15);">
+                    <img src="2026_Poster.png" alt="Happy New Year 2026 Poster" style="width: 100%; display: block;">
+                    <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to bottom, rgba(0,0,0,0) 60%, rgba(0,86,210,0.15) 100%); pointer-events: none;"></div>
+                </div>
+
+                <div style="width: 100%; max-width: 900px; aspect-ratio: 16/9; border-radius: 16px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.05); border: 1px solid var(--border-color);">
+                    <iframe src="https://www.youtube.com/embed/I9iRwGbGbLQ" style="width: 100%; height: 100%; border: none;" allowfullscreen></iframe>
+                </div>
+
+            </div>
+        </section>
+
+        <section class="grid-section" id="culture">
+            <div>
+                <h2 class="section-title" data-key="culture-h">The Aesthetic of Hanzi</h2>
+                <p class="section-p" data-key="culture-p1">Calligraphy is a meditative dance of ink and soul. We explore the profound beauty of Hanzi aesthetics.</p>
+                <p class="section-p" data-key="culture-p2">Every stroke carries history, connecting our heritage to the modern world.</p>
+            </div>
+            <img src="calligraphy_work.jpg" class="img-frame">
+        </section>
+
+        <section id="about-section" style="text-align: center; margin-bottom: 120px;">
+            <img src="Xmas_members.jpg" class="img-frame" style="max-width: 940px; margin-bottom: 30px;">
+            <div class="media-sub-grid">
+                <div class="sub-media-item"><img src="Xmas_photo1.png" alt="Activity"></div>
+                <div class="sub-media-item">
+                    <iframe src="https://www.youtube.com/embed/7rDKusI032c" allowfullscreen></iframe>
+                </div>
+            </div>
+            <h2 class="section-title" data-key="about-h">Unity in Diversity</h2>
+            <p class="section-p" data-key="about-p">Captured during our 2025 Christmas Celebration—building bridges through shared traditions.</p>
+            <a class="direct-link-btn" target="_blank" data-key="xmas_link" href="xmas.html"> Learn more about APSC Christmas Celebration 2025 → </a>
+        </section>
+
+        <section class="support-section" id="support">
+            <h2 class="section-title" data-key="support-h">Support Our Mission</h2>
+            <p class="section-p" data-key="support-p">Your contribution helps us fund cultural workshops and peer support resources.</p>
+            <img src="doublegood_QR.jpg" class="qr-img">
+            <br>
+            <a href="https://popup.doublegood.com/s/e5w1wi33" class="direct-link-btn" target="_blank" data-key="support-link">
+                Visit our DoubleGood donation page →
+            </a>
+            <p style="font-size: 0.85rem; color: #999; margin-top: 30px;" data-key="support-sub">Thank you for empowering the Asian student community.</p>
+        </section>
+
+        <section class="meeting-box" id="meeting-section">
+            <h3 style="color: var(--brand-blue); margin-bottom: 15px; font-weight: 700; letter-spacing: 0.1em;" data-key="meet-h">WEEKLY GATHERING</h3>
+            <p style="font-size: 1.6rem; font-weight: 700; color: var(--text-main);" data-key="meet-p1">Mondays @ Lunch | Room 1008</p>
+            <p style="font-size: 1rem; color: var(--text-sub); margin-top: 15px;" data-key="meet-p2">All students are welcome to join our family.</p>
+        </section>
+    </main>
+
+    <footer>
+        <div class="social-icons">
+            <a href="https://www.instagram.com/apsc_chs/" target="_blank"><img src="instagram_icon.png" alt="Instagram"></a>
+            <a href="https://www.tiktok.com/@asian.peer.support.club" target="_blank"><img src="tiktok_icon.png" alt="TikTok"></a>
+            <a href="https://youtube.com/@asianpeersupportclub" target="_blank"><img src="youtube_icon.png" alt="YouTube"></a>
+            <a href="https://www.facebook.com/share/1JPeJSg5Lu/" target="_blank"><img src="facebook_icon.png" alt="Facebook"></a>
+        </div>
+        <p class="footer-text" data-key="footer-cp">© 2026 ASIAN PEER SUPPORT CLUB | CLARKSBURG HIGH SCHOOL</p>
+        <div class="footer-legal">
+            <a href="Privacy_Policy.html" data-key="nav-privacy">Privacy Policy</a>
+            <span class="separator">|</span>
+            <a href="Terms_of_Use.html" data-key="nav-terms">Terms of Use</a>
+        </div>
+    </footer>
+
+    <script>
+        const hamburger = document.getElementById('hamburger-btn');
+        const navMenu = document.getElementById('nav-menu');
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+        function closeMenu() {
+            hamburger.classList.remove('active');
+            navMenu.classList.remove('active');
+        }
+
+        const i18n = {
+            'en': {
+                'nav-about': 'About', 'nav-meeting': 'Meetings', 'nav-contact': 'Contact', 'nav-ann': 'Announcements', 'nav-xmas': '2025 Christmas', 'nav-support': 'Get Support', 'nav-feedback': 'Feedback', 'nav-donate': 'Donate', 'nav-privacy': 'Privacy Policy', 'nav-terms': 'Terms of Use',
+                'hero-title': 'Experience Culture.\nFind Your Community.', 'cta': 'Join Us',
+                'newyear-h': 'Celebrating 2025 & Welcoming 2026', 'newyear-p': 'Reflecting on our milestones and looking forward to a bright new year.',
+                'culture-h': 'The Aesthetic of Hanzi', 'culture-p1': 'Calligraphy is a meditative dance of ink and soul. We explore the profound beauty of Hanzi aesthetics.', 'culture-p2': 'Every stroke carries history, connecting our heritage to the modern world.',
+                'about-h': 'Unity in Diversity', 'about-p': 'Captured during our 2025 Christmas Celebration—building bridges through shared traditions.', 'xmas_link': ' Learn more about APSC Christmas Celebration 2025 → ',
+                'support-h': 'Support Our Mission', 'support-p': 'Your contribution helps us fund cultural workshops and peer support resources.', 'support-link': 'Visit our DoubleGood donation page →', 'support-sub': 'Thank you for empowering the Asian student community.',
+                'meet-h': 'WEEKLY GATHERING', 'meet-p1': 'Mondays @ Lunch | Room 1008', 'meet-p2': 'All students are welcome to join our family.',
+                'footer-cp': '© 2025 ASIAN PEER SUPPORT CLUB | CLARKSBURG HIGH SCHOOL'
+            },
+            'zh-hans': {
+                'nav-about': '关于我们', 'nav-meeting': '会议安排', 'nav-contact': '联系我们', 'nav-ann': '公告通知', 'nav-xmas': '2025 圣诞', 'nav-support': '获取支持', 'nav-feedback': '反馈', 'nav-donate': '捐赠支持', 'nav-privacy': '隐私政策', 'nav-terms': '使用条款',
+                'hero-title': '体验文化底蕴\n融入温暖社群', 'cta': '加入 APSC 社团',
+                'newyear-h': '共庆 2025 里程碑，迎接 2026 新年', 'newyear-p': '回顾过去一年的精彩瞬间，展望充满希望的新一年。',
+                'culture-h': '汉字美学之韵', 'culture-p1': '书法是笔墨与心灵的禅意共舞。我们致力于探索汉字美学的深邃之美。', 'culture-p2': '每一笔一划都承载着历史，将传统遗产与现代世界相连。',
+                'about-h': '多元中的合一', 'about-p': '记录于 2025 年圣诞庆祝活动——通过共同的传统搭建友谊的桥梁。', 'xmas_link': ' 了解更多关于 APSC 2025 圣诞庆祝活动 → ',
+                'support-h': '支持我们的使命', 'support-p': '您的捐助将直接用于文化工作坊和同伴支持资源。', 'support-link': '访问我们的 DoubleGood 捐赠页面 →', 'support-sub': '感谢您为亚裔学生群体赋能。',
+                'meet-h': '每周会议', 'meet-p1': '每周一午餐时间 | 1008 教室', 'meet-p2': '欢迎所有学生加入我们的大家庭。',
+                'footer-cp': '© 2026 ASIAN PEER SUPPORT CLUB | CLARKSBURG HIGH SCHOOL'
+            },
+            'zh-hant': {
+                'nav-about': '關於我們', 'nav-meeting': '會議安排', 'nav-contact': '聯絡我們', 'nav-ann': '公告通知', 'nav-xmas': '2025 聖誕', 'nav-support': '獲取支持', 'nav-feedback': '回饋', 'nav-donate': '捐贈支持', 'nav-privacy': '隱私政策', 'nav-terms': '使用條款',
+                'hero-title': '體驗文化底蘊\n融入溫暖社群', 'cta': '加入 APSC 社團',
+                'newyear-h': '共慶 2025 里程碑，迎接 2026 新年', 'newyear-p': '回顧過去一年的精彩瞬間，展望充滿希望的新一年。',
+                'culture-h': '漢字美學之韻', 'culture-p1': '書法是筆墨與心靈的禪意共舞。我們致力於探索漢字美學的深邃之美。', 'culture-p2': '每一筆一劃都承載著歷史，將傳統遺產與現代世界相連。',
+                'about-h': '多元中的合一', 'about-p': '記錄於 2025 年聖誕慶祝活動——通過共同的傳統搭建友誼的橋梁。', 'xmas_link': ' 了解更多關於 APSC 2025 聖誕慶祝活動 → ',
+                'support-h': '支持我們的使命', 'support-p': '您的捐助將直接用於文化工作坊和同伴支持資源。', 'support-link': '訪問我們的 DoubleGood 捐贈頁面 →', 'support-sub': '感謝您為亞裔學生群體賦能。',
+                'meet-h': '每周會議', 'meet-p1': '每周一午餐時間 | 1008 教室', 'meet-p2': '歡迎所有學生加入我們的大家庭。',
+                'footer-cp': '© 2026 ASIAN PEER SUPPORT CLUB | CLARKSBURG HIGH SCHOOL'
+            },
+            'ko': {
+                'nav-about': '정보', 'nav-meeting': '회의', 'nav-contact': '문의', 'nav-ann': '공지사항', 'nav-xmas': '2025 크리스마스', 'nav-support': '지원 받기', 'nav-feedback': '피드백', 'nav-donate': '기부', 'nav-privacy': '개인정보 처리방침', 'nav-terms': '이용약관',
+                'hero-title': '문화를 체험하고\n커뮤니티를 만나보세요', 'cta': 'APSC 가입하기',
+                'newyear-h': '2025년의 추억과 2026년의 시작', 'newyear-p': '우리의 이정표를 되새기고 밝은 새해를 맞이합니다.',
+                'culture-h': '한(漢)의 미학', 'culture-p1': '서예는 먹과 영혼의 명상적인 춤입니다.', 'culture-p2': '모든 획은 역사를 담고 있습니다.',
+                'about-h': '다양성 속의 통합', 'about-p': '2025년 크리스마스 축제에서 촬영됨.', 'xmas_link': ' 2025년 크리스마스 축제에 대해 더 알아보기 → ',
+                'support-h': '우리의 사명을 지원해주세요', 'support-p': '귀하의 기부는 문화 워크숍을 지원하는 데 도움이 됩니다.', 'support-link': 'DoubleGood 기부 페이지 방문 →', 'support-sub': '아시아 학생 커뮤니티를 지원해 주셔서 감사합니다.',
+                'meet-h': '주간 회의', 'meet-p1': '매주 월요일 점심 | 1008호', 'meet-p2': '모든 학생을 환영합니다.',
+                'footer-cp': '© 2026 ASIAN PEER SUPPORT CLUB | CLARKSBURG HIGH SCHOOL'
+            },
+            'ja': {
+                'nav-about': '詳細', 'nav-meeting': '会議', 'nav-contact': 'お問い合わせ', 'nav-ann': 'お知らせ', 'nav-xmas': '2025年クリスマス', 'nav-support': 'サポートを受ける', 'nav-feedback': 'フィードバック', 'nav-donate': '寄付', 'nav-privacy': 'プライバシーポリシー', 'nav-terms': '利用規約',
+                'hero-title': '文化を体験し\n仲間を見つけよう', 'cta': 'APSCに入会する',
+                'newyear-h': '2025年の軌跡と2026年の幕開け', 'newyear-p': 'これまでの歩みを振り返り、輝かしい新年を迎えます。',
+                'culture-h': '漢字の美学', 'culture-p1': '書道は墨と魂の瞑想的なダンスです。', 'culture-p2': '一筆一筆に歴史が宿っています。',
+                'about-h': '多様性の中の調和', 'about-p': '2025年のクリスマス祝賀会にて撮影。', 'xmas_link': ' 2025年クリスマス祝賀会の詳細はこちら → ',
+                'support-h': '私たちの使命を支援する', 'support-p': '皆様のご寄付は、文化活動に活用されます。', 'support-link': 'DoubleGood寄付ページへ →', 'support-sub': 'アジア人学生コミュニティへのご支援に感謝します。',
+                'meet-h': '例会', 'meet-p1': '毎週月曜日 昼休み | 1008教室', 'meet-p2': 'すべての学生を歓迎します。',
+                'footer-cp': '© 2026 ASIAN PEER SUPPORT CLUB | CLARKSBURG HIGH SCHOOL'
+            },
+            'es': {
+                'nav-about': 'Acerca de', 'nav-meeting': 'Reuniones', 'nav-contact': 'Contacto', 'nav-ann': 'Anuncios', 'nav-xmas': '2025 Christmas', 'nav-support': 'Obtener Apoyo', 'nav-feedback': 'Comentarios', 'nav-donate': 'Donar', 'nav-privacy': 'Privacidad', 'nav-terms': 'Términos',
+                'hero-title': 'Vive la Cultura.\nEncuentra tu Comunidad.', 'cta': 'Únete a APSC',
+                'newyear-h': 'Celebrando 2025 y Dando la Bienvenida a 2026', 'newyear-p': 'Reflexionando sobre nuestros logros y esperando un año nuevo brillante.',
+                'culture-h': 'La Estética de Hanzi', 'culture-p1': 'La caligrafía es una danza meditativa.', 'culture-p2': 'Cada trazo lleva historia.',
+                'about-h': 'Unidad en la Diversidad', 'about-p': 'Celebración de Navidad 2025.', 'xmas_link': ' Aprende más sobre la Celebración de Navidad APSC 2025 → ',
+                'support-h': 'Apoye Nuestra Misión', 'support-p': 'Su contribución nos ayuda a financiar talleres.', 'support-link': 'Página de donaciones DoubleGood →', 'support-sub': 'Gracias por empoderar a los estudiantes.',
+                'meet-h': 'REUNIÓN SEMANAL', 'meet-p1': 'Lunes @ Almuerzo | Salón 1008', 'meet-p2': 'Todos los estudiantes son bienvenidos.',
+                'footer-cp': '© 2026 ASIAN PEER SUPPORT CLUB | CLARKSBURG HIGH SCHOOL'
+            },
+            'fr': {
+                'nav-about': 'À propos', 'nav-meeting': 'Réunions', 'nav-contact': 'Contact', 'nav-ann': 'Annonces',  'nav-xmas': '2025 Noël', 'nav-support': 'Obtenir du soutien', 'nav-feedback': 'Avis', 'nav-donate': 'Donner', 'nav-privacy': 'Confidentialité', 'nav-terms': 'Conditions',
+                'hero-title': 'Vivez la Culture.\nTrouvez votre Communauté.', 'cta': 'Rejoindre APSC',
+                'newyear-h': 'Célébration de 2025 et Bienvenue à 2026', 'newyear-p': 'Réflexion sur nos jalons et anticipation d\'une nouvelle année brillante.',
+                'culture-h': 'L\'Esthétique de Hanzi', 'culture-p1': 'La calligraphie est une danse méditative.', 'culture-p2': 'Chaque trait porte l\'histoire.',
+                'about-h': 'Unité dans la Diversité', 'about-p': 'Célébration de Noël 2025.', 'xmas_link': ' En savoir plus sur la Célébration de Noël APSC 2025 → ',
+                'support-h': 'Soutenez Notre Mission', 'support-p': 'Votre contribution finance des ateliers.', 'support-link': 'Page de don DoubleGood →', 'support-sub': 'Merci de soutenir les étudiants.',
+                'meet-h': 'RÉUNION HEBDOMADAIRE', 'meet-p1': 'Lundi @ Déjeuner | Salle 1008', 'meet-p2': 'Bienvenue à tous les étudiants.',
+                'footer-cp': '© 2026 ASIAN PEER SUPPORT CLUB | CLARKSBURG HIGH SCHOOL'
+            }
+        };
+
+           function updateLang(lang) {
+        // 保存到会话存储 (关闭标签页后消失)
+        sessionStorage.setItem('selectedLang', lang);
+
+        // 更新按钮 UI 状态
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            // 根据按钮的内容或点击的参数来匹配高亮
+            if (btn.getAttribute('onclick').includes(`'${lang}'`)) {
+                btn.classList.add('active');
+            } else {
+                btn.classList.remove('active');
+            }
+        });
+
+        // 执行翻译
+        document.querySelectorAll('[data-key]').forEach(el => {
+            const key = el.getAttribute('data-key');
+            if (i18n[lang] && i18n[lang][key]) {
+                el.innerText = i18n[lang][key];
+            }
+        });
+    }
+
+    // 4. 页面加载时自动初始化
+    window.addEventListener('DOMContentLoaded', () => {
+        const savedLang = sessionStorage.getItem('selectedLang');
+        // 如果有保存的语言且不是默认的英文，则应用它
+        if (savedLang && savedLang !== 'en') {
+            updateLang(savedLang);
+        }
+    });
+    </script>
+</body>
+</html>

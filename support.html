@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Get Support | APSC</title>
+    <link rel="icon" href="apsc_new_logo.ico" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --brand-blue: #0056D2;
+            --text-main: #1d1d1f;
+            --text-sub: #6e6e73;
+            --bg-body: #ffffff;
+            --bg-card: #fbfbfd;
+            --border-color: #f5f5f7;
+            --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* --- 语言切换 --- */
+        .lang-switcher { background: #fff; padding: 12px 0; text-align: center; border-bottom: 1px solid var(--border-color); }
+        .lang-btn { background: none; border: none; font-size: 10px; font-weight: 600; letter-spacing: 0.1em; color: var(--text-sub); margin: 0 10px; cursor: pointer; transition: var(--transition); }
+        .lang-btn.active { color: var(--brand-blue); }
+
+        /* --- 导航栏 --- */
+        nav { background: rgba(255,255,255,0.85); backdrop-filter: blur(25px); position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid var(--border-color); }
+        .nav-container { max-width: 1300px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 12px 40px; }
+        .nav-brand-link img { height: 35px; }
+        .nav-links { display: flex; list-style: none; gap: 20px; align-items: center; }
+        .nav-links a { text-decoration: none; color: var(--text-main); font-size: 13px; font-weight: 500; transition: var(--transition); }
+        .nav-links a:hover { color: var(--brand-blue); }
+        .btn-donate-nav { border: 1px solid var(--brand-blue); padding: 6px 15px; border-radius: 50px; color: var(--brand-blue) !important; }
+
+        /* --- 汉堡菜单 --- */
+        .hamburger { display: none; cursor: pointer; width: 30px; height: 20px; position: relative; z-index: 1001; }
+        .hamburger span { display: block; width: 100%; height: 2px; background-color: var(--text-main); position: absolute; transition: var(--transition); border-radius: 2px; }
+        .hamburger span:nth-child(1) { top: 0; }
+        .hamburger span:nth-child(2) { top: 9px; }
+        .hamburger span:nth-child(3) { top: 18px; }
+        .hamburger.active span:nth-child(1) { transform: rotate(45deg); top: 9px; }
+        .hamburger.active span:nth-child(2) { opacity: 0; }
+        .hamburger.active span:nth-child(3) { transform: rotate(-45deg); top: 9px; }
+
+        /* --- 主要内容 --- */
+        .wrapper { max-width: 800px; margin: 0 auto; padding: 60px 40px 100px; }
+        .page-header { text-align: center; margin-bottom: 50px; }
+        .page-header h1 { font-size: 3rem; font-weight: 800; letter-spacing: -0.05em; margin-bottom: 15px; }
+        
+        .disclaimer-box { background: #fff0f0; border: 1px solid #fedbdbe8; color: #d70015; padding: 20px; border-radius: 12px; margin-bottom: 40px; font-size: 0.9rem; display: flex; align-items: center; gap: 15px; }
+        
+        .support-form-container { background: var(--bg-card); border: 1px solid var(--border-color); padding: 40px; border-radius: 24px; }
+        .form-group { margin-bottom: 25px; }
+        .form-label { display: block; font-size: 0.9rem; font-weight: 600; margin-bottom: 8px; }
+        .form-input, .form-select, .form-textarea { width: 100%; padding: 12px 16px; border-radius: 12px; border: 1px solid var(--border-color); font-family: inherit; outline: none; transition: var(--transition); }
+        .form-input:focus, .form-textarea:focus { border-color: var(--brand-blue); box-shadow: 0 0 0 4px rgba(0,86,210,0.1); }
+
+        .btn-submit { width: 100%; padding: 14px; background: var(--brand-blue); color: #fff; border: none; border-radius: 12px; font-weight: 600; cursor: pointer; transition: var(--transition); }
+        .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,86,210,0.2); }
+        .btn-submit:disabled { background: #ccc; cursor: not-allowed; transform: none; box-shadow: none; }
+
+        /* --- 资源列表 --- */
+        .resources-section { margin-top: 60px; }
+        .resource-card { display: flex; justify-content: space-between; align-items: center; padding: 20px; background: #fff; border: 1px solid var(--border-color); border-radius: 16px; margin-bottom: 15px; text-decoration: none; color: inherit; transition: var(--transition); }
+        .resource-card:hover { border-color: var(--brand-blue); transform: translateX(5px); }
+        .res-name { font-weight: 600; }
+        .res-contact { color: var(--brand-blue); font-size: 0.9rem; font-weight: 600; }
+
+        /* --- Footer --- */
+        footer { padding: 80px 0 60px; border-top: 1px solid var(--border-color); text-align: center; background: #fbfbfd; }
+        .social-icons { display: flex; justify-content: center; gap: 30px; margin-bottom: 30px; }
+        .social-icons img { width: 26px; height: 26px; filter: grayscale(1); opacity: 0.5; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .social-icons a:hover img { filter: grayscale(0); opacity: 1; transform: translateY(-8px) scale(1.2); }
+        .footer-text { font-size: 11px; color: #aaa; letter-spacing: 0.05em; margin-bottom: 15px; }
+        .footer-legal { display: flex; justify-content: center; gap: 20px; }
+        .footer-legal a { font-size: 11px; color: #86868b; text-decoration: none; transition: var(--transition); }
+        .footer-legal a:hover { color: var(--brand-blue); text-decoration: underline; }
+        .footer-legal .separator { color: #eee; user-select: none; }
+
+        @media (max-width: 1024px) {
+            .nav-container { padding: 12px 20px; }
+            .nav-links { gap: 12px; }
+        }
+
+        @media (max-width: 900px) {
+            .hamburger { display: block; }
+            .nav-links { position: absolute; top: 100%; left: 0; width: 100%; background: rgba(255, 255, 255, 0.98); backdrop-filter: blur(20px); flex-direction: column; padding: 20px 0; gap: 0; opacity: 0; transform: translateY(-20px); pointer-events: none; transition: all 0.3s ease; }
+            .nav-links.active { opacity: 1; transform: translateY(0); pointer-events: auto; }
+            .nav-links a { display: block; padding: 18px 0; text-align: center; width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="lang-switcher">
+        <button class="lang-btn active" onclick="updateLang('en')">ENGLISH</button>
+        <button class="lang-btn" onclick="updateLang('zh-hans')">简体中文</button>
+        <button class="lang-btn" onclick="updateLang('zh-hant')">繁體中文</button>
+        <button class="lang-btn" onclick="updateLang('ko')">한국어</button>
+        <button class="lang-btn" onclick="updateLang('ja')">日本語</button>
+        <button class="lang-btn" onclick="updateLang('es')">ESPAÑOL</button>
+        <button class="lang-btn" onclick="updateLang('fr')">FRANÇAIS</button>
+    </div>
+
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="nav-brand-link"><img src="APSC_LOGO.png" alt="APSC Logo"></a>
+            <div class="hamburger" id="hamburger-btn"><span></span><span></span><span></span></div>
+            <ul class="nav-links" id="nav-menu">
+                <li><a href="index.html" data-key="nav-home">Home</a></li>
+                <li><a href="about.html" data-key="nav-about">About</a></li>
+                <li><a href="index.html#meeting-section" data-key="nav-meetings">Meetings</a></li>
+                <li><a href="support.html" data-key="nav-support" style="color: var(--brand-blue);">Get Support</a></li>
+                <li><a href="announcements.html" data-key="nav-ann">Announcements</a></li>
+                <li><a href="guestbook.html" data-key="nav-feedback">Feedback</a></li>
+                <li><a href="contact.html" data-key="nav-contact">Contact</a></li>
+                <li><a href="index.html#support" class="btn-donate-nav" data-key="nav-donate">Donate</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="wrapper">
+        <header class="page-header">
+            <h1 data-key="sup-title">We Are Here For You</h1>
+            <p data-key="sup-sub">Whether it's academic stress, social challenges, or you just need someone to talk to, APSC is here to listen.</p>
+        </header>
+
+        <div class="disclaimer-box">
+            <span>⚠️</span>
+            <span data-key="sup-disclaimer">Important: We provide peer support, not professional medical advice. If you are in immediate danger, call 911 or a crisis hotline.</span>
+        </div>
+
+        <div class="support-form-container">
+            <form id="supportForm">
+                <div class="form-group">
+                    <label class="form-label" data-key="lbl-name">Name (Optional)</label>
+                    <input type="text" name="name" id="nameInput" class="form-input" placeholder="Your name">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" data-key="lbl-contact">Contact Info (Email/Phone)</label>
+                    <input type="text" name="contact" id="contactInput" class="form-input" placeholder="How can we reach you?" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" data-key="lbl-type">Type of Support</label>
+                    <select name="type" id="typeInput" class="form-select">
+                        <option value="academic" data-key="opt-academic">Academic Support</option>
+                        <option value="social" data-key="opt-social">Social Support</option>
+                        <option value="mental" data-key="opt-mental">Emotional Support</option>
+                        <option value="other" data-key="opt-other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" data-key="lbl-msg">How can we help?</label>
+                    <textarea name="message" id="msgInput" class="form-textarea" placeholder="Tell us what's going on..."></textarea>
+                </div>
+                <button type="submit" id="submitBtn" class="btn-submit" data-key="btn-send">Send Request</button>
+            </form>
+        </div>
+
+        <div class="resources-section">
+            <h2 style="margin-bottom: 25px;" data-key="res-title">External Resources</h2>
+            
+            <a href="https://www.montgomeryschoolsmd.org/schools/clarksburghs/bullyingresource/" target="_blank" class="resource-card">
+                <span class="res-name" data-key="res-bullying">Bullying & Harassment Reporting</span>
+                <span class="res-contact" data-key="res-link">Visit Site →</span>
+            </a>
+
+            <div class="resource-card" style="cursor: default;">
+                <span class="res-name" data-key="res-hotline">National Crisis Hotline</span>
+                <span class="res-contact">988</span>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="social-icons">
+            <a href="https://www.instagram.com/apsc_chs/" target="_blank"><img src="instagram_icon.png" alt="Instagram"></a>
+            <a href="https://www.tiktok.com/@asian.peer.support.club" target="_blank"><img src="tiktok_icon.png" alt="TikTok"></a>
+            <a href="https://youtube.com/@asianpeersupportclub" target="_blank"><img src="youtube_icon.png" alt="YouTube"></a>
+            <a href="https://www.facebook.com/share/1JPeJSg5Lu/" target="_blank"><img src="facebook_icon.png" alt="Facebook"></a>
+        </div>
+        <p class="footer-text">© 2026 ASIAN PEER SUPPORT CLUB | CLARKSBURG HIGH SCHOOL</p>
+        <div class="footer-legal">
+            <a href="Privacy_Policy.html" data-key="nav-privacy">Privacy Policy</a>
+            <span class="separator">|</span>
+            <a href="Terms_of_Use.html" data-key="nav-terms">Terms of Use</a>
+        </div>
+    </footer>
+
+    <script>
+        // 导航控制
+        const hamburger = document.getElementById('hamburger-btn');
+        const navMenu = document.getElementById('nav-menu');
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+
+        // --- Google Sheet 提交处理 ---
+        // 请在此替换为你自己的 Web App URL
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbyriovgPxileMH1c0rvibtn6StREWTqYAUcOPuBVnvMLzLQwnFem6a-vc32oVBzqJMuMg/exec'; 
+        const form = document.getElementById('supportForm');
+        const submitBtn = document.getElementById('submitBtn');
+
+        form.addEventListener('submit', e => {
+            e.preventDefault();
+            
+            // 提交时禁用按钮防止重复点击
+            submitBtn.disabled = true;
+            const originalBtnText = submitBtn.innerText;
+            submitBtn.innerText = "Sending...";
+
+            fetch(scriptURL, { 
+                method: 'POST', 
+                body: new FormData(form)
+            })
+            .then(response => {
+                alert("Success! Your request has been sent. We will contact you as soon as possible.");
+                form.reset();
+            })
+            .catch(error => {
+                console.error('Error!', error.message);
+                alert("An error occurred while sending. Please try again or contact us directly via Instagram.");
+            })
+            .finally(() => {
+                submitBtn.disabled = false;
+                submitBtn.innerText = originalBtnText;
+            });
+        });
+
+        const i18n = {
+            'en': {
+                'nav-home': 'Home', 'nav-about': 'About', 'nav-meetings': 'Meetings', 'nav-support': 'Get Support', 'nav-ann': 'Announcements', 'nav-feedback': 'Feedback', 'nav-contact': 'Contact', 'nav-donate': 'Donate', 'nav-privacy': 'Privacy Policy', 'nav-terms': 'Terms of Use',
+                'sup-title': 'We Are Here For You', 'sup-sub': 'Whether it\'s academic stress, social challenges, or you just need someone to talk to, APSC is here to listen.',
+                'sup-disclaimer': 'Important: We provide peer support, not professional medical advice. If you are in immediate danger, call 911 or a crisis hotline.',
+                'lbl-name': 'Name (Optional)', 'lbl-contact': 'Contact Info (Email/Phone)', 'lbl-type': 'Type of Support', 'lbl-msg': 'How can we help?',
+                'ph-name': 'Your name', 'ph-contact': 'How can we reach you?', 'ph-msg': 'Tell us what\'s going on...',
+                'opt-academic': 'Academic Support', 'opt-social': 'Social Support', 'opt-mental': 'Emotional Support', 'opt-other': 'Other',
+                'btn-send': 'Send Request', 'res-title': 'External Resources', 'res-bullying': 'Bullying & Harassment Reporting', 'res-link': 'Visit Site →', 'res-hotline': 'National Crisis Hotline'
+            },
+            'zh-hans': {
+                'nav-home': '首页', 'nav-about': '关于我们', 'nav-meetings': '会议安排', 'nav-support': '获取帮助', 'nav-ann': '公告通知', 'nav-feedback': '反馈', 'nav-contact': '联系我们', 'nav-donate': '捐赠支持', 'nav-privacy': '隐私政策', 'nav-terms': '使用条款',
+                'sup-title': '我们在这里支持你', 'sup-sub': '无论是学业压力、社交困扰，还是只想找人倾诉，APSC 都在这里倾听。',
+                'sup-disclaimer': '重要提示：我们提供同伴互助，而非专业医疗建议。如果你处于紧急危险中，请立即拨打 911 或危机热线。',
+                'lbl-name': '姓名 (可选)', 'lbl-contact': '联系方式 (邮箱/电话)', 'lbl-type': '帮助类型', 'lbl-msg': '我们需要如何帮助你？',
+                'ph-name': '你的姓名', 'ph-contact': '如何联系你？', 'ph-msg': '请告诉我们发生了什么...',
+                'opt-academic': '学业支持', 'opt-social': '社交支持', 'opt-mental': '情感支持', 'opt-other': '其他',
+                'btn-send': '发送请求', 'res-title': '外部资源', 'res-bullying': '学校霸凌和骚扰投诉页面', 'res-link': '访问官网 →', 'res-hotline': '国家危机热线'
+            },
+            'zh-hant': {
+                'nav-home': '首頁', 'nav-about': '關於我們', 'nav-meetings': '會議安排', 'nav-support': '獲取幫助', 'nav-ann': '公告通知', 'nav-feedback': '回饋', 'nav-contact': '聯繫我們', 'nav-donate': '捐贈支持', 'nav-privacy': '隱私政策', 'nav-terms': '使用條款',
+                'sup-title': '我們在這裡支持你', 'sup-sub': '無論是學業壓力、社交困擾，還是只想找人傾訴，APSC 都在這裡傾聽。',
+                'sup-disclaimer': '重要提示：我們提供同伴互助，而非專業醫療建議。如果你處於緊急危險中，請立即撥打 911 或危機熱線。',
+                'lbl-name': '姓名 (可選)', 'lbl-contact': '聯繫方式 (郵箱/電話)', 'lbl-type': '幫助類型', 'lbl-msg': '我們需要如何幫助你？',
+                'ph-name': '你的姓名', 'ph-contact': '如何聯繫你？', 'ph-msg': '請告訴我們發生了什麼...',
+                'opt-academic': '學業支持', 'opt-social': '社交支持', 'opt-mental': '情感支持', 'opt-other': '其他',
+                'btn-send': '發送請求', 'res-title': '外部資源', 'res-bullying': '學校霸凌和騷擾投訴頁面', 'res-link': '訪問官網 →', 'res-hotline': '國家危機熱線'
+            },
+            'ko': {
+                'nav-home': '홈', 'nav-about': '소개', 'nav-meetings': '회의', 'nav-support': '지원 받기', 'nav-ann': '공지사항', 'nav-feedback': '피드백', 'nav-contact': '문의하기', 'nav-donate': '기부하기', 'nav-privacy': '개인정보처리방침', 'nav-terms': '이용약관',
+                'sup-title': '우리는 당신을 위해 여기 있습니다', 'sup-sub': '학업 스트레스, 사회적 도전 또는 단지 누군가와 이야기하고 싶을 때, APSC는 당신의 이야기를 듣기 위해 여기 있습니다.',
+                'sup-disclaimer': '중요: 우리는 동료 지원을 제공하며 전문적인 의료 조언을 제공하지 않습니다. 즉각적인 위험에 처한 경우 911 또는 위기 핫라인에 전화하십시오.',
+                'lbl-name': '이름 (선택 사항)', 'lbl-contact': '연락처 정보 (이메일/전화)', 'lbl-type': '지원 유형', 'lbl-msg': '어떻게 도와드릴까요?',
+                'ph-name': '당신의 이름', 'ph-contact': '어떻게 연락할 수 있나요?', 'ph-msg': '무슨 일이 일어나고 있는지 알려주세요...',
+                'opt-academic': '학업 지원', 'opt-social': '사회적 지원', 'opt-mental': '정서적 지원', 'opt-other': '기타',
+                'btn-send': '요청 보내기', 'res-title': '외부 자원', 'res-bullying': '괴롭힘 및 괴롭힘 신고', 'res-link': '사이트 방문 →', 'res-hotline': '국가 위기 핫라인'
+            },
+            'ja': {
+                'nav-home': 'ホーム', 'nav-about': '私たちについて', 'nav-meetings': '会議', 'nav-support': 'サポートを受ける', 'nav-ann': 'お知らせ', 'nav-feedback': 'フィードバック', 'nav-contact': 'お問い合わせ', 'nav-donate': '寄付する', 'nav-privacy': 'プライバシーポリシー', 'nav-terms': '利用規約',
+                'sup-title': '私たちはあなたのためにここにいます', 'sup-sub': '学業のストレス、社会的な課題、またはただ誰かと話したい場合でも、APSCはあなたの話を聞くためにここにいます。',
+                'sup-disclaimer': '重要：私たちはピアサポートを提供しており、専門的な医療アドバイスは提供していません。緊急の危険にさらされている場合は、911または危機ホットラインに電話してください。',
+                'lbl-name': '名前（任意）', 'lbl-contact': '連絡先情報（メール/電話）', 'lbl-type': 'サポートの種類', 'lbl-msg': 'どのようにお手伝いできますか？',
+                'ph-name': 'あなたの名前', 'ph-contact': 'どのように連絡できますか？', 'ph-msg': '何が起こっているのか教えてください...',
+                'opt-academic': '学業サポート', 'opt-social': '社会的サポート', 'opt-mental': '感情的サポート', 'opt-other': 'その他',
+                'btn-send': 'リクエストを送信', 'res-title': '外部リソース', 'res-bullying': 'いじめ・嫌がらせの報告', 'res-link': 'サイトを訪問 →', 'res-hotline': '全国危機ホットライン'
+            },
+            'es': {
+                'nav-home': 'Inicio', 'nav-about': 'Acerca de', 'nav-meetings': 'Reuniones', 'nav-support': 'Obtener Apoyo', 'nav-ann': 'Anuncios', 'nav-feedback': 'Comentarios', 'nav-contact': 'Contacto', 'nav-donate': 'Donar', 'nav-privacy': 'Política de Privacidad', 'nav-terms': 'Términos de Uso',
+                'sup-title': 'Estamos aquí para ti', 'sup-sub': 'Ya sea estrés académico, desafíos sociales o si solo necesitas alguien con quien hablar, APSC está aquí para escucharte.',
+                'sup-disclaimer': 'Importante: Proporcionamos apoyo entre pares, no asesoramiento médico profesional. Si estás en peligro inmediato, llama al 911 o a una línea directa de crisis.',
+                'lbl-name': 'Nombre (Opcional)', 'lbl-contact': 'Información de Contacto (Correo/Teléfono)', 'lbl-type': 'Tipo de Apoyo', 'lbl-msg': '¿Cómo podemos ayudarte?',
+                'ph-name': 'Tu nombre', 'ph-contact': '¿Cómo podemos contactarte?', 'ph-msg': 'Cuéntanos qué está pasando...',
+                'opt-academic': 'Apoyo Académico', 'opt-social': 'Apoyo Social', 'opt-mental': 'Apoyo Emocional', 'opt-other': 'Otro',
+                'btn-send': 'Enviar Solicitud', 'res-title': 'Recursos Externos', 'res-bullying': 'Reporte de Acoso Escolar y Hostigamiento', 'res-link': 'Visitar Sitio →', 'res-hotline': 'Línea Directa Nacional de Crisis'
+            },
+            'fr': {
+                'nav-home': 'Accueil', 'nav-about': 'À propos', 'nav-meetings': 'Réunions', 'nav-support': 'Obtenir de l\'aide', 'nav-ann': 'Annonces', 'nav-feedback': 'Feedback', 'nav-contact': 'Contact', 'nav-donate': 'Faire un don', 'nav-privacy': 'Confidentialité', 'nav-terms': 'Conditions d\'utilisation',
+                'sup-title': 'Nous sommes là pour vous', 'sup-sub': 'Que ce soit le stress académique, les défis sociaux ou si vous avez simplement besoin de parler à quelqu\'un, APSC est là pour vous écouter.',
+                'sup-disclaimer': 'Important : Nous fournissons un soutien par les pairs, pas des conseils médicaux professionnels. Si vous êtes en danger immédiat, appelez le 911 ou une ligne d\'assistance en cas de crise.',
+                'lbl-name': 'Nom (Optionnel)', 'lbl-contact': 'Infos de contact', 'lbl-type': 'Type de soutien', 'lbl-msg': 'Comment pouvons-nous vous aider ?',
+                'ph-name': 'Votre nom', 'ph-contact': 'Comment vous joindre ?', 'ph-msg': 'Dites-nous tout...',
+                'opt-academic': 'Soutien académique', 'opt-social': 'Soutien social', 'opt-mental': 'Soutien émotionnel', 'opt-other': 'Autre',
+                'btn-send': 'Envoyer', 'res-title': 'Ressources externes', 'res-bullying': 'Signalement de harcèlement', 'res-link': 'Visiter le site →', 'res-hotline': 'Ligne de crise nationale'
+            }
+        };
+
+        function updateLang(lang) {
+            sessionStorage.setItem('selectedLang', lang);
+
+            // 更新按钮状态
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.getAttribute('onclick').includes(`'${lang}'`));
+            });
+
+            // 更新文本内容
+            document.querySelectorAll('[data-key]').forEach(el => {
+                const key = el.getAttribute('data-key');
+                if (i18n[lang] && i18n[lang][key]) el.innerText = i18n[lang][key];
+            });
+
+            // 更新 Placeholder
+            const nameInp = document.getElementById('nameInput');
+            const contactInp = document.getElementById('contactInput');
+            const msgInp = document.getElementById('msgInput');
+            
+            if(i18n[lang]['ph-name']) nameInp.placeholder = i18n[lang]['ph-name'];
+            if(i18n[lang]['ph-contact']) contactInp.placeholder = i18n[lang]['ph-contact'];
+            if(i18n[lang]['ph-msg']) msgInp.placeholder = i18n[lang]['ph-msg'];
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedLang = sessionStorage.getItem('selectedLang') || 'en';
+            updateLang(savedLang);
+        });
+    </script>
+</body>
+</html>

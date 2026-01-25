@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us | APSC</title>
+    <link rel="icon" href="apsc_new_logo.ico" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --brand-blue: #0056D2;
+            --text-main: #1d1d1f;
+            --text-sub: #6e6e73;
+            --bg-body: #ffffff;
+            --border-color: #f5f5f7;
+            --transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* --- 语言切换 --- */
+        .lang-switcher {
+            background: #fff; padding: 12px 0; text-align: center; border-bottom: 1px solid var(--border-color);
+        }
+        .lang-btn {
+            background: none; border: none; font-size: 10px; font-weight: 600;
+            letter-spacing: 0.1em; color: var(--text-sub); margin: 0 10px;
+            cursor: pointer; transition: var(--transition);
+        }
+        .lang-btn.active { color: var(--brand-blue); }
+
+        /* --- 导航栏 --- */
+        nav {
+            background: rgba(255,255,255,0.85);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            position: sticky; top: 0; z-index: 1000;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .nav-container {
+            max-width: 1300px; margin: 0 auto;
+            display: flex; justify-content: space-between; align-items: center; padding: 12px 40px;
+            position: relative;
+        }
+        .nav-brand-link img { height: 35px; transition: var(--transition); }
+        .nav-links { display: flex; list-style: none; gap: 25px; align-items: center; }
+        .nav-links a { text-decoration: none; color: var(--text-main); font-size: 13px; font-weight: 500; transition: var(--transition); }
+        .nav-links a:hover { color: var(--brand-blue); }
+        .btn-donate-nav {
+            border: 1px solid var(--brand-blue);
+            padding: 6px 15px; border-radius: 50px;
+            color: var(--brand-blue) !important;
+        }
+        .btn-donate-nav:hover { background: var(--brand-blue); color: #fff !important; }
+
+        /* --- 汉堡菜单 --- */
+        .hamburger { display: none; cursor: pointer; width: 30px; height: 20px; position: relative; z-index: 1001; }
+        .hamburger span { display: block; width: 100%; height: 2px; background-color: var(--text-main); position: absolute; transition: var(--transition); border-radius: 2px; }
+        .hamburger span:nth-child(1) { top: 0; }
+        .hamburger span:nth-child(2) { top: 9px; }
+        .hamburger span:nth-child(3) { top: 18px; }
+        .hamburger.active span:nth-child(1) { transform: rotate(45deg); top: 9px; }
+        .hamburger.active span:nth-child(2) { opacity: 0; }
+        .hamburger.active span:nth-child(3) { transform: rotate(-45deg); top: 9px; }
+
+        /* --- 内容区域 --- */
+        .wrapper { max-width: 1000px; margin: 0 auto; padding: 80px 40px; }
+        .contact-header { text-align: center; margin-bottom: 60px; }
+        .contact-header h1 { font-size: 3.5rem; font-weight: 800; letter-spacing: -0.05em; margin-bottom: 10px; }
+        .contact-header p { color: var(--text-sub); font-size: 1.2rem; }
+
+        .contact-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 40px; margin-bottom: 60px; }
+        .contact-card {
+            background: #fbfbfd; border: 1px solid var(--border-color);
+            padding: 40px; border-radius: 24px; transition: var(--transition);
+        }
+        .contact-card:hover { transform: translateY(-5px); box-shadow: 0 15px 40px rgba(0,0,0,0.04); }
+        
+        .section-tag {
+            display: inline-block; font-size: 11px; font-weight: 700; color: var(--brand-blue);
+            text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 20px;
+        }
+        
+        .email-item { margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid #f0f0f2; }
+        .email-item:last-child { border-bottom: none; }
+        .email-role { font-size: 12px; color: var(--text-sub); font-weight: 600; display: block; }
+        .email-link { color: var(--brand-blue); text-decoration: none; font-weight: 500; font-size: 15px; transition: 0.3s; }
+
+        .phone-box { font-size: 1.8rem; font-weight: 700; color: var(--brand-blue); text-decoration: none; }
+
+        .qr-container { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; margin-top: 20px; }
+        .qr-wrapper { text-align: center; }
+        .qr-wrapper img { width: 160px; border-radius: 12px; border: 1px solid var(--border-color); }
+        .qr-label { font-size: 11px; font-weight: 600; margin-top: 8px; color: var(--text-sub); }
+
+        /* --- Footer --- */
+        footer { padding: 80px 0 60px; border-top: 1px solid var(--border-color); text-align: center; background: #fbfbfd; }
+        .social-icons { display: flex; justify-content: center; gap: 30px; margin-bottom: 30px; }
+        .social-icons img { width: 26px; height: 26px; filter: grayscale(1); opacity: 0.5; transition: var(--transition); }
+        .social-icons a:hover img { filter: grayscale(0); opacity: 1; transform: translateY(-8px) scale(1.2); }
+        .footer-text { font-size: 11px; color: #aaa; letter-spacing: 0.05em; margin-bottom: 15px; }
+        .footer-legal { display: flex; justify-content: center; gap: 20px; }
+        .footer-legal a { font-size: 11px; color: #86868b; text-decoration: none; transition: var(--transition); }
+        .footer-legal a:hover { color: var(--brand-blue); text-decoration: underline; }
+
+        @media (max-width: 900px) {
+            .contact-grid { grid-template-columns: 1fr; }
+            .hamburger { display: block; }
+            .nav-links {
+                position: absolute; top: 100%; left: 0; width: 100%; background: rgba(255, 255, 255, 0.98); 
+                backdrop-filter: blur(20px); flex-direction: column; padding: 20px 0; gap: 0; opacity: 0; 
+                transform: translateY(-20px); pointer-events: none; transition: all 0.3s ease;
+            }
+            .nav-links.active { opacity: 1; transform: translateY(0); pointer-events: auto; }
+            .nav-links a { display: block; padding: 18px 0; text-align: center; font-size: 16px; }
+            .btn-donate-nav { margin: 10px 40px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="lang-switcher">
+        <button class="lang-btn active" onclick="updateLang('en')">ENGLISH</button>
+        <button class="lang-btn" onclick="updateLang('zh-hans')">简体中文</button>
+        <button class="lang-btn" onclick="updateLang('zh-hant')">繁體中文</button>
+        <button class="lang-btn" onclick="updateLang('ko')">한국어</button>
+        <button class="lang-btn" onclick="updateLang('ja')">日本語</button>
+        <button class="lang-btn" onclick="updateLang('es')">ESPAÑOL</button>
+        <button class="lang-btn" onclick="updateLang('fr')">FRANÇAIS</button>
+    </div>
+
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="nav-brand-link"><img src="APSC_LOGO.png" alt="APSC Logo"></a>
+            <div class="hamburger" id="hamburger-btn"><span></span><span></span><span></span></div>
+            <ul class="nav-links" id="nav-menu">
+                <li><a href="index.html" data-key="nav-home">Home</a></li>
+                <li><a href="about.html" data-key="nav-about">About</a></li>
+                <li><a href="contact.html" data-key="nav-contact" style="color: var(--brand-blue);">Contact</a></li>
+                <li><a href="index.html#meeting-section" data-key="nav-meetings">Meetings</a></li>
+                <li><a href="announcements.html" data-key="nav-announcement">Announcements</a></li>
+                <li><a href="support.html" data-key="nav-support">Get Support</a></li>
+                <li><a href="guestbook.html" data-key="nav-feedback">Feedback</a></li>
+                <li><a href="index.html#support" class="btn-donate-nav" data-key="nav-donate">Donate</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="wrapper">
+        <header class="contact-header">
+            <h1 data-key="con-title">Contact Us</h1>
+            <p data-key="con-sub">We look forward to hearing from you!</p>
+        </header>
+
+        <div class="contact-grid">
+            <div class="contact-card">
+                <span class="section-tag" data-key="tag-email">Email Directory</span>
+                <div class="email-list">
+                    <div class="email-item">
+                        <span class="email-role">APSC Official</span>
+                        <a href="mailto:apscchs.1@gmail.com" class="email-link">apscchs.1@gmail.com</a>
+                    </div>
+                    <div class="email-item">
+                        <span class="email-role">President (Johnny Q.)</span>
+                        <a href="mailto:10111913@mcpsmd.net" class="email-link">10111913@mcpsmd.net</a>
+                    </div>
+                    <div class="email-item">
+                        <span class="email-role">V.P. (Vicky Z.)</span>
+                        <a href="mailto:10111906@mcpsmd.net" class="email-link">10111906@mcpsmd.net</a>
+                    </div>
+                    <div class="email-item">
+                        <span class="email-role">Secretary (Jason Q.)</span>
+                        <a href="mailto:10020231@mcpsmd.net" class="email-link">10020231@mcpsmd.net</a>
+                    </div>
+                    <div class="email-item">
+                        <span class="email-role">Treasurer (Jinxin Z.)</span>
+                        <a href="mailto:10085980@mcpsmd.net" class="email-link">10085980@mcpsmd.net</a>
+                    </div>
+                    <div class="email-item">
+                        <span class="email-role">Public Relations (Ziye Z.)</span>
+                        <a href="mailto:10110371@mcpsmd.net" class="email-link">10110371@mcpsmd.net</a>
+                    </div>
+                    <div class="email-item">
+                        <span class="email-role">Sponsor (Amy Zhu)</span>
+                        <a href="mailto:Xiaoling_Zhu@mcpsmd.org" class="email-link">Xiaoling_Zhu@mcpsmd.org</a>
+                    </div>
+                    <div class="email-item">
+                        <span class="email-role">Co-Sponsor (Karen He)</span>
+                        <a href="mailto:Hongkaren_He@mcpsmd.org" class="email-link">Hongkaren_He@mcpsmd.org</a>
+                    </div>
+                </div>
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 40px;">
+                <div class="contact-card">
+                    <span class="section-tag" data-key="tag-phone">Phone</span>
+                    <p style="margin-bottom: 10px; color: var(--text-sub); font-size: 14px;" data-key="con-direct">Direct Line:</p>
+                    <a href="tel:+15714281607" class="phone-box">+1 (571) 428-1607</a>
+                </div>
+
+                <div class="contact-card">
+                    <span class="section-tag" data-key="tag-social">Instant Messaging</span>
+                    <div style="margin-bottom: 25px;">
+                        <p style="font-weight: 700; margin-bottom: 10px;" data-key="con-wechat">WeChat IDs:</p>
+                        <ul style="list-style: none; font-size: 14px; color: var(--text-sub); line-height: 2;">
+                            <li><strong data-key="wechat_official">APSC Official:</strong> APSCCHS</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="qr-container">
+                        <div class="qr-wrapper">
+                            <img src="wechat_QR.jpg" alt="WeChat QR">
+                            <p class="qr-label">WeChat QR Code</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="social-icons">
+            <a href="https://www.instagram.com/apsc_chs/" target="_blank"><img src="instagram_icon.png" alt="Instagram"></a>
+            <a href="https://www.tiktok.com/@asian.peer.support.club" target="_blank"><img src="tiktok_icon.png" alt="TikTok"></a>
+            <a href="https://youtube.com/@asianpeersupportclub" target="_blank"><img src="youtube_icon.png" alt="YouTube"></a>
+            <a href="https://www.facebook.com/share/1JPeJSg5Lu/" target="_blank"><img src="facebook_icon.png" alt="Facebook"></a>
+        </div>
+        <p class="footer-text">© 2026 ASIAN PEER SUPPORT CLUB | CLARKSBURG HIGH SCHOOL</p>
+        <div class="footer-legal">
+            <a href="Privacy_Policy.html" data-key="nav-privacy">Privacy Policy</a>
+            <a href="Terms_of_Use.html" data-key="nav-terms">Terms of Use</a>
+        </div>
+    </footer>
+
+<script>
+    // 1. 基础 UI 逻辑：汉堡菜单
+    const hamburger = document.getElementById('hamburger-btn');
+    const navMenu = document.getElementById('nav-menu');
+    hamburger.addEventListener('click', () => {
+        hamburger.classList.toggle('active');
+        navMenu.classList.toggle('active');
+    });
+
+    // 2. 翻译字典 (保持你原有的内容，这里只列出结构)
+    const i18n = {
+        'en': {
+            'nav-home': 'Home', 'nav-about': 'About', 'nav-support': 'Get Support', 'nav-feedback': 'Feedback', 'nav-contact': 'Contact', 'nav-meetings': 'Meetings', 'nav-announcement': 'Announcements', 'nav-donate': 'Donate', 'nav-privacy': 'Privacy Policy', 'nav-terms': 'Terms of Use',
+            'con-title': 'Contact Us', 'con-sub': 'We look forward to hearing from you!', 'tag-email': 'Email Directory', 'tag-phone': 'Phone', 'tag-social': 'Instant Messaging',
+            'con-direct': 'Direct Line:', 'con-wechat': 'WeChat IDs:', 'wechat_official': 'APSC Official:',
+        },
+        'zh-hans': {
+            'nav-home': '首页', 'nav-about': '关于我们', 'nav-support': '获取支持', 'nav-feedback': '反馈', 'nav-contact': '联系我们', 'nav-meetings': '会议安排', 'nav-announcement': '公告通知', 'nav-donate': '捐赠支持', 'nav-privacy': '隐私政策', 'nav-terms': '使用条款',
+            'con-title': '联系我们', 'con-sub': '期待您的来信！', 'tag-email': '邮箱列表', 'tag-phone': '电话', 'tag-social': '即时通讯',
+            'con-direct': '直拨电话:', 'con-wechat': '微信 ID:', 'wechat_official': 'APSC 官方：',
+        },
+        'zh-hant': {
+            'nav-home': '首頁', 'nav-about': '關於我們', 'nav-feedback': '反饋', 'nav-contact': '聯繫我們', 'nav-meetings': '會議安排', 'nav-announcement':'公告通知', 'nav-donate': '捐贈支持',  'nav-privacy': '隱私政策', 'nav-terms': '使用條款',
+            'con-title': '聯繫我們', 'con-sub': '期待您的來信！', 'tag-email': '郵箱列表', 'tag-phone': '電話', 'tag-social': '即時通訊',
+            'con-direct': '直撥電話:', 'con-wechat': '微信 ID:', 'wechat_official': 'APSC 官方：',
+        },
+        'ko': {
+            'nav-home': '홈', 'nav-about': '정보', 'nav-support': '지원 받기', 'nav-feedback': '피드백', 'nav-contact': '연락처', 'nav-meetings': '회의', 'nav-announcement':'공지사항','nav-donate': '기부','nav-privacy':'개인정보','nav-terms':'이용약관',
+            'con-title': '문의하기', 'con-sub': '여러분의 의견을 기다립니다!', 'tag-email': '이메일 디렉토리', 'tag-phone': '전화', 'tag-social': '인스턴트 메시징',
+            'con-direct': '직통 전화:', 'con-wechat': 'WeChat ID:', 'wechat_official': 'APSC 공식:'
+        },
+        'ja': {
+            'nav-home': 'ホーム', 'nav-about': '詳細',  'nav-support': 'サポートを受ける', 'nav-feedback': '感想', 'nav-contact': '連絡先', 'nav-meetings': '会議', 'nav-announcement': '公告通知', 'nav-donate': '寄付', 'nav-privacy': 'ポリシー', 'nav-terms': '規約',
+            'con-title': 'お問い合わせ', 'con-sub': 'ご連絡をお待ちしております！', 'tag-email': 'メール一覧', 'tag-phone': '電話', 'tag-social': 'インスタントメッセージ',
+            'con-direct': '直通電話:', 'con-wechat': 'WeChat ID:', 'wechat_official': 'APSC 公式:'
+        },
+        'es': {
+            'nav-home': 'Inicio', 'nav-about': 'Acerca de',  'nav-support': 'Obtener apoyo', 'nav-feedback': 'Comentarios', 'nav-contact': 'Contacto', 'nav-meetings': 'Reuniones', 'nav-announcement': 'Anuncios', 'nav-donate': 'Donar', 'nav-privacy': 'Privacidad', 'nav-terms': 'Términos',
+            'con-title': 'Contáctenos', 'con-sub': '¡Esperamos saber de usted!', 'tag-email': 'Directorio de Email', 'tag-phone': 'Teléfono', 'tag-social': 'Mensajería Inst.',
+            'con-direct': 'Línea Directa:', 'con-wechat': 'IDs de WeChat:', 'wechat_official': 'APSC Oficial:'
+        },
+        'fr': {
+            'nav-home': 'Accueil', 'nav-about': 'À propos', 'nav-support': 'Obtenir du soutien', 'nav-feedback': 'Avis', 'nav-contact': 'Contact', 'nav-meetings': 'Réunions', 'nav-announcement': 'Annonces', 'nav-donate': 'Donner', 'nav-privacy': 'Confidentialité', 'nav-terms': 'Conditions',
+            'con-title': 'Contactez-nous', 'con-sub': 'Nous avons hâte de vous entendre !', 'tag-email': 'Répertoire Email', 'tag-phone': 'Téléphone', 'tag-social': 'Messagerie Inst.',
+            'con-direct': 'Ligne Directe:', 'con-wechat': 'IDs WeChat:', 'wechat_official': 'APSC Officiel:'
+        }
+    };
+
+    // 3. 改进后的切换函数
+    function updateLang(lang) {
+        // 保存到会话存储 (关闭标签页后消失)
+        sessionStorage.setItem('selectedLang', lang);
+
+        // 更新按钮 UI 状态
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            // 根据按钮的内容或点击的参数来匹配高亮
+            if (btn.getAttribute('onclick').includes(`'${lang}'`)) {
+                btn.classList.add('active');
+            } else {
+                btn.classList.remove('active');
+            }
+        });
+
+        // 执行翻译
+        document.querySelectorAll('[data-key]').forEach(el => {
+            const key = el.getAttribute('data-key');
+            if (i18n[lang] && i18n[lang][key]) {
+                el.innerText = i18n[lang][key];
+            }
+        });
+    }
+
+    // 4. 页面加载时自动初始化
+    window.addEventListener('DOMContentLoaded', () => {
+        const savedLang = sessionStorage.getItem('selectedLang');
+        // 如果有保存的语言且不是默认的英文，则应用它
+        if (savedLang && savedLang !== 'en') {
+            updateLang(savedLang);
+        }
+    });
+</script>
+</body>
+</html>
