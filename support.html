@@ -32,13 +32,28 @@
         .lang-btn.active { color: var(--brand-blue); }
 
         /* --- 导航栏 --- */
-        nav { background: rgba(255,255,255,0.85); backdrop-filter: blur(25px); position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid var(--border-color); }
-        .nav-container { max-width: 1300px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 12px 40px; }
-        .nav-brand-link img { height: 35px; }
-        .nav-links { display: flex; list-style: none; gap: 20px; align-items: center; }
+        nav {
+            background: rgba(255,255,255,0.85);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            position: sticky; top: 0; z-index: 1000;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .nav-container {
+            max-width: 1300px; margin: 0 auto;
+            display: flex; justify-content: space-between; align-items: center; padding: 12px 40px;
+            position: relative;
+        }
+        .nav-brand-link img { height: 35px; transition: var(--transition); }
+        .nav-links { display: flex; list-style: none; gap: 25px; align-items: center; }
         .nav-links a { text-decoration: none; color: var(--text-main); font-size: 13px; font-weight: 500; transition: var(--transition); }
         .nav-links a:hover { color: var(--brand-blue); }
-        .btn-donate-nav { border: 1px solid var(--brand-blue); padding: 6px 15px; border-radius: 50px; color: var(--brand-blue) !important; }
+        .btn-donate-nav {
+            border: 1px solid var(--brand-blue);
+            padding: 6px 15px; border-radius: 50px;
+            color: var(--brand-blue) !important;
+        }
+        .btn-donate-nav:hover { background: var(--brand-blue); color: #fff !important; }
 
         /* --- 汉堡菜单 --- */
         .hamburger { display: none; cursor: pointer; width: 30px; height: 20px; position: relative; z-index: 1001; }
@@ -49,6 +64,7 @@
         .hamburger.active span:nth-child(1) { transform: rotate(45deg); top: 9px; }
         .hamburger.active span:nth-child(2) { opacity: 0; }
         .hamburger.active span:nth-child(3) { transform: rotate(-45deg); top: 9px; }
+
 
         /* --- 主要内容 --- */
         .wrapper { max-width: 800px; margin: 0 auto; padding: 60px 40px 100px; }
@@ -85,16 +101,17 @@
         .footer-legal a:hover { color: var(--brand-blue); text-decoration: underline; }
         .footer-legal .separator { color: #eee; user-select: none; }
 
-        @media (max-width: 1024px) {
-            .nav-container { padding: 12px 20px; }
-            .nav-links { gap: 12px; }
-        }
-
-        @media (max-width: 900px) {
+         @media (max-width: 900px) {
+            .contact-grid { grid-template-columns: 1fr; }
             .hamburger { display: block; }
-            .nav-links { position: absolute; top: 100%; left: 0; width: 100%; background: rgba(255, 255, 255, 0.98); backdrop-filter: blur(20px); flex-direction: column; padding: 20px 0; gap: 0; opacity: 0; transform: translateY(-20px); pointer-events: none; transition: all 0.3s ease; }
+            .nav-links {
+                position: absolute; top: 100%; left: 0; width: 100%; background: rgba(255, 255, 255, 0.98); 
+                backdrop-filter: blur(20px); flex-direction: column; padding: 20px 0; gap: 0; opacity: 0; 
+                transform: translateY(-20px); pointer-events: none; transition: all 0.3s ease;
+            }
             .nav-links.active { opacity: 1; transform: translateY(0); pointer-events: auto; }
-            .nav-links a { display: block; padding: 18px 0; text-align: center; width: 100%; }
+            .nav-links a { display: block; padding: 18px 0; text-align: center; font-size: 16px; }
+            .btn-donate-nav { margin: 10px 40px; }
         }
     </style>
 </head>
@@ -117,11 +134,11 @@
             <ul class="nav-links" id="nav-menu">
                 <li><a href="index.html" data-key="nav-home">Home</a></li>
                 <li><a href="about.html" data-key="nav-about">About</a></li>
-                <li><a href="index.html#meeting-section" data-key="nav-meetings">Meetings</a></li>
-                <li><a href="support.html" data-key="nav-support" style="color: var(--brand-blue);">Get Support</a></li>
-                <li><a href="announcements.html" data-key="nav-ann">Announcements</a></li>
-                <li><a href="guestbook.html" data-key="nav-feedback">Feedback</a></li>
                 <li><a href="contact.html" data-key="nav-contact">Contact</a></li>
+                <li><a href="index.html#meeting-section" data-key="nav-meetings">Meetings</a></li>
+                <li><a href="announcements.html" data-key="nav-ann">Announcements</a></li>
+                <li><a href="support.html" data-key="nav-support" style="color: var(--brand-blue);">Get Support</a></li>
+                <li><a href="guestbook.html" data-key="nav-feedback">Feedback</a></li>
                 <li><a href="index.html#support" class="btn-donate-nav" data-key="nav-donate">Donate</a></li>
             </ul>
         </div>
@@ -167,16 +184,22 @@
 
         <div class="resources-section">
             <h2 style="margin-bottom: 25px;" data-key="res-title">External Resources</h2>
-            
-            <a href="https://www.montgomeryschoolsmd.org/schools/clarksburghs/bullyingresource/" target="_blank" class="resource-card">
-                <span class="res-name" data-key="res-bullying">Bullying & Harassment Reporting</span>
-                <span class="res-contact" data-key="res-link">Visit Site →</span>
-            </a>
+        
 
             <div class="resource-card" style="cursor: default;">
                 <span class="res-name" data-key="res-hotline">National Crisis Hotline</span>
-                <span class="res-contact">988</span>
+                <span class="res-contact">9-8-8</span>
             </div>
+
+             <div class="resource-card" style="cursor: default;">
+                <span class="res-name" data-key="res-mfjc">Montgomery Family Justice Center</span>
+                <span class="res-contact">240-773-0444</span>
+            </div>
+
+             <a href="https://www.montgomeryschoolsmd.org/schools/clarksburghs/bullyingresource/" target="_blank" class="resource-card">
+                <span class="res-name" data-key="res-bullying">CHS Bullying & Harassment Reporting</span>
+                <span class="res-contact" data-key="res-link">Visit Site →</span>
+            </a>
         </div>
     </main>
 
@@ -244,7 +267,7 @@
                 'lbl-name': 'Name (Optional)', 'lbl-contact': 'Contact Info (Email/Phone)', 'lbl-type': 'Type of Support', 'lbl-msg': 'How can we help?',
                 'ph-name': 'Your name', 'ph-contact': 'How can we reach you?', 'ph-msg': 'Tell us what\'s going on...',
                 'opt-academic': 'Academic Support', 'opt-social': 'Social Support', 'opt-mental': 'Emotional Support', 'opt-other': 'Other',
-                'btn-send': 'Send Request', 'res-title': 'External Resources', 'res-bullying': 'Bullying & Harassment Reporting', 'res-link': 'Visit Site →', 'res-hotline': 'National Crisis Hotline'
+                'btn-send': 'Send Request', 'res-title': 'External Resources', 'res-bullying': 'CHS Bullying & Harassment Reporting', 'res-link': 'Visit Site →', 'res-hotline': 'National Crisis Hotline', 'res-mfjc': 'Montgomery Family Justice Center'
             },
             'zh-hans': {
                 'nav-home': '首页', 'nav-about': '关于我们', 'nav-meetings': '会议安排', 'nav-support': '获取帮助', 'nav-ann': '公告通知', 'nav-feedback': '反馈', 'nav-contact': '联系我们', 'nav-donate': '捐赠支持', 'nav-privacy': '隐私政策', 'nav-terms': '使用条款',
@@ -253,7 +276,7 @@
                 'lbl-name': '姓名 (可选)', 'lbl-contact': '联系方式 (邮箱/电话)', 'lbl-type': '帮助类型', 'lbl-msg': '我们需要如何帮助你？',
                 'ph-name': '你的姓名', 'ph-contact': '如何联系你？', 'ph-msg': '请告诉我们发生了什么...',
                 'opt-academic': '学业支持', 'opt-social': '社交支持', 'opt-mental': '情感支持', 'opt-other': '其他',
-                'btn-send': '发送请求', 'res-title': '外部资源', 'res-bullying': '学校霸凌和骚扰投诉页面', 'res-link': '访问官网 →', 'res-hotline': '国家危机热线'
+                'btn-send': '发送请求', 'res-title': '外部资源', 'res-bullying': 'CHS 霸凌和骚扰投诉页面', 'res-link': '访问官网 →', 'res-hotline': '国家危机热线', 'res-mfjc': '蒙哥马利家庭司法中心'
             },
             'zh-hant': {
                 'nav-home': '首頁', 'nav-about': '關於我們', 'nav-meetings': '會議安排', 'nav-support': '獲取幫助', 'nav-ann': '公告通知', 'nav-feedback': '回饋', 'nav-contact': '聯繫我們', 'nav-donate': '捐贈支持', 'nav-privacy': '隱私政策', 'nav-terms': '使用條款',
@@ -262,7 +285,7 @@
                 'lbl-name': '姓名 (可選)', 'lbl-contact': '聯繫方式 (郵箱/電話)', 'lbl-type': '幫助類型', 'lbl-msg': '我們需要如何幫助你？',
                 'ph-name': '你的姓名', 'ph-contact': '如何聯繫你？', 'ph-msg': '請告訴我們發生了什麼...',
                 'opt-academic': '學業支持', 'opt-social': '社交支持', 'opt-mental': '情感支持', 'opt-other': '其他',
-                'btn-send': '發送請求', 'res-title': '外部資源', 'res-bullying': '學校霸凌和騷擾投訴頁面', 'res-link': '訪問官網 →', 'res-hotline': '國家危機熱線'
+                'btn-send': '發送請求', 'res-title': '外部資源', 'res-bullying': 'CHS 霸凌和騷擾投訴頁面', 'res-link': '訪問官網 →', 'res-hotline': '國家危機熱線', 'res-mfjc': '蒙哥馬利家庭司法中心'
             },
             'ko': {
                 'nav-home': '홈', 'nav-about': '소개', 'nav-meetings': '회의', 'nav-support': '지원 받기', 'nav-ann': '공지사항', 'nav-feedback': '피드백', 'nav-contact': '문의하기', 'nav-donate': '기부하기', 'nav-privacy': '개인정보처리방침', 'nav-terms': '이용약관',
@@ -271,7 +294,7 @@
                 'lbl-name': '이름 (선택 사항)', 'lbl-contact': '연락처 정보 (이메일/전화)', 'lbl-type': '지원 유형', 'lbl-msg': '어떻게 도와드릴까요?',
                 'ph-name': '당신의 이름', 'ph-contact': '어떻게 연락할 수 있나요?', 'ph-msg': '무슨 일이 일어나고 있는지 알려주세요...',
                 'opt-academic': '학업 지원', 'opt-social': '사회적 지원', 'opt-mental': '정서적 지원', 'opt-other': '기타',
-                'btn-send': '요청 보내기', 'res-title': '외부 자원', 'res-bullying': '괴롭힘 및 괴롭힘 신고', 'res-link': '사이트 방문 →', 'res-hotline': '국가 위기 핫라인'
+                'btn-send': '요청 보내기', 'res-title': '외부 자원', 'res-bullying': 'CHS 괴롭힘 및 괴롭힘 신고', 'res-link': '사이트 방문 →', 'res-hotline': '국가 위기 핫라인', 'res-mfjc': '몬트고메리 가족 사법 센터'
             },
             'ja': {
                 'nav-home': 'ホーム', 'nav-about': '私たちについて', 'nav-meetings': '会議', 'nav-support': 'サポートを受ける', 'nav-ann': 'お知らせ', 'nav-feedback': 'フィードバック', 'nav-contact': 'お問い合わせ', 'nav-donate': '寄付する', 'nav-privacy': 'プライバシーポリシー', 'nav-terms': '利用規約',
@@ -280,7 +303,7 @@
                 'lbl-name': '名前（任意）', 'lbl-contact': '連絡先情報（メール/電話）', 'lbl-type': 'サポートの種類', 'lbl-msg': 'どのようにお手伝いできますか？',
                 'ph-name': 'あなたの名前', 'ph-contact': 'どのように連絡できますか？', 'ph-msg': '何が起こっているのか教えてください...',
                 'opt-academic': '学業サポート', 'opt-social': '社会的サポート', 'opt-mental': '感情的サポート', 'opt-other': 'その他',
-                'btn-send': 'リクエストを送信', 'res-title': '外部リソース', 'res-bullying': 'いじめ・嫌がらせの報告', 'res-link': 'サイトを訪問 →', 'res-hotline': '全国危機ホットライン'
+                'btn-send': 'リクエストを送信', 'res-title': '外部リソース', 'res-bullying': 'CHS いじめ・嫌がらせの報告', 'res-link': 'サイトを訪問 →', 'res-hotline': '全国危機ホットライン', 'res-mfjc': 'モンゴメリー家族司法センター'
             },
             'es': {
                 'nav-home': 'Inicio', 'nav-about': 'Acerca de', 'nav-meetings': 'Reuniones', 'nav-support': 'Obtener Apoyo', 'nav-ann': 'Anuncios', 'nav-feedback': 'Comentarios', 'nav-contact': 'Contacto', 'nav-donate': 'Donar', 'nav-privacy': 'Política de Privacidad', 'nav-terms': 'Términos de Uso',
@@ -289,7 +312,7 @@
                 'lbl-name': 'Nombre (Opcional)', 'lbl-contact': 'Información de Contacto (Correo/Teléfono)', 'lbl-type': 'Tipo de Apoyo', 'lbl-msg': '¿Cómo podemos ayudarte?',
                 'ph-name': 'Tu nombre', 'ph-contact': '¿Cómo podemos contactarte?', 'ph-msg': 'Cuéntanos qué está pasando...',
                 'opt-academic': 'Apoyo Académico', 'opt-social': 'Apoyo Social', 'opt-mental': 'Apoyo Emocional', 'opt-other': 'Otro',
-                'btn-send': 'Enviar Solicitud', 'res-title': 'Recursos Externos', 'res-bullying': 'Reporte de Acoso Escolar y Hostigamiento', 'res-link': 'Visitar Sitio →', 'res-hotline': 'Línea Directa Nacional de Crisis'
+                'btn-send': 'Enviar Solicitud', 'res-title': 'Recursos Externos', 'res-bullying': 'Reporte de Acoso Escolar y Hostigamiento', 'res-link': 'Visitar Sitio →', 'res-hotline': 'Línea Directa Nacional de Crisis', 'res-mfjc': 'Centro de Justicia Familiar de Montgomery'
             },
             'fr': {
                 'nav-home': 'Accueil', 'nav-about': 'À propos', 'nav-meetings': 'Réunions', 'nav-support': 'Obtenir de l\'aide', 'nav-ann': 'Annonces', 'nav-feedback': 'Feedback', 'nav-contact': 'Contact', 'nav-donate': 'Faire un don', 'nav-privacy': 'Confidentialité', 'nav-terms': 'Conditions d\'utilisation',
@@ -298,7 +321,7 @@
                 'lbl-name': 'Nom (Optionnel)', 'lbl-contact': 'Infos de contact', 'lbl-type': 'Type de soutien', 'lbl-msg': 'Comment pouvons-nous vous aider ?',
                 'ph-name': 'Votre nom', 'ph-contact': 'Comment vous joindre ?', 'ph-msg': 'Dites-nous tout...',
                 'opt-academic': 'Soutien académique', 'opt-social': 'Soutien social', 'opt-mental': 'Soutien émotionnel', 'opt-other': 'Autre',
-                'btn-send': 'Envoyer', 'res-title': 'Ressources externes', 'res-bullying': 'Signalement de harcèlement', 'res-link': 'Visiter le site →', 'res-hotline': 'Ligne de crise nationale'
+                'btn-send': 'Envoyer', 'res-title': 'Ressources externes', 'res-bullying': 'Signalement de harcèlement', 'res-link': 'Visiter le site →', 'res-hotline': 'Ligne de crise nationale', 'res-mfjc': 'Centre de justice familiale de Montgomery'
             }
         };
 

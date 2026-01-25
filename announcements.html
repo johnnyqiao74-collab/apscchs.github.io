@@ -52,7 +52,12 @@
         .nav-links { display: flex; list-style: none; gap: 25px; align-items: center; }
         .nav-links a { text-decoration: none; color: var(--text-main); font-size: 13px; font-weight: 500; transition: var(--transition); }
         .nav-links a:hover { color: var(--brand-blue); }
-        .btn-donate-nav { border: 1px solid var(--brand-blue); padding: 6px 15px; border-radius: 50px; color: var(--brand-blue) !important; }
+         .btn-donate-nav {
+            border: 1px solid var(--brand-blue);
+            padding: 6px 15px; border-radius: 50px;
+            color: var(--brand-blue) !important;
+        }
+        .btn-donate-nav:hover { background: var(--brand-blue); color: #fff !important; }
 
         /* --- 汉堡菜单 CSS --- */
         .hamburger { display: none; cursor: pointer; width: 30px; height: 20px; position: relative; z-index: 1001; }
