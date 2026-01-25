@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms of Use | APSC</title>
+    <link rel="icon" href="apsc_new_logo.ico" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --brand-blue: #0056D2;
+            --text-main: #1d1d1f;
+            --text-sub: #6e6e73;
+            --bg-body: #ffffff;
+            --border-color: #f5f5f7;
+            --transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* --- 语言切换 --- */
+        .lang-switcher { background: #fff; padding: 12px 0; text-align: center; border-bottom: 1px solid var(--border-color); }
+        .lang-btn { background: none; border: none; font-size: 10px; font-weight: 600; letter-spacing: 0.1em; color: var(--text-sub); margin: 0 10px; cursor: pointer; transition: var(--transition); }
+        .lang-btn.active { color: var(--brand-blue); }
+
+        /* --- 导航栏 --- */
+        nav { background: rgba(255,255,255,0.85); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid var(--border-color); }
+        .nav-container { max-width: 1300px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 12px 40px; }
+        .nav-brand-link img { height: 35px; }
+        .nav-links { display: flex; list-style: none; gap: 25px; align-items: center; }
+        .nav-links a { text-decoration: none; color: var(--text-main); font-size: 13px; font-weight: 500; transition: var(--transition); }
+        .nav-links a:hover { color: var(--brand-blue); }
+        .btn-donate-nav { border: 1px solid var(--brand-blue); padding: 6px 15px; border-radius: 50px; color: var(--brand-blue) !important; }
+
+        /* --- 内容区域 --- */
+        .legal-wrapper { max-width: 850px; margin: 80px auto; padding: 0 40px; min-height: 60vh; }
+        .page-header { text-align: center; margin-bottom: 60px; }
+        .page-title { font-size: 3rem; font-weight: 800; letter-spacing: -0.04em; margin-bottom: 10px; }
+        .last-updated { font-size: 14px; color: var(--text-sub); }
+        
+        .content-section { margin-bottom: 50px; padding-bottom: 20px; border-bottom: 1px solid var(--border-color); }
+        .content-section:last-child { border-bottom: none; }
+        .content-section h2 { font-size: 1.4rem; font-weight: 700; margin-bottom: 18px; color: var(--text-main); }
+        .content-section p { font-size: 1.05rem; color: var(--text-sub); margin-bottom: 15px; }
+
+        .important-note { background: #fbfbfd; border-left: 4px solid var(--brand-blue); padding: 25px; border-radius: 12px; margin: 25px 0; }
+        .important-note p { margin-bottom: 10px; }
+        .important-note p:last-child { margin-bottom: 0; }
+
+        /* --- Footer --- */
+        footer { padding: 60px 0; border-top: 1px solid var(--border-color); text-align: center; background: #fbfbfd; }
+        .social-icons { display: flex; justify-content: center; gap: 20px; margin-bottom: 25px; }
+        .social-icons img { width: 24px; height: 24px; filter: grayscale(1); opacity: 0.6; transition: all 0.4s ease; }
+        .social-icons a:hover img { filter: grayscale(0); opacity: 1; transform: translateY(-5px) scale(1.1); }
+        .footer-text { font-size: 11px; color: #aaa; margin-bottom: 10px; }
+        .footer-legal { display: flex; justify-content: center; gap: 20px; }
+        .footer-legal a { font-size: 11px; color: #86868b; text-decoration: none; }
+        .footer-legal a:hover { color: var(--brand-blue); text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .page-title { font-size: 2.2rem; }
+            .nav-container { padding: 12px 20px; }
+            .nav-links { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="lang-switcher">
+        <button class="lang-btn active" onclick="updateLang('en')">ENGLISH</button>
+        <button class="lang-btn" onclick="updateLang('zh-hans')">简体中文</button>
+        <button class="lang-btn" onclick="updateLang('zh-hant')">繁體中文</button>
+        <button class="lang-btn" onclick="updateLang('ko')">한국어</button>
+        <button class="lang-btn" onclick="updateLang('ja')">日本語</button>
+        <button class="lang-btn" onclick="updateLang('es')">ESPAÑOL</button>
+        <button class="lang-btn" onclick="updateLang('fr')">FRANÇAIS</button>
+    </div>
+
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="nav-brand-link"><img src="APSC_LOGO.png" alt="APSC Logo"></a>
+            <ul class="nav-links">
+                <li><a href="index.html" data-key="nav-home">Home</a></li>
+                <li><a href="about.html" data-key="nav-about">About</a></li>
+                <li><a href="support.html" data-key="nav-support">Get Support</a></li>
+                <li><a href="index.html#support" class="btn-donate-nav" data-key="nav-donate">Donate</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="legal-wrapper">
+        <div class="page-header">
+            <h1 class="page-title" data-key="nav-terms">Terms of Use</h1>
+            <p class="last-updated" data-key="ter-update">Effective Date: January 2026</p>
+        </div>
+
+        <div class="content-section">
+            <h2 data-key="ter-h1">1. Agreement to Terms</h2>
+            <p data-key="ter-p1">By accessing this website, you agree to be bound by these Terms of Use and all applicable laws and regulations at Clarksburg High School and Montgomery County Public Schools (MCPS).</p>
+        </div>
+
+        <div class="content-section">
+            <h2 data-key="ter-h2">2. Peer Support Disclaimer</h2>
+            <div class="important-note">
+                <p data-key="ter-p2-a"><strong>Not Professional Advice:</strong> The Asian Peer Support Club (APSC) provides peer-to-peer support only. Our members are students, not licensed mental health professionals, counselors, or medical doctors.</p>
+                <p data-key="ter-p2-b"><strong>Emergency Situations:</strong> This platform is not monitored 24/7. In a life-threatening emergency, please call 911 or the 988 Crisis Lifeline immediately.</p>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2 data-key="ter-h3">3. Mandatory Reporting</h2>
+            <p data-key="ter-p3">Consistent with MCPS policy, if a student discloses intent to harm themselves or others, or reports abuse, APSC is obligated to report this information to school administration or qualified professionals.</p>
+        </div>
+
+        <div class="content-section">
+            <h2 data-key="ter-h4">4. User Conduct</h2>
+            <p data-key="ter-p4">Any communication through our site must remain respectful and inclusive. Submission of false reports or harassment is prohibited and will be reported to school authorities.</p>
+        </div>
+
+        <div class="content-section">
+            <h2 data-key="ter-h5">5. Intellectual Property</h2>
+            <p data-key="ter-p5">All logos, text, and original media are the property of APSC. Use of these assets for commercial purposes is prohibited without written consent.</p>
+        </div>
+
+        <div class="content-section">
+            <h2 data-key="ter-h6">6. External Links</h2>
+            <p data-key="ter-p6">Our site provides links to external resources. APSC is not responsible for the content, safety, or privacy practices of these third-party websites.</p>
+        </div>
+    </main>
+
+    <footer>
+        <div class="social-icons">
+            <a href="https://www.instagram.com/apsc_chs/" target="_blank"><img src="instagram_icon.png"></a>
+            <a href="https://www.tiktok.com/@asian.peer.support.club" target="_blank"><img src="tiktok_icon.png"></a>
+            <a href="https://youtube.com/@asianpeersupportclub" target="_blank"><img src="youtube_icon.png"></a>
+            <a href="https://www.facebook.com/share/1JPeJSg5Lu/" target="_blank"><img src="facebook_icon.png"></a>
+        </div>
+        <p class="footer-text" data-key="footer-cp">© 2026 ASIAN PEER SUPPORT CLUB | CLARKSBURG HIGH SCHOOL</p>
+        <div class="footer-legal">
+            <a href="Privacy_Policy.html" data-key="nav-privacy">Privacy Policy</a>
+            <a href="Terms_of_Use.html" data-key="nav-terms">Terms of Use</a>
+        </div>
+    </footer>
+
+    <script>
+        const i18n = {
+            'en': {
+                'nav-home': 'Home', 'nav-about': 'About', 'nav-support': 'Get Support', 'nav-donate': 'Donate', 'nav-privacy': 'Privacy Policy', 'nav-terms': 'Terms of Use',
+                'ter-update': 'Effective Date: January 2026',
+                'ter-h1': '1. Agreement to Terms', 'ter-p1': 'By accessing this site, you agree to follow these terms and school regulations.',
+                'ter-h2': '2. Peer Support Disclaimer', 'ter-p2-a': 'Not Professional Advice: APSC provides peer-to-peer support only. We are not licensed professionals.', 'ter-p2-b': 'Emergency Situations: This platform is not monitored 24/7. In emergencies, call 911 or 988.',
+                'ter-h3': '3. Mandatory Reporting', 'ter-p3': 'We are obligated to report cases involving safety threats or abuse to school administration.',
+                'ter-h4': '4. User Conduct', 'ter-p4': 'All communication must be respectful. False reports will be reported to school authorities.',
+                'ter-h5': '5. Intellectual Property', 'ter-p5': 'All logos and content belong to APSC.',
+                'ter-h6': '6. External Links', 'ter-p6': 'We are not responsible for the content of external sites like MCPS resources.',
+                'footer-cp': '© 2026 ASIAN PEER SUPPORT CLUB | CLARKSBURG HIGH SCHOOL'
+            },
+            'zh-hans': {
+                'nav-home': '首页', 'nav-about': '关于我们', 'nav-support': '寻求帮助', 'nav-donate': '捐赠支持', 'nav-privacy': '隐私政策', 'nav-terms': '使用条款',
+                'ter-update': '生效日期：2026年1月',
+                'ter-h1': '1. 接受条款', 'ter-p1': '访问本网站即表示您同意遵守这些使用条款及学校相关规定。',
+                'ter-h2': '2. 同伴互助免责声明', 'ter-p2-a': '非专业建议：APSC 仅提供同伴支持。我们不是持证心理咨询师或医生。', 'ter-p2-b': '紧急情况：本平台不提供全天候监控。遇到紧急情况，请立即拨打 911 或 988。',
+                'ter-h3': '3. 强制报告义务', 'ter-p3': '根据学校规定，如果涉及安全威胁或虐待报告，我们有义务向管理层报备。',
+                'ter-h4': '4. 用户行为规范', 'ter-p4': '所有沟通必须保持尊重。提交虚假报告或骚扰行为将被举报至学校。',
+                'ter-h5': '5. 知识产权', 'ter-p5': '本站所有徽标和内容均归 APSC 所有。',
+                'ter-h6': '6. 外部链接', 'ter-p6': '我们不对外部资源（如学校官方链接）的内容或安全负责。',
+                'footer-cp': '© 2026 ASIAN PEER SUPPORT CLUB | CLARKSBURG HIGH SCHOOL'
+            },
+            'zh-hant': {
+                'nav-home': '首頁', 'nav-about': '關於我們', 'nav-support': '尋求幫助', 'nav-donate': '捐贈支持', 'nav-privacy': '隱私政策', 'nav-terms': '使用條款',
+                'ter-update': '生效日期：2026年1月',
+                'ter-h1': '1. 接受條款', 'ter-p1': '訪問本網站即表示您同意遵守這些使用條款及學校相關規定。',
+                'ter-h2': '2. 同伴互助免責聲明', 'ter-p2-a': '非專業建議：APSC 僅提供同伴支持。我們不是持證心理諮詢師或醫生。', 'ter-p2-b': '緊急情況：本平台不提供全天候監控。遇到緊急情況，請立即撥打 911 或 988。',
+                'ter-h3': '3. 強制報告義務', 'ter-p3': '根據學校規定，如果涉及安全威脅或虐待報告，我們有義務向管理層報備。',
+                'ter-h4': '4. 用戶行為規範', 'ter-p4': '所有溝通必須保持尊重。提交虛假報告或騷擾行為將被舉報至學校。',
+                'ter-h5': '5. 知識產權', 'ter-p5': '本站所有徽標和內容均歸 APSC 所有。',
+                'ter-h6': '6. 外部鏈接', 'ter-p6': '我們不對外部資源（如學校官方鏈接）的内容或安全負責。',
+                'footer-cp': '© 2026 ASIAN PEER SUPPORT CLUB | CLARKSBURG HIGH SCHOOL'
+            },
+            'ko': {
+                'nav-home': '홈', 'nav-about': '정보', 'nav-support': '지원 받기', 'nav-donate': '기부', 'nav-privacy': '개인정보 정책', 'nav-terms': '이용 약관',
+                'ter-update': '시행일: 2026년 1월',
+                'ter-h1': '1. 약관 동의', 'ter-p1': '본 사이트를 이용함으로써 귀하는 본 약관 및 학교 규정을 준수하는 데 동의하게 됩니다.',
+                'ter-h2': '2. 동료 지원 면책 조항', 'ter-p2-a': '전문가 조언 아님: APSC는 동료 지원만 제공합니다. 저희는 자격증이 있는 전문가가 아닙니다.', 'ter-p2-b': '긴급 상황: 본 플랫폼은 24시간 모니터링되지 않습니다. 응급 상황 시 911 또는 988로 전화하십시오.',
+                'ter-h3': '3. 의무 보고', 'ter-p3': '안전 위협이나 학대 사례가 발견될 경우 학교 행정실에 보고할 의무가 있습니다.',
+                'ter-h4': '4. 사용자 행동 규칙', 'ter-p4': '모든 소통은 존중되어야 합니다. 허위 보고는 학교 당국에 보고됩니다.',
+                'ter-h5': '5. 지적 재산권', 'ter-p5': '모든 로고와 콘텐츠는 APSC의 소유입니다.',
+                'ter-h6': '6. 외부 링크', 'ter-p6': '저희는 외부 리소스 사이트의 콘텐츠나 안전에 대해 책임을 지지 않습니다.',
+                'footer-cp': '© 2026 ASIAN PEER SUPPORT CLUB | CLARKSBURG HIGH SCHOOL'
+            },
+            'ja': {
+                'nav-home': 'ホーム', 'nav-about': '詳細', 'nav-support': 'サポート', 'nav-donate': '寄付', 'nav-privacy': 'プライバシーポリシー', 'nav-terms': '利用規約',
+                'ter-update': '発効日：2026年1月',
+                'ter-h1': '1. 規約への同意', 'ter-p1': '当サイトを利用することで、これらの規約および学校規則に従うことに同意したものとみなされます。',
+                'ter-h2': '2. ピアサポート免責事項', 'ter-p2-a': '専門的助言ではありません：APSCはピアサポートのみを提供します。私たちは専門家ではありません。', 'ter-p2-b': '緊急事態：このサイトは24時間監視されていません。緊急時は911または988へ連絡してください。',
+                'ter-h3': '3. 報告義務', 'ter-p3': '安全への脅威や虐待が判明した場合、学校管理者に報告する義務があります。',
+                'ter-h4': '4. ユーザー行動規範', 'ter-p4': 'すべてのコミュニケーションは尊重を持って行う必要があります。虚偽の報告は禁止されています。',
+                'ter-h5': '5. 知的財産権', 'ter-p5': 'すべてのロゴとコンテンツはAPSCに帰属します。',
+                'ter-h6': '6. 外部リンク', 'ter-p6': '外部サイトの内容や安全性について、当社は責任を負いません。',
+                'footer-cp': '© 2026 ASIAN PEER SUPPORT CLUB | CLARKSBURG HIGH SCHOOL'
+            },
+            'es': {
+                'nav-home': 'Inicio', 'nav-about': 'Acerca de', 'nav-support': 'Obtener Apoyo', 'nav-donate': 'Donar', 'nav-privacy': 'Privacidad', 'nav-terms': 'Términos',
+                'ter-update': 'Fecha de vigencia: Enero 2026',
+                'ter-h1': '1. Acuerdo de Términos', 'ter-p1': 'Al acceder a este sitio, acepta seguir estos términos y las regulaciones escolares.',
+                'ter-h2': '2. Descargo de Apoyo entre Pares', 'ter-p2-a': 'No es consejo profesional: APSC solo brinda apoyo entre estudiantes. No somos profesionales con licencia.', 'ter-p2-b': 'Emergencias: Esta plataforma no se monitorea 24/7. En emergencias, llame al 911 o 988.',
+                'ter-h3': '3. Reporte Obligatorio', 'ter-p3': 'Estamos obligados a informar amenazas de seguridad o abuso a la administración escolar.',
+                'ter-h4': '4. Conducta del Usuario', 'ter-p4': 'Toda comunicación debe ser respetuosa. Los informes falsos serán reportados.',
+                'ter-h5': '5. Propiedad Intelectual', 'ter-p5': 'Todos los logotipos y contenidos pertenecen a APSC.',
+                'ter-h6': '6. Enlaces Externos', 'ter-p6': 'No somos responsables del contenido o seguridad de sitios externos.',
+                'footer-cp': '© 2026 ASIAN PEER SUPPORT CLUB | CLARKSBURG HIGH SCHOOL'
+            },
+            'fr': {
+                'nav-home': 'Accueil', 'nav-about': 'À propos', 'nav-support': 'Soutien', 'nav-donate': 'Donner', 'nav-privacy': 'Confidentialité', 'nav-terms': 'Conditions',
+                'ter-update': 'Date d\'effet : Janvier 2026',
+                'ter-h1': '1. Acceptation des Conditions', 'ter-p1': 'En accédant à ce site, vous acceptez ces conditions et les règlements de l\'école.',
+                'ter-h2': '2. Avis de non-responsabilité', 'ter-p2-a': 'Pas un conseil professionnel : APSC offre uniquement un soutien entre pairs. Nous ne sommes pas des professionnels.', 'ter-p2-b': 'Urgences : Cette plateforme n\'est pas surveillée 24/7. En cas d\'urgence, appelez le 911 ou le 988.',
+                'ter-h3': '3. Signalement Obligatoire', 'ter-p3': 'Nous sommes tenus de signaler les menaces de sécurité ou les abus à la direction de l\'école.',
+                'ter-h4': '4. Conduite de l\'Utilisateur', 'ter-p4': 'Toute communication doit être respectueuse. Les faux rapports seront signalés.',
+                'ter-h5': '5. Propriété Intellectuelle', 'ter-p5': 'Tous les logos et contenus appartiennent à l\'APSC.',
+                'ter-h6': '6. Liens Externes', 'ter-p6': 'Nous ne sommes pas responsables du contenu ou de la sécurité des sites externes.',
+                'footer-cp': '© 2026 ASIAN PEER SUPPORT CLUB | CLARKSBURG HIGH SCHOOL'
+            }
+        };
+
+        function updateLang(lang) {
+            sessionStorage.setItem('selectedLang', lang);
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.getAttribute('onclick').includes(`'${lang}'`));
+            });
+            document.querySelectorAll('[data-key]').forEach(el => {
+                const key = el.getAttribute('data-key');
+                if (i18n[lang] && i18n[lang][key]) el.innerText = i18n[lang][key];
+            });
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedLang = sessionStorage.getItem('selectedLang') || 'en';
+            updateLang(savedLang);
+        });
+    </script>
+</body>
+</html>

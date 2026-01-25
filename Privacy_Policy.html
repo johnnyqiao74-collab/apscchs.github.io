@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy | APSC</title>
+    <link rel="icon" href="apsc_new_logo.ico" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --brand-blue: #0056D2;
+            --text-main: #1d1d1f;
+            --text-sub: #6e6e73;
+            --bg-body: #ffffff;
+            --bg-card: #fbfbfd;
+            --border-color: #f5f5f7;
+            --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* --- 语言切换 --- */
+        .lang-switcher { background: #fff; padding: 12px 0; text-align: center; border-bottom: 1px solid var(--border-color); }
+        .lang-btn { background: none; border: none; font-size: 10px; font-weight: 600; letter-spacing: 0.1em; color: var(--text-sub); margin: 0 10px; cursor: pointer; transition: var(--transition); }
+        .lang-btn.active { color: var(--brand-blue); }
+
+        /* --- 导航栏 --- */
+        nav { background: rgba(255,255,255,0.85); backdrop-filter: blur(25px); position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid var(--border-color); }
+        .nav-container { max-width: 1300px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 12px 40px; }
+        .nav-brand-link img { height: 35px; }
+        .nav-links { display: flex; list-style: none; gap: 25px; align-items: center; }
+        .nav-links a { text-decoration: none; color: var(--text-main); font-size: 13px; font-weight: 500; transition: var(--transition); }
+        .nav-links a:hover { color: var(--brand-blue); }
+        .btn-donate-nav { border: 1px solid var(--brand-blue); padding: 6px 15px; border-radius: 50px; color: var(--brand-blue) !important; }
+
+        /* --- 汉堡菜单 --- */
+        .hamburger { display: none; cursor: pointer; width: 30px; height: 20px; position: relative; z-index: 1001; }
+        .hamburger span { display: block; width: 100%; height: 2px; background-color: var(--text-main); position: absolute; transition: var(--transition); border-radius: 2px; }
+        .hamburger span:nth-child(1) { top: 0; }
+        .hamburger span:nth-child(2) { top: 9px; }
+        .hamburger span:nth-child(3) { top: 18px; }
+        .hamburger.active span:nth-child(1) { transform: rotate(45deg); top: 9px; }
+        .hamburger.active span:nth-child(2) { opacity: 0; }
+        .hamburger.active span:nth-child(3) { transform: rotate(-45deg); top: 9px; }
+
+        /* --- 内容区域 --- */
+        .legal-wrapper { max-width: 850px; margin: 0 auto; padding: 80px 40px 100px; }
+        .page-header { text-align: center; margin-bottom: 60px; }
+        .page-header h1 { font-size: 3rem; font-weight: 800; letter-spacing: -0.05em; margin-bottom: 10px; }
+        .last-updated { font-size: 14px; color: var(--text-sub); }
+
+        .content-section { margin-bottom: 50px; padding-bottom: 20px; border-bottom: 1px solid var(--border-color); }
+        .content-section:last-child { border-bottom: none; }
+        .content-section h2 { font-size: 1.4rem; font-weight: 700; margin-bottom: 18px; color: var(--text-main); }
+        .content-section p { font-size: 1.05rem; color: var(--text-sub); margin-bottom: 15px; }
+
+        .important-note { background: var(--bg-card); border-left: 4px solid var(--brand-blue); padding: 25px; border-radius: 12px; margin: 25px 0; }
+
+        /* --- Footer --- */
+        footer { padding: 80px 0 60px; border-top: 1px solid var(--border-color); text-align: center; background: #fbfbfd; }
+        .social-icons { display: flex; justify-content: center; gap: 30px; margin-bottom: 30px; }
+        .social-icons img { width: 26px; height: 26px; filter: grayscale(1); opacity: 0.5; transition: all 0.4s ease; }
+        .social-icons a:hover img { filter: grayscale(0); opacity: 1; transform: translateY(-8px) scale(1.2); }
+        .footer-text { font-size: 11px; color: #aaa; margin-bottom: 15px; }
+        .footer-legal { display: flex; justify-content: center; gap: 20px; }
+        .footer-legal a { font-size: 11px; color: #86868b; text-decoration: none; transition: var(--transition); }
+        .footer-legal a:hover { color: var(--brand-blue); text-decoration: underline; }
+
+        @media (max-width: 900px) {
+            .hamburger { display: block; }
+            .nav-links { position: absolute; top: 100%; left: 0; width: 100%; background: rgba(255, 255, 255, 0.98); backdrop-filter: blur(20px); flex-direction: column; padding: 20px 0; gap: 0; opacity: 0; transform: translateY(-20px); pointer-events: none; transition: all 0.3s ease; }
+            .nav-links.active { opacity: 1; transform: translateY(0); pointer-events: auto; }
+            .nav-links a { display: block; padding: 18px 0; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="lang-switcher">
+        <button class="lang-btn active" onclick="updateLang('en')">ENGLISH</button>
+        <button class="lang-btn" onclick="updateLang('zh-hans')">简体中文</button>
+        <button class="lang-btn" onclick="updateLang('zh-hant')">繁體中文</button>
+        <button class="lang-btn" onclick="updateLang('ko')">한국어</button>
+        <button class="lang-btn" onclick="updateLang('ja')">日本語</button>
+        <button class="lang-btn" onclick="updateLang('es')">ESPAÑOL</button>
+        <button class="lang-btn" onclick="updateLang('fr')">FRANÇAIS</button>
+    </div>
+
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="nav-brand-link"><img src="APSC_LOGO.png" alt="APSC Logo"></a>
+            <div class="hamburger" id="hamburger-btn"><span></span><span></span><span></span></div>
+            <ul class="nav-links" id="nav-menu">
+                <li><a href="index.html" data-key="nav-home">Home</a></li>
+                <li><a href="about.html" data-key="nav-about">About</a></li>
+                <li><a href="support.html" data-key="nav-support">Get Support</a></li>
+                <li><a href="announcements.html" data-key="nav-ann">Announcements</a></li>
+                <li><a href="guestbook.html" data-key="nav-feedback">Feedback</a></li>
+                <li><a href="index.html#support" class="btn-donate-nav" data-key="nav-donate">Donate</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="legal-wrapper">
+        <header class="page-header">
+            <h1 data-key="nav-privacy">Privacy Policy</h1>
+            <p class="last-updated" data-key="pri-update">Last Updated: January 2026</p>
+        </header>
+
+        <section class="content-section">
+            <h2 data-key="pri-h1">1. Data Collection</h2>
+            <p data-key="pri-p1">We collect personal information (such as name and contact info) only when you voluntarily submit it via our "Get Support," "Feedback," or interest forms.</p>
+        </section>
+
+        <section class="content-section">
+            <h2 data-key="pri-h2">2. Use of Information</h2>
+            <p data-key="pri-p2">Your information is used to provide peer support, organize club events, and improve our services. We do not sell your personal data to third parties.</p>
+        </section>
+
+        <section class="content-section">
+            <h2 data-key="pri-h3">3. Confidentiality & Mandatory Reporting</h2>
+            <div class="important-note">
+                <p data-key="pri-p3-a"><strong>Privacy Limit:</strong> While we respect your privacy, we are <strong>Mandatory Reporters</strong> under MCPS policy.</p>
+                <p data-key="pri-p3-b">If you disclose information regarding intent to harm yourself or others, or report abuse/neglect, we are legally required to notify school administration or relevant authorities immediately.</p>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <h2 data-key="pri-h4">4. Data Security</h2>
+            <p data-key="pri-p4">We implement reasonable measures to protect your data. However, no method of transmission over the internet is 100% secure. By using our forms, you acknowledge this inherent risk.</p>
+        </section>
+
+        <section class="content-section">
+            <h2 data-key="pri-h5">5. External Links</h2>
+            <p data-key="pri-p5">Our website contains links to external sites (e.g., Instagram, DoubleGood). We are not responsible for the privacy practices of these third-party platforms.</p>
+        </section>
+    </main>
+
+    <footer>
+        <div class="social-icons">
+            <a href="https://www.instagram.com/apsc_chs/" target="_blank"><img src="instagram_icon.png" alt="Instagram"></a>
+            <a href="https://www.tiktok.com/@asian.peer.support.club" target="_blank"><img src="tiktok_icon.png" alt="TikTok"></a>
+            <a href="https://youtube.com/@asianpeersupportclub" target="_blank"><img src="youtube_icon.png" alt="YouTube"></a>
+            <a href="https://www.facebook.com/share/1JPeJSg5Lu/" target="_blank"><img src="facebook_icon.png" alt="Facebook"></a>
+        </div>
+        <p class="footer-text">© 2026 ASIAN PEER SUPPORT CLUB | CLARKSBURG HIGH SCHOOL</p>
+        <div class="footer-legal">
+            <a href="Privacy_Policy.html" data-key="nav-privacy">Privacy Policy</a>
+            <span class="separator">|</span>
+            <a href="Terms_of_Use.html" data-key="nav-terms">Terms of Use</a>
+        </div>
+    </footer>
+
+    <script>
+        const hamburger = document.getElementById('hamburger-btn');
+        const navMenu = document.getElementById('nav-menu');
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+
+        const i18n = {
+            'en': {
+                'nav-home': 'Home', 'nav-about': 'About', 'nav-support': 'Get Support', 'nav-ann': 'Announcements', 'nav-feedback': 'Feedback', 'nav-donate': 'Donate', 'nav-privacy': 'Privacy Policy', 'nav-terms': 'Terms of Use',
+                'pri-update': 'Last Updated: January 2026',
+                'pri-h1': '1. Data Collection', 'pri-p1': 'We collect info only when you voluntarily submit it via our forms.',
+                'pri-h2': '2. Use of Information', 'pri-p2': 'Used for peer support and club events. We never sell your data.',
+                'pri-h3': '3. Confidentiality & Mandatory Reporting', 'pri-p3-a': 'Privacy Limit: We are Mandatory Reporters under MCPS policy.', 'pri-p3-b': 'If you disclose intent to harm yourself/others or report abuse, we must notify school authorities.',
+                'pri-h4': '4. Data Security', 'pri-p4': 'Internet transmission is never 100% secure. Use forms at your own risk.',
+                'pri-h5': '5. External Links', 'pri-p5': 'We are not responsible for the privacy of sites like Instagram or DoubleGood.'
+            },
+            'zh-hans': {
+                'nav-home': '首页', 'nav-about': '关于我们', 'nav-support': '寻求帮助', 'nav-ann': '公告', 'nav-feedback': '反馈', 'nav-donate': '捐赠支持', 'nav-privacy': '隐私政策', 'nav-terms': '使用条款',
+                'pri-update': '最后更新：2026年1月',
+                'pri-h1': '1. 数据收集', 'pri-p1': '我们仅在您通过“寻求帮助”或反馈表单主动提交时收集个人信息。',
+                'pri-h2': '2. 信息用途', 'pri-p2': '用于提供同伴支持及社团活动。我们绝不出售您的个人数据。',
+                'pri-h3': '3. 保密性与强制报告', 'pri-p3-a': '隐私限制：根据学校 (MCPS) 规定，我们属于强制报告者。', 'pri-p3-b': '如果您披露自残、伤害他人或遭受虐待的信息，我们依法必须立即通知学校管理层。',
+                'pri-h4': '4. 数据安全', 'pri-p4': '互联网传输无法保证 100% 安全，请知悉提交表单的固有风险。',
+                'pri-h5': '5. 外部链接', 'pri-p5': '我们不对 Instagram 或捐赠网站等第三方平台的隐私惯例负责。'
+            },
+            'zh-hant': {
+                'nav-home': '首頁', 'nav-about': '關於我們', 'nav-support': '尋求幫助', 'nav-ann': '公告', 'nav-feedback': '回饋', 'nav-donate': '捐贈支持', 'nav-privacy': '隱私政策', 'nav-terms': '使用條款',
+                'pri-update': '最後更新：2026年1月',
+                'pri-h1': '1. 數據收集', 'pri-p1': '我們僅在您通過「尋求幫助」或回饋表單主動提交時收集個人信息。',
+                'pri-h2': '2. 信息用途', 'pri-p2': '用於提供同伴支持及社團活動。我們絕不出售您的個人數據。',
+                'pri-h3': '3. 保密性與強制報告', 'pri-p3-a': '隱私限制：根據學校 (MCPS) 規定，我們屬於強制報告者。', 'pri-p3-b': '如果您披露自殘、傷害他人或遭受虐待的信息，我們依法必須立即通知學校管理層。',
+                'pri-h4': '4. 數據安全', 'pri-p4': '互聯網傳輸無法保證 100% 安全，請知悉提交表單的固有風險。',
+                'pri-h5': '5. 外部鏈接', 'pri-p5': '我們不對 Instagram 或捐助網站等第三方平台的隱私慣例負責。'
+            },
+            'ko': {
+                'nav-home': '홈', 'nav-about': '소개', 'nav-support': '지원 받기', 'nav-ann': '공지', 'nav-feedback': '피드백', 'nav-donate': '기부', 'nav-privacy': '개인정보 정책', 'nav-terms': '이용약관',
+                'pri-update': '최종 업데이트: 2026년 1월',
+                'pri-h1': '1. 데이터 수집', 'pri-p1': '양식을 통해 자발적으로 제출된 정보만 수집합니다.',
+                'pri-h2': '2. 정보 이용', 'pri-p2': '동료 지원 및 클럽 활동에만 사용됩니다. 데이터를 판매하지 않습니다.',
+                'pri-h3': '3. 비밀 유지 및 의무 보고', 'pri-p3-a': '개인정보 제한: MCPS 정책에 따라 우리는 의무 보고자입니다.', 'pri-p3-b': '자해, 타인 가해 또는 학대 사실을 알릴 경우 학교 당국에 신고해야 합니다.',
+                'pri-h4': '4. 데이터 보안', 'pri-p4': '인터넷 전송은 100% 안전할 수 없습니다. 위험을 인지하고 사용하십시오.',
+                'pri-h5': '5. 외부 링크', 'pri-p5': '인스타그램 등 외부 사이트의 개인정보 보호 정책에 대해서는 책임지지 않습니다.'
+            },
+            'ja': {
+                'nav-home': 'ホーム', 'nav-about': '詳細', 'nav-support': 'サポート', 'nav-ann': 'お知らせ', 'nav-feedback': '意見', 'nav-donate': '寄付', 'nav-privacy': 'プライバシー', 'nav-terms': '利用規約',
+                'pri-update': '最終更新：2026年1月',
+                'pri-h1': '1. データ収集', 'pri-p1': 'フォームから自発的に提出された情報のみを収集します。',
+                'pri-h2': '2. 情報の利用', 'pri-p2': 'ピアサポートや活動の運営に使用され、第三者に販売することはありません。',
+                'pri-h3': '3. 守秘義務と報告義務', 'pri-p3-a': '制限事項：学校の規定により、私たちは報告義務を負っています。', 'pri-p3-b': '自傷や他害、虐待の恐れがある場合は、学校管理者に通知する義務があります。',
+                'pri-h4': '4. セキュリティ', 'pri-p4': 'インターネット上の送信は100%安全ではありません。リスクを理解した上でご利用ください。',
+                'pri-h5': '5. 外部リンク', 'pri-p5': '外部サイトのプライバシー慣行について、当社は責任を負いません。'
+            },
+            'es': {
+                'nav-home': 'Inicio', 'nav-about': 'Acerca de', 'nav-support': 'Soporte', 'nav-ann': 'Anuncios', 'nav-feedback': 'Contacto', 'nav-donate': 'Donar', 'nav-privacy': 'Privacidad', 'nav-terms': 'Términos',
+                'pri-update': 'Última actualización: Enero 2026',
+                'pri-h1': '1. Recolección de Datos', 'pri-p1': 'Solo recolectamos datos enviados voluntariamente a través de nuestros formularios.',
+                'pri-h2': '2. Uso de Información', 'pri-p2': 'Se usa para apoyo entre pares y eventos del club. No vendemos sus datos.',
+                'pri-h3': '3. Confidencialidad y Reporte Obligatorio', 'pri-p3-a': 'Límite de Privacidad: Somos informantes obligatorios bajo la política de MCPS.', 'pri-p3-b': 'Si revela intención de dañarse o reporta abuso, debemos notificar a las autoridades escolares.',
+                'pri-h4': '4. Seguridad de Datos', 'pri-p4': 'La transmisión por internet no es 100% segura. Use los formularios bajo su propio riesgo.',
+                'pri-h5': '5. Enlaces Externos', 'pri-p5': 'No somos responsables de las prácticas de sitios como Instagram o DoubleGood.'
+            },
+            'fr': {
+                'nav-home': 'Accueil', 'nav-about': 'À propos', 'nav-support': 'Soutien', 'nav-ann': 'Annonces', 'nav-feedback': 'Retour', 'nav-donate': 'Donner', 'nav-privacy': 'Confidentialité', 'nav-terms': 'Conditions',
+                'pri-update': 'Mis à jour: Janvier 2026',
+                'pri-h1': '1. Collecte de données', 'pri-p1': 'Nous collectons des infos uniquement via vos soumissions volontaires aux formulaires.',
+                'pri-h2': '2. Utilisation des infos', 'pri-p2': 'Utilisé pour le soutien par les pairs. Nous ne vendons jamais vos données.',
+                'pri-h3': '3. Confidentialité et signalement', 'pri-p3-a': 'Limite: Nous sommes des signaleurs obligatoires selon la politique MCPS.', 'pri-p3-b': 'En cas d\'intention de nuire ou d\'abus, nous devons en informer l\'administration scolaire.',
+                'pri-h4': '4. Sécurité des données', 'pri-p4': 'La transmission Web n\'est jamais 100% sûre. Utilisez les formulaires à vos risques.',
+                'pri-h5': '5. Liens externes', 'pri-p5': 'Nous ne sommes pas responsables de la confidentialité des sites tiers.'
+            }
+        };
+
+        function updateLang(lang) {
+            sessionStorage.setItem('selectedLang', lang);
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.getAttribute('onclick').includes(`'${lang}'`));
+            });
+            document.querySelectorAll('[data-key]').forEach(el => {
+                const key = el.getAttribute('data-key');
+                if (i18n[lang] && i18n[lang][key]) el.innerText = i18n[lang][key];
+            });
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedLang = sessionStorage.getItem('selectedLang') || 'en';
+            updateLang(savedLang);
+        });
+    </script>
+</body>
+</html>
