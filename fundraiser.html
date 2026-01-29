@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lunar New Year Fundraiser | APSC</title>
+    <link rel="icon" href="apsc_new_logo.ico" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            /* 春节特别版颜色变量 */
+            --brand-blue: #0056D2; /* 用于Logo等通用元素 */
+            --lny-red: #B91C1C;    /* 主题色：高级红 */
+            --lny-bg: #fff5f5;
+            --text-main: #1d1d1f;
+            --text-sub: #6e6e73;
+            --bg-body: #ffffff;
+            --border-color: #f5f5f7;
+            --transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+            scroll-behavior: smooth;
+        }
+
+        /* --- 顶部语言切换 --- */
+        .lang-switcher {
+            background: #fff;
+            padding: 12px 0;
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .lang-btn {
+            background: none; border: none; font-size: 10px; font-weight: 600;
+            letter-spacing: 0.1em; color: var(--text-sub); margin: 0 10px;
+            cursor: pointer; transition: var(--transition);
+        }
+        .lang-btn.active { color: var(--lny-red); font-weight: 700; } 
+
+        /* --- 导航栏 --- */
+        nav {
+            background: rgba(255,255,255,0.9);
+            backdrop-filter: blur(25px);
+            position: sticky; top: 0; z-index: 1000;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .nav-container {
+            max-width: 1300px; margin: 0 auto;
+            display: flex; justify-content: space-between; align-items: center; padding: 12px 40px;
+        }
+        .nav-brand-link img { height: 35px; transition: var(--transition); }
+        .nav-links { display: flex; list-style: none; gap: 20px; align-items: center; } /* Gap稍作调整以容纳更多按钮 */
+        .nav-links a { text-decoration: none; color: var(--text-main); font-size: 13px; font-weight: 500; transition: var(--transition); }
+        .nav-links a:hover { color: var(--lny-red); } 
+        
+        .btn-donate-nav {
+            border: 1px solid var(--lny-red); 
+            padding: 6px 15px; border-radius: 50px;
+            color: var(--lny-red) !important;
+        }
+        .btn-donate-nav:hover { background: var(--lny-red); color: #fff !important; }
+
+        .hamburger { display: none; cursor: pointer; width: 30px; height: 20px; position: relative; z-index: 1001; }
+        .hamburger span { display: block; width: 100%; height: 2px; background-color: var(--text-main); position: absolute; transition: var(--transition); border-radius: 2px; }
+        .hamburger span:nth-child(1) { top: 0; }
+        .hamburger span:nth-child(2) { top: 9px; }
+        .hamburger span:nth-child(3) { top: 18px; }
+        .hamburger.active span:nth-child(1) { transform: rotate(45deg); top: 9px; }
+        .hamburger.active span:nth-child(2) { opacity: 0; }
+        .hamburger.active span:nth-child(3) { transform: rotate(-45deg); top: 9px; }
+
+        /* --- 页面内容 --- */
+        .wrapper { max-width: 1100px; margin: 0 auto; padding: 60px 40px; }
+
+        /* 海报区域 */
+       /* --- 海报区域：已针对竖版（Portrait）优化 --- */
+        .poster-section { 
+            width: 100%; 
+            margin-bottom: 60px; 
+            text-align: center; 
+        }
+        .poster-container {
+            width: 100%; 
+            max-width: 550px; /* 竖版海报不宜过宽，550px 在大屏上视觉效果更好 */
+            margin: 0 auto;
+            border-radius: 20px; 
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(185, 28, 28, 0.15);
+            background: #fdfdfd; 
+            /* 使用常见的竖版比例 2:3，如果你的海报更长，可以改用 1/1.5 或 3/4 */
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+        }
+        .poster-container img { 
+            width: 100%; 
+            height: 100%; 
+            /* object-fit: contain 确保整张海报完整可见，不被裁剪 */
+            /* 如果你确定海报比例完全匹配容器，也可以用 cover */
+            object-fit: contain; 
+            background-color: #fdfdfd;
+        }
+
+    
+        /* 介绍文字 */
+        .intro-text { text-align: center; max-width: 700px; margin: 0 auto 50px; }
+        .page-title { 
+            font-size: 3rem; font-weight: 800; letter-spacing: -0.05em; margin-bottom: 20px; line-height: 1.1; 
+            color: var(--text-main);
+        }
+        .highlight-red { color: var(--lny-red); }
+        .intro-p { color: var(--text-sub); font-size: 1.15rem; }
+
+        /* 信息卡片 */
+        .event-details-card {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 40px;
+            background: #fff;
+            border: 1px solid rgba(185, 28, 28, 0.2);
+            border-left: 6px solid var(--lny-red);
+            border-radius: 12px; padding: 40px; margin-bottom: 80px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+        }
+        .info-group h4 {
+            font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em;
+            color: var(--lny-red); margin-bottom: 10px; font-weight: 700;
+        }
+        .info-group p { font-size: 1.05rem; color: var(--text-main); margin-bottom: 5px; }
+        .info-group .sub { font-size: 0.9rem; color: var(--text-sub); }
+
+        /* 产品展示 */
+        .showcase-header { text-align: center; margin-bottom: 50px; }
+        .showcase-title { font-size: 2rem; font-weight: 700; margin-bottom: 10px; }
+        
+        .product-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 30px;
+        }
+        .product-item {
+            background: #f9f9f9; border-radius: 16px; overflow: hidden; transition: var(--transition);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05); aspect-ratio: 1 / 1; position: relative;
+        }
+        .product-item:hover {
+            transform: translateY(-5px); box-shadow: 0 15px 30px rgba(185, 28, 28, 0.1);
+        }
+        .product-item img {
+            width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease;
+        }
+        .product-item:hover img { transform: scale(1.05); }
+
+        /* --- Footer --- */
+        footer { padding: 80px 0 60px; border-top: 1px solid var(--border-color); text-align: center; background: #fbfbfd; }
+        .social-icons { display: flex; justify-content: center; gap: 30px; margin-bottom: 30px; }
+        .social-icons img { width: 26px; height: 26px; filter: grayscale(1); opacity: 0.5; transition: all 0.4s; }
+        .social-icons a:hover img { filter: grayscale(0); opacity: 1; transform: translateY(-8px) scale(1.2); }
+        .footer-text { font-size: 11px; color: #aaa; letter-spacing: 0.05em; margin-bottom: 15px; }
+        .footer-legal a { font-size: 11px; color: #86868b; text-decoration: none; transition: var(--transition); }
+        .footer-legal a:hover { color: var(--lny-red); text-decoration: underline; }
+
+        @media (max-width: 900px) {
+            .nav-container { padding: 12px 20px; }
+            .event-details-card { grid-template-columns: 1fr; gap: 30px; }
+            .hamburger { display: block; }
+            .nav-links {
+                position: absolute; top: 100%; left: 0; width: 100%; background: rgba(255, 255, 255, 0.98); 
+                backdrop-filter: blur(20px); flex-direction: column; padding: 20px 0; gap: 0; opacity: 0; 
+                transform: translateY(-20px); pointer-events: none; transition: all 0.3s ease;
+            }
+            .nav-links.active { opacity: 1; transform: translateY(0); pointer-events: auto; }
+            .nav-links a { display: block; padding: 18px 0; font-size: 16px; }
+            .poster-container {
+                max-width: 90%; 
+                aspect-ratio: auto; 
+            }
+            .poster-container img {
+                height: auto;
+            }
+            .page-title { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="lang-switcher">
+        <button class="lang-btn active" onclick="updateLang('en')">ENGLISH</button>
+        <button class="lang-btn" onclick="updateLang('zh-hans')">简体中文</button>
+        <button class="lang-btn" onclick="updateLang('zh-hant')">繁體中文</button>
+        <button class="lang-btn" onclick="updateLang('ko')">한국어</button>
+        <button class="lang-btn" onclick="updateLang('ja')">日本語</button>
+        <button class="lang-btn" onclick="updateLang('es')">ESPAÑOL</button>
+        <button class="lang-btn" onclick="updateLang('fr')">FRANÇAIS</button>
+    </div>
+
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="nav-brand-link"><img src="APSC_LOGO.png" alt="APSC Logo"></a>
+            <div class="hamburger" id="hamburger-btn"><span></span><span></span><span></span></div>
+            <ul class="nav-links" id="nav-menu">
+                <li><a href="index.html" data-key="nav-home">Home</a></li>
+                <li><a href="about.html" data-key="nav-about">About</a></li>
+                <li><a href="contact.html" data-key="nav-contact">Contact</a></li>
+                <li><a href="index.html#meeting-section" data-key="nav-meetings">Meetings</a></li>
+                <li><a href="announcements.html" data-key="nav-announcement">Announcements</a></li>
+                <li><a href="support.html" data-key="nav-support">Get Support</a></li>
+                <li><a href="guestbook.html" data-key="nav-feedback">Feedback</a></li>
+                <li><a href="index.html#support" class="btn-donate-nav" data-key="nav-donate">Donate</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="wrapper">
+        
+        <section class="poster-section">
+            <div class="poster-container">
+                <img src="Lunar_New_Year_Decorations_Fundraiser.png" alt="APSC Lunar New Year Fundraiser Poster">
+            </div>
+        </section>
+
+        <section class="intro-text">
+            <h1 class="page-title">
+                <span data-key="hero-line1">Celebrating Tradition,</span><br>
+                <span class="highlight-red" data-key="hero-line2">3D Printed with Love.</span>
+            </h1>
+            <p class="intro-p" data-key="event-intro">
+                We are thrilled to partner with Great Wall Supermarket to bring you unique, student-designed 3D printed souvenirs. Celebrate the Lunar New Year while supporting APSC's mission to empower Asian students.
+            </p>
+        </section>
+
+        <div class="event-details-card">
+            <div class="info-group">
+                <h4 data-key="label-time">DATE & TIME</h4>
+                <p><strong>Feb 6, 2026 (Fri)</strong> <span class="sub">4:00 PM - 7:30 PM</span></p>
+                <p><strong>Feb 7 - 8, 2026 (Sat & Sun)</strong> <span class="sub">10:00 AM - 4:00 PM</span></p>
+            </div>
+            
+            <div class="info-group">
+                <h4 data-key="label-loc">LOCATION</h4>
+                <p data-key="val-loc-name">Outside Great Wall Supermarket</p>
+                <p class="sub">19721 N Frederick Rd, Germantown, MD 20876</p>
+                
+                <h4 data-key="label-pay" style="margin-top: 20px;">PAYMENT METHODS</h4>
+                <p data-key="val-pay">Cash & Digital Payments Accepted</p>
+            </div>
+        </div>
+
+        <section>
+            <div class="showcase-header">
+                <h2 class="showcase-title" data-key="showcase-h">Design Showcase</h2>
+                <p style="color:var(--text-sub)" data-key="showcase-sub">Exclusive designs printed by APSC members.</p>
+            </div>
+
+            <div class="product-grid">
+                <div class="product-item"><img src="temp.JPG" alt="Product 1"></div>
+                <div class="product-item"><img src="temp 2.JPG" alt="Product 2"></div>
+                <div class="product-item"><img src="temp 3.JPG" alt="Product 3"></div>
+                <div class="product-item"><img src="temp 4.JPG" alt="Product 4"></div>
+                <div class="product-item"><img src="temp 5.JPG" alt="Product 5"></div>
+                <div class="product-item"><img src="temp 6.JPG" alt="Product 6"></div>
+                <div class="product-item"><img src="temp 7.JPG" alt="Product 7"></div>
+                <div class="product-item"><img src="temp 8.JPG" alt="Product 8"></div>
+                <div class="product-item"><img src="temp 9.JPG" alt="Product 9"></div>
+                <div class="product-item"><img src="temp 10.JPG" alt="Product 10"></div>
+                <div class="product-item"><img src="temp 11.JPG" alt="Product 11"></div>
+                <div class="product-item"><img src="temp 12.JPG" alt="Product 12"></div>
+                <div class="product-item"><img src="temp 13.JPG" alt="Product 13"></div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <div class="social-icons">
+            <a href="https://www.instagram.com/apsc_chs/" target="_blank"><img src="instagram_icon.png" alt="Instagram"></a>
+            <a href="https://www.tiktok.com/@asian.peer.support.club" target="_blank"><img src="tiktok_icon.png" alt="TikTok"></a>
+            <a href="https://youtube.com/@asianpeersupportclub" target="_blank"><img src="youtube_icon.png" alt="YouTube"></a>
+            <a href="https://www.facebook.com/share/1JPeJSg5Lu/" target="_blank"><img src="facebook_icon.png" alt="Facebook"></a>
+        </div>
+        <p class="footer-text">© 2026 ASIAN PEER SUPPORT CLUB | CLARKSBURG HIGH SCHOOL</p>
+        <div class="footer-legal">
+            <a href="Privacy_Policy.html" data-key="nav-privacy">Privacy Policy</a>
+            <span class="separator">|</span>
+            <a href="Terms_of_Use.html" data-key="nav-terms">Terms of Use</a>
+        </div>
+    </footer>
+
+    <script>
+        // 1. 汉堡菜单逻辑
+        const hamburger = document.getElementById('hamburger-btn');
+        const navMenu = document.getElementById('nav-menu');
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+
+        // 2. 多语言内容库 (已补全导航栏和标题翻译)
+        const i18n = {
+            'en': {
+                'nav-home': 'Home', 'nav-about': 'About', 'nav-contact': 'Contact', 'nav-announcement': 'Announcements', 'nav-meetings': 'Meetings', 'nav-support': 'Get Support', 'nav-feedback': 'Feedback', 'nav-donate': 'Donate', 'nav-privacy': 'Privacy Policy', 'nav-terms': 'Terms of Use',
+                'hero-line1': 'Celebrating Tradition,',
+                'hero-line2': '3D Printed with Love.',
+                'event-intro': 'We are thrilled to partner with Great Wall Supermarket to bring you unique, student-designed 3D printed souvenirs. Celebrate the Lunar New Year while supporting APSC\'s mission.',
+                'label-time': 'DATE & TIME', 'label-loc': 'LOCATION', 'label-pay': 'PAYMENT METHODS',
+                'val-loc-name': 'Outside Great Wall Supermarket',
+                'val-pay': 'Cash & Digital Payments Accepted',
+                'showcase-h': 'Design Showcase', 'showcase-sub': 'Exclusive designs printed by APSC members.'
+            },
+            'zh-hans': {
+                'nav-home': '首页', 'nav-about': '关于我们', 'nav-contact': '联系我们', 'nav-announcement': '公告通知', 'nav-meetings': '会议安排', 'nav-support': '获取支持', 'nav-feedback': '反馈', 'nav-donate': '捐赠支持', 'nav-privacy': '隐私政策', 'nav-terms': '使用条款',
+                'hero-line1': '传承传统，',
+                'hero-line2': '3D 打印，用爱呈现。',
+                'event-intro': '我们很高兴能与大中华超市（Great Wall Supermarket）合作，为您带来学生设计的独特 3D 打印纪念品。在庆祝农历新年的同时，支持 APSC 的社团使命。',
+                'label-time': '日期与时间', 'label-loc': '地点', 'label-pay': '支付方式',
+                'val-loc-name': '大中华超市门外 (Germantown)',
+                'val-pay': '接受现金及电子支付',
+                'showcase-h': '产品展示', 'showcase-sub': 'APSC 成员独家设计与制作'
+            },
+            'zh-hant': {
+                'nav-home': '首頁', 'nav-about': '關於我們', 'nav-contact': '聯絡我們', 'nav-announcement': '公告通知', 'nav-meetings': '會議安排', 'nav-support': '獲取支持', 'nav-feedback': '回饋', 'nav-donate': '捐贈支持', 'nav-privacy': '隱私政策', 'nav-terms': '使用條款',
+                'hero-line1': '傳承傳統，',
+                'hero-line2': '3D 列印，用愛呈現。',
+                'event-intro': '我們很高興能與大中華超市（Great Wall Supermarket）合作，為您帶來學生設計的獨特 3D 列印紀念品。在慶祝農歷新年的同時，支持 APSC 的社團使命。',
+                'label-time': '日期與時間', 'label-loc': '地點', 'label-pay': '支付方式',
+                'val-loc-name': '大中華超市門外 (Germantown)',
+                'val-pay': '接受現金及電子支付',
+                'showcase-h': '產品展示', 'showcase-sub': 'APSC 成員獨家設計與制作'
+            },
+            'ko': {
+                'nav-home': '홈', 'nav-about': '정보', 'nav-contact': '문의', 'nav-announcement': '공지사항', 'nav-meetings': '회의', 'nav-support': '지원 받기', 'nav-feedback': '피드백', 'nav-donate': '기부', 'nav-privacy': '개인정보', 'nav-terms': '이용약관',
+                'hero-line1': '전통을 기리며,',
+                'hero-line2': '사랑으로 만든 3D 프린팅.',
+                'event-intro': 'Great Wall Supermarket과 협력하여 학생이 직접 디자인한 독특한 3D 프린팅 기념품을 선보이게 되어 기쁩니다. 설날을 기념하며 APSC를 지원해 주세요.',
+                'label-time': '일시', 'label-loc': '장소', 'label-pay': '결제 방법',
+                'val-loc-name': 'Great Wall Supermarket 외부',
+                'val-pay': '현금 및 디지털 결제 가능',
+                'showcase-h': '디자인 쇼케이스', 'showcase-sub': 'APSC 회원이 제작한 독점 디자인'
+            },
+            'ja': {
+                'nav-home': 'ホーム', 'nav-about': '詳細', 'nav-contact': 'お問い合わせ', 'nav-announcement': 'お知らせ', 'nav-meetings': '会議', 'nav-support': 'サポート', 'nav-feedback': '感想', 'nav-donate': '寄付', 'nav-privacy': 'プライバシー', 'nav-terms': '利用規約',
+                'hero-line1': '伝統を祝い、',
+                'hero-line2': '愛を込めた3Dプリント。',
+                'event-intro': 'Great Wall Supermarketと協力し、学生がデザインしたユニークな3Dプリント記念品をお届けします。旧正月を祝いながら、APSCの活動をご支援ください。',
+                'label-time': '日時', 'label-loc': '場所', 'label-pay': '支払い方法',
+                'val-loc-name': 'Great Wall Supermarket 屋外',
+                'val-pay': '現金および電子決済に対応',
+                'showcase-h': '作品紹介', 'showcase-sub': 'APSCメンバーによる限定デザイン'
+            },
+            'es': {
+                'nav-home': 'Inicio', 'nav-about': 'Acerca de', 'nav-contact': 'Contacto', 'nav-announcement': 'Anuncios', 'nav-meetings': 'Reuniones', 'nav-support': 'Apoyo', 'nav-feedback': 'Comentarios', 'nav-donate': 'Donar', 'nav-privacy': 'Privacidad', 'nav-terms': 'Términos',
+                'hero-line1': 'Celebrando la Tradición,',
+                'hero-line2': 'Impreso en 3D con Amor.',
+                'event-intro': 'Estamos encantados de asociarnos con Great Wall Supermarket para traerles recuerdos únicos impresos en 3D. Celebre el Año Nuevo Lunar apoyando a APSC.',
+                'label-time': 'FECHA Y HORA', 'label-loc': 'UBICACIÓN', 'label-pay': 'MÉTODOS DE PAGO',
+                'val-loc-name': 'Afuera de Great Wall Supermarket',
+                'val-pay': 'Efectivo y Pagos Digitales',
+                'showcase-h': 'Galería de Diseños', 'showcase-sub': 'Diseños exclusivos de APSC'
+            },
+            'fr': {
+                'nav-home': 'Accueil', 'nav-about': 'À propos', 'nav-contact': 'Contact', 'nav-announcement': 'Annonces', 'nav-meetings': 'Réunions', 'nav-support': 'Soutien', 'nav-feedback': 'Avis', 'nav-donate': 'Donner', 'nav-privacy': 'Confidentialité', 'nav-terms': 'Conditions',
+                'hero-line1': 'Célébrer la Tradition,',
+                'hero-line2': 'Imprimé en 3D avec Amour.',
+                'event-intro': 'Nous sommes ravis de nous associer au supermarché Great Wall pour vous proposer des souvenirs uniques imprimés en 3D. Célébrez le Nouvel An lunaire avec APSC.',
+                'label-time': 'DATE ET HEURE', 'label-loc': 'LIEU', 'label-pay': 'PAIEMENT',
+                'val-loc-name': 'À l\'extérieur du Great Wall Supermarket',
+                'val-pay': 'Espèces et paiements numériques',
+                'showcase-h': 'Vitrine de Produits', 'showcase-sub': 'Modèles exclusifs des membres APSC'
+            }
+        };
+
+        // 3. 语言切换逻辑
+        function updateLang(lang) {
+            sessionStorage.setItem('selectedLang', lang);
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                if (btn.getAttribute('onclick').includes(`'${lang}'`)) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+            document.querySelectorAll('[data-key]').forEach(el => {
+                const key = el.getAttribute('data-key');
+                if (i18n[lang] && i18n[lang][key]) {
+                    // 如果内容包含HTML标签（如<br>），建议使用innerHTML，但这里纯文本足够安全
+                    el.innerText = i18n[lang][key];
+                }
+            });
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedLang = sessionStorage.getItem('selectedLang');
+            if (savedLang) {
+                updateLang(savedLang);
+            }
+        });
+    </script>
+</body>
+</html>
