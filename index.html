@@ -124,6 +124,10 @@
 
         /* --- Footer --- */
         footer { padding: 80px 0 60px; border-top: 1px solid var(--border-color); text-align: center; }
+         .footer-legal { display: flex; justify-content: center; gap: 20px; }
+        .footer-legal a { font-size: 11px; color: #86868b; text-decoration: none; transition: var(--transition); }
+        .footer-legal a:hover { color: var(--brand-blue); text-decoration: underline; }
+
         .social-icons { display: flex; justify-content: center; gap: 30px; margin-bottom: 30px; }
         .social-icons img { width: 26px; filter: grayscale(1); opacity: 0.5; transition: 0.3s; }
         .social-icons a:hover img { filter: grayscale(0); opacity: 1; transform: translateY(-5px); }
@@ -234,14 +238,18 @@
         </section>
     </main>
 
-    <footer>
+   <footer>
         <div class="social-icons">
             <a href="https://www.instagram.com/apsc_chs/" target="_blank"><img src="instagram_icon.png" alt="Instagram"></a>
             <a href="https://www.tiktok.com/@asian.peer.support.club" target="_blank"><img src="tiktok_icon.png" alt="TikTok"></a>
             <a href="https://youtube.com/@asianpeersupportclub" target="_blank"><img src="youtube_icon.png" alt="YouTube"></a>
             <a href="https://www.facebook.com/share/1JPeJSg5Lu/" target="_blank"><img src="facebook_icon.png" alt="Facebook"></a>
         </div>
-        <p class="footer-text" data-key="footer-cp">© 2026 ASIAN PEER SUPPORT CLUB | CLARKSBURG HIGH SCHOOL</p>
+        <p class="footer-text">© 2026 ASIAN PEER SUPPORT CLUB | CLARKSBURG HIGH SCHOOL</p>
+        <div class="footer-legal">
+            <a href="Privacy_Policy.html" data-key="nav-privacy">Privacy Policy</a>
+            <a href="Terms_of_Use.html" data-key="nav-terms">Terms of Use</a>
+        </div>
     </footer>
 
     <script>
