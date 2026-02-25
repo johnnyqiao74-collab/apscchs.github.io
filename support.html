@@ -79,6 +79,18 @@
         .form-input, .form-select, .form-textarea { width: 100%; padding: 12px 16px; border-radius: 12px; border: 1px solid var(--border-color); font-family: inherit; outline: none; transition: var(--transition); }
         .form-input:focus, .form-textarea:focus { border-color: var(--brand-blue); box-shadow: 0 0 0 4px rgba(0,86,210,0.1); }
 
+        /* --- 自定义复选框样式 --- */
+        .checkbox-group { display: flex; align-items: flex-start; margin-bottom: 25px; }
+        .checkbox-container { display: flex; align-items: flex-start; cursor: pointer; font-size: 0.85rem; color: var(--text-sub); user-select: none; line-height: 1.5; position: relative; }
+        .checkbox-container input { position: absolute; opacity: 0; cursor: pointer; height: 0; width: 0; }
+        .checkmark { display: inline-block; width: 18px; height: 18px; background-color: #fff; border: 2px solid #d2d2d7; border-radius: 5px; margin-right: 12px; margin-top: 1px; position: relative; transition: var(--transition); flex-shrink: 0; }
+        .checkbox-container:hover input ~ .checkmark { border-color: var(--brand-blue); }
+        .checkbox-container input:checked ~ .checkmark { background-color: var(--brand-blue); border-color: var(--brand-blue); }
+        .checkmark:after { content: ""; position: absolute; display: none; left: 5px; top: 2px; width: 4px; height: 8px; border: solid white; border-width: 0 2px 2px 0; transform: rotate(45deg); }
+        .checkbox-container input:checked ~ .checkmark:after { display: block; }
+        .agree-text a { color: var(--brand-blue); text-decoration: none; font-weight: 500; transition: var(--transition); }
+        .agree-text a:hover { text-decoration: underline; }
+
         .btn-submit { width: 100%; padding: 14px; background: var(--brand-blue); color: #fff; border: none; border-radius: 12px; font-weight: 600; cursor: pointer; transition: var(--transition); }
         .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,86,210,0.2); }
         .btn-submit:disabled { background: #ccc; cursor: not-allowed; transform: none; box-shadow: none; }
@@ -178,6 +190,17 @@
                     <label class="form-label" data-key="lbl-msg">How can we help?</label>
                     <textarea name="message" id="msgInput" class="form-textarea" placeholder="Tell us what's going on..."></textarea>
                 </div>
+
+                <div class="form-group checkbox-group">
+                    <label class="checkbox-container">
+                        <input type="checkbox" name="agree_terms" required>
+                        <span class="checkmark"></span>
+                        <span class="agree-text" data-key="lbl-agree">
+                            I have read and agree to the <a href="Privacy_Policy.html" target="_blank">Privacy Policy</a> and <a href="Terms_of_Use.html" target="_blank">Terms of Use</a>.
+                        </span>
+                    </label>
+                </div>
+
                 <button type="submit" id="submitBtn" class="btn-submit" data-key="btn-send">Send Request</button>
             </form>
         </div>
@@ -185,7 +208,6 @@
         <div class="resources-section">
             <h2 style="margin-bottom: 25px;" data-key="res-title">External Resources</h2>
         
-
             <div class="resource-card" style="cursor: default;">
                 <span class="res-name" data-key="res-hotline">National Crisis Hotline</span>
                 <span class="res-contact">9-8-8</span>
@@ -228,7 +250,6 @@
         });
 
         // --- Google Sheet 提交处理 ---
-        // 请在此替换为你自己的 Web App URL
         const scriptURL = 'https://script.google.com/macros/s/AKfycbyriovgPxileMH1c0rvibtn6StREWTqYAUcOPuBVnvMLzLQwnFem6a-vc32oVBzqJMuMg/exec'; 
         const form = document.getElementById('supportForm');
         const submitBtn = document.getElementById('submitBtn');
@@ -267,7 +288,8 @@
                 'lbl-name': 'Name (Optional)', 'lbl-contact': 'Contact Info (Email/Phone)', 'lbl-type': 'Type of Support', 'lbl-msg': 'How can we help?',
                 'ph-name': 'Your name', 'ph-contact': 'How can we reach you?', 'ph-msg': 'Tell us what\'s going on...',
                 'opt-academic': 'Academic Support', 'opt-social': 'Social Support', 'opt-mental': 'Emotional Support', 'opt-other': 'Other',
-                'btn-send': 'Send Request', 'res-title': 'External Resources', 'res-bullying': 'CHS Bullying & Harassment Reporting', 'res-link': 'Visit Site →', 'res-hotline': 'National Crisis Hotline', 'res-mfjc': 'Montgomery Family Justice Center'
+                'btn-send': 'Send Request', 'res-title': 'External Resources', 'res-bullying': 'CHS Bullying & Harassment Reporting', 'res-link': 'Visit Site →', 'res-hotline': 'National Crisis Hotline', 'res-mfjc': 'Montgomery Family Justice Center',
+                'lbl-agree': 'I have read and agree to the <a href="Privacy_Policy.html" target="_blank">Privacy Policy</a> and <a href="Terms_of_Use.html" target="_blank">Terms of Use</a>.'
             },
             'zh-hans': {
                 'nav-home': '首页', 'nav-about': '关于我们', 'nav-meetings': '会议安排', 'nav-support': '获取帮助', 'nav-ann': '公告通知', 'nav-feedback': '反馈', 'nav-contact': '联系我们', 'nav-donate': '捐赠支持', 'nav-privacy': '隐私政策', 'nav-terms': '使用条款',
@@ -276,7 +298,8 @@
                 'lbl-name': '姓名 (可选)', 'lbl-contact': '联系方式 (邮箱/电话)', 'lbl-type': '帮助类型', 'lbl-msg': '我们需要如何帮助你？',
                 'ph-name': '你的姓名', 'ph-contact': '如何联系你？', 'ph-msg': '请告诉我们发生了什么...',
                 'opt-academic': '学业支持', 'opt-social': '社交支持', 'opt-mental': '情感支持', 'opt-other': '其他',
-                'btn-send': '发送请求', 'res-title': '外部资源', 'res-bullying': 'CHS 霸凌和骚扰投诉页面', 'res-link': '访问官网 →', 'res-hotline': '国家危机热线', 'res-mfjc': '蒙哥马利家庭司法中心'
+                'btn-send': '发送请求', 'res-title': '外部资源', 'res-bullying': 'CHS 霸凌和骚扰投诉页面', 'res-link': '访问官网 →', 'res-hotline': '国家危机热线', 'res-mfjc': '蒙哥马利家庭司法中心',
+                'lbl-agree': '我已阅读并同意 <a href="Privacy_Policy.html" target="_blank">隐私政策</a> 和 <a href="Terms_of_Use.html" target="_blank">使用条款</a>。'
             },
             'zh-hant': {
                 'nav-home': '首頁', 'nav-about': '關於我們', 'nav-meetings': '會議安排', 'nav-support': '獲取幫助', 'nav-ann': '公告通知', 'nav-feedback': '回饋', 'nav-contact': '聯繫我們', 'nav-donate': '捐贈支持', 'nav-privacy': '隱私政策', 'nav-terms': '使用條款',
@@ -285,7 +308,8 @@
                 'lbl-name': '姓名 (可選)', 'lbl-contact': '聯繫方式 (郵箱/電話)', 'lbl-type': '幫助類型', 'lbl-msg': '我們需要如何幫助你？',
                 'ph-name': '你的姓名', 'ph-contact': '如何聯繫你？', 'ph-msg': '請告訴我們發生了什麼...',
                 'opt-academic': '學業支持', 'opt-social': '社交支持', 'opt-mental': '情感支持', 'opt-other': '其他',
-                'btn-send': '發送請求', 'res-title': '外部資源', 'res-bullying': 'CHS 霸凌和騷擾投訴頁面', 'res-link': '訪問官網 →', 'res-hotline': '國家危機熱線', 'res-mfjc': '蒙哥馬利家庭司法中心'
+                'btn-send': '發送請求', 'res-title': '外部資源', 'res-bullying': 'CHS 霸凌和騷擾投訴頁面', 'res-link': '訪問官網 →', 'res-hotline': '國家危機熱線', 'res-mfjc': '蒙哥馬利家庭司法中心',
+                'lbl-agree': '我已閱讀並同意 <a href="Privacy_Policy.html" target="_blank">隱私政策</a> 和 <a href="Terms_of_Use.html" target="_blank">使用條款</a>。'
             },
             'ko': {
                 'nav-home': '홈', 'nav-about': '소개', 'nav-meetings': '회의', 'nav-support': '지원 받기', 'nav-ann': '공지사항', 'nav-feedback': '피드백', 'nav-contact': '문의하기', 'nav-donate': '기부하기', 'nav-privacy': '개인정보처리방침', 'nav-terms': '이용약관',
@@ -294,7 +318,8 @@
                 'lbl-name': '이름 (선택 사항)', 'lbl-contact': '연락처 정보 (이메일/전화)', 'lbl-type': '지원 유형', 'lbl-msg': '어떻게 도와드릴까요?',
                 'ph-name': '당신의 이름', 'ph-contact': '어떻게 연락할 수 있나요?', 'ph-msg': '무슨 일이 일어나고 있는지 알려주세요...',
                 'opt-academic': '학업 지원', 'opt-social': '사회적 지원', 'opt-mental': '정서적 지원', 'opt-other': '기타',
-                'btn-send': '요청 보내기', 'res-title': '외부 자원', 'res-bullying': 'CHS 괴롭힘 및 괴롭힘 신고', 'res-link': '사이트 방문 →', 'res-hotline': '국가 위기 핫라인', 'res-mfjc': '몬트고메리 가족 사법 센터'
+                'btn-send': '요청 보내기', 'res-title': '외부 자원', 'res-bullying': 'CHS 괴롭힘 및 괴롭힘 신고', 'res-link': '사이트 방문 →', 'res-hotline': '국가 위기 핫라인', 'res-mfjc': '몬트고메리 가족 사법 센터',
+                'lbl-agree': '<a href="Privacy_Policy.html" target="_blank">개인정보처리방침</a> 및 <a href="Terms_of_Use.html" target="_blank">이용약관</a>을 읽고 이에 동의합니다.'
             },
             'ja': {
                 'nav-home': 'ホーム', 'nav-about': '私たちについて', 'nav-meetings': '会議', 'nav-support': 'サポートを受ける', 'nav-ann': 'お知らせ', 'nav-feedback': 'フィードバック', 'nav-contact': 'お問い合わせ', 'nav-donate': '寄付する', 'nav-privacy': 'プライバシーポリシー', 'nav-terms': '利用規約',
@@ -303,7 +328,8 @@
                 'lbl-name': '名前（任意）', 'lbl-contact': '連絡先情報（メール/電話）', 'lbl-type': 'サポートの種類', 'lbl-msg': 'どのようにお手伝いできますか？',
                 'ph-name': 'あなたの名前', 'ph-contact': 'どのように連絡できますか？', 'ph-msg': '何が起こっているのか教えてください...',
                 'opt-academic': '学業サポート', 'opt-social': '社会的サポート', 'opt-mental': '感情的サポート', 'opt-other': 'その他',
-                'btn-send': 'リクエストを送信', 'res-title': '外部リソース', 'res-bullying': 'CHS いじめ・嫌がらせの報告', 'res-link': 'サイトを訪問 →', 'res-hotline': '全国危機ホットライン', 'res-mfjc': 'モンゴメリー家族司法センター'
+                'btn-send': 'リクエストを送信', 'res-title': '外部リソース', 'res-bullying': 'CHS いじめ・嫌がらせの報告', 'res-link': 'サイトを訪問 →', 'res-hotline': '全国危機ホットライン', 'res-mfjc': 'モンゴメリー家族司法センター',
+                'lbl-agree': '<a href="Privacy_Policy.html" target="_blank">プライバシーポリシー</a> と <a href="Terms_of_Use.html" target="_blank">利用規約</a> を読み、これに同意します。'
             },
             'es': {
                 'nav-home': 'Inicio', 'nav-about': 'Acerca de', 'nav-meetings': 'Reuniones', 'nav-support': 'Obtener Apoyo', 'nav-ann': 'Anuncios', 'nav-feedback': 'Comentarios', 'nav-contact': 'Contacto', 'nav-donate': 'Donar', 'nav-privacy': 'Política de Privacidad', 'nav-terms': 'Términos de Uso',
@@ -312,7 +338,8 @@
                 'lbl-name': 'Nombre (Opcional)', 'lbl-contact': 'Información de Contacto (Correo/Teléfono)', 'lbl-type': 'Tipo de Apoyo', 'lbl-msg': '¿Cómo podemos ayudarte?',
                 'ph-name': 'Tu nombre', 'ph-contact': '¿Cómo podemos contactarte?', 'ph-msg': 'Cuéntanos qué está pasando...',
                 'opt-academic': 'Apoyo Académico', 'opt-social': 'Apoyo Social', 'opt-mental': 'Apoyo Emocional', 'opt-other': 'Otro',
-                'btn-send': 'Enviar Solicitud', 'res-title': 'Recursos Externos', 'res-bullying': 'Reporte de Acoso Escolar y Hostigamiento', 'res-link': 'Visitar Sitio →', 'res-hotline': 'Línea Directa Nacional de Crisis', 'res-mfjc': 'Centro de Justicia Familiar de Montgomery'
+                'btn-send': 'Enviar Solicitud', 'res-title': 'Recursos Externos', 'res-bullying': 'Reporte de Acoso Escolar y Hostigamiento', 'res-link': 'Visitar Sitio →', 'res-hotline': 'Línea Directa Nacional de Crisis', 'res-mfjc': 'Centro de Justicia Familiar de Montgomery',
+                'lbl-agree': 'He leído y acepto la <a href="Privacy_Policy.html" target="_blank">Política de Privacidad</a> y los <a href="Terms_of_Use.html" target="_blank">Términos de Uso</a>.'
             },
             'fr': {
                 'nav-home': 'Accueil', 'nav-about': 'À propos', 'nav-meetings': 'Réunions', 'nav-support': 'Obtenir de l\'aide', 'nav-ann': 'Annonces', 'nav-feedback': 'Feedback', 'nav-contact': 'Contact', 'nav-donate': 'Faire un don', 'nav-privacy': 'Confidentialité', 'nav-terms': 'Conditions d\'utilisation',
@@ -321,7 +348,8 @@
                 'lbl-name': 'Nom (Optionnel)', 'lbl-contact': 'Infos de contact', 'lbl-type': 'Type de soutien', 'lbl-msg': 'Comment pouvons-nous vous aider ?',
                 'ph-name': 'Votre nom', 'ph-contact': 'Comment vous joindre ?', 'ph-msg': 'Dites-nous tout...',
                 'opt-academic': 'Soutien académique', 'opt-social': 'Soutien social', 'opt-mental': 'Soutien émotionnel', 'opt-other': 'Autre',
-                'btn-send': 'Envoyer', 'res-title': 'Ressources externes', 'res-bullying': 'Signalement de harcèlement', 'res-link': 'Visiter le site →', 'res-hotline': 'Ligne de crise nationale', 'res-mfjc': 'Centre de justice familiale de Montgomery'
+                'btn-send': 'Envoyer', 'res-title': 'Ressources externes', 'res-bullying': 'Signalement de harcèlement', 'res-link': 'Visiter le site →', 'res-hotline': 'Ligne de crise nationale', 'res-mfjc': 'Centre de justice familiale de Montgomery',
+                'lbl-agree': 'J\'ai lu et j\'accepte la <a href="Privacy_Policy.html" target="_blank">Politique de confidentialité</a> et les <a href="Terms_of_Use.html" target="_blank">Conditions d\'utilisation</a>.'
             }
         };
 
@@ -333,10 +361,10 @@
                 btn.classList.toggle('active', btn.getAttribute('onclick').includes(`'${lang}'`));
             });
 
-            // 更新文本内容
+            // 更新文本内容：这里将 innerText 换成了 innerHTML，使得带有 <a> 标签的文本能被正确解析
             document.querySelectorAll('[data-key]').forEach(el => {
                 const key = el.getAttribute('data-key');
-                if (i18n[lang] && i18n[lang][key]) el.innerText = i18n[lang][key];
+                if (i18n[lang] && i18n[lang][key]) el.innerHTML = i18n[lang][key];
             });
 
             // 更新 Placeholder
