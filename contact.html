@@ -144,6 +144,7 @@
                 <li><a href="index.html" data-key="nav-home">Home</a></li>
                 <li><a href="about.html" data-key="nav-about">About</a></li>
                 <li><a href="contact.html" data-key="nav-contact" style="color: var(--brand-blue);">Contact</a></li>
+                <li><a href="events.html" data-key="nav-events">Events</a></li>
                 <li><a href="index.html#meeting-section" data-key="nav-meetings">Meetings</a></li>
                 <li><a href="announcements.html" data-key="nav-announcement">Announcements</a></li>
                 <li><a href="support.html" data-key="nav-support">Get Support</a></li>
@@ -251,37 +252,37 @@
     // 2. 翻译字典 (保持你原有的内容，这里只列出结构)
     const i18n = {
         'en': {
-            'nav-home': 'Home', 'nav-about': 'About', 'nav-support': 'Get Support', 'nav-feedback': 'Feedback', 'nav-contact': 'Contact', 'nav-meetings': 'Meetings', 'nav-announcement': 'Announcements', 'nav-donate': 'Donate', 'nav-privacy': 'Privacy Policy', 'nav-terms': 'Terms of Use',
+            'nav-home': 'Home', 'nav-about': 'About', 'nav-support': 'Get Support', 'nav-feedback': 'Feedback', 'nav-contact': 'Contact', 'nav-meetings': 'Meetings', 'nav-announcement': 'Announcements', 'nav-donate': 'Donate', 'nav-privacy': 'Privacy Policy', 'nav-terms': 'Terms of Use', 'nav-events': 'Events',
             'con-title': 'Contact Us', 'con-sub': 'We look forward to hearing from you!', 'tag-email': 'Email Directory', 'tag-phone': 'Phone', 'tag-social': 'Instant Messaging',
             'con-direct': 'Direct Line:', 'con-wechat': 'WeChat IDs:', 'wechat_official': 'APSC Official:',
         },
         'zh-hans': {
-            'nav-home': '首页', 'nav-about': '关于我们', 'nav-support': '获取支持', 'nav-feedback': '反馈', 'nav-contact': '联系我们', 'nav-meetings': '会议安排', 'nav-announcement': '公告通知', 'nav-donate': '捐赠支持', 'nav-privacy': '隐私政策', 'nav-terms': '使用条款',
+            'nav-home': '首页', 'nav-about': '关于我们', 'nav-support': '获取支持', 'nav-feedback': '反馈', 'nav-contact': '联系我们', 'nav-meetings': '会议安排', 'nav-announcement': '公告通知', 'nav-donate': '捐赠支持', 'nav-privacy': '隐私政策', 'nav-terms': '使用条款', 'nav-events': '活动展示',
             'con-title': '联系我们', 'con-sub': '期待您的来信！', 'tag-email': '邮箱列表', 'tag-phone': '电话', 'tag-social': '即时通讯',
             'con-direct': '直拨电话:', 'con-wechat': '微信 ID:', 'wechat_official': 'APSC 官方：',
         },
         'zh-hant': {
-            'nav-home': '首頁', 'nav-about': '關於我們', 'nav-support': '獲取支持', 'nav-feedback': '回饋', 'nav-contact': '聯繫我們', 'nav-meetings': '會議安排', 'nav-announcement':'公告通知', 'nav-donate': '捐贈支持',  'nav-privacy': '隱私政策', 'nav-terms': '使用條款',
+            'nav-home': '首頁', 'nav-about': '關於我們', 'nav-support': '獲取支持', 'nav-feedback': '回饋', 'nav-contact': '聯繫我們', 'nav-meetings': '會議安排', 'nav-announcement':'公告通知', 'nav-donate': '捐贈支持',  'nav-privacy': '隱私政策', 'nav-terms': '使用條款', 'nav-events': '活動展示',
             'con-title': '聯繫我們', 'con-sub': '期待您的來信！', 'tag-email': '郵箱列表', 'tag-phone': '電話', 'tag-social': '即時通訊',
             'con-direct': '直撥電話:', 'con-wechat': '微信 ID:', 'wechat_official': 'APSC 官方：',
         },
         'ko': {
-            'nav-home': '홈', 'nav-about': '정보', 'nav-support': '지원 받기', 'nav-feedback': '피드백', 'nav-contact': '연락처', 'nav-meetings': '회의', 'nav-announcement':'공지사항','nav-donate': '기부','nav-privacy':'개인정보','nav-terms':'이용약관',
+            'nav-home': '홈', 'nav-about': '정보', 'nav-support': '지원 받기', 'nav-feedback': '피드백', 'nav-contact': '연락처', 'nav-meetings': '회의', 'nav-announcement':'공지사항','nav-donate': '기부','nav-privacy':'개인정보','nav-terms':'이용약관', 'nav-events': '이벤트',
             'con-title': '문의하기', 'con-sub': '여러분의 의견을 기다립니다!', 'tag-email': '이메일 디렉토리', 'tag-phone': '전화', 'tag-social': '인스턴트 메시징',
             'con-direct': '직통 전화:', 'con-wechat': 'WeChat ID:', 'wechat_official': 'APSC 공식:'
         },
         'ja': {
-            'nav-home': 'ホーム', 'nav-about': '詳細',  'nav-support': 'サポートを受ける', 'nav-feedback': '感想', 'nav-contact': '連絡先', 'nav-meetings': '会議', 'nav-announcement': '公告通知', 'nav-donate': '寄付', 'nav-privacy': 'ポリシー', 'nav-terms': '規約',
+            'nav-home': 'ホーム', 'nav-about': '詳細',  'nav-support': 'サポートを受ける', 'nav-feedback': '感想', 'nav-contact': '連絡先', 'nav-meetings': '会議', 'nav-announcement': '公告通知', 'nav-donate': '寄付', 'nav-privacy': 'ポリシー', 'nav-terms': '規約', 'nav-events': 'イベント',
             'con-title': 'お問い合わせ', 'con-sub': 'ご連絡をお待ちしております！', 'tag-email': 'メール一覧', 'tag-phone': '電話', 'tag-social': 'インスタントメッセージ',
             'con-direct': '直通電話:', 'con-wechat': 'WeChat ID:', 'wechat_official': 'APSC 公式:'
         },
         'es': {
-            'nav-home': 'Inicio', 'nav-about': 'Acerca de',  'nav-support': 'Obtener apoyo', 'nav-feedback': 'Comentarios', 'nav-contact': 'Contacto', 'nav-meetings': 'Reuniones', 'nav-announcement': 'Anuncios', 'nav-donate': 'Donar', 'nav-privacy': 'Privacidad', 'nav-terms': 'Términos',
+            'nav-home': 'Inicio', 'nav-about': 'Acerca de',  'nav-support': 'Obtener apoyo', 'nav-feedback': 'Comentarios', 'nav-contact': 'Contacto', 'nav-meetings': 'Reuniones', 'nav-announcement': 'Anuncios', 'nav-donate': 'Donar', 'nav-privacy': 'Privacidad', 'nav-terms': 'Términos', 'nav-events': 'Eventos',
             'con-title': 'Contáctenos', 'con-sub': '¡Esperamos saber de usted!', 'tag-email': 'Directorio de Email', 'tag-phone': 'Teléfono', 'tag-social': 'Mensajería Inst.',
             'con-direct': 'Línea Directa:', 'con-wechat': 'IDs de WeChat:', 'wechat_official': 'APSC Oficial:'
         },
         'fr': {
-            'nav-home': 'Accueil', 'nav-about': 'À propos', 'nav-support': 'Obtenir du soutien', 'nav-feedback': 'Avis', 'nav-contact': 'Contact', 'nav-meetings': 'Réunions', 'nav-announcement': 'Annonces', 'nav-donate': 'Donner', 'nav-privacy': 'Confidentialité', 'nav-terms': 'Conditions',
+            'nav-home': 'Accueil', 'nav-about': 'À propos', 'nav-support': 'Obtenir du soutien', 'nav-feedback': 'Avis', 'nav-contact': 'Contact', 'nav-meetings': 'Réunions', 'nav-announcement': 'Annonces', 'nav-donate': 'Donner', 'nav-privacy': 'Confidentialité', 'nav-terms': 'Conditions', 'nav-events': 'Événements',
             'con-title': 'Contactez-nous', 'con-sub': 'Nous avons hâte de vous entendre !', 'tag-email': 'Répertoire Email', 'tag-phone': 'Téléphone', 'tag-social': 'Messagerie Inst.',
             'con-direct': 'Ligne Directe:', 'con-wechat': 'IDs WeChat:', 'wechat_official': 'APSC Officiel:'
         }

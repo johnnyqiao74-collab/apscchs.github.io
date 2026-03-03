@@ -94,10 +94,9 @@
         /* --- 栅格部分 (Hanzi) --- */
         .grid-section { display: grid; grid-template-columns: 1.1fr 1fr; gap: 80px; align-items: center; margin-bottom: 120px; }
 
-        /* --- 媒体展示 (Christmas) --- */
-        .media-sub-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; max-width: 900px; margin: 20px auto 40px; }
-        .sub-media-item { width: 100%; height: 280px; border-radius: 16px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
-        .sub-media-item img, .sub-media-item iframe { width: 100%; height: 100%; object-fit: cover; border: none; }
+        /* --- 活动相册展示 --- */
+        .events-gallery { display: flex; flex-direction: column; gap: 30px; max-width: 940px; margin: 0 auto 40px; }
+        .events-gallery img { width: 100%; border-radius: 24px; box-shadow: 0 20px 40px rgba(0,0,0,0.05); object-fit: cover; }
 
         .direct-link-btn { display: inline-block; margin-top: 20px; color: var(--brand-blue); text-decoration: none; font-weight: 600; }
 
@@ -136,64 +135,34 @@
             border: 0;
         }
 
-        /* --- Sponsorship Section Styles (高级纯CSS动画UI) --- */
+        /* --- Sponsorship Section Styles (极简扁平风格) --- */
         .sponsor-wrapper {
-            position: relative;
-            background: #0a0a0c; /* 深色沉浸式背景 */
+            background: #fbfbfd;
             border-radius: 32px;
-            padding: 100px 40px;
+            padding: 80px 40px;
             text-align: center;
             margin-bottom: 100px;
-            overflow: hidden;
-            color: #ffffff;
-            box-shadow: 0 20px 50px rgba(0, 86, 210, 0.15);
+            border: 1px solid var(--border-color);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.02);
+            color: var(--text-main);
         }
 
-        /* 动态背景光影旋转动画 */
-        .sponsor-bg {
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: conic-gradient(from 0deg at 50% 50%, #0a0a0c 0%, var(--brand-blue) 25%, #0a0a0c 50%, var(--lny-red) 75%, #0a0a0c 100%);
-            animation: spin-bg 12s linear infinite;
-            opacity: 0.2;
-            z-index: 0;
-        }
-
-        /* 毛玻璃内容卡片 */
         .sponsor-content {
-            position: relative;
-            z-index: 1;
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 24px;
-            padding: 60px 40px;
             max-width: 800px;
             margin: 0 auto;
-            transition: var(--transition);
-        }
-        .sponsor-content:hover {
-            border-color: rgba(255, 255, 255, 0.25);
-            transform: translateY(-5px);
         }
 
         .sponsor-title {
-            font-size: 3rem;
+            font-size: 2.8rem;
             font-weight: 800;
-            background: linear-gradient(135deg, #ffffff 0%, #a5c0ff 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
             margin-bottom: 20px;
             letter-spacing: -0.03em;
+            color: var(--text-main);
         }
 
         .sponsor-text {
             font-size: 1.15rem;
-            color: rgba(255,255,255,0.75);
+            color: var(--text-sub);
             margin-bottom: 40px;
             line-height: 1.8;
             max-width: 600px;
@@ -205,39 +174,42 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 12px;
-            background: #ffffff;
-            color: #000000;
-            padding: 18px 45px;
+            gap: 10px;
+            background: var(--brand-blue);
+            color: #ffffff;
+            padding: 15px 36px;
             border-radius: 100px;
             text-decoration: none;
-            font-weight: 700;
-            font-size: 16px;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            font-weight: 600;
+            font-size: 15px;
+            transition: var(--transition);
         }
         
         .btn-sponsor:hover {
-            transform: scale(1.05);
-            box-shadow: 0 15px 30px rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 86, 210, 0.2);
+            background: #0046b0;
+            color: #ffffff;
         }
 
         .btn-sponsor svg {
-            width: 20px; height: 20px;
+            width: 18px; height: 18px;
             transition: transform 0.3s ease;
         }
         .btn-sponsor:hover svg {
-            transform: translateX(6px); /* 箭头滑动动画 */
-        }
-
-        @keyframes spin-bg {
-            100% { transform: rotate(360deg); }
+            transform: translateX(4px); /* 箭头滑动动画 */
         }
 
         @media (max-width: 900px) {
             .nav-container { padding: 12px 20px; }
             .grid-section { grid-template-columns: 1fr; text-align: center; gap: 40px; }
             .hero-title { font-size: 2.5rem; }
+            
+            /* 手机端赞助板块优化 */
+            .sponsor-wrapper { padding: 50px 20px; margin-bottom: 60px; }
             .sponsor-title { font-size: 2rem; }
+            .btn-sponsor { padding: 12px 24px; font-size: 14px; width: 100%; max-width: 280px; }
+
             .hamburger { display: block; }
             .nav-links {
                 position: absolute; top: 100%; left: 0; width: 100%;
@@ -248,7 +220,6 @@
             }
             .nav-links.active { opacity: 1; transform: translateY(0); pointer-events: auto; }
             .nav-links a { display: block; padding: 15px 0; font-size: 16px; text-align: center; }
-            .media-sub-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -271,6 +242,7 @@
             <ul class="nav-links" id="nav-menu">
                 <li><a href="about.html" data-key="nav-about">About</a></li>
                 <li><a href="contact.html" data-key="nav-contact">Contact</a></li>
+                <li><a href="events.html" data-key="nav-events">Events</a></li>
                 <li><a href="#meeting-section" data-key="nav-meeting">Meetings</a></li>
                 <li><a href="announcements.html" data-key="nav-ann">Announcements</a></li>
                 <li><a href="support.html" data-key="nav-support">Get Support</a></li>
@@ -303,6 +275,10 @@
                     <img src="LNY_Poster.png" alt="Year of the Horse Poster" style="width: 100%; height: 100%; object-fit: cover;">
                 </div>
 
+                <div style="width: 100%; max-width: 900px; aspect-ratio: 8064/4182; margin: 60px auto 0; border-radius: 20px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.08);">
+                    <img src="Event_LNY4.JPG" alt="Members holding red envelopes" style="width: 100%; height: 100%; object-fit: cover;">
+                </div>
+
                 <div style="margin-top: 80px;">
                     <h3 style="font-size: 1.8rem; font-weight: 800; margin-bottom: 10px;" data-key="yt-title">Our Traditions</h3>
                     <p class="section-p" data-key="yt-sub" style="margin-bottom: 30px;">Watch our club's exclusive series on Lunar New Year traditions.</p>
@@ -314,8 +290,6 @@
         </section>
         
         <section class="sponsor-wrapper" id="support">
-            <div class="sponsor-bg"></div>
-            
             <div class="sponsor-content">
                 <h2 class="sponsor-title" data-key="sponsor-h">Empower Our Mission</h2>
                 <p class="sponsor-text" data-key="sponsor-p">
@@ -340,17 +314,16 @@
             <img src="calligraphy_work.jpg" class="img-frame">
         </section>
 
-        <section id="about-section" style="text-align: center; margin-bottom: 120px;">
-            <img src="Xmas_members.jpg" class="img-frame" style="max-width: 940px; margin-bottom: 30px;">
-            <div class="media-sub-grid">
-                <div class="sub-media-item"><img src="Xmas_photo1.png" alt="Activity"></div>
-                <div class="sub-media-item">
-                    <iframe src="https://www.youtube.com/embed/7rDKusI032c" allowfullscreen></iframe>
-                </div>
+        <section id="events-preview-section" style="text-align: center; margin-bottom: 120px;">
+            <h2 class="section-title" data-key="events-prev-h">Our Activities</h2>
+            <p class="section-p" data-key="events-prev-p" style="margin-bottom: 40px;">Discover the vibrant events and workshops hosted by our community.</p>
+            
+            <div class="events-gallery">
+                <img src="Xmas_members.jpg" alt="Event Members">
+                <img src="Xmas_photo1.png" alt="Event Activity" style="max-width: 600px; margin: 0 auto;">
             </div>
-            <h2 class="section-title" data-key="about-h">Unity in Diversity</h2>
-            <p class="section-p" data-key="about-p">Captured during our 2025 Christmas Celebration—building bridges through shared traditions.</p>
-            <a class="direct-link-btn" target="_blank" data-key="xmas_link" href="xmas.html"> Learn more about APSC Christmas Celebration 2025 → </a>
+            
+            <a class="direct-link-btn" data-key="events-link" href="events.html"> Explore all APSC Events → </a>
         </section>
 
         <section class="meeting-box" id="meeting-section">
@@ -384,81 +357,81 @@
 
         const i18n = {
             'en': {
-                'nav-about': 'About', 'nav-meeting': 'Meetings', 'nav-contact': 'Contact', 'nav-ann': 'Announcements', 'nav-support': 'Get Support', 'nav-feedback': 'Feedback', 'nav-donate': 'Donate',
+                'nav-about': 'About', 'nav-meeting': 'Meetings', 'nav-contact': 'Contact', 'nav-ann': 'Announcements', 'nav-support': 'Get Support', 'nav-feedback': 'Feedback', 'nav-donate': 'Donate', 'nav-events': 'Events',
                 'hero-title': 'Experience Culture.\nFind Your Community.', 'cta': 'Join Us',
                 'lny-title': 'Lunar New Year 2026', 'lny-h': 'Spirit of the Horse', 'lny-p': 'Celebrating the Year of the Horse. A symbol of unbridled energy, nobility, and the drive to move forward. Wishing our community a year of strength and prosperity.',
                 'yt-title': 'Our Traditions', 'yt-sub': 'Watch our club\'s exclusive series on Lunar New Year traditions.',
                 'sponsor-h': 'Empower Our Mission', 'sponsor-p': 'Become a driving force behind APSC. Your sponsorship helps us foster cultural exchange, host inclusive events, and build a stronger, more supportive student community. Let\'s create an impact together.', 'sponsor-btn': 'Become a Sponsor',
                 'culture-h': 'The Aesthetic of Hanzi', 'culture-p1': 'Calligraphy is a meditative dance of ink and soul.', 'culture-p2': 'Every stroke carries history.',
-                'about-h': 'Unity in Diversity', 'about-p': 'Captured during our 2025 Christmas Celebration.', 'xmas_link': 'Learn more about APSC Christmas 2025 →',
+                'events-prev-h': 'Our Activities', 'events-prev-p': 'Discover the vibrant events and workshops hosted by our community.', 'events-link': 'Explore all APSC Events →',
                 'meet-h': 'WEEKLY GATHERING', 'meet-p1': 'Mondays @ Lunch | Room 1008', 'meet-p2': 'All students are welcome to join our family.',
-                'footer-cp': '© 2026 ASIAN PEER SUPPORT CLUB | CLARKSBURG HIGH SCHOOL'
+                'footer-cp': '© 2026 ASIAN PEER SUPPORT CLUB | CLARKSBURG HIGH SCHOOL', 'nav-privacy': 'Privacy Policy', 'nav-terms': 'Terms of Use'
             },
             'zh-hans': {
-                'nav-about': '关于我们', 'nav-meeting': '会议安排', 'nav-contact': '联系我们', 'nav-ann': '公告通知', 'nav-support': '获取支持', 'nav-feedback': '反馈', 'nav-donate': '捐赠支持',
+                'nav-about': '关于我们', 'nav-meeting': '会议安排', 'nav-contact': '联系我们', 'nav-ann': '公告通知', 'nav-support': '获取支持', 'nav-feedback': '反馈', 'nav-donate': '捐赠支持', 'nav-events': '活动展示',
                 'hero-title': '体验文化底蕴\n融入温暖社群', 'cta': '加入 APSC 社团',
                 'lny-title': '中国新年 2026', 'lny-h': '龙马精神，共迎新岁', 'lny-p': '庆祝农历马年。象征着奔腾的活力与高贵的精神。祝愿我们的社区在新的一年里力量充沛，繁荣昌盛。',
                 'yt-title': '探索我们的传统', 'yt-sub': '观看由我们社团独家制作的春节传统系列视频。',
                 'sponsor-h': '赋能我们的使命', 'sponsor-p': '成为 APSC 背后的驱动力。您的赞助将帮助我们促进文化交流，举办包容性活动，并建立一个更强大、互助的学生社区。让我们共同创造影响力。', 'sponsor-btn': '成为赞助商',
                 'culture-h': '汉字美学之韵', 'culture-p1': '书法是笔墨与心灵的禅意共舞。', 'culture-p2': '每一笔一划都承载着历史。',
-                'about-h': '多元中的合一', 'about-p': '记录于 2025 年圣诞庆祝活动。', 'xmas_link': '了解更多关于 APSC 2025 圣诞活动 →',
+                'events-prev-h': '我们的活动', 'events-prev-p': '探索我们社区举办的丰富多彩的活动与工作坊。', 'events-link': '浏览所有 APSC 活动 →',
                 'meet-h': '每周会议', 'meet-p1': '每周一午餐时间 | 1008 教室', 'meet-p2': '欢迎所有学生加入我们的大家庭。',
-                'footer-cp': '© 2026 ASIAN PEER SUPPORT CLUB | CLARKSBURG HIGH SCHOOL'
+                'footer-cp': '© 2026 ASIAN PEER SUPPORT CLUB | CLARKSBURG HIGH SCHOOL', 'nav-privacy': '隐私政策', 'nav-terms': '使用条款'
             },
             'zh-hant': {
-                'nav-about': '關於我們', 'nav-meeting': '會議安排', 'nav-contact': '聯絡我們', 'nav-ann': '公告通知', 'nav-support': '獲取支持', 'nav-feedback': '回饋', 'nav-donate': '捐贈支持',
+                'nav-about': '關於我們', 'nav-meeting': '會議安排', 'nav-contact': '聯絡我們', 'nav-ann': '公告通知', 'nav-support': '獲取支持', 'nav-feedback': '回饋', 'nav-donate': '捐贈支持', 'nav-events': '活動展示',
                 'hero-title': '體驗文化底蘊\n融入溫暖社群', 'cta': '加入 APSC 社團',
                 'lny-title': '中國新年 2026', 'lny-h': '龍馬精神，共迎新歲', 'lny-p': '慶祝農曆馬年。象徵著奔騰的活力與高貴的精神。祝願我們的社區在新的一年裡力量充沛，繁榮昌盛。',
                 'yt-title': '探索我們的傳統', 'yt-sub': '觀看由我們社團獨家製作的春節傳統系列影片。',
                 'sponsor-h': '賦能我們的使命', 'sponsor-p': '成為 APSC 背後的驅動力。您的贊助將幫助我們促進文化交流，舉辦包容性活動，並建立一個更強大、互助的學生社區。讓我們共同創造影響力。', 'sponsor-btn': '成為贊助商',
-                'culture-h': '漢字美學之韻', 'culture-p1': '書法是筆墨與心靈的禪意共舞。', 'culture-p2': '每一筆一劃都承載著歷史。',   
-                'about-h': '多元中的合一', 'about-p': '記錄於 2025 年聖誕慶祝活動。', 'xmas_link': '了解更多關於 APSC 2025 聖誕活動 →',
+                'culture-h': '漢字美學之韻', 'culture-p1': '書法是筆墨與心靈的禪意共舞。', 'culture-p2': '每一筆一劃都承載著歷史。',  
+                'events-prev-h': '我們的活動', 'events-prev-p': '探索我們社區舉辦的豐富多彩的活動與工作坊。', 'events-link': '瀏覽所有 APSC 活動 →',
                 'meet-h': '每週會議', 'meet-p1': '每週一午餐時間 | 1008 教室', 'meet-p2': '歡迎所有學生加入我們的大家庭。',
-                'footer-cp': '© 2026 ASIAN PEER SUPPORT CLUB | CLARKSBURG HIGH SCHOOL'
+                'footer-cp': '© 2026 ASIAN PEER SUPPORT CLUB | CLARKSBURG HIGH SCHOOL', 'nav-privacy': '隱私政策', 'nav-terms': '使用條款'
             },
             'ko': {
-                'nav-about': '소개', 'nav-meeting': '모임', 'nav-contact': '연락처', 'nav-ann': '공지사항', 'nav-support': '지원 받기', 'nav-feedback': '피드백', 'nav-donate': '기부하기',
+                'nav-about': '소개', 'nav-meeting': '모임', 'nav-contact': '연락처', 'nav-ann': '공지사항', 'nav-support': '지원 받기', 'nav-feedback': '피드백', 'nav-donate': '기부하기', 'nav-events': '이벤트',
                 'hero-title': '문화 체험.\n커뮤니티 찾기.', 'cta': '가입하기',
                 'lny-title': '설날 2026', 'lny-h': '말의 해, 활기찬 새해', 'lny-p': '말의 해를 기념하며, 무한한 에너지와 고귀함을 기립니다. 우리 커뮤니티에 힘과 번영이 가득하기를 기원합니다.',
                 'yt-title': '우리의 전통', 'yt-sub': '우리 동아리가 독점 제작한 설날 전통 시리즈를 시청하세요.',
                 'sponsor-h': '우리의 사명에 힘을 실어주세요', 'sponsor-p': 'APSC의 원동력이 되어주세요. 여러분의 후원은 문화 교류를 촉진하고 포용적인 행사를 개최하며 더 강력하고 지원적인 학생 커뮤니티를 구축하는 데 도움이 됩니다. 함께 영향력을 만들어 갑시다.', 'sponsor-btn': '후원자 되기',
                 'culture-h': '한자의 미학', 'culture-p1': '서예는 잉크와 영혼의 명상적인 춤입니다.', 'culture-p2': '모든 획에는 역사가 담겨 있습니다.',
-                'about-h': '다양성 속의 통일성', 'about-p': '2025년 크리스마스 축하 행사에서 촬영되었습니다.', 'xmas_link': 'APSC 크리스마스 2025에 대해 자세히 알아보기 →',
+                'events-prev-h': '우리의 활동', 'events-prev-p': '우리 커뮤니티에서 주최하는 활기찬 이벤트와 워크숍을 발견해보세요.', 'events-link': '모든 APSC 이벤트 살펴보기 →',
                 'meet-h': '주간 모임', 'meet-p1': '매주 월요일 점심 시간 | 1008호실', 'meet-p2': '모든 학생들이 우리 가족에 합류하는 것을 환영합니다.',
-                'footer-cp': '© 2026 ASIAN PEER SUPPORT CLUB | CLARKSBURG HIGH SCHOOL'
+                'footer-cp': '© 2026 ASIAN PEER SUPPORT CLUB | CLARKSBURG HIGH SCHOOL', 'nav-privacy': '개인정보 처리방침', 'nav-terms': '이용 약관'
             },
             'ja': {
-                'nav-about': '私たちについて', 'nav-meeting': 'ミーティング', 'nav-contact': 'お問い合わせ', 'nav-ann': 'お知らせ', 'nav-support': 'サポートを受ける', 'nav-feedback': 'フィードバック', 'nav-donate': '寄付する',
+                'nav-about': '私たちについて', 'nav-meeting': 'ミーティング', 'nav-contact': 'お問い合わせ', 'nav-ann': 'お知らせ', 'nav-support': 'サポートを受ける', 'nav-feedback': 'フィードバック', 'nav-donate': '寄付する', 'nav-events': 'イベント',
                 'hero-title': '文化を体験し、\nコミュニティを見つけよう。', 'cta': '参加する',
                 'lny-h': '午年（うまどし）の精神', 'lny-p': '午年を祝して。尽きることのないエネルギーと気高さの象徴です。私たちのコミュニティにとって、力強く繁栄する一年となりますように。',
                 'yt-title': '私たちの伝統', 'yt-sub': '私たちのクラブが独占制作した旧正月の伝統シリーズをご覧ください。',
                 'sponsor-h': '私たちの使命を支援する', 'sponsor-p': 'APSCの原動力になってください。皆様のスポンサーシップは、文化交流の促進、包括的なイベントの開催、そしてより強力でサポートし合える学生コミュニティの構築に役立ちます。一緒にインパクトを創り出しましょう。', 'sponsor-btn': 'スポンサーになる',
                 'culture-h': '漢字の美学', 'culture-p1': '書道はインクと魂の瞑想的なダンスです。', 'culture-p2': 'すべての筆画には歴史が刻まれています。',
-                'about-h': '多様性の中의 統一性', 'about-p': '2025年のクリスマスセレブレーションで撮影されました。', 'xmas_link': 'APSCクリスマス2025について詳しくはこちら→',
+                'events-prev-h': '私たちの活動', 'events-prev-p': 'コミュニティが主催する活気あるイベントやワークショップをご覧ください。', 'events-link': 'すべてのAPSCイベントを見る →',
                 'meet-h': '毎週の集まり', 'meet-p1': '毎週月曜日のランチタイム | 1008教室', 'meet-p2': 'すべての学生が私たちの家族に参加することを歓迎します。',
-                'footer-cp': '© 2026 ASIAN PEER SUPPORT CLUB | CLARKSBURG HIGH SCHOOL'
+                'footer-cp': '© 2026 ASIAN PEER SUPPORT CLUB | CLARKSBURG HIGH SCHOOL', 'nav-privacy': 'プライバシーポリシー', 'nav-terms': '利用規約'
             },
             'es': {
-                'nav-about': 'Acerca de', 'nav-meeting': 'Reuniones', 'nav-contact': 'Contacto', 'nav-ann': 'Anuncios', 'nav-support': 'Obtener Apoyo', 'nav-feedback': 'Comentarios', 'nav-donate': 'Donar',
+                'nav-about': 'Acerca de', 'nav-meeting': 'Reuniones', 'nav-contact': 'Contacto', 'nav-ann': 'Anuncios', 'nav-support': 'Obtener Apoyo', 'nav-feedback': 'Comentarios', 'nav-donate': 'Donar', 'nav-events': 'Eventos',
                 'hero-title': 'Experimenta la Cultura.\nEncuentra tu Comunidad.', 'cta': 'Únete a Nosotros',
                 'lny-title': 'Año Nuevo Lunar 2026', 'lny-h': 'Espíritu del Caballo', 'lny-p': 'Celebrando el Año del Caballo. Un símbolo de energía desenfrenada y nobleza. Deseando a nuestra comunidad un año de fuerza y prosperidad.',
                 'yt-title': 'Nuestras Tradiciones', 'yt-sub': 'Mira la serie exclusiva de nuestro club sobre las tradiciones del Año Nuevo Lunar.',
                 'sponsor-h': 'Empodera Nuestra Misión', 'sponsor-p': 'Conviértete en una fuerza impulsora detrás de APSC. Tu patrocinio nos ayuda a fomentar el intercambio cultural, organizar eventos inclusivos y construir una comunidad estudiantil más fuerte y solidaria. Creemos un impacto juntos.', 'sponsor-btn': 'Conviértete en Patrocinador',
                 'culture-h': 'La Estética de los Hanzi', 'culture-p1': 'La caligrafía es una danza meditativa de tinta y alma.', 'culture-p2': 'Cada trazo lleva historia.',
-                'about-h': 'Unidad en la Diversidad', 'about-p': 'Capturado durante nuestra Celebración de Navidad 2025.', 'xmas_link': 'Aprende más sobre la Celebración de Navidad APSC 2025 →',
+                'events-prev-h': 'Nuestras Actividades', 'events-prev-p': 'Descubre los vibrantes eventos y talleres organizados por nuestra comunidad.', 'events-link': 'Explora todos los eventos de APSC →',
                 'meet-h': 'REUNIÓN SEMANAL', 'meet-p1': 'Lunes en el Almuerzo | Sala 1008', 'meet-p2': 'Todos los estudiantes son bienvenidos a unirse a nuestra familia.',
-                'footer-cp': '© 2026 ASIAN PEER SUPPORT CLUB | CLARKSBURG HIGH SCHOOL'
+                'footer-cp': '© 2026 ASIAN PEER SUPPORT CLUB | CLARKSBURG HIGH SCHOOL', 'nav-privacy': 'Política de Privacidad', 'nav-terms': 'Términos de Uso'
             },
             'fr': {
-                'nav-about': 'À propos', 'nav-meeting': 'Réunions', 'nav-contact': 'Contact', 'nav-ann': 'Annonces', 'nav-support': 'Obtenir de l\'aide', 'nav-feedback': 'Retour d\'information', 'nav-donate': 'Faire un don',
+                'nav-about': 'À propos', 'nav-meeting': 'Réunions', 'nav-contact': 'Contact', 'nav-ann': 'Annonces', 'nav-support': 'Obtenir de l\'aide', 'nav-feedback': 'Retour d\'information', 'nav-donate': 'Faire un don', 'nav-events': 'Événements',
                 'hero-title': 'Découvrez la Culture.\nTrouvez Votre Communauté.', 'cta': 'Rejoignez-nous',
                 'lny-title': 'Nouvel An Lunaire 2026', 'lny-h': 'L\'Esprit du Cheval', 'lny-p': 'Célébration de l\'Année du Cheval. Symbole d\'énergie débridée et de noblesse. Nous souhaitons à notre communauté une année de force et de prospérité.',
                 'yt-title': 'Nos Traditions', 'yt-sub': 'Regardez la série exclusive de notre club sur les traditions du Nouvel An lunaire.',
                 'sponsor-h': 'Soutenez Notre Mission', 'sponsor-p': 'Devenez une force motrice derrière l\'APSC. Votre parrainage nous aide à favoriser les échanges culturels, à organiser des événements inclusifs et à bâtir une communauté étudiante plus forte et plus solidaire. Créons un impact ensemble.', 'sponsor-btn': 'Devenir Sponsor',
                 'culture-h': 'L\'Esthétique des Hanzi', 'culture-p1': 'La calligraphie est une danse méditative d\'encre et d\'âme.', 'culture-p2': 'Chaque trait porte l\'histoire.',
-                'about-h': 'Unité dans la Diversité', 'about-p': 'Capturé lors de notre célébration de Noël 2025.', 'xmas_link': 'En savoir plus sur la célébration de Noël APSC 2025 →',
+                'events-prev-h': 'Nos Activités', 'events-prev-p': 'Découvrez les événements et ateliers dynamiques organisés par notre communauté.', 'events-link': 'Explorer tous les événements de l\'APSC →',
                 'meet-h': 'RÉUNION HEBDOMADAIRE', 'meet-p1': 'Lundis à l\'heure du déjeuner | Salle 1008', 'meet-p2': 'Tous les étudiants sont invités à rejoindre notre famille.',
-                'footer-cp': '© 2026 ASIAN PEER SUPPORT CLUB | CLARKSBURG HIGH SCHOOL'
+                'footer-cp': '© 2026 ASIAN PEER SUPPORT CLUB | CLARKSBURG HIGH SCHOOL', 'nav-privacy': 'Politique de Confidentialité', 'nav-terms': 'Conditions d\'Utilisation'
             }
         };
 

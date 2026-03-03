@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coming Soon | APSC</title>
+    <link rel="icon" href="apsc_new_logo.ico" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --brand-blue: #0056D2;
+            --text-main: #1d1d1f;
+            --text-sub: #6e6e73;
+            --bg-body: #ffffff;
+            --transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            text-align: center;
+            padding: 40px; /* 为小屏幕提供内边距 */
+        }
+
+        .coming-soon-container {
+            max-width: 600px;
+            width: 100%;
+            padding: 40px;
+            border-radius: 24px;
+            background: #fff;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+            border: 1px solid #f0f0f0;
+        }
+
+        .logo-container {
+            margin-bottom: 40px;
+            display: inline-block; /* 确保box-shadow正确应用 */
+            box-shadow: 0 10px 20px rgba(0,0,0,0.08); /* 轻微阴影 */
+            border-radius: 18%; /* 使Logo看起来更圆润，但保留方形基础 */
+            overflow: hidden; /* 确保图片不会溢出圆角 */
+        }
+
+        .logo-container img {
+            width: 150px; /* 大尺寸Logo */
+            height: 150px;
+            object-fit: cover;
+            display: block; /* 移除图片底部空白 */
+        }
+
+        h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            letter-spacing: -0.05em;
+            margin-bottom: 20px;
+            color: var(--text-main);
+        }
+
+        p {
+            font-size: 1.2rem;
+            color: var(--text-sub);
+            margin-bottom: 30px;
+        }
+
+        .back-home-btn {
+            display: inline-block;
+            background: var(--brand-blue);
+            color: #fff;
+            padding: 14px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .back-home-btn:hover {
+            transform: translateY(-2px);
+            background: #0046b0;
+            box-shadow: 0 8px 16px rgba(0, 86, 210, 0.2);
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .coming-soon-container {
+                padding: 30px;
+            }
+            .logo-container img {
+                width: 120px;
+                height: 120px;
+            }
+            h1 {
+                font-size: 2.2rem;
+            }
+            p {
+                font-size: 1rem;
+            }
+            .back-home-btn {
+                padding: 12px 25px;
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .coming-soon-container {
+                padding: 20px;
+            }
+            .logo-container img {
+                width: 100px;
+                height: 100px;
+            }
+            h1 {
+                font-size: 1.8rem;
+            }
+            p {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="coming-soon-container">
+        <div class="logo-container">
+            <img src="apsc_new_logo.png" alt="APSC Logo">
+        </div>
+        <h1>Coming Soon!</h1>
+        <p>We are working hard to bring you exciting new content and features. Please check back later!</p>
+        <a href="index.html" class="back-home-btn">Back to Home</a>
+    </div>
+</body>
+</html>
