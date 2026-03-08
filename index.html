@@ -148,7 +148,7 @@
         }
 
         .sponsor-content {
-            max-width: 800px;
+            /* 移除了最大宽度限制，让其自适应外层容器 */
             margin: 0 auto;
         }
 
@@ -201,6 +201,9 @@
         }
 
         @media (max-width: 900px) {
+            /* 增加此处修改：缩小手机端最外层容器的 padding，给内容留出空间 */
+            .wrapper { padding: 40px 20px; }
+
             .nav-container { padding: 12px 20px; }
             .grid-section { grid-template-columns: 1fr; text-align: center; gap: 40px; }
             .hero-title { font-size: 2.5rem; }
@@ -263,8 +266,8 @@
 
     <main class="wrapper">
         
-        <section id="lny-section" style="padding: 40px 20px; margin-bottom: 120px;">
-            <div style="max-width: 900px; margin: 0 auto; text-align: center;">
+        <section id="lny-section" style="margin-bottom: 120px;">
+            <div style="margin: 0 auto; text-align: center;">
                 <span style="color: var(--lny-red); font-size: 0.9rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; display: block; margin-bottom: 15px;" data-key="lny-title">Lunar New Year 2026</span>
                 <h2 class="section-title" data-key="lny-h" style="margin-bottom: 25px;">Spirit of the Horse</h2>
                 <p class="section-p" data-key="lny-p" style="max-width: 650px; margin: 0 auto 50px;">
@@ -275,7 +278,7 @@
                     <img src="LNY_Poster.png" alt="Year of the Horse Poster" style="width: 100%; height: 100%; object-fit: cover;">
                 </div>
 
-                <div style="width: 100%; max-width: 900px; aspect-ratio: 8064/4182; margin: 60px auto 0; border-radius: 20px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.08);">
+                <div style="width: 100%; aspect-ratio: 8064/4182; margin: 60px auto 40px; border-radius: 20px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.08);">
                     <img src="Event_LNY4.jpg" alt="Group Picture" style="width: 100%; height: 100%; object-fit: cover;">
                 </div>
 
@@ -335,7 +338,7 @@
 
    <footer>
         <div class="social-icons">
-            <a href="https://www.instagram.com/apsc_chs/" target="_blank"><img src="instagram_icon.png" alt="Instagram"></a>
+            <a href="https://www.instagram.com/cburg_apsc/" target="_blank"><img src="instagram_icon.png" alt="Instagram"></a>
             <a href="https://www.tiktok.com/@asian.peer.support.club" target="_blank"><img src="tiktok_icon.png" alt="TikTok"></a>
             <a href="https://youtube.com/@asianpeersupportclub" target="_blank"><img src="youtube_icon.png" alt="YouTube"></a>
             <a href="https://www.facebook.com/share/1JPeJSg5Lu/" target="_blank"><img src="facebook_icon.png" alt="Facebook"></a>
