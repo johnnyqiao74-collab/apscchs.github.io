@@ -107,6 +107,23 @@
         .date-tag { font-size: 11px; font-weight: 700; color: var(--brand-blue); letter-spacing: 0.05em; }
         .announcement-text { font-size: 1.05rem; color: var(--text-main); font-weight: 500; }
 
+        .pagination {
+            display: flex; justify-content: center; align-items: center; flex-wrap: wrap;
+            gap: 8px; margin-top: 25px;
+            font-size: 14px;
+        }
+        .pagination button {
+            border: 1px solid var(--border-color); background: #fff; color: var(--text-main);
+            border-radius: 8px; padding: 6px 12px; cursor: pointer; transition: var(--transition);
+        }
+        .pagination button:hover { border-color: var(--brand-blue); color: var(--brand-blue); }
+        .pagination button.active {
+            background: var(--brand-blue); color: #fff; border-color: var(--brand-blue);
+        }
+        .pagination button:disabled {
+            opacity: 0.5; cursor: not-allowed; border-color: #e3e3e3;
+        }
+
         /* --- Footer --- */
         footer { padding: 60px 0; border-top: 1px solid var(--border-color); text-align: center; background: #fbfbfd; }
         .social-icons { display: flex; justify-content: center; gap: 25px; margin-bottom: 20px; }
@@ -191,6 +208,7 @@
         </header>
 
         <div class="announcement-list" id="announcementList"></div>
+        <div class="pagination" id="paginationControls"></div>
     </main>
 
    <footer>
@@ -263,6 +281,47 @@
 
         let currentLang = 'en';
         let isAscending = false;
+        let currentPage = 1;
+        const itemsPerPage = 8;
+
+        function setPage(page) {
+            currentPage = page;
+            render();
+        }
+
+        function renderPagination(totalPages) {
+            const container = document.getElementById('paginationControls');
+            if (!container) return;
+
+            if (totalPages <= 1) {
+                container.innerHTML = '';
+                return;
+            }
+
+            let html = `<button onclick="setPage(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''}>◀</button>`;
+
+            const maxButtons = 7;
+            let start = Math.max(1, currentPage - 3);
+            let end = Math.min(totalPages, start + maxButtons - 1);
+            if (end - start + 1 < maxButtons) {
+                start = Math.max(1, end - maxButtons + 1);
+            }
+
+            if (start > 1) {
+                html += `<button onclick="setPage(1)">1</button><span>…</span>`;
+            }
+
+            for (let i = start; i <= end; i++) {
+                html += `<button class="${i === currentPage ? 'active' : ''}" onclick="setPage(${i})">${i}</button>`;
+            }
+
+            if (end < totalPages) {
+                html += `<span>…</span><button onclick="setPage(${totalPages})">${totalPages}</button>`;
+            }
+
+            html += `<button onclick="setPage(${currentPage + 1})" ${currentPage === totalPages ? 'disabled' : ''}>▶</button>`;
+            container.innerHTML = html;
+        }
 
         // --- 核心切换函数 (:基于你提供的标准) ---
         function updateLang(lang) {
@@ -308,28 +367,47 @@
             );
             filtered.sort((a, b) => isAscending ? new Date(a.date) - new Date(b.date) : new Date(b.date) - new Date(a.date));
             const listEl = document.getElementById('announcementList');
-            
+
             if (filtered.length === 0) {
                 listEl.innerHTML = `<p style="text-align:center; color:var(--text-sub); margin-top:20px;">No announcements found.</p>`;
+                document.getElementById('paginationControls').innerHTML = '';
                 return;
             }
 
-            listEl.innerHTML = filtered.map(item => `
+            const totalPages = Math.ceil(filtered.length / itemsPerPage);
+
+            if (currentPage > totalPages) {
+                currentPage = totalPages;
+            }
+            if (currentPage < 1) {
+                currentPage = 1;
+            }
+
+            const start = (currentPage - 1) * itemsPerPage;
+            const pageItems = filtered.slice(start, start + itemsPerPage);
+
+            listEl.innerHTML = pageItems.map(item => `
                 <div class="announcement-box">
                     <span class="date-tag">${item.date}</span>
                     <p class="announcement-text">${item.keys[currentLang] || item.keys['en']}</p>
                 </div>
             `).join('');
+
+            renderPagination(totalPages);
         }
 
         function toggleSort() {
             isAscending = !isAscending;
+            currentPage = 1;
             const btn = document.getElementById('sortBtn');
             btn.innerText = i18n[currentLang][isAscending ? 'sort-old' : 'sort-new'];
             render();
         }
 
-        function filterAnnouncements() { render(); }
+        function filterAnnouncements() {
+            currentPage = 1;
+            render();
+        }
 
         // --- 页面加载时自动初始化 (标准逻辑) ---
         window.addEventListener('DOMContentLoaded', () => {

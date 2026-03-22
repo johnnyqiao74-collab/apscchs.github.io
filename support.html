@@ -113,7 +113,119 @@
         .footer-legal a:hover { color: var(--brand-blue); text-decoration: underline; }
         .footer-legal .separator { color: #eee; user-select: none; }
 
-         @media (max-width: 900px) {
+        /* --- 弹窗卡片 --- */
+        .guidance-modal-overlay {
+            position: fixed; inset: 0; display: none; justify-content: center; align-items: center; z-index: 2000;
+            background: linear-gradient(105deg, rgba(10, 24, 71, 0.55), rgba(5, 56, 120, 0.4));
+            overflow: hidden;
+        }
+        .guidance-modal-overlay::before {
+            content: '';
+            position: absolute; inset: 0;
+            background-image: radial-gradient(circle at 20% 30%, rgba(255,255,255,0.2) 0%, transparent 35%), radial-gradient(circle at 80% 70%, rgba(96,186,255,0.18) 0%, transparent 45%);
+            pointer-events: none;
+            z-index: 1;
+        }
+        .guidance-modal-overlay.active { display: flex; }
+        .guidance-modal {
+            position: relative;
+            z-index: 2;
+            width: min(980px, 100%); max-height: min(90vh, 760px);
+            background: linear-gradient(130deg, #fbfdff, #eef5ff);
+            border-radius: 24px; border: 1px solid rgba(255,255,255,0.6); backdrop-filter: blur(8px);
+            box-shadow: 0 24px 42px rgba(0,0,0,0.35);
+            overflow: hidden; display: flex; flex-direction: column;
+
+            transform: translateY(20px) scale(0.96);
+            opacity: 0;
+            transition: transform 0.38s cubic-bezier(0.15, 0.8, 0.25, 1), opacity 0.3s ease;
+        }
+        .guidance-modal-overlay.active .guidance-modal {
+            transform: translateY(0) scale(1);
+            opacity: 1;
+        }
+        .guidance-modal.close-animation {
+            transform: translateY(24px) scale(0.92);
+            opacity: 0;
+        }
+        .guidance-modal::after {
+            content: '';
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at 15% 20%, rgba(80, 160, 255, 0.12), transparent 28%),
+                        radial-gradient(circle at 85% 80%, rgba(150, 215, 255, 0.14), transparent 30%);
+            pointer-events: none;
+            z-index: 1;
+        }
+        .guidance-header {
+            position: relative; z-index: 2;
+            padding: 20px 26px; border-bottom: 1px solid rgba(0,86,210,0.17); display: flex; justify-content: space-between; align-items: center;
+        }
+        .guidance-header h2 { margin: 0; font-size: 1.5rem; letter-spacing: 0.02em; }
+        .guidance-close {
+            background: #fff; border: 1px solid #c8d8f9; color: #235fa7; font-size: 1.1rem; border-radius: 50%; width: 30px; height: 30px; cursor: pointer;
+            display: inline-flex; justify-content: center; align-items: center; transition: transform 0.2s ease, box-shadow 0.2s ease;
+            outline: none;
+        }
+        .guidance-close:hover { transform: scale(1.05); box-shadow: 0 6px 15px rgba(0,86,210,0.28); }
+        .guidance-body {
+            position: relative; z-index: 2;
+            padding: 22px; overflow-y: auto; min-height: 400px;
+        }
+        .guidance-body p { color: #4c6b8f; margin-bottom: 12px; }
+        .guidance-grid {
+            display: grid; grid-template-columns: repeat(2,minmax(220px,1fr)); gap: 16px;
+        }
+        .guidance-card {
+            position: relative;
+            background: rgba(255,255,255,0.92);
+            border: 1px solid rgba(112,153,209,0.35);
+            border-radius: 16px; padding: 18px 16px 18px 24px;
+            overflow: hidden;
+            transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+            backdrop-filter: blur(2px);
+        }
+        .guidance-card::before {
+            content: '';
+            position: absolute; top: -16px; right: -20px; width: 84px; height: 84px;
+            background: radial-gradient(circle at top left, rgba(0,118,255,0.25), transparent 60%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+        .guidance-card:hover { transform: translateY(-4px); box-shadow: 0 14px 26px rgba(0,86,210,0.2); border-color: rgba(0,86,210,0.6); }
+        .guidance-card h3 { margin: 0 0 10px; font-size: 1.13rem; color: #174c8b; display: flex; align-items: center; gap: 8px; }
+        .guidance-card h3::before { content: '✨'; }
+        .guidance-content { font-size: 0.95rem; color: #2d4c7b; line-height: 1.55; margin: 0; }
+        .guidance-content ul { margin: 8px 0 0; padding-left: 18px; color: #324f75; line-height: 1.5; }
+        .guidance-content ul li { margin-bottom: 6px; }
+        .guidance-card ul li { margin-bottom: 6px; }
+        .guidance-card .link-item { font-size: 0.88rem; color: #0056d2; font-weight: 600; text-decoration: underline; margin-top: 10px; display: inline-block; }
+        .guidance-card .link-item:hover { color: #003c99; }
+
+        .btn-guidance-open {
+            margin: 18px auto 28px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 16px;
+            border-radius: 999px;
+            border: 1px solid rgba(0,86,210,0.3);
+            background: linear-gradient(120deg, #d7ebff, #eaf4ff);
+            color: #0058bf;
+            font-weight: 700;
+            font-size: 0.95rem;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,86,210,0.16);
+            transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+            text-decoration: none;
+        }
+
+        .btn-guidance-open:hover {
+            transform: translateY(-2px);
+            background: linear-gradient(120deg, #c2ddff, #d8ecff);
+            box-shadow: 0 7px 20px rgba(0,86,210,0.26);
+        }
+
+        @media (max-width: 900px) {
             .contact-grid { grid-template-columns: 1fr; }
             .hamburger { display: block; }
             .nav-links {
@@ -156,10 +268,24 @@
         </div>
     </nav>
 
+    <div class="guidance-modal-overlay" id="guidanceModal" role="dialog" aria-modal="true" aria-label="Support Guidance">
+        <div class="guidance-modal">
+            <div class="guidance-header">
+                <h2>Support Guidance Cards</h2>
+                <button class="guidance-close" id="guidanceClose" aria-label="Close guidance overlay">✕</button>
+            </div>
+            <div class="guidance-body">
+                <p style="margin-bottom: 15px; color: #666;">Please choose a card below to explore quick suggestions and support pathways first. If immediate help is needed, use the crisis contacts below.</p>
+                <div class="guidance-grid" id="guidanceGrid"></div>
+            </div>
+        </div>
+    </div>
+
     <main class="wrapper">
         <header class="page-header">
             <h1 data-key="sup-title">We Are Here For You</h1>
             <p data-key="sup-sub">Whether it's academic stress, social challenges, or you just need someone to talk to, APSC is here to listen.</p>
+            <button class="btn-guidance-open" id="openGuidanceBtn">Open Support Guidance Cards</button>
         </header>
 
         <div class="disclaimer-box">
@@ -241,6 +367,9 @@
     </footer>
 
     <script>
+        // 全局语言状态（必须存在）
+        let currentLang = 'en';
+
         // 导航控制
         const hamburger = document.getElementById('hamburger-btn');
         const navMenu = document.getElementById('nav-menu');
@@ -278,6 +407,107 @@
                 submitBtn.disabled = false;
                 submitBtn.innerText = originalBtnText;
             });
+        });
+
+        const guidanceDataI18n = {
+            en: [
+                { title: 'Mental Guidance', text: '<ul><li>Practice 4-7-8 breathing: inhale 4s, hold 7s, exhale 8s.</li><li>Set one small daily goal and celebrate it.</li><li>Write 3 things you are grateful for today.</li></ul>', action: 'Learn more about coping skills', url: 'https://www.mentalhealth.gov/' },
+                { title: 'Physical Guidance', text: '<ul><li>Take a 30-minute walk outside daily.</li><li>Keep a steady sleep schedule (7-8 hours).</li><li>Eat balanced meals with fruits and veggies.</li></ul>', action: 'View healthy routine tips', url: 'https://www.cdc.gov/physicalactivity/' },
+                { title: 'Social Guidance', text: '<ul><li>Check in with 1–2 trusted people this week.</li><li>Join supportive groups or school community activities.</li><li>Practice saying “no” when you need boundaries.</li></ul>', action: 'Explore community support', url: 'https://www.mentalhealth.gov/' },
+                { title: 'Academic Guidance', text: '<ul><li>Use Pomodoro: study 25m, rest 5m, repeat.</li><li>Prioritize work by importance and deadline.</li><li>Ask teachers/questions early when stuck.</li></ul>', action: 'Use study and planning tools', url: 'https://www.khanacademy.org/' }
+            ],
+            'zh-hans': [
+                { title: '心理疏导', text: '<ul><li>练习深呼吸：吸气 4 秒、屏气 7 秒、呼气 8 秒。</li><li>设立小目标并记录每天完成情况。</li><li>写下3件当天感激的事情。</li></ul>', action: '了解应对方法', url: 'https://www.mentalhealth.gov/' },
+                { title: '身体疏导', text: '<ul><li>每天自然散步30分钟。</li><li>保持规律睡眠，7-8小时为宜。</li><li>多吃蔬果、适量蛋白、少糖少油。</li></ul>', action: '查看健康习惯', url: 'https://www.cdc.gov/physicalactivity/' },
+                { title: '社交疏导', text: '<ul><li>每周主动与1-2位朋友/家人联系。</li><li>参加支持小组或学校社团。</li><li>学会设立界限，说“我需要自己的空间”。</li></ul>', action: '探索社区支持', url: 'https://www.mentalhealthamerica.net/' },
+                { title: '学业疏导', text: '<ul><li>使用番茄工作法：25分钟学习、5分钟休息。</li><li>按紧急程度安排任务，分块完成。</li><li>不懂就问老师或同学，及时解决问题。</li></ul>', action: '使用学习工具', url: 'https://www.khanacademy.org/' }
+            ],
+            'zh-hant': [
+                { title: '心理疏導', text: '<ul><li>練習深呼吸：吸氣4秒、屏氣7秒、呼氣8秒。</li><li>設定小目標並記錄進度。</li><li>寫下3件你今天感謝的事。</li></ul>', action: '了解應對方法', url: 'https://www.mentalhealth.gov/' },
+                { title: '身體疏導', text: '<ul><li>每天自然散步30分鐘。</li><li>保持固定睡眠時間，7-8小時。</li><li>均衡飲食，多吃蔬果。</li></ul>', action: '查看健康習慣', url: 'https://www.cdc.gov/physicalactivity/' },
+                { title: '社交疏導', text: '<ul><li>每週主動與1-2位朋友或家人聯繫。</li><li>參加支持小組或校內活動。</li><li>說“不”並保護個人界限。</li></ul>', action: '探索社群支持', url: 'https://www.mentalhealthamerica.net/' },
+                { title: '學業疏導', text: '<ul><li>使用番茄鐘：25分鐘學習，5分鐘休息。</li><li>按優先級安排任務緩解壓力。</li><li>遇到問題及時尋求教師幫助。</li></ul>', action: '使用學習工具', url: 'https://www.khanacademy.org/' }
+            ],
+            ko: [
+                { title: '정서적 지원', text: '<ul><li>4-7-8 호흡법을 시도하세요.</li><li>작은 목표를 설정하고 성취감을 느껴보세요。</li><li>감사한 일을 3가지 적어보세요。</li></ul>', action: '대처 기술 확인하기', url: 'https://www.mentalhealth.gov/' },
+                { title: '신체적 지원', text: '<ul><li>매일 30분 걷기.</li><li>7-8시간 규칙적 수면.</li><li>균형 있는 식단 유지。</li></ul>', action: '건강 루틴 보기', url: 'https://www.cdc.gov/physicalactivity/' },
+                { title: '사회적 지원', text: '<ul><li>친구 또는 가족과 자주 연락하기.</li><li>지원 그룹 참여.</li><li>경계를 설정하고 스스로를 돌보기。</li></ul>', action: '커뮤니티 지원 찾기', url: 'https://www.mentalhealthamerica.net/' },
+                { title: '학업 지원', text: '<ul><li>포모도로 기법 사용.</li><li>우선순위에 따라 계획 세우기.</li><li>문제가 있을 때 즉시 질문하기.</li></ul>', action: '학습 도구 활용', url: 'https://www.khanacademy.org/' }
+            ],
+            ja: [
+                { title: 'メンタルサポート', text: '<ul><li>4-7-8呼吸法を実践。</li><li>小さな目標を立てて達成感を得る。</li><li>感謝していることを3つ書く。</li></ul>', action: '対処方法を確認', url: 'https://www.mentalhealth.gov/' },
+                { title: 'フィジカルサポート', text: '<ul><li>毎日30分の散歩。</li><li>7-8時間の規則正しい睡眠。</li><li>バランスの良い食事。</li></ul>', action: '健康ルーティンを見る', url: 'https://www.cdc.gov/physicalactivity/' },
+                { title: 'ソーシャルサポート', text: '<ul><li>週に1-2人と連絡を取る。</li><li>サポートグループに参加。</li><li>自分の境界線を守る。</li></ul>', action: 'コミュニティサポートを探す', url: 'https://www.mentalhealthamerica.net/' },
+                { title: 'アカデミックサポート', text: '<ul><li>ポモドーロ法を使う。</li><li>優先順位をつけて計画する。</li><li>困ったら早めに質問する。</li></ul>', action: '学習ツールを使う', url: 'https://www.khanacademy.org/' }
+            ],
+            es: [
+                { title: 'Apoyo Mental', text: '<ul><li>Practica respiración 4-7-8.</li><li>Establece metas pequeñas diarias.</li><li>Escribe 3 cosas por las que estás agradecido.</li></ul>', action: 'Conoce habilidades de afrontamiento', url: 'https://www.mentalhealth.gov/' },
+                { title: 'Apoyo Físico', text: '<ul><li>Camina 30 minutos al día.</li><li>Duerme 7-8 horas a un horario fijo.</li><li>Come equilibrado con frutas y verduras.</li></ul>', action: 'Tips de rutina saludable', url: 'https://www.cdc.gov/physicalactivity/' },
+                { title: 'Apoyo Social', text: '<ul><li>Conéctate con personas de confianza.</li><li>Únete a grupos solidarios.</li><li>Establece límites sanos.</li></ul>', action: 'Explora apoyo comunitario', url: 'https://www.mentalhealthamerica.net/' },
+                { title: 'Apoyo Académico', text: '<ul><li>Usa Pomodoro: 25m estudio + 5m descanso.</li><li>Organiza tareas por prioridad.</li><li>Pide ayuda cuando no entiendas.</li></ul>', action: 'Herramientas de estudio', url: 'https://www.khanacademy.org/' }
+            ],
+            fr: [
+                { title: 'Soutien Mental', text: '<ul><li>Respiration 4-7-8.</li><li>Objectifs quotidiens simples.</li><li>Liste de 3 gratitudes.</li></ul>', action: 'Voir les stratégies d’adaptation', url: 'https://www.mentalhealth.gov/' },
+                { title: 'Soutien Physique', text: '<ul><li>Marche 30 min.</li><li>Sommeil 7-8h régulier.</li><li>Alimentation équilibrée.</li></ul>', action: 'Conseils routine saine', url: 'https://www.cdc.gov/physicalactivity/' },
+                { title: 'Soutien Social', text: '<ul><li>Contactez un proche.</li><li>Rejoignez un groupe solidaire.</li><li>Fixez des limites.</li></ul>', action: 'Explorer soutien communautaire', url: 'https://www.mentalhealthamerica.net/' },
+                { title: 'Soutien Académique', text: '<ul><li>Méthode Pomodoro.</li><li>Planifier selon priorité.</li><li>Demander de l’aide au besoin.</li></ul>', action: 'Outils d’étude', url: 'https://www.khanacademy.org/' }
+            ]
+        };
+
+        function getGuidanceData(lang) {
+            return guidanceDataI18n[lang] || guidanceDataI18n.en;
+        }
+
+        function renderGuidanceCards() {
+            const grid = document.getElementById('guidanceGrid');
+            if (!grid) return;
+            const data = getGuidanceData(currentLang);
+            grid.innerHTML = data.map(card => `
+                <div class="guidance-card">
+                    <h3>${card.title}</h3>
+                    <div class="guidance-content">${card.text}</div>
+                    <a class="link-item" href="${card.url}" target="_blank" rel="noopener noreferrer">${card.action} →</a>
+                </div>
+            `).join('');
+        }
+
+        const modalOverlay = document.getElementById('guidanceModal');
+        const modalCloseBtn = document.getElementById('guidanceClose');
+
+        function openGuidanceModal() {
+            if (!modalOverlay) return;
+            renderGuidanceCards();
+            const modal = modalOverlay.querySelector('.guidance-modal');
+            if (modal) {
+                modal.classList.remove('close-animation');
+            }
+            modalOverlay.style.display = 'flex';
+            modalOverlay.classList.add('active');
+        }
+
+        function closeGuidanceModal() {
+            if (!modalOverlay) return;
+            const modal = modalOverlay.querySelector('.guidance-modal');
+            if (modal) {
+                modal.classList.add('close-animation');
+            }
+            setTimeout(() => {
+                modalOverlay.classList.remove('active');
+                modalOverlay.style.display = 'none';
+                if (modal) modal.classList.remove('close-animation');
+            }, 340);
+        }
+
+        if (modalCloseBtn) modalCloseBtn.addEventListener('click', closeGuidanceModal);
+        if (modalOverlay) modalOverlay.addEventListener('click', (e) => {
+            if (e.target === modalOverlay) closeGuidanceModal();
+        });
+
+        const openGuidanceBtn = document.getElementById('openGuidanceBtn');
+        if (openGuidanceBtn) openGuidanceBtn.addEventListener('click', openGuidanceModal);
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeGuidanceModal();
         });
 
         const i18n = {
@@ -375,11 +605,15 @@
             if(i18n[lang]['ph-name']) nameInp.placeholder = i18n[lang]['ph-name'];
             if(i18n[lang]['ph-contact']) contactInp.placeholder = i18n[lang]['ph-contact'];
             if(i18n[lang]['ph-msg']) msgInp.placeholder = i18n[lang]['ph-msg'];
+
+            // 更新指导卡片内容语言
+            renderGuidanceCards();
         }
 
         window.addEventListener('DOMContentLoaded', () => {
             const savedLang = sessionStorage.getItem('selectedLang') || 'en';
             updateLang(savedLang);
+            openGuidanceModal();
         });
     </script>
 </body>
