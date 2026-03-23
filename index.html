@@ -268,6 +268,11 @@
             .sponsor-wrapper { padding: 50px 20px; margin-bottom: 60px; }
             .sponsor-title { font-size: 2rem; }
             .btn-sponsor { padding: 12px 24px; font-size: 14px; width: 100%; max-width: 280px; }
+            
+            .meeting-box { padding: 24px 20px; margin-left: auto; margin-right: auto; }
+            #home-feedback-section > div { padding: 20px !important; }
+            #home-feedback-form > div:first-child { grid-template-columns: 1fr !important; }
+            #home-feedback-section h3 { font-size: 1.5rem; }
 
             .hamburger { display: block; }
             .nav-links {
@@ -366,18 +371,6 @@
             </div>
         </section>
 
-        <section class="fundraiser-wrapper" id="fundraiser">
-            <div class="fundraiser-content">
-                <h2 class="fundraiser-title" data-key="fundraiser-h">Support Our Initiatives</h2>
-                <p class="fundraiser-text" data-key="fundraiser-p">
-                    Your support helps us continue our mission of cultural exchange and community building. Every contribution makes a difference in creating meaningful experiences for our members.
-                </p>
-                <div class="fundraiser-image">
-                    <img src="Fundraiser.PNG" alt="Fundraiser Poster" style="max-width: 100%; height: auto; border-radius: 16px; box-shadow: 0 20px 40px rgba(0,0,0,0.1);">
-                </div>
-            </div>
-        </section>
-
         <section class="grid-section" id="culture">
             <div>
                 <h2 class="section-title" data-key="culture-h">The Aesthetic of Hanzi</h2>
@@ -405,14 +398,14 @@
             <p style="font-size: 1rem; color: var(--text-sub); margin-top: 15px;" data-key="meet-p2">Next Meeting: March 23, 2026</p>
         </section>
 
-        <section class="meeting-box" id="home-feedback-section" style="background: linear-gradient(135deg, #f8fafc 0%, #edf2f7 100%); border: 1px solid #d1e0f0; margin-top: 120px; box-shadow: 0 12px 32px rgba(0,86,210,0.08); border-radius: 20px;">
+        <section class="meeting-box" id="home-feedback-section" style="background: linear-gradient(135deg, #f8fafc 0%, #edf2f7 100%); border: 1px solid #d1e0f0; margin-top: 120px; box-shadow: 0 12px 32px rgba(0,86,210,0.08); border-radius: 20px; margin-left: auto; margin-right: auto; max-width: 900px;">
             <div style="padding: 32px; position: relative;">
                 <div style="position: absolute; top: -20px; left: 20px; background: #0056D2; color: white; padding: 6px 12px; border-radius: 20px; font-size: 0.85rem; font-weight: 600; letter-spacing: 0.05em;">💬 FEEDBACK</div>
                 <h3 data-key="fb-title" style="margin-bottom: 16px; font-size: 1.8rem; font-weight: 700; color: #1d4a7a;">Share Your Feedback</h3>
                 <p data-key="fb-sub" style="color: #5a6c7d; margin-bottom: 24px; font-size: 1.05rem; line-height: 1.6;">Your voice helps us make APSC better every day.</p>
 
                 <form id="home-feedback-form" style="display: grid; gap: 16px;">
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; width: 100%;">
                         <div>
                             <label for="home-fb-name" style="display: block; font-size: 0.9rem; font-weight: 600; color: #374151; margin-bottom: 6px;" data-key="fb-name-lbl">Name (Optional)</label>
                             <input type="text" id="home-fb-name" data-key="fb-name" placeholder="Your name" style="width:100%; padding:14px 16px; border-radius:12px; border:2px solid #e5e7eb; font-size: 16px; transition: border-color 0.3s ease; background: rgba(255,255,255,0.8);" />
@@ -426,7 +419,7 @@
                         <label for="home-fb-message" style="display: block; font-size: 0.9rem; font-weight: 600; color: #374151; margin-bottom: 6px;" data-key="fb-msg-lbl">Message (Required)</label>
                         <textarea id="home-fb-message" rows="6" data-key="fb-msg" placeholder="Tell us what's on your mind..." required style="width:100%; padding:14px 16px; border-radius:12px; border:2px solid #e5e7eb; font-size: 16px; transition: border-color 0.3s ease; background: rgba(255,255,255,0.8); resize: vertical; min-height: 120px;"></textarea>
                     </div>
-                    <div style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap;">
+                    <div style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap; justify-content: center;">
                         <button type="submit" id="home-fb-submit" style="background: linear-gradient(135deg, #0056D2, #003d99); color: white; border: none; padding: 14px 28px; border-radius: 12px; font-size: 16px; font-weight: 600; cursor: pointer; transition: transform 0.2s ease, box-shadow 0.2s ease; box-shadow: 0 4px 12px rgba(0,86,210,0.3);" data-key="fb-btn">Submit Message</button>
                         <div id="home-fb-status" style="font-weight: 600; color: #6b7280; font-size: 0.95rem; min-height: 24px; display: flex; align-items: center; gap: 8px;"></div>
                     </div>
