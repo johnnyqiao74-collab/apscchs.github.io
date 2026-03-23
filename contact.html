@@ -36,28 +36,21 @@
         }
         .lang-btn.active { color: var(--brand-blue); }
 
-        /* --- 导航栏 --- */
-        nav {
-            background: rgba(255,255,255,0.85);
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
-            position: sticky; top: 0; z-index: 1000;
-            border-bottom: 1px solid var(--border-color);
+       nav {
+            background: rgba(255,255,255,0.85); backdrop-filter: blur(25px);
+            position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid var(--border-color);
         }
         .nav-container {
             max-width: 1300px; margin: 0 auto;
             display: flex; justify-content: space-between; align-items: center; padding: 12px 40px;
             position: relative;
         }
-        .nav-brand-link img { height: 35px; transition: var(--transition); }
-        .nav-links { display: flex; list-style: none; gap: 25px; align-items: center; }
+        .nav-brand-link img { height: 44px; transition: transform 0.25s ease; }
+        .nav-brand-link img:hover { transform: scale(1.05); }
+        .nav-links { display: flex; list-style: none; gap: 20px; align-items: center; }
         .nav-links a { text-decoration: none; color: var(--text-main); font-size: 13px; font-weight: 500; transition: var(--transition); }
         .nav-links a:hover { color: var(--brand-blue); }
-        .btn-donate-nav {
-            border: 1px solid var(--brand-blue);
-            padding: 6px 15px; border-radius: 50px;
-            color: var(--brand-blue) !important;
-        }
+        .btn-donate-nav { border: 1px solid var(--brand-blue); padding: 6px 15px; border-radius: 50px; color: var(--brand-blue) !important; }
         .btn-donate-nav:hover { background: var(--brand-blue); color: #fff !important; }
 
         /* --- 汉堡菜单 --- */

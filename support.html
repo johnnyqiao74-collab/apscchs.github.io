@@ -31,28 +31,21 @@
         .lang-btn { background: none; border: none; font-size: 10px; font-weight: 600; letter-spacing: 0.1em; color: var(--text-sub); margin: 0 10px; cursor: pointer; transition: var(--transition); }
         .lang-btn.active { color: var(--brand-blue); }
 
-        /* --- 导航栏 --- */
         nav {
-            background: rgba(255,255,255,0.85);
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
-            position: sticky; top: 0; z-index: 1000;
-            border-bottom: 1px solid var(--border-color);
+            background: rgba(255,255,255,0.85); backdrop-filter: blur(25px);
+            position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid var(--border-color);
         }
         .nav-container {
             max-width: 1300px; margin: 0 auto;
             display: flex; justify-content: space-between; align-items: center; padding: 12px 40px;
             position: relative;
         }
-        .nav-brand-link img { height: 35px; transition: var(--transition); }
-        .nav-links { display: flex; list-style: none; gap: 25px; align-items: center; }
+        .nav-brand-link img { height: 44px; transition: transform 0.25s ease; }
+        .nav-brand-link img:hover { transform: scale(1.05); }
+        .nav-links { display: flex; list-style: none; gap: 20px; align-items: center; }
         .nav-links a { text-decoration: none; color: var(--text-main); font-size: 13px; font-weight: 500; transition: var(--transition); }
         .nav-links a:hover { color: var(--brand-blue); }
-        .btn-donate-nav {
-            border: 1px solid var(--brand-blue);
-            padding: 6px 15px; border-radius: 50px;
-            color: var(--brand-blue) !important;
-        }
+        .btn-donate-nav { border: 1px solid var(--brand-blue); padding: 6px 15px; border-radius: 50px; color: var(--brand-blue) !important; }
         .btn-donate-nav:hover { background: var(--brand-blue); color: #fff !important; }
 
         /* --- 汉堡菜单 --- */
@@ -116,29 +109,28 @@
         /* --- 弹窗卡片 --- */
         .guidance-modal-overlay {
             position: fixed; inset: 0; display: none; justify-content: center; align-items: center; z-index: 2000;
-            background: linear-gradient(105deg, rgba(10, 24, 71, 0.55), rgba(5, 56, 120, 0.4));
-            overflow: hidden;
-        }
-        .guidance-modal-overlay::before {
-            content: '';
-            position: absolute; inset: 0;
-            background-image: radial-gradient(circle at 20% 30%, rgba(255,255,255,0.2) 0%, transparent 35%), radial-gradient(circle at 80% 70%, rgba(96,186,255,0.18) 0%, transparent 45%);
-            pointer-events: none;
-            z-index: 1;
+            background: rgba(5,12,38,0.65);
+            backdrop-filter: blur(4px);
+            touch-action: none;
         }
         .guidance-modal-overlay.active { display: flex; }
+
         .guidance-modal {
             position: relative;
             z-index: 2;
-            width: min(980px, 100%); max-height: min(90vh, 760px);
-            background: linear-gradient(130deg, #fbfdff, #eef5ff);
-            border-radius: 24px; border: 1px solid rgba(255,255,255,0.6); backdrop-filter: blur(8px);
-            box-shadow: 0 24px 42px rgba(0,0,0,0.35);
-            overflow: hidden; display: flex; flex-direction: column;
-
-            transform: translateY(20px) scale(0.96);
+            width: min(920px, 92%);
+            max-height: min(90vh, 780px);
+            background: radial-gradient(circle at top left, #f8fdff 0%, #edf6ff 100%);
+            border-radius: 22px;
+            border: 1px solid rgba(255,255,255,0.55);
+            box-shadow: 0 24px 48px rgba(6,24,75,0.3);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transform: translateY(14px) scale(0.98);
             opacity: 0;
-            transition: transform 0.38s cubic-bezier(0.15, 0.8, 0.25, 1), opacity 0.3s ease;
+            transition: transform 0.35s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.3s ease;
+            animation: fadeInUp 0.5s ease both;
         }
         .guidance-modal-overlay.active .guidance-modal {
             transform: translateY(0) scale(1);
@@ -148,58 +140,135 @@
             transform: translateY(24px) scale(0.92);
             opacity: 0;
         }
-        .guidance-modal::after {
+
+        .guidance-modal::before {
             content: '';
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at 15% 20%, rgba(80, 160, 255, 0.12), transparent 28%),
-                        radial-gradient(circle at 85% 80%, rgba(150, 215, 255, 0.14), transparent 30%);
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 18% 15%, rgba(89,164,255,0.14), transparent 40%),
+                        radial-gradient(circle at 82% 78%, rgba(140,207,255,0.16), transparent 35%);
             pointer-events: none;
-            z-index: 1;
         }
+
         .guidance-header {
             position: relative; z-index: 2;
-            padding: 20px 26px; border-bottom: 1px solid rgba(0,86,210,0.17); display: flex; justify-content: space-between; align-items: center;
+            padding: 24px 28px 16px;
+            border-bottom: 1px solid rgba(59,124,204,0.18);
+            display: flex; justify-content: space-between; align-items: center;
         }
-        .guidance-header h2 { margin: 0; font-size: 1.5rem; letter-spacing: 0.02em; }
+        .guidance-header h2 {
+            margin: 0;
+            font-size: 1.45rem;
+            font-weight: 750;
+            letter-spacing: -0.03em;
+            color: #0f3f7f;
+        }
+        .guidance-header p {
+            margin: 8px 0 0;
+            font-size: 0.95rem;
+            color: #4a6486;
+            max-width: 480px;
+        }
+
         .guidance-close {
-            background: #fff; border: 1px solid #c8d8f9; color: #235fa7; font-size: 1.1rem; border-radius: 50%; width: 30px; height: 30px; cursor: pointer;
-            display: inline-flex; justify-content: center; align-items: center; transition: transform 0.2s ease, box-shadow 0.2s ease;
+            background: #fff;
+            border: 1px solid #a4c4ef;
+            color: #1f4f86;
+            font-size: 1.1rem;
+            border-radius: 50%; width: 34px; height: 34px;
+            cursor: pointer;
+            display: inline-flex; justify-content: center; align-items: center;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
             outline: none;
         }
-        .guidance-close:hover { transform: scale(1.05); box-shadow: 0 6px 15px rgba(0,86,210,0.28); }
+        .guidance-close:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 18px rgba(0,86,210,0.28);
+            background: #eef5ff;
+        }
+
         .guidance-body {
             position: relative; z-index: 2;
-            padding: 22px; overflow-y: auto; min-height: 400px;
+            padding: 20px 22px 22px;
+            overflow-y: auto;
+            min-height: 320px;
+            border-top: 1px solid rgba(255,255,255,0.5);
         }
-        .guidance-body p { color: #4c6b8f; margin-bottom: 12px; }
+        .guidance-body p { color: #546c88; margin-bottom: 14px; font-size: 0.96rem; }
+
         .guidance-grid {
-            display: grid; grid-template-columns: repeat(2,minmax(220px,1fr)); gap: 16px;
+            display: grid;
+            grid-template-columns: repeat(2, minmax(220px, 1fr));
+            gap: 14px;
         }
+
         .guidance-card {
             position: relative;
-            background: rgba(255,255,255,0.92);
-            border: 1px solid rgba(112,153,209,0.35);
-            border-radius: 16px; padding: 18px 16px 18px 24px;
+            background: linear-gradient(180deg, rgba(255,255,255,0.95), rgba(243,248,255,0.98));
+            border: 1px solid rgba(138,170,217,0.35);
+            border-radius: 16px;
+            padding: 16px 14px 18px 16px;
             overflow: hidden;
             transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
-            backdrop-filter: blur(2px);
+            box-shadow: 0 6px 14px rgba(33,80,148,0.08);
+            backdrop-filter: blur(3px);
         }
         .guidance-card::before {
             content: '';
-            position: absolute; top: -16px; right: -20px; width: 84px; height: 84px;
-            background: radial-gradient(circle at top left, rgba(0,118,255,0.25), transparent 60%);
+            position: absolute; top: -14px; right: -12px;
+            width: 76px; height: 76px;
+            background: radial-gradient(circle at 10% 10%, rgba(61,145,255,0.3), transparent 60%);
             border-radius: 50%;
             pointer-events: none;
+            transform: translate(4px, -4px);
         }
-        .guidance-card:hover { transform: translateY(-4px); box-shadow: 0 14px 26px rgba(0,86,210,0.2); border-color: rgba(0,86,210,0.6); }
-        .guidance-card h3 { margin: 0 0 10px; font-size: 1.13rem; color: #174c8b; display: flex; align-items: center; gap: 8px; }
-        .guidance-card h3::before { content: '✨'; }
-        .guidance-content { font-size: 0.95rem; color: #2d4c7b; line-height: 1.55; margin: 0; }
-        .guidance-content ul { margin: 8px 0 0; padding-left: 18px; color: #324f75; line-height: 1.5; }
-        .guidance-content ul li { margin-bottom: 6px; }
-        .guidance-card ul li { margin-bottom: 6px; }
-        .guidance-card .link-item { font-size: 0.88rem; color: #0056d2; font-weight: 600; text-decoration: underline; margin-top: 10px; display: inline-block; }
-        .guidance-card .link-item:hover { color: #003c99; }
+        .guidance-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 18px 28px rgba(31,90,165,0.2);
+            border-color: rgba(29,110,212,0.5);
+        }
+
+        .guidance-card h3 {
+            margin: 0 0 8px;
+            font-size: 1.06rem;
+            font-weight: 700;
+            color: #1d4974;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .guidance-card h3::before { content: none; }
+
+        .guidance-content {
+            font-size: 0.94rem;
+            color: #304f76;
+            line-height: 1.58;
+            margin-bottom: 10px;
+        }
+        .guidance-content ul { margin: 8px 0 0; padding-left: 18px; color: #345a84; line-height: 1.55; }
+        .guidance-content ul li { margin-bottom: 7px; }
+
+        .guidance-card .link-item {
+            font-size: 0.89rem;
+            color: #0d5cb6;
+            font-weight: 700;
+            text-decoration: none;
+            margin-top: 12px;
+            display: inline-block;
+        }
+        .guidance-card .link-item:hover { color: #003b88; }
+
+        .guidance-card .recommended {
+            display: inline-block;
+            margin-top: 8px;
+            padding: 4px 10px;
+            border-radius: 999px;
+            background: rgba(55,121,233,0.13);
+            color: #155ea3;
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 0.03em;
+        }
 
         .btn-guidance-open {
             margin: 18px auto 28px;
@@ -218,11 +287,26 @@
             transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
             text-decoration: none;
         }
-
+        .btn-guidance-open[data-key]::before { content: '';}
         .btn-guidance-open:hover {
             transform: translateY(-2px);
             background: linear-gradient(120deg, #c2ddff, #d8ecff);
             box-shadow: 0 7px 20px rgba(0,86,210,0.26);
+        }
+
+        @keyframes fadeInUp {
+            0% { opacity: 0; transform: translateY(20px) scale(0.96); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        @media (max-width: 900px) {
+            .guidance-modal { max-height: 92vh; width: min(96vw, 100%); }
+            .guidance-header { padding: 18px 18px 14px; }
+            .guidance-header h2 { font-size: 1.25rem; }
+            .guidance-body { padding: 16px 16px 18px; }
+            .guidance-grid { grid-template-columns: 1fr; gap: 12px; }
+            .guidance-card { padding: 14px 12px 14px; }
+            .guidance-body p { margin-bottom: 10px; font-size: 0.92rem; }
         }
 
         @media (max-width: 900px) {
@@ -271,11 +355,11 @@
     <div class="guidance-modal-overlay" id="guidanceModal" role="dialog" aria-modal="true" aria-label="Support Guidance">
         <div class="guidance-modal">
             <div class="guidance-header">
-                <h2>Support Guidance Cards</h2>
+                <h2 data-key="guidance-title">Support Guidance Cards</h2>
                 <button class="guidance-close" id="guidanceClose" aria-label="Close guidance overlay">✕</button>
             </div>
             <div class="guidance-body">
-                <p style="margin-bottom: 15px; color: #666;">Please choose a card below to explore quick suggestions and support pathways first. If immediate help is needed, use the crisis contacts below.</p>
+                <p data-key="guidance-intro" style="margin-bottom: 15px; color: #666;">Please choose a card below to explore quick suggestions and support pathways first. If immediate help is needed, use the crisis contacts below.</p>
                 <div class="guidance-grid" id="guidanceGrid"></div>
             </div>
         </div>
@@ -285,7 +369,7 @@
         <header class="page-header">
             <h1 data-key="sup-title">We Are Here For You</h1>
             <p data-key="sup-sub">Whether it's academic stress, social challenges, or you just need someone to talk to, APSC is here to listen.</p>
-            <button class="btn-guidance-open" id="openGuidanceBtn">Open Support Guidance Cards</button>
+            <button class="btn-guidance-open" id="openGuidanceBtn" data-key="btn-guidance-open">Open Support Guidance Cards</button>
         </header>
 
         <div class="disclaimer-box">
@@ -466,6 +550,7 @@
                 <div class="guidance-card">
                     <h3>${card.title}</h3>
                     <div class="guidance-content">${card.text}</div>
+                    <span class="recommended">Quick Win</span>
                     <a class="link-item" href="${card.url}" target="_blank" rel="noopener noreferrer">${card.action} →</a>
                 </div>
             `).join('');
@@ -514,6 +599,7 @@
             'en': {
                 'nav-home': 'Home', 'nav-about': 'About', 'nav-meetings': 'Meetings', 'nav-support': 'Get Support', 'nav-ann': 'Announcements', 'nav-feedback': 'Feedback', 'nav-contact': 'Contact', 'nav-donate': 'Donate', 'nav-privacy': 'Privacy Policy', 'nav-terms': 'Terms of Use',
                 'sup-title': 'We Are Here For You', 'sup-sub': 'Whether it\'s academic stress, social challenges, or you just need someone to talk to, APSC is here to listen.',
+                'guidance-title': 'Support Guidance Cards', 'guidance-intro': 'Please choose a card below to explore quick suggestions and support pathways first. If immediate help is needed, use the crisis contacts below.', 'btn-guidance-open': 'Open Support Guidance Cards',
                 'sup-disclaimer': 'Important: We provide peer support, not professional medical advice. If you are in immediate danger, call 911 or a crisis hotline.',
                 'lbl-name': 'Name (Optional)', 'lbl-contact': 'Contact Info (Email/Phone)', 'lbl-type': 'Type of Support', 'lbl-msg': 'How can we help?',
                 'ph-name': 'Your name', 'ph-contact': 'How can we reach you?', 'ph-msg': 'Tell us what\'s going on...',
@@ -524,6 +610,7 @@
             'zh-hans': {
                 'nav-home': '首页', 'nav-about': '关于我们', 'nav-meetings': '会议安排', 'nav-support': '获取帮助', 'nav-ann': '公告通知', 'nav-feedback': '反馈', 'nav-contact': '联系我们', 'nav-donate': '捐赠支持', 'nav-privacy': '隐私政策', 'nav-terms': '使用条款',
                 'sup-title': '我们在这里支持你', 'sup-sub': '无论是学业压力、社交困扰，还是只想找人倾诉，APSC 都在这里倾听。',
+                'guidance-title': '支持建议卡', 'guidance-intro': '请从下方卡片中选择，先查看快捷建议和支持途径。如需紧急援助，请使用危机联系方式。', 'btn-guidance-open': '打开支持建议卡',
                 'sup-disclaimer': '重要提示：我们提供同伴互助，而非专业医疗建议。如果你处于紧急危险中，请立即拨打 911 或危机热线。',
                 'lbl-name': '姓名 (可选)', 'lbl-contact': '联系方式 (邮箱/电话)', 'lbl-type': '帮助类型', 'lbl-msg': '我们需要如何帮助你？',
                 'ph-name': '你的姓名', 'ph-contact': '如何联系你？', 'ph-msg': '请告诉我们发生了什么...',
@@ -534,6 +621,7 @@
             'zh-hant': {
                 'nav-home': '首頁', 'nav-about': '關於我們', 'nav-meetings': '會議安排', 'nav-support': '獲取幫助', 'nav-ann': '公告通知', 'nav-feedback': '回饋', 'nav-contact': '聯繫我們', 'nav-donate': '捐贈支持', 'nav-privacy': '隱私政策', 'nav-terms': '使用條款',
                 'sup-title': '我們在這裡支持你', 'sup-sub': '無論是學業壓力、社交困擾，還是只想找人傾訴，APSC 都在這裡傾聽。',
+                'guidance-title': '支持建議卡', 'guidance-intro': '請從下方卡片中選擇，先查看快捷建議和支持途徑。如需緊急援助，請使用危機聯絡方式。', 'btn-guidance-open': '打開支持建議卡',
                 'sup-disclaimer': '重要提示：我們提供同伴互助，而非專業醫療建議。如果你處於緊急危險中，請立即撥打 911 或危機熱線。',
                 'lbl-name': '姓名 (可選)', 'lbl-contact': '聯繫方式 (郵箱/電話)', 'lbl-type': '幫助類型', 'lbl-msg': '我們需要如何幫助你？',
                 'ph-name': '你的姓名', 'ph-contact': '如何聯繫你？', 'ph-msg': '請告訴我們發生了什麼...',
@@ -544,6 +632,7 @@
             'ko': {
                 'nav-home': '홈', 'nav-about': '소개', 'nav-meetings': '회의', 'nav-support': '지원 받기', 'nav-ann': '공지사항', 'nav-feedback': '피드백', 'nav-contact': '문의하기', 'nav-donate': '기부하기', 'nav-privacy': '개인정보처리방침', 'nav-terms': '이용약관',
                 'sup-title': '우리는 당신을 위해 여기 있습니다', 'sup-sub': '학업 스트레스, 사회적 도전 또는 단지 누군가와 이야기하고 싶을 때, APSC는 당신의 이야기를 듣기 위해 여기 있습니다.',
+                'guidance-title': '지원 가이드 카드', 'guidance-intro': '아래 카드에서 빠른 제안과 지원 경로를 먼저 확인하세요. 즉각적인 도움이 필요하면 위기 연락처를 사용하세요.', 'btn-guidance-open': '지원 가이드 카드 열기',
                 'sup-disclaimer': '중요: 우리는 동료 지원을 제공하며 전문적인 의료 조언을 제공하지 않습니다. 즉각적인 위험에 처한 경우 911 또는 위기 핫라인에 전화하십시오.',
                 'lbl-name': '이름 (선택 사항)', 'lbl-contact': '연락처 정보 (이메일/전화)', 'lbl-type': '지원 유형', 'lbl-msg': '어떻게 도와드릴까요?',
                 'ph-name': '당신의 이름', 'ph-contact': '어떻게 연락할 수 있나요?', 'ph-msg': '무슨 일이 일어나고 있는지 알려주세요...',
@@ -554,6 +643,7 @@
             'ja': {
                 'nav-home': 'ホーム', 'nav-about': '私たちについて', 'nav-meetings': '会議', 'nav-support': 'サポートを受ける', 'nav-ann': 'お知らせ', 'nav-feedback': 'フィードバック', 'nav-contact': 'お問い合わせ', 'nav-donate': '寄付する', 'nav-privacy': 'プライバシーポリシー', 'nav-terms': '利用規約',
                 'sup-title': '私たちはあなたのためにここにいます', 'sup-sub': '学業のストレス、社会的な課題、またはただ誰かと話したい場合でも、APSCはあなたの話を聞くためにここにいます。',
+                'guidance-title': 'サポートガイドカード', 'guidance-intro': '以下のカードから、すぐに使える提案と支援の流れを確認してください。緊急の場合は危機連絡先を利用してください。', 'btn-guidance-open': 'サポートガイドカードを開く',
                 'sup-disclaimer': '重要：私たちはピアサポートを提供しており、専門的な医療アドバイスは提供していません。緊急の危険にさらされている場合は、911または危機ホットラインに電話してください。',
                 'lbl-name': '名前（任意）', 'lbl-contact': '連絡先情報（メール/電話）', 'lbl-type': 'サポートの種類', 'lbl-msg': 'どのようにお手伝いできますか？',
                 'ph-name': 'あなたの名前', 'ph-contact': 'どのように連絡できますか？', 'ph-msg': '何が起こっているのか教えてください...',
@@ -564,6 +654,7 @@
             'es': {
                 'nav-home': 'Inicio', 'nav-about': 'Acerca de', 'nav-meetings': 'Reuniones', 'nav-support': 'Obtener Apoyo', 'nav-ann': 'Anuncios', 'nav-feedback': 'Comentarios', 'nav-contact': 'Contacto', 'nav-donate': 'Donar', 'nav-privacy': 'Política de Privacidad', 'nav-terms': 'Términos de Uso',
                 'sup-title': 'Estamos aquí para ti', 'sup-sub': 'Ya sea estrés académico, desafíos sociales o si solo necesitas alguien con quien hablar, APSC está aquí para escucharte.',
+                'guidance-title': 'Tarjetas de Orientación de Apoyo', 'guidance-intro': 'Elige una tarjeta abajo para ver sugerencias rápidas y vías de apoyo primero. Si necesitas ayuda inmediata, usa los contactos de crisis.', 'btn-guidance-open': 'Abrir tarjetas de orientación',
                 'sup-disclaimer': 'Importante: Proporcionamos apoyo entre pares, no asesoramiento médico profesional. Si estás en peligro inmediato, llama al 911 o a una línea directa de crisis.',
                 'lbl-name': 'Nombre (Opcional)', 'lbl-contact': 'Información de Contacto (Correo/Teléfono)', 'lbl-type': 'Tipo de Apoyo', 'lbl-msg': '¿Cómo podemos ayudarte?',
                 'ph-name': 'Tu nombre', 'ph-contact': '¿Cómo podemos contactarte?', 'ph-msg': 'Cuéntanos qué está pasando...',
@@ -574,8 +665,9 @@
             'fr': {
                 'nav-home': 'Accueil', 'nav-about': 'À propos', 'nav-meetings': 'Réunions', 'nav-support': 'Obtenir de l\'aide', 'nav-ann': 'Annonces', 'nav-feedback': 'Feedback', 'nav-contact': 'Contact', 'nav-donate': 'Faire un don', 'nav-privacy': 'Confidentialité', 'nav-terms': 'Conditions d\'utilisation',
                 'sup-title': 'Nous sommes là pour vous', 'sup-sub': 'Que ce soit le stress académique, les défis sociaux ou si vous avez simplement besoin de parler à quelqu\'un, APSC est là pour vous écouter.',
+                'guidance-title': 'Cartes de Support', 'guidance-intro': 'Choisissez une carte ci-dessous pour explorer d\'abord des suggestions rapides et des parcours de soutien. En cas d\'urgence, utilisez les contacts de crise.', 'btn-guidance-open': 'Ouvrir les cartes de support',
                 'sup-disclaimer': 'Important : Nous fournissons un soutien par les pairs, pas des conseils médicaux professionnels. Si vous êtes en danger immédiat, appelez le 911 ou une ligne d\'assistance en cas de crise.',
-                'lbl-name': 'Nom (Optionnel)', 'lbl-contact': 'Infos de contact', 'lbl-type': 'Type de soutien', 'lbl-msg': 'Comment pouvons-nous vous aider ?',
+                'lbl-name': 'Nom (Optionnel)', 'lbl-contact': 'Infos de contact', 'lbl-type': 'Type de soutien', 'lbl-msg': 'Comment pouvons-nous vous aider ?', 
                 'ph-name': 'Votre nom', 'ph-contact': 'Comment vous joindre ?', 'ph-msg': 'Dites-nous tout...',
                 'opt-academic': 'Soutien académique', 'opt-social': 'Soutien social', 'opt-mental': 'Soutien émotionnel', 'opt-other': 'Autre',
                 'btn-send': 'Envoyer', 'res-title': 'Ressources externes', 'res-bullying': 'Signalement de harcèlement', 'res-link': 'Visiter le site →', 'res-hotline': 'Ligne de crise nationale', 'res-mfjc': 'Centre de justice familiale de Montgomery',
@@ -584,6 +676,7 @@
         };
 
         function updateLang(lang) {
+            currentLang = lang;
             sessionStorage.setItem('selectedLang', lang);
 
             // 更新按钮状态
