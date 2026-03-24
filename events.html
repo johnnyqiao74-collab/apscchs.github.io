@@ -109,7 +109,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: linear-gradient(135deg, rgba(0, 86, 210, 0.02) 0%, rgba(248, 187, 217, 0.02) 100%);
+            background: linear-gradient(135deg, rgba(0, 86, 210, 0.02) 0%, rgba(200, 230, 255, 0.02) 100%);
             opacity: 0;
             transition: opacity 0.3s ease;
             pointer-events: none;
@@ -134,11 +134,25 @@
             position: relative;
         }
 
+        .gallery-img-wrapper::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(100, 200, 255, 0.65) 0%, rgba(150, 180, 255, 0.55) 100%);
+            pointer-events: none;
+            z-index: 2;
+        }
+
         .gallery-img-wrapper img {
             width: 100%;
             height: 100%;
             object-fit: cover; /* 保证图片填满容器且不变形 */
             transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            z-index: 1;
         }
 
         .gallery-card:hover .gallery-img-wrapper img {
@@ -265,7 +279,7 @@
         }
 
 .collaboration-section {
-            background: linear-gradient(135deg, rgba(252, 228, 236, 0.15) 0%, rgba(248, 187, 217, 0.15) 100%);
+            background: linear-gradient(135deg, rgba(230, 242, 255, 0.15) 0%, rgba(200, 230, 255, 0.15) 100%);
             border: 1px solid var(--border-color);
             border-radius: 24px;
             padding: 70px 50px;
@@ -346,7 +360,7 @@
         }
         /* --- Upcoming Event Section --- */
         .upcoming-section {
-            background: linear-gradient(135deg, rgba(252, 228, 236, 0.2) 0%, rgba(248, 187, 217, 0.2) 100%);
+            background: linear-gradient(135deg, rgba(230, 242, 255, 0.2) 0%, rgba(200, 230, 255, 0.2) 100%);
             border-radius: 32px;
             padding: 80px 40px;
             text-align: center;
@@ -501,6 +515,17 @@
 
         </section>
 
+        <section class="upcoming-section">
+            <div class="upcoming-content">
+                <h2 class="upcoming-title" data-key="upcoming-h">Upcoming Event</h2>
+                <p class="upcoming-text" data-key="upcoming-p">Join us for our Chinese After School Program (CASP)! We're looking for dedicated volunteers to help teach and assist. Whether you're tutoring, mentoring, or assisting with activities, your contribution makes a meaningful difference in our younger generation's learning journey.</p>
+                <div class="upcoming-image">
+                    <a href="#casp-volunteer" style="text-decoration: none; display: inline-block; width: 100%; max-width: 500px;">
+                        <img src="CASP.png" alt="CASP Poster" style="cursor: pointer; transition: transform 0.3s ease, box-shadow 0.3s ease;" onmouseover="this.style.transform='scale(1.02)'; this.style.boxShadow='0 30px 60px rgba(0,86,210,0.15)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 20px 40px rgba(0,0,0,0.1)';">
+                    </a>
+                </div>
+            </div>
+        </section>
 
         <section class="archive-section">
             <h2 class="archive-title" data-key="archive-h">Past Event Archive</h2>
@@ -550,7 +575,7 @@
                 'gal-date1': 'Recent Highlight', 'gal-title1': 'Cultural Exchange & Festival', 'gal-desc1': 'A wonderful time full with delicious food and fun to celebrate the year of the fire horse together with our members and friends.',
                 'gal-date2': 'Symbolic Moment', 'gal-title2': 'Strength in Unity', 'gal-desc2': 'Our members standing together representing the diverse, inclusive, and highly supportive core of the Asian Peer Support Club.',
                 'gal-date3': 'Academic Support', 'gal-title3': 'Peer Tutoring Kickoff', 'gal-desc3': 'Starting the semester strong with our collaborative study session where members help each other excel academically and build confidence.',
-                'upcoming-h': 'Upcoming Event', 'upcoming-p': 'Join us for our upcoming fundraiser event! Your support helps us continue our mission of cultural exchange and community building. Every contribution makes a difference in creating meaningful experiences for our members.',
+                'upcoming-h': 'Upcoming Event', 'upcoming-p': 'Join us for the Chinese After School Program (CASP)! We are looking for dedicated volunteers to help teach and assist. Whether you are tutoring, mentoring, or assisting with activities, your contribution makes a meaningful difference in our younger generation\'s learning journey.',
                 'archive-h': 'Past Event Archive', 'archive-p': 'Looking for older activities or minor club meetings? We keep a record of everything we do. Browse our dedicated archive pages below to revisit our historical moments.',
                 'collab-h': 'Partner with Us',
                 'collab-p': 'We are always looking to collaborate with different clubs or organizations to co-host impactful events. If you are interested in creating something meaningful together, please do not hesitate to reach out via any of our contact methods.',
@@ -566,7 +591,7 @@
                 'gal-date1': '近期亮点', 'gal-title1': '文化交流与节日庆典', 'gal-desc1': '一个美好时刻，充满着美味的食物和欢乐的氛围，我们与成员和朋友们一起庆祝了火马年的到来。',
                 'gal-date2': '象征性时刻', 'gal-title2': '团结就是力量', 'gal-desc2': '我们的成员并肩站立，展现了亚洲同伴支持社多元、包容且高度互助的核心精神。',
                 'gal-date3': '学术支持', 'gal-title3': '同伴辅导启动仪式', 'gal-desc3': '通过我们的协作学习课程强势开启新学期，成员们互相帮助，在学术上精益求精并建立自信。',
-                'upcoming-h': '即将举行的活动', 'upcoming-p': '加入我们的即将举行的募捐活动！您的支持帮助我们继续文化交流和社区建设的使命。每一次贡献都在为我们的成员创造有意义的体验方面产生差异。',
+                'upcoming-h': '即将举行的活动', 'upcoming-p': '加入我们的中文课后计划（CASP）！我们正在寻找专业志愿者帮助教学和协助。无论您是进行辅导、指导还是协助活动，您的贡献都能在我们下一代的学习之旅中产生有意义的影响。',
                 'archive-h': '往期活动归档', 'archive-p': '正在寻找早期的活动或小型社团会议记录？我们记录了所做的一切。请浏览下方的专属归档页面，重温我们的历史时刻。',
                 'collab-h': '合作伙伴与意向',
                 'collab-p': '我们非常希望与不同的社团或组织共同合作创办活动。如果您有兴趣与我们一同创造有意义的体验，请随时通过我们提供的任一联系方式与我们取得联系。',
@@ -582,7 +607,7 @@
                 'gal-date1': '近期亮點', 'gal-title1': '文化交流與節日慶典', 'gal-desc1': '一個美好的夜晚，大家分享傳統美食、製作手工藝品，並探討文化傳承在校園社區中的重要性。',
                 'gal-date2': '象徵性時刻', 'gal-title2': '團結就是力量', 'gal-desc2': '我們的成員並肩站立，展現了亞洲同伴支持社多元、包容且高度互助的核心精神。',
                 'gal-date3': '學術支持', 'gal-title3': '同伴輔導啟動儀式', 'gal-desc3': '通過我們的協作學習課程強勢開啟新學期，成員們互相幫助，在學術上精益求精並建立自信。',
-                'upcoming-h': '即將舉行的活動', 'upcoming-p': '加入我們的即將舉行的募捐活動！您的支持幫助我們繼續文化交流和社區建設的使命。每一次貢獻都在為我們的成員創造有意義的體驗方面產生差異。',
+                'upcoming-h': '即將舉行的活動', 'upcoming-p': '加入我們的中文課後計畫（CASP）！我們正在尋找專業志願者幫助教學和協助。無論您是進行輔導、指導還是協助活動，您的貢獻都能在我們下一代的學習之旅中產生有意義的影響。',
                 'archive-h': '往期活動歸檔', 'archive-p': '正在尋找早期的活動或小型社團會議記錄？我們記錄了所做的一切。請瀏覽下方的專屬歸檔頁面，重溫我們的歷史時刻。',
                 'collab-h': '合作夥伴與意向',
                 'collab-p': '我們非常希望與不同的社團或組織共同合作創辦活動。如果您有興趣與我們一同創造有意義的體驗，請隨時通過我們提供的任一聯繫方式與我們取得聯繫。',
@@ -598,7 +623,7 @@
                 'gal-date1': '최근 하이라이트', 'gal-title1': '문화 교류 및 축제', 'gal-desc1': '전통 음식을 나누고, 공예품을 만들고, 학교 커뮤니티 내에서 문화 유산의 중요성에 대해 토론하는 아름다운 저녁입니다.',
                 'gal-date2': '상징적 순간', 'gal-title2': '연대의 힘', 'gal-desc2': '아시아 동료 지원 클럽의 다양하고 포용적이며 지원적인 핵심을 대표하여 함께 서 있는 우리 회원들.',
                 'gal-date3': '학업 지원', 'gal-title3': '동료 튜터링 시작', 'gal-desc3': '회원들이 학업적으로 탁월하고 자신감을 키울 수 있도록 서로 돕는 협동 학습 세션으로 학기를 힘차게 시작합니다.',
-                'upcoming-h': '다가오는 이벤트', 'upcoming-p': '다가오는 모금 이벤트에 참여하세요! 귀하의 지원은 문화 교류와 커뮤니티 구축이라는 우리의 사명을 계속 이어갈 수 있도록 도와줍니다. 모든 기부는 회원들에게 의미 있는 경험을 만드는 데 차이를 만듭니다.',
+                'upcoming-h': '다가오는 이벤트', 'upcoming-p': '중국어 방과후 프로그램(CASP)에 참여하세요! 우리는 교육과 지원을 돕는 헌신적인 자원봉사자를 찾고 있습니다. 튜터링, 멘토링 또는 활동 지원 등 어떤 형태든 다음 세대의 학습 여정에 의미 있는 차이를 만드는 데 도움이 됩니다.'
                 'archive-h': '과거 이벤트 아카이브', 'archive-p': '오래된 활동이나 소규모 동아리 모임을 찾고 계신가요? 우리는 우리가 하는 모든 것을 기록합니다. 아래 전용 아카이브 페이지를 검색하십시오.',
                 'collab-h': '우리와 파트너가 되세요',
                 'collab-p': '우리는 영향력 있는 행사를 공동 주최하기 위해 다양한 클럽이나 조직과 협력하기를 항상 희망합니다. 함께 의미 있는 일을 만드는 데 관심이 있으시다면 주저하지 마시고 연락해 주시기 바랍니다.',
@@ -614,7 +639,7 @@
                 'gal-date1': '最近のハイライト', 'gal-title1': '文化交流とフェスティバル', 'gal-desc1': '伝統的な食べ物を分かち合い、工芸品を作り、学校コミュニティ内での文化遺産の重要性について話し合う美しい夜。',
                 'gal-date2': '象徴的な瞬間', 'gal-title2': '団結の強さ', 'gal-desc2': 'アジア・ピア・サポート・クラブの多様で包括的、そして非常に協力的な中核を代表して共に立つ私たちのメンバー。',
                 'gal-date3': '学術サポート', 'gal-title3': 'ピアチュータリングのキックオフ', 'gal-desc3': 'メンバーが学業で優れ、自信を築くのを互いに助け合う共同学習セッションで、学期を力強くスタートします。',
-                'upcoming-h': '今後のイベント', 'upcoming-p': '今後の募金イベントにご参加ください！皆様の支援は、文化交流とコミュニティ構築という私たちの使命を続けるのに役立ちます。すべての貢献は、私たちのメンバーに意味のある体験を作ることに違いをもたらします。',
+                'upcoming-h': '今後のイベント', 'upcoming-p': '中国語放課後プログラム(CASP)にご参加ください！教育と支援をお手伝いいただける献身的なボランティアを募集しています。チュータリング、メンタリング、または活動支援など、次世代の学習の旅に意味のある違いをもたらします。'
                 'archive-h': '過去のイベントアーカイブ', 'archive-p': '古い活動や小規模なクラブの会議をお探しですか？私たちはすべての記録を保持しています。以下のアーカイブページをご覧ください。',
                 'collab-h': 'パートナーシップのご案内',
                 'collab-p': '私たちは、有意義なイベントを共催するために、さまざまなクラブや組織との協力を常に求めています。一緒に何かを作り上げることに興味がある方は、提供されている連絡方法のいずれかからお気軽にお問い合わせください。',
@@ -630,7 +655,7 @@
                 'gal-date1': 'Acontecimiento Reciente', 'gal-title1': 'Intercambio Cultural y Festival', 'gal-desc1': 'Una hermosa velada compartiendo comida tradicional, haciendo manualidades y discutiendo la importancia de nuestra herencia cultural.',
                 'gal-date2': 'Momento Simbólico', 'gal-title2': 'La Fuerza en la Unidad', 'gal-desc2': 'Nuestros miembros de pie juntos representando el núcleo diverso, inclusivo y altamente solidario del Asian Peer Support Club.',
                 'gal-date3': 'Apoyo Académico', 'gal-title3': 'Inicio de Tutoría entre Compañeros', 'gal-desc3': 'Comenzando el semestre con fuerza con nuestra sesión de estudio colaborativo donde los miembros se ayudan mutuamente a sobresalir.',
-                'upcoming-h': 'Próximo Evento', 'upcoming-p': '¡Únete a nosotros en nuestro próximo evento de recaudación de fondos! Tu apoyo nos ayuda a continuar nuestra misión de intercambio cultural y construcción comunitaria. Cada contribución marca una diferencia en la creación de experiencias significativas para nuestros miembros.',
+                'upcoming-h': 'Próximo Evento', 'upcoming-p': '¡Únete al Programa Chino After School (CASP)! Estamos buscando voluntarios dedicados para ayudar a enseñar y asistir. Ya sea tutoría, mentoría o asistencia en actividades, tu contribución marca una diferencia significativa en el viaje de aprendizaje de la próxima generación.'
                 'archive-h': 'Archivo de Eventos Pasados', 'archive-p': '¿Buscas actividades más antiguas o reuniones menores del club? Mantenemos un registro de todo lo que hacemos. Explora nuestras páginas de archivo dedicadas a continuación.',
                 'collab-h': 'Colabora con Nosotros',
                 'collab-p': 'Siempre buscamos colaborar con diferentes clubes u organizaciones para coorganizar eventos impactantes. Si estás interesado en crear algo significativo juntos, no dudes en contactarnos a través de cualquiera de nuestros medios.',
@@ -646,7 +671,7 @@
                 'gal-date1': 'Fait Saillant Récent', 'gal-title1': 'Échange Culturel et Festival', 'gal-desc1': 'Une belle soirée de partage de plats traditionnels, d\'artisanat et de discussion sur l\'importance de notre patrimoine culturel.',
                 'gal-date2': 'Moment Symbolique', 'gal-title2': 'La Force dans l\'Unité', 'gal-desc2': 'Nos membres debout ensemble représentant le noyau diversifié, inclusif et hautement solidaire du Asian Peer Support Club.',
                 'gal-date3': 'Soutien Académique', 'gal-title3': 'Lancement du Tutorat par les Pairs', 'gal-desc3': 'Commencer le semestre en force avec notre session d\'étude collaborative où les membres s\'entraident pour exceller académiquement.',
-                'upcoming-h': 'Événement à Venir', 'upcoming-p': 'Rejoignez-nous pour notre prochain événement de collecte de fonds ! Votre soutien nous aide à poursuivre notre mission d\'échange culturel et de construction communautaire. Chaque contribution fait une différence dans la création d\'expériences significatives pour nos membres.',
+                'upcoming-h': 'Événement à Venir', 'upcoming-p': 'Rejoignez-nous pour le programme après les cours en chinois (CASP) ! Nous recherchons des bénévoles dédiés pour enseigner et aider. Que ce soit le tutorat, le mentorat ou l\'assistance aux activités, votre contribution fait une différence significative dans le parcours d\'apprentissage de la prochaine génération.'
                 'archive-h': 'Archives des Événements Passés', 'archive-p': 'Vous recherchez des activités plus anciennes ou des réunions de club mineures ? Nous gardons une trace de tout ce que nous faisons. Parcourez nos pages d\'archives dédiées ci-dessous.',
                 'collab-h': 'Devenez Partenaire',
                 'collab-p': 'Nous cherchons toujours à collaborer avec différents clubs ou organisations pour co-organiser des événements percutants. Si vous souhaitez créer quelque chose de significatif ensemble, n\'hésitez pas à nous contacter par l\'un de nos moyens de communication.',
