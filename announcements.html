@@ -107,15 +107,59 @@
             font-size: 14px;
         }
         .pagination button {
-            border: 1px solid var(--border-color); background: #fff; color: var(--text-main);
-            border-radius: 8px; padding: 6px 12px; cursor: pointer; transition: var(--transition);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            color: var(--text-main);
+            border-radius: 12px;
+            padding: 8px 16px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 500;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            position: relative;
+            overflow: hidden;
         }
-        .pagination button:hover { border-color: var(--brand-blue); color: var(--brand-blue); }
+        .pagination button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .pagination button:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.3);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+        .pagination button:hover::before {
+            opacity: 1;
+        }
         .pagination button.active {
-            background: var(--brand-blue); color: #fff; border-color: var(--brand-blue);
+            background: rgba(0, 86, 210, 0.9);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            color: #fff;
+            border-color: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 4px 20px rgba(0, 86, 210, 0.3);
+        }
+        .pagination button.active::before {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.1) 100%);
+            opacity: 1;
         }
         .pagination button:disabled {
-            opacity: 0.5; cursor: not-allowed; border-color: #e3e3e3;
+            opacity: 0.4;
+            cursor: not-allowed;
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
         }
 
         /* --- Footer --- */
@@ -263,7 +307,8 @@
             { id: 30, date: '02/27/2026', keys: { en: 'APSC 17th general meeting will be held on Monday, Mar 2 at lunchtime in Room 1008. During the meeting we will discuss on the responses for the club feedback & suggestions form and plan for the upcoming events. We look forward to seeing everyone there and having a productive discussion!', 'zh-hans': 'APSC第17次会议将于3月2日（周一）午餐时间在1008教室举行。会议期间，我们将讨论社团反馈和建议表的回复，并计划即将到来的活动。我们期待在那里见到大家，并进行富有成效的讨论！', 'zh-hant': 'APSC第17次會議將於3月2日（周一）午餐時間在1008教室舉行。會議期間，我們將討論社團反饋和建議表的回覆，並計劃即將到來的活動。我們期待在那里見到大家，並進行富有成效的討論！', ko: 'APSC 제17차 모임은 3월 2일(월) 점심시간에 1008호에서 개최됩니다. 모임 동안 우리는 클럽 피드백 및 제안 양식에 대한 응답을 논의하고 다가오는 이벤트를 계획할 것입니다. 모두가 그곳에서 만나 생산적인 토론을 나누기를 기대합니다!', ja: 'APSCの第17回会議は3月2日（月）昼休みに1008号室で開催されます。会議中、クラブのフィードバックと提案フォームへの回答について話し合い、今後のイベントを計画します。皆さんがそこに集まって生産的な議論をすることを楽しみにしています！', es: '¡La 17ª reunión general de APSC se llevará a cabo el lunes 2 de marzo a la hora del almuerzo en la sala 1008! Durante la reunión, discutiremos las respuestas al formulario de comentarios y sugerencias del club y planificaremos los próximos eventos. ¡Esperamos verlos a todos allí y tener una discusión productiva!' , fr: 'La 17ème assemblée générale de l’APSC se tiendra le lundi 2 mars, pendant la pause déjeuner, dans la salle 1008. Au cours de la réunion, nous discuterons des réponses au formulaire de commentaires et suggestions du club et planifierons les événements à venir. Nous avons hâte de vous y voir tous pour une discussion productive !' } },
             { id: 31, date: '03/23/2026', keys: { en: 'The upcoming fundraiser is postponed due to some issues. We will announce the new date and details once everything is ready. Thank you for your understanding and support!', 'zh-hans': '由于一些问题，原定的筹款活动被推迟了。我们会在一切准备就绪后宣布新的日期和细节。感谢您的理解和支持！', 'zh-hant': '由於一些問題，原定的籌款活動被推遲了。我們會在一切準備就緒後宣布新的日期和細節。感謝您的理解和支持！', ko: '일부 문제로 인해 예정된 모금 행사가 연기되었습니다. 모든 준비가 완료되면 새 날짜와 세부 정보를 발표할 것입니다. 이해와 지원에 감사드립니다!', ja: 'いくつかの問題により、予定されていた募金活動は延期されました。すべてが準備でき次第、新しい日付と詳細を発表します。ご理解とご支援に感謝します！', es: '¡La próxima recaudación de fondos se pospone debido a algunos problemas! Anunciaremos la nueva fecha y detalles una vez que todo esté listo. ¡Gracias por su comprensión y apoyo!' , fr: 'La prochaine collecte de fonds est reportée en raison de certains problèmes. Nous annoncerons la nouvelle date et les détails une fois que tout sera prêt. Merci pour votre compréhension et votre soutien !' } },
             { id: 32, date: '03/24/2026', keys: { en: 'We are looking for volunteers to help with Chinese After School Program (CASP) at Snowden Farm Elementary School (SFES)! Check out the flyer on home page for more details and sign up if you are interested. Thank you for your support!', 'zh-hans': '我们正在寻找志愿者来帮助斯诺登农场小学（SFES）的中文课后项目（CASP）！请查看主页上的传单以获取更多详细信息，如果您有兴趣，请报名。感谢您的支持！', 'zh-hant': '我們正在尋找志願者來幫助斯諾登農場小學（SFES）的中文課後項目（CASP）！請查看主頁上的傳單以獲取更多詳細信息，如果您有興趣，請報名。感謝您的支持！', ko: '스노든 팜 초등학교(SFES)의 중국어 방과후 프로그램(CASP)을 도울 자원봉사자를 찾고 있습니다! 자세한 내용은 홈페이지의 전단지를 확인하고 관심이 있으시면 등록하세요. 지원해 주셔서 감사합니다!', ja: 'スノーデンファーム小学校（SFES）の中国語放課後プログラム（CASP）を手伝うボランティアを募集しています！詳細はホームページのチラシを確認し、興味がある場合はサインアップしてください。ご支援ありがとうございます！', es: '¡Estamos buscando voluntarios para ayudar con el Programa de Chino Después de la Escuela (CASP) en la Escuela Primaria Snowden Farm (SFES)! Consulta el folleto en la página de inicio para obtener más detalles y regístrate si estás interesado. ¡Gracias por tu apoyo!' , fr: 'Nous recherchons des bénévoles pour aider avec le Programme de chinois après l\'école (CASP) à l\'école élémentaire Snowden Farm (SFES) ! Consultez le flyer sur la page d\'accueil pour plus de détails et inscrivez-vous si vous êtes intéressé. Merci pour votre soutien !' } },
-            { id: 33, date: '03/24/2026', keys: { en: 'Join our meeting in Room 1008 at lunchtime on Friday, March 27 to learn more about the Chinese After School Program (CASP)! We will discuss the program details and how you can get involved! Bring your friends and come support this meaningful program! We look forward to seeing you there!', 'zh-hans': '加入我们3月27日（周五）午餐时间在1008教室的会议，了解更多关于中文课后项目（CASP）的信息！我们将讨论项目细节以及您如何参与！带上你的朋友来支持这个有意义的项目！我们期待在那里见到你！', 'zh-hant': '加入我們3月27日（周五）午餐時間在1008教室的會議，了解更多關於中文課後項目（CASP）的信息！我們將討論項目細節以及您如何參與！帶上你的朋友來支持這個有意義的項目！我們期待在那里見到你！', ko: '3월 27일 금요일 점심시간에 1008호에서 열리는 회의에 참여하여 중국어 방과후 프로그램(CASP)에 대해 자세히 알아보세요! 프로그램 세부 사항과 참여 방법에 대해 논의할 것입니다! 친구를 데리고 와서 이 의미 있는 프로그램을 지원하세요! 그곳에서 뵙기를 기대합니다!', ja: '3月27日（金）昼休みに1008号室で開催される会議に参加して、中国語放課後プログラム（CASP）についてもっと知りましょう！プログラムの詳細と参加方法について話し合います！友達を連れて、この意味のあるプログラムをサポートしてください！皆さんがそこに集まることを楽しみにしています！', es: '¡Únete a nuestra reunión en la sala 1008 a la hora del almuerzo el viernes 27 de marzo para aprender más sobre el Programa de Chino Después de la Escuela (CASP)! ¡Discutiremos los detalles del programa y cómo puedes involucrarte! ¡Trae a tus amigos y apoya este programa significativo! ¡Esperamos verte allí!' , fr: 'Rejoignez notre réunion dans la salle 1008 à l\'heure du déjeuner le vendredi 27 mars pour en savoir plus sur le Programme de chinois après l\'école (CASP) ! Nous discuterons des détails du programme et de la manière dont vous pouvez vous impliquer ! Amenez vos amis et venez soutenir ce programme significatif ! Nous avons hâte de vous y voir !'} }
+            { id: 33, date: '03/24/2026', keys: { en: 'Join our meeting in Room 1008 at lunchtime on Friday, March 27 to learn more about the Chinese After School Program (CASP)! We will discuss the program details and how you can get involved! Bring your friends and come support this meaningful program! We look forward to seeing you there!', 'zh-hans': '加入我们3月27日（周五）午餐时间在1008教室的会议，了解更多关于中文课后项目（CASP）的信息！我们将讨论项目细节以及您如何参与！带上你的朋友来支持这个有意义的项目！我们期待在那里见到你！', 'zh-hant': '加入我們3月27日（周五）午餐時間在1008教室的會議，了解更多關於中文課後項目（CASP）的信息！我們將討論項目細節以及您如何參與！帶上你的朋友來支持這個有意義的項目！我們期待在那里見到你！', ko: '3월 27일 금요일 점심시간에 1008호에서 열리는 회의에 참여하여 중국어 방과후 프로그램(CASP)에 대해 자세히 알아보세요! 프로그램 세부 사항과 참여 방법에 대해 논의할 것입니다! 친구를 데리고 와서 이 의미 있는 프로그램을 지원하세요! 그곳에서 뵙기를 기대합니다!', ja: '3月27日（金）昼休みに1008号室で開催される会議に参加して、中国語放課後プログラム（CASP）についてもっと知りましょう！プログラムの詳細と参加方法について話し合います！友達を連れて、この意味のあるプログラムをサポートしてください！皆さんがそこに集まることを楽しみにしています！', es: '¡Únete a nuestra reunión en la sala 1008 a la hora del almuerzo el viernes 27 de marzo para aprender más sobre el Programa de Chino Después de la Escuela (CASP)! ¡Discutiremos los detalles del programa y cómo puedes involucrarte! ¡Trae a tus amigos y apoya este programa significativo! ¡Esperamos verte allí!' , fr: 'Rejoignez notre réunion dans la salle 1008 à l\'heure du déjeuner le vendredi 27 mars pour en savoir plus sur le Programme de chinois après l\'école (CASP) ! Nous discuterons des détails du programme et de la manière dont vous pouvez vous impliquer ! Amenez vos amis et venez soutenir ce programme significatif ! Nous avons hâte de vous y voir !'} },
+            { id: 34, date: '04/05/2026', keys: { en: 'Happy Easter Sunday! This is a reminder that there will be no meeting on Monday, April 6 due to the Easter Holiday. We hope everyone has a wonderful Easter with your family and friends!', 'zh-hans': '复活节快乐！提醒大家，由于复活节假期，4月6日（周一）将没有会议。希望大家和家人朋友度过一个美好的复活节！', 'zh-hant': '復活節快樂！提醒大家，由於復活節假期，4月6日（周一）將沒有會議。希望大家和家人朋友度過一個美好的復活節！', ko: '행복한 부활절입니다! 부활절 휴일로 인해 4월 6일(월)에는 모임이 없다는 점을 알려드립니다. 가족 및 친구들과 함께 멋진 부활절 보내시길 바랍니다!', ja: 'ハッピーイースターサンデー！イースターホリデーのため、4月6日（月）はミーティングがないことをお知らせします。皆さんが家族や友達と素晴らしいイースターを過ごせることを願っています！', es: '¡Feliz Domingo de Pascua! Este es un recordatorio de que no habrá reunión el lunes 6 de abril debido al feriado de Pascua. ¡Esperamos que todos tengan una maravillosa Pascua con su familia y amigos!' , fr: 'Joyeux dimanche de Pâques ! Ceci est un rappel qu\'il n\'y aura pas de réunion le lundi 6 avril en raison du jour férié de Pâques. Nous espérons que tout le monde passera une merveilleuse Pâques avec votre famille et vos amis !' } },
         ];
 
         const i18n = {
