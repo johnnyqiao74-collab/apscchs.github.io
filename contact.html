@@ -99,11 +99,9 @@
         .contact-form { width: 100%; min-width: 0; }
         .contact-form .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; min-width: 0; }
         .contact-form .form-group { min-width: 0; }
-        .contact-form input,
-        .contact-form textarea,
-        .contact-form select {
-            width: 100%;
-            min-width: 0;
+        .contact-form input[type="date"] {
+            width: 100% !important;
+            box-sizing: border-box;
         }
         .contact-form textarea { min-height: 160px; }
         .contact-form .submit-btn {
@@ -295,6 +293,38 @@
 
         <section class="team-container">
             <div class="contact-content">
+                <div style="text-align: center; margin-bottom: 60px;">
+                    <h3 style="font-size: 2rem; font-weight: 700; margin-bottom: 30px; color: var(--text-main);" data-key="contact-methods-title">Other Ways to Contact Us</h3>
+                    
+                    <div class="contact-methods-grid">
+                        <div style="text-align: center; padding: 30px; background: #fbfbfd; border-radius: 20px; border: 1px solid var(--border-color);">
+                            <div style="font-size: 3rem; margin-bottom: 20px;">📧</div>
+                            <h4 style="font-size: 1.3rem; font-weight: 700; margin-bottom: 15px; color: var(--text-main);" data-key="email-title-direct">Email Us</h4>
+                            <p style="color: var(--text-sub); margin-bottom: 15px;" data-key="email-desc-direct">Send us an email for general inquiries, partnership opportunities, or to schedule a meeting.</p>
+                            <a href="mailto:apscchs.1@gmail.com" style="color: var(--brand-blue); font-weight: 600; text-decoration: none;" data-key="email-link">apscchs.1@gmail.com</a>
+                        </div>
+                        
+                        <div style="text-align: center; padding: 30px; background: #fbfbfd; border-radius: 20px; border: 1px solid var(--border-color);">
+                            <div style="font-size: 3rem; margin-bottom: 20px;">📱</div>
+                            <h4 style="font-size: 1.3rem; font-weight: 700; margin-bottom: 15px; color: var(--text-main);" data-key="social-title-direct">Social Media</h4>
+                            <p style="color: var(--text-sub); margin-bottom: 15px;" data-key="social-desc-direct">Follow us for updates, event announcements, and community discussions.</p>
+                            <div style="display: flex; justify-content: center; gap: 15px;">
+                                <a href="https://www.instagram.com/cburg_apsc/" target="_blank" style="color: var(--brand-blue); font-weight: 600; text-decoration: none;">Instagram</a>
+                                <a href="https://www.facebook.com/share/1JPeJSg5Lu/?mibextid=wwXIfr" target="_blank" style="color: var(--brand-blue); font-weight: 600; text-decoration: none;">Facebook</a>
+                                <a href="https://youtube.com/@asianpeersupportclub?si=KEjXASrIdc-YnPQK" target="_blank" style="color: var(--brand-blue); font-weight: 600; text-decoration: none;">YouTube</a>
+                                <a href="https://www.tiktok.com/@asian.peer.support.club?_r=1&_t=ZT-92ENWhIaqPF" target="_blank" style="color: var(--brand-blue); font-weight: 600; text-decoration: none;">TikTok</a>
+                            </div>
+                        </div>
+                        
+                        <div style="text-align: center; padding: 30px; background: #fbfbfd; border-radius: 20px; border: 1px solid var(--border-color);">
+                            <div style="font-size: 3rem; margin-bottom: 20px;">📅</div>
+                            <h4 style="font-size: 1.3rem; font-weight: 700; margin-bottom: 15px; color: var(--text-main);" data-key="meeting-title-direct">In-Person Meetings</h4>
+                            <p style="color: var(--text-sub); margin-bottom: 15px;" data-key="meeting-desc-direct">We hold regular club meetings and are happy to schedule one-on-one sessions.</p>
+                            <a href="events.html" style="color: var(--brand-blue); font-weight: 600; text-decoration: none;" data-key="meeting-link">View Events</a>
+                        </div>
+                    </div>
+                </div>
+
                 <h2 style="font-size: 2.5rem; font-weight: 800; text-align: center; margin-bottom: 40px; color: var(--text-main);" data-key="appointment-title">Book an Appointment</h2>
                 
                 <form id="appointment-form" class="contact-form" action="https://formspree.io/f/xdapyqld" method="POST">
@@ -344,37 +374,6 @@
                     <button type="submit" class="submit-btn" data-key="submit-btn">Schedule Appointment</button>
                     <div id="form-status" style="margin-top: 20px; text-align: center; font-size: 14px; font-weight: 500; min-height: 24px;"></div>
                 </form>
-
-                <div style="text-align: center; margin-bottom: 60px;">
-                    <h3 style="font-size: 2rem; font-weight: 700; margin-bottom: 30px; color: var(--text-main);" data-key="contact-methods-title">Other Ways to Contact Us</h3>
-                    
-                    <div class="contact-methods-grid">
-                        <div style="text-align: center; padding: 30px; background: #fbfbfd; border-radius: 20px; border: 1px solid var(--border-color);">
-                            <div style="font-size: 3rem; margin-bottom: 20px;">📧</div>
-                            <h4 style="font-size: 1.3rem; font-weight: 700; margin-bottom: 15px; color: var(--text-main);" data-key="email-title-direct">Email Us</h4>
-                            <p style="color: var(--text-sub); margin-bottom: 15px;" data-key="email-desc-direct">Send us an email for general inquiries, partnership opportunities, or to schedule a meeting.</p>
-                            <a href="mailto:apscchs.1@gmail.com" style="color: var(--brand-blue); font-weight: 600; text-decoration: none;" data-key="email-link">apscchs.1@gmail.com</a>
-                        </div>
-                        
-                        <div style="text-align: center; padding: 30px; background: #fbfbfd; border-radius: 20px; border: 1px solid var(--border-color);">
-                            <div style="font-size: 3rem; margin-bottom: 20px;">📱</div>
-                            <h4 style="font-size: 1.3rem; font-weight: 700; margin-bottom: 15px; color: var(--text-main);" data-key="social-title-direct">Social Media</h4>
-                            <p style="color: var(--text-sub); margin-bottom: 15px;" data-key="social-desc-direct">Follow us for updates, event announcements, and community discussions.</p>
-                            <div style="display: flex; justify-content: center; gap: 15px;">
-                                <a href="https://www.instagram.com/cburg_apsc/" target="_blank" style="color: var(--brand-blue); font-weight: 600; text-decoration: none;">Instagram</a>
-                                <a href="https://www.facebook.com/share/1JPeJSg5Lu/?mibextid=wwXIfr" target="_blank" style="color: var(--brand-blue); font-weight: 600; text-decoration: none;">Facebook</a>
-                                <a href="https://youtube.com/@asianpeersupportclub?si=KEjXASrIdc-YnPQK" target="_blank" style="color: var(--brand-blue); font-weight: 600; text-decoration: none;">YouTube</a>
-                            </div>
-                        </div>
-                        
-                        <div style="text-align: center; padding: 30px; background: #fbfbfd; border-radius: 20px; border: 1px solid var(--border-color);">
-                            <div style="font-size: 3rem; margin-bottom: 20px;">📅</div>
-                            <h4 style="font-size: 1.3rem; font-weight: 700; margin-bottom: 15px; color: var(--text-main);" data-key="meeting-title-direct">In-Person Meetings</h4>
-                            <p style="color: var(--text-sub); margin-bottom: 15px;" data-key="meeting-desc-direct">We hold regular club meetings and are happy to schedule one-on-one sessions.</p>
-                            <a href="events.html" style="color: var(--brand-blue); font-weight: 600; text-decoration: none;" data-key="meeting-link">View Events</a>
-                        </div>
-                    </div>
-                </div>
             </div>
         </section>
     </main>
@@ -401,6 +400,7 @@
             <a href="Terms_of_Use.html" data-key="footer-terms">Terms of Use</a>
         </div>
     </footer>
+    <p style="text-align: center; font-size: 12px; color: #666; margin: 20px 0;">Maintained by the APSC Web Team</p>
 
     <script>
         const translations = {
