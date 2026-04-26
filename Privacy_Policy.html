@@ -31,14 +31,29 @@
         .lang-btn { background: none; border: none; font-size: 10px; font-weight: 600; letter-spacing: 0.1em; color: var(--text-sub); margin: 0 10px; cursor: pointer; transition: var(--transition); }
         .lang-btn.active { color: var(--brand-blue); }
 
-        /* --- 导航栏 --- */
-        nav { background: rgba(255,255,255,0.85); backdrop-filter: blur(25px); position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid var(--border-color); }
-        .nav-container { max-width: 1300px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 12px 40px; }
-        .nav-brand-link img { height: 35px; }
-        .nav-links { display: flex; list-style: none; gap: 25px; align-items: center; }
+         nav {
+            background: rgba(255,255,255,0.85); backdrop-filter: blur(25px);
+            position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid var(--border-color);
+        }
+        .nav-container {
+            max-width: 1300px; margin: 0 auto;
+            display: flex; justify-content: space-between; align-items: center; padding: 12px 40px;
+            position: relative;
+        }
+        .nav-brand-link img { height: 44px; transition: transform 0.25s ease; }
+        .nav-brand-link img:hover { transform: scale(1.05); }
+        .nav-links { display: flex; list-style: none; gap: 20px; align-items: center; }
         .nav-links a { text-decoration: none; color: var(--text-main); font-size: 13px; font-weight: 500; transition: var(--transition); }
         .nav-links a:hover { color: var(--brand-blue); }
         .btn-donate-nav { border: 1px solid var(--brand-blue); padding: 6px 15px; border-radius: 50px; color: var(--brand-blue) !important; }
+        .btn-donate-nav:hover { background: var(--brand-blue); color: #fff !important; }
+        
+        .btn-donate-nav {
+            border: 1px solid var(--brand-blue);
+            padding: 6px 15px; border-radius: 50px;
+            color: var(--brand-blue) !important;
+        }
+        .btn-donate-nav:hover { background: var(--brand-blue); color: #fff !important; }
 
         /* --- 汉堡菜单 --- */
         .hamburger { display: none; cursor: pointer; width: 30px; height: 20px; position: relative; z-index: 1001; }
@@ -97,13 +112,16 @@
         <div class="nav-container">
             <a href="index.html" class="nav-brand-link"><img src="APSC_LOGO.png" alt="APSC Logo"></a>
             <div class="hamburger" id="hamburger-btn"><span></span><span></span><span></span></div>
-            <ul class="nav-links" id="nav-menu">
+             <ul class="nav-links" id="nav-menu">
                 <li><a href="index.html" data-key="nav-home">Home</a></li>
-                <li><a href="about.html" data-key="nav-about">About</a></li>
+                <li><a href="about.html"  data-key="nav-about">About</a></li>
+                <li><a href="contact.html" data-key="nav-contact">Contact</a></li>
+                <li><a href="events.html" data-key="nav-events">Events</a></li>
+                <li><a href="index.html#meeting-section" data-key="nav-meeting" onclick="closeMenu()">Meetings</a></li>
+                <li><a href="announcements.html" data-key="nav-announcements">Announcements</a></li>
                 <li><a href="support.html" data-key="nav-support">Get Support</a></li>
-                <li><a href="announcements.html" data-key="nav-ann">Announcements</a></li>
                 <li><a href="guestbook.html" data-key="nav-feedback">Feedback</a></li>
-                <li><a href="index.html#support" class="btn-donate-nav" data-key="nav-donate">Donate</a></li>
+                <li><a href="index.html#support" class="btn-donate-nav" data-key="nav-donate" onclick="closeMenu()">Donate</a></li>
             </ul>
         </div>
     </nav>
@@ -184,7 +202,7 @@
         </div>
         <p class="footer-text">© 2026 ASIAN PEER SUPPORT CLUB | CLARKSBURG HIGH SCHOOL</p>
         <div class="footer-legal">
-            <a href="Privacy_Policy.html" data-key="nav-privacy">Privacy Policy</a>
+            <a href="Privacy_Policy.html" style="color: var(--brand-blue)" data-key="nav-privacy">Privacy Policy</a>
             <span class="separator">|</span>
             <a href="Terms_of_Use.html" data-key="nav-terms">Terms of Use</a>
         </div> 
@@ -202,7 +220,7 @@
 
         const i18n = {
             'en': {
-                'nav-home': 'Home', 'nav-about': 'About', 'nav-support': 'Get Support', 'nav-ann': 'Announcements', 'nav-feedback': 'Feedback', 'nav-donate': 'Donate', 'nav-privacy': 'Privacy Policy', 'nav-terms': 'Terms of Use',
+                'nav-home': 'Home', 'nav-about': 'About', 'nav-support': 'Get Support', 'nav-ann': 'Announcements', 'nav-feedback': 'Feedback', 'nav-donate': 'Donate', 'nav-privacy': 'Privacy Policy', 'nav-terms': 'Terms of Use', 'nav-contact': 'Contact', 'nav-events': 'Events', 'nav-meeting': 'Meetings',
                 'pri-update': 'Effective Date: January 2026',
                 'pri-h1': '1. Introduction & Scope', 'pri-p1': 'APSC is committed to protecting your privacy. This policy explains how we collect, use, and protect information in compliance with MCPS regulations and applicable laws.',
                 'pri-h2': '2. Types of Information We Collect', 'pri-p2': 'We collect personal information only when voluntarily submitted through forms, including: name, email, phone, grade level, interests, and support requests. We do not use cookies or tracking technologies.',
@@ -218,7 +236,7 @@
                 'pri-h12': '12. Contact & Support', 'pri-p12': 'For questions about this Privacy Policy, data handling concerns, or to request access/deletion of your information, contact APSC through official school channels or speak with administration.'
             },
             'zh-hans': {
-                'nav-home': '首页', 'nav-about': '关于我们', 'nav-support': '寻求帮助', 'nav-ann': '公告', 'nav-feedback': '反馈', 'nav-donate': '捐赠支持', 'nav-privacy': '隐私政策', 'nav-terms': '使用条款',
+                'nav-home': '首页', 'nav-about': '关于我们', 'nav-support': '寻求帮助', 'nav-ann': '公告', 'nav-feedback': '反馈', 'nav-donate': '捐赠支持', 'nav-privacy': '隐私政策', 'nav-terms': '使用条款', 'nav-contact': '联系我们', 'nav-events': '活动展示', 'nav-meeting': '会议安排',
                 'pri-update': '生效日期：2026年1月',
                 'pri-h1': '1. 介绍与范围', 'pri-p1': 'APSC 致力于保护您的隐私。本政策解释我们如何根据学校规定收集、使用和保护您的信息。',
                 'pri-h2': '2. 我们收集的信息类型', 'pri-p2': '我们仅通过表单主动收集个人信息，包括：姓名、电子邮件、电话、年级、兴趣和支持请求。我们不使用 Cookie 或跟踪技术。',
@@ -234,7 +252,7 @@
                 'pri-h12': '12. 联系与支持', 'pri-p12': '如对本隐私政策有疑问、数据处理问题或希望请求访问/删除您的信息，请通过官方渠道与 APSC 联系。'
             },
             'zh-hant': {
-                'nav-home': '首頁', 'nav-about': '關於我們', 'nav-support': '尋求幫助', 'nav-ann': '公告', 'nav-feedback': '回饋', 'nav-donate': '捐贈支持', 'nav-privacy': '隱私政策', 'nav-terms': '使用條款',
+                'nav-home': '首頁', 'nav-about': '關於我們', 'nav-support': '尋求幫助', 'nav-ann': '公告', 'nav-feedback': '回饋', 'nav-donate': '捐贈支持', 'nav-privacy': '隱私政策', 'nav-terms': '使用條款', 'nav-contact': '聯繫我們', 'nav-events': '活動展示', 'nav-meeting': '會議安排',
                 'pri-update': '生效日期：2026年1月',
                 'pri-h1': '1. 介紹與範圍', 'pri-p1': 'APSC 致力於保護您的隱私。本政策解釋我們如何根據學校規定收集、使用和保護您的信息。',
                 'pri-h2': '2. 我們收集的信息類型', 'pri-p2': '我們僅通過表單主動收集個人信息，包括：姓名、電子郵件、電話、年級、興趣和支持請求。我們不使用 Cookie 或跟蹤技術。',
@@ -250,7 +268,7 @@
                 'pri-h12': '12. 聯繫與支持', 'pri-p12': '如對本隱私政策有疑問、數據處理問題或希望請求訪問/刪除您的信息，請通過官方渠道與 APSC 聯繫。'
             },
             'ko': {
-                'nav-home': '홈', 'nav-about': '소개', 'nav-support': '지원 받기', 'nav-ann': '공지', 'nav-feedback': '피드백', 'nav-donate': '기부', 'nav-privacy': '개인정보 정책', 'nav-terms': '이용약관',
+                'nav-home': '홈', 'nav-about': '소개', 'nav-support': '지원 받기', 'nav-ann': '공지', 'nav-feedback': '피드백', 'nav-donate': '기부', 'nav-privacy': '개인정보 정책', 'nav-terms': '이용약관', 'nav-contact': '연락처', 'nav-events': '이벤트', 'nav-meeting': '회의',
                 'pri-update': '발효 날짜: 2026년 1월',
                 'pri-h1': '1. 도입 및 범위', 'pri-p1': 'APSC는 귀하의 개인정보 보호에 최선을 다합니다. 본 정책은 학교 규정에 따라 정보를 수집, 사용 및 보호하는 방법을 설명합니다.',
                 'pri-h2': '2. 수집하는 정보 유형', 'pri-p2': '양식을 통해 자발적으로 제출된 개인정보만 수집합니다: 이름, 이메일, 전화, 학년, 관심사, 지원 요청. 쿠키나 추적 기술을 사용하지 않습니다.',
@@ -266,7 +284,7 @@
                 'pri-h12': '12. 연락처 및 지원', 'pri-p12': '본 정책에 대한 질문, 데이터 처리 우려 또는 정보 접근/삭제 요청은 공식 채널을 통해 APSC에 연락하세요.'
             },
             'ja': {
-                'nav-home': 'ホーム', 'nav-about': '詳細', 'nav-support': 'サポート', 'nav-ann': 'お知らせ', 'nav-feedback': '意見', 'nav-donate': '寄付', 'nav-privacy': 'プライバシー', 'nav-terms': '利用規約',
+                'nav-home': 'ホーム', 'nav-about': '詳細', 'nav-support': 'サポート', 'nav-ann': 'お知らせ', 'nav-feedback': '意見', 'nav-donate': '寄付', 'nav-privacy': 'プライバシー', 'nav-terms': '利用規約', 'nav-contact': 'お問い合わせ', 'nav-events': 'イベント', 'nav-meeting': 'ミーティング',
                 'pri-update': '発効日：2026年1月',
                 'pri-h1': '1. 導入および範囲', 'pri-p1': 'APSCはあなたのプライバシー保護に専念しています。本ポリシーは、学校規制に準拠して情報をどのように収集、使用、保護するかを説明しています。',
                 'pri-h2': '2. 収集する情報のタイプ', 'pri-p2': 'フォーム経由で自発的に提出された個人情報のみを収集します：名前、メール、電話、学年、興味、サポートリクエスト。Cookieや追跡技術は使用しません。',
@@ -282,7 +300,7 @@
                 'pri-h12': '12. お問い合わせおよびサポート', 'pri-p12': '本ポリシーに関するご質問、データ処理についてのご懸念、または情報へのアクセス/削除をリクエストするには、公式チャネルでAPSCにお問い合わせください。'
             },
             'es': {
-                'nav-home': 'Inicio', 'nav-about': 'Acerca de', 'nav-support': 'Soporte', 'nav-ann': 'Anuncios', 'nav-feedback': 'Contacto', 'nav-donate': 'Donar', 'nav-privacy': 'Privacidad', 'nav-terms': 'Términos',
+                'nav-home': 'Inicio', 'nav-about': 'Acerca de', 'nav-support': 'Soporte', 'nav-ann': 'Anuncios', 'nav-feedback': 'Contacto', 'nav-donate': 'Donar', 'nav-privacy': 'Privacidad', 'nav-terms': 'Términos', 'nav-contact': 'Contacto', 'nav-events': 'Eventos', 'nav-meeting': 'Reuniones',
                 'pri-update': 'Fecha efectiva: Enero 2026',
                 'pri-h1': '1. Introducción y Alcance', 'pri-p1': 'APSC se compromete a proteger su privacidad. Esta política explica cómo recopilamos, usamos y protegemos información en cumplimiento con regulaciones escolares.',
                 'pri-h2': '2. Tipos de Información que Recopilamos', 'pri-p2': 'Recopilamos información personal solo cuando la envía voluntariamente a través de formularios: nombre, correo electrónico, teléfono, grado, intereses y solicitudes de apoyo. No utilizamos cookies o tecnologías de seguimiento.',
@@ -298,7 +316,7 @@
                 'pri-h12': '12. Contacto y Apoyo', 'pri-p12': 'Para preguntas sobre esta política, inquietudes de manejo de datos o solicitudes de acceso/eliminación, contáctenos a través de canales oficiales de la escuela.'
             },
             'fr': {
-                'nav-home': 'Accueil', 'nav-about': 'À propos', 'nav-support': 'Soutien', 'nav-ann': 'Annonces', 'nav-feedback': 'Retour', 'nav-donate': 'Donner', 'nav-privacy': 'Confidentialité', 'nav-terms': 'Conditions',
+                'nav-home': 'Accueil', 'nav-about': 'À propos', 'nav-support': 'Soutien', 'nav-ann': 'Annonces', 'nav-feedback': 'Retour', 'nav-donate': 'Donner', 'nav-privacy': 'Confidentialité', 'nav-terms': 'Conditions', 'nav-contact': 'Contact', 'nav-events': 'Événements', 'nav-meeting': 'Réunions',
                 'pri-update': 'Date d\'effet : Janvier 2026',
                 'pri-h1': '1. Introduction et Portée', 'pri-p1': 'APSC s\'engage à protéger votre confidentialité. Cette politique explique comment nous collectons, utilisons et protégeons les informations conformément aux réglementations scolaires.',
                 'pri-h2': '2. Types d\'Informations que Nous Collectons', 'pri-p2': 'Nous collectons des informations personnelles uniquement lorsque vous les soumettez volontairement : nom, e-mail, téléphone, classe, intérêts et demandes de soutien. Nous n\'utilisons pas de cookies ou technologie de suivi.',
