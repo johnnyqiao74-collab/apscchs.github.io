@@ -67,18 +67,49 @@
         .hamburger.active span:nth-child(3) { transform: rotate(-45deg); top: 9px; }
 
         /* 页面主体架构 */
-        .wrapper { max-width: 1100px; margin: 0 auto; padding: 80px 40px; }
+        .wrapper { max-width: 1180px; margin: 0 auto; padding: 90px 40px 80px; }
         
-        .hero-section { text-align: center; margin-bottom: 80px; }
-        .section-tag { color: var(--brand-blue); font-weight: 600; font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 15px; display: block; }
-        .section-title { font-size: 3rem; font-weight: 800; letter-spacing: -0.04em; margin-bottom: 30px; color: var(--text-main); }
+        .hero-section { text-align: center; margin-bottom: 90px; position: relative; }
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at top center, rgba(0, 86, 210, 0.08), transparent 35%);
+            pointer-events: none;
+            opacity: 0.65;
+            transform: translateY(-10%);
+        }
+        .hero-section > * { position: relative; z-index: 1; }
+        .section-tag {
+            color: var(--brand-blue);
+            font-weight: 700;
+            font-size: 0.85rem;
+            letter-spacing: 0.24em;
+            text-transform: uppercase;
+            margin-bottom: 18px;
+            display: inline-flex;
+            padding: 10px 20px;
+            border-radius: 999px;
+            background: rgba(0, 86, 210, 0.08);
+        }
+        .section-title {
+            font-size: 3.6rem;
+            font-weight: 900;
+            letter-spacing: -0.045em;
+            margin-bottom: 28px;
+            line-height: 1.02;
+            background: linear-gradient(135deg, var(--text-main) 0%, var(--brand-blue) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
         .hero-text {
             font-family: 'Times New Roman', Times, serif;
             color: var(--text-main);
-            font-size: 1.25rem;
-            max-width: 850px;
-            margin: 0 auto 25px;
-            line-height: 1.6;
+            font-size: 1.22rem;
+            max-width: 820px;
+            margin: 0 auto 26px;
+            line-height: 1.78;
             text-align: center;
         }
 
@@ -91,15 +122,16 @@
         }
 
         .gallery-card {
-            background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
-            border-radius: 24px;
+            background: #ffffff;
+            border-radius: 28px;
             overflow: hidden;
-            border: 1px solid var(--border-color);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(0, 86, 210, 0.08);
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.5s ease, border-color 0.5s ease;
             display: flex;
             flex-direction: column;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.06);
             position: relative;
+            min-height: 100%;
         }
 
         .gallery-card::before {
@@ -109,16 +141,16 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: linear-gradient(135deg, rgba(0, 86, 210, 0.02) 0%, rgba(200, 230, 255, 0.02) 100%);
+            background: radial-gradient(circle at top left, rgba(0, 86, 210, 0.08), transparent 35%);
             opacity: 0;
-            transition: opacity 0.3s ease;
+            transition: opacity 0.4s ease;
             pointer-events: none;
         }
 
         .gallery-card:hover {
-            border-color: rgba(0, 86, 210, 0.2);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.08);
-            transform: translateY(-8px);
+            border-color: rgba(0, 86, 210, 0.3);
+            box-shadow: 0 28px 60px rgba(0,0,0,0.12);
+            transform: translateY(-10px);
         }
 
         .gallery-card:hover::before {
@@ -128,7 +160,7 @@
         /* 关键：使用 aspect-ratio 保证所有设备上图片比例完全一致 (3:2) */
         .gallery-img-wrapper {
             width: 100%;
-            aspect-ratio: 3 / 2; 
+            aspect-ratio: 3 / 2;
             overflow: hidden;
             background: #eee;
             position: relative;
@@ -141,15 +173,21 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: linear-gradient(135deg, rgba(100, 200, 255, 0.65) 0%, rgba(150, 180, 255, 0.55) 100%);
+            background: linear-gradient(135deg, rgba(0, 86, 210, 0.18), rgba(255,255,255,0) 70%);
+            opacity: 0;
+            transition: opacity 0.35s ease;
             pointer-events: none;
             z-index: 2;
+        }
+
+        .gallery-card:hover .gallery-img-wrapper::after {
+            opacity: 1;
         }
 
         .gallery-img-wrapper img {
             width: 100%;
             height: 100%;
-            object-fit: cover; /* 保证图片填满容器且不变形 */
+            object-fit: cover;
             transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
             z-index: 1;
@@ -160,7 +198,7 @@
         }
 
         .gallery-info {
-            padding: 24px;
+            padding: 28px;
         }
 
         .gallery-date {
@@ -189,13 +227,13 @@
 
         /* --- 往期活动归档菜单 (Archive Box) --- */
         .archive-section {
-            background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
-            border: 1px solid var(--border-color);
-            border-radius: 24px;
-            padding: 60px 50px;
+            background: linear-gradient(145deg, #ffffff 0%, #f5f8ff 100%);
+            border: 1px solid rgba(0, 86, 210, 0.12);
+            border-radius: 30px;
+            padding: 70px 55px;
             text-align: center;
             margin-top: 40px;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.04);
+            box-shadow: 0 16px 45px rgba(0,0,0,0.06);
             position: relative;
             overflow: hidden;
         }
@@ -203,18 +241,18 @@
         .archive-section::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: radial-gradient(circle at 20% 30%, rgba(0, 86, 210, 0.02) 0%, transparent 40%);
+            top: -20%;
+            left: 10%;
+            width: 260px;
+            height: 260px;
+            background: radial-gradient(circle, rgba(0, 86, 210, 0.12) 0%, transparent 56%);
             pointer-events: none;
         }
 
         .archive-title {
-            font-size: 2.2rem;
-            font-weight: 700;
-            margin-bottom: 20px;
+            font-size: 2.4rem;
+            font-weight: 900;
+            margin-bottom: 22px;
             color: var(--text-main);
             position: relative;
             z-index: 1;
@@ -223,12 +261,12 @@
         .archive-desc {
             font-family: 'Times New Roman', Times, serif;
             color: var(--text-sub);
-            font-size: 1.1rem;
-            margin-bottom: 40px;
-            max-width: 650px;
+            font-size: 1.16rem;
+            margin-bottom: 42px;
+            max-width: 700px;
             margin-left: auto;
             margin-right: auto;
-            line-height: 1.7;
+            line-height: 1.75;
             position: relative;
             z-index: 1;
         }
@@ -236,22 +274,22 @@
         .archive-links {
             display: flex;
             justify-content: center;
-            gap: 15px;
+            gap: 16px;
             flex-wrap: wrap;
         }
 
         .btn-archive {
             display: inline-block;
-            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
-            border: 1px solid var(--border-color);
-            padding: 14px 28px;
-            border-radius: 50px;
+            background: linear-gradient(135deg, #ffffff 0%, rgba(245, 248, 255, 1) 100%);
+            border: 1px solid rgba(0, 86, 210, 0.12);
+            padding: 15px 30px;
+            border-radius: 999px;
             color: var(--text-main);
-            font-size: 14px;
-            font-weight: 500;
+            font-size: 0.95rem;
+            font-weight: 600;
             text-decoration: none;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+            box-shadow: 0 8px 18px rgba(0,0,0,0.06);
             position: relative;
             overflow: hidden;
         }
@@ -263,29 +301,29 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(0, 86, 210, 0.1), transparent);
-            transition: left 0.5s ease;
+            background: linear-gradient(90deg, transparent, rgba(0, 86, 210, 0.08), transparent);
+            transition: left 0.45s ease;
         }
 
         .btn-archive:hover {
-            border-color: var(--brand-blue);
+            border-color: rgba(0, 86, 210, 0.3);
             color: var(--brand-blue);
-            box-shadow: 0 8px 25px rgba(0, 86, 210, 0.15);
-            transform: translateY(-2px);
+            box-shadow: 0 14px 35px rgba(0, 86, 210, 0.16);
+            transform: translateY(-3px);
         }
 
         .btn-archive:hover::before {
             left: 100%;
         }
 
-.collaboration-section {
-            background: linear-gradient(135deg, rgba(230, 242, 255, 0.15) 0%, rgba(200, 230, 255, 0.15) 100%);
-            border: 1px solid var(--border-color);
-            border-radius: 24px;
-            padding: 70px 50px;
+        .collaboration-section {
+            background: linear-gradient(135deg, rgba(245, 248, 255, 0.6) 0%, rgba(217, 234, 255, 0.6) 100%);
+            border: 1px solid rgba(0, 86, 210, 0.12);
+            border-radius: 30px;
+            padding: 80px 50px;
             text-align: center;
             margin-top: 40px;
-            box-shadow: 0 12px 40px rgba(0,0,0,0.05);
+            box-shadow: 0 18px 50px rgba(0,0,0,0.08);
             position: relative;
             overflow: hidden;
         }
@@ -293,18 +331,18 @@
         .collaboration-section::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: radial-gradient(circle at 70% 20%, rgba(0, 86, 210, 0.03) 0%, transparent 50%);
+            top: -20%;
+            right: -10%;
+            width: 320px;
+            height: 320px;
+            background: radial-gradient(circle, rgba(0, 86, 210, 0.1) 0%, transparent 48%);
             pointer-events: none;
         }
 
         .collaboration-title {
-            font-size: 2.4rem;
-            font-weight: 700;
-            margin-bottom: 25px;
+            font-size: 2.6rem;
+            font-weight: 900;
+            margin-bottom: 26px;
             color: var(--text-main);
             letter-spacing: -0.02em;
             position: relative;
@@ -314,31 +352,50 @@
         .collaboration-desc {
             font-family: 'Times New Roman', Times, serif;
             color: var(--text-sub);
-            font-size: 1.15rem;
+            font-size: 1.18rem;
             margin-bottom: 45px;
-            max-width: 750px;
+            max-width: 760px;
             margin-left: auto;
             margin-right: auto;
-            line-height: 1.7;
+            line-height: 1.75;
             position: relative;
             z-index: 1;
         }
 
-.btn-collab {
-    display: inline-block;
+        .btn-collab {
+            display: inline-block;
             background: linear-gradient(135deg, var(--brand-blue) 0%, #0046b0 100%);
             color: #fff !important;
-            padding: 16px 45px;
-            border-radius: 50px;
-            font-size: 16px;
-            font-weight: 600;
+            padding: 16px 48px;
+            border-radius: 999px;
+            font-size: 1rem;
+            font-weight: 700;
             text-decoration: none;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 4px 20px rgba(0, 86, 210, 0.3);
+            transition: transform 0.35s ease, box-shadow 0.35s ease;
+            box-shadow: 0 12px 30px rgba(0, 86, 210, 0.24);
             position: relative;
             overflow: hidden;
         }
 
+        .btn-collab::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.16), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .btn-collab:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 18px 40px rgba(0, 86, 210, 0.28);
+        }
+
+        .btn-collab:hover::before {
+            left: 100%;
+        }
         .btn-collab::before {
             content: '';
             position: absolute;
@@ -360,58 +417,60 @@
         }
         /* --- Upcoming Event Section --- */
         .upcoming-section {
-            background: linear-gradient(135deg, rgba(245, 245, 220, 0.2) 0%, rgba(0, 255, 255, 0.1) 100%);
-            border-radius: 32px;
-            padding: 80px 40px;
+            background: linear-gradient(135deg, rgba(230, 242, 255, 0.75) 0%, rgba(244, 249, 255, 0.85) 100%);
+            border-radius: 36px;
+            padding: 90px 50px;
             text-align: center;
             margin: 80px 0;
-            border: 1px solid var(--border-color);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.03);
+            border: 1px solid rgba(0, 86, 210, 0.12);
+            box-shadow: 0 26px 60px rgba(0,0,0,0.08);
             color: var(--text-main);
         }
 
         .upcoming-content {
             margin: 0 auto;
-            max-width: 800px;
+            max-width: 780px;
         }
 
         .upcoming-title {
-            font-size: 2.8rem;
-            font-weight: 800;
-            margin-bottom: 20px;
-            letter-spacing: -0.03em;
+            font-size: 3rem;
+            font-weight: 900;
+            margin-bottom: 24px;
+            letter-spacing: -0.04em;
             color: var(--text-main);
         }
 
         .upcoming-text {
-            font-size: 1.15rem;
+            font-size: 1.18rem;
             color: var(--text-sub);
             margin-bottom: 40px;
-            line-height: 1.8;
-            max-width: 600px;
+            line-height: 1.85;
+            max-width: 640px;
             margin-left: auto;
             margin-right: auto;
         }
 
         .upcoming-image {
-            margin-top: 40px;
+            margin-top: 45px;
         }
 
         .upcoming-image img {
             max-width: 100%;
             height: auto;
-            border-radius: 16px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease;
+            border-radius: 24px;
+            box-shadow: 0 24px 50px rgba(0,0,0,0.11);
+            transition: transform 0.35s ease, box-shadow 0.35s ease;
         }
 
         .upcoming-image img:hover {
-            transform: scale(1.02);
+            transform: scale(1.03);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.16);
         }
 
         @media (max-width: 768px) {
             .upcoming-section { padding: 50px 20px; margin: 60px 0; }
-            .upcoming-title { font-size: 2rem; }
+            .upcoming-title { font-size: 2.1rem; }
+            .upcoming-text { font-size: 1.05rem; max-width: 100%; }
         }
         
         footer { padding: 80px 0 60px; border-top: 1px solid var(--border-color); text-align: center; background: #fbfbfd; }
@@ -509,8 +568,8 @@
                 </div>
                 <div class="gallery-info">
                     <span class="gallery-date" data-key="gal-date3">Academic Support</span>
-                    <h3 class="gallery-title" data-key="gal-title3">Peer Tutoring Kickoff</h3>
-                    <p class="gallery-desc" data-key="gal-desc3">Starting the semester strong with our collaborative study session where members help each other excel academically and build confidence.</p>
+                    <h3 class="gallery-title" data-key="gal-title3">Buddy-Based ESOL Support System Kickoff</h3>
+                    <p class="gallery-desc" data-key="gal-desc3">Starting the semester strong with our collaborative study session.</p>
                 </div>
             </div>
 
@@ -533,8 +592,9 @@
             <p class="archive-desc" data-key="archive-p">Looking for older activities or minor club meetings? We keep a record of everything we do. Browse our dedicated archive pages below to revisit our historical moments.</p>
             
             <div class="archive-links">
+                <a href="eventf.html" class="btn-archive" data-key="btn-arc6">Qingming Festival Event 2026 Archive</a>
                 <a href="eventa.html" class="btn-archive" data-key="btn-arc1">CNY Celebration 2026 Archive</a>
-                 <a href="eventb.html" class="btn-archive" data-key="btn-arc2">Xmas Celebration 2025 Archive</a>
+                <a href="eventb.html" class="btn-archive" data-key="btn-arc2">Xmas Celebration 2025 Archive</a>
                 <a href="eventd.html" class="btn-archive" data-key="btn-arc3">Decorations Fundraiser Archive</a>
                 <a href="eventc.html" class="btn-archive" data-key="btn-arc4">General Meetings Archive</a>
                 <a href="evente.html" class="btn-archive" data-key="btn-arc5">Other Activities Archive</a>
@@ -575,13 +635,13 @@
                 'events-p2': 'From vibrant traditional festivals and academic workshops to casual bonding activities, every moment captured here reflects our dedication to fostering a welcoming environment. Explore our gallery to see how we build connections, empower our members, and create lasting memories together.',
                 'gal-date1': 'Recent Highlight', 'gal-title1': 'Cultural Exchange & Festival', 'gal-desc1': 'A wonderful time full with delicious food and fun to celebrate the year of the fire horse together with our members and friends.',
                 'gal-date2': 'Symbolic Moment', 'gal-title2': 'Strength in Unity', 'gal-desc2': 'Our members standing together representing the diverse, inclusive, and highly supportive core of the Asian Peer Support Club.',
-                'gal-date3': 'Academic Support', 'gal-title3': 'Peer Tutoring Kickoff', 'gal-desc3': 'Starting the semester strong with our collaborative study session where members help each other excel academically and build confidence.',
+                'gal-date3': 'Academic Support', 'gal-title3': 'Buddy-Based ESOL Support System Kickoff', 'gal-desc3': 'Starting the semester strong with our collaborative study session.',
                 'upcoming-h': 'Qingming Festival Cultural Event', 'upcoming-p': 'Join us for our Qingming Festival Cultural Event! This traditional Chinese holiday is a time to honor our ancestors and reflect on family heritage. Experience authentic cultural activities, enjoy traditional foods, and connect with our community. Join our meeting on Monday (April 20) in Rm 1008 during lunch time.',
                 'archive-h': 'Past Event Archive', 'archive-p': 'Looking for older activities or minor club meetings? We keep a record of everything we do. Browse our dedicated archive pages below to revisit our historical moments.',
                 'collab-h': 'Partner with Us',
                 'collab-p': 'We are always looking to collaborate with different clubs or organizations to co-host impactful events. If you are interested in creating something meaningful together, please do not hesitate to reach out via any of our contact methods.',
                 'btn-collab-link': 'Contact Us to Collaborate',
-                'btn-arc1': 'CNY Celebration 2026 Archive', 'btn-arc2': 'Xmas Celebration 2025 Archive', 'btn-arc3': 'Decorations Fundraiser Archive', 'btn-arc4': 'General Meetings Archive', 'btn-arc5': 'Other Activities Archive',
+                'btn-arc1': 'CNY Celebration 2026 Archive', 'btn-arc2': 'Xmas Celebration 2025 Archive', 'btn-arc3': 'Decorations Fundraiser Archive', 'btn-arc4': 'General Meetings Archive', 'btn-arc5': 'Other Activities Archive', 'btn-arc6': 'Qingming Festival Event 2026 Archive',
                 'nav-privacy': 'Privacy Policy', 'nav-terms': 'Terms of Use', 'footer-cp': '© 2026 ASIAN PEER SUPPORT CLUB | CLARKSBURG HIGH SCHOOL'
             },
             'zh-hans': {
@@ -591,13 +651,13 @@
                 'events-p2': '从充满活力的传统节日、学术研讨会到轻松的团队建设活动，这里捕捉到的每一个瞬间都反映了我们致力于营造包容环境的决心。探索我们的照片墙，见证我们如何建立联系、赋能成员并共同创造持久的记忆。',
                 'gal-date1': '近期亮点', 'gal-title1': '文化交流与节日庆典', 'gal-desc1': '一个美好时刻，充满着美味的食物和欢乐的氛围，我们与成员和朋友们一起庆祝了火马年的到来。',
                 'gal-date2': '象征性时刻', 'gal-title2': '团结就是力量', 'gal-desc2': '我们的成员并肩站立，展现了亚洲同伴支持社多元、包容且高度互助的核心精神。',
-                'gal-date3': '学术支持', 'gal-title3': '同伴辅导启动仪式', 'gal-desc3': '通过我们的协作学习课程强势开启新学期，成员们互相帮助，在学术上精益求精并建立自信。',
+                'gal-date3': '学术支持', 'gal-title3': '伙伴式ESOL支持系统启动', 'gal-desc3': '通过我们的协作学习课程强势开启新学期。',
                 'upcoming-h': '清明节文化活动', 'upcoming-p': '加入我们的清明节文化活动！这个传统的中国节日是缅怀祖先和反思家族遗产的时候。体验正宗的文化活动，品尝传统美食，与我们的社区连接。周一（4月20日）午餐时间在Rm 1008加入我们的会议。',
                 'archive-h': '往期活动归档', 'archive-p': '正在寻找早期的活动或小型社团会议记录？我们记录了所做的一切。请浏览下方的专属归档页面，重温我们的历史时刻。',
                 'collab-h': '合作伙伴与意向',
                 'collab-p': '我们非常希望与不同的社团或组织共同合作创办活动。如果您有兴趣与我们一同创造有意义的体验，请随时通过我们提供的任一联系方式与我们取得联系。',
                 'btn-collab-link': '立即联系我们',
-                'btn-arc1': '2026农历新年庆祝活动归档', 'btn-arc2': '2025圣诞庆祝活动归档', 'btn-arc3': '装饰义卖活动归档', 'btn-arc4': '常规会议活动归档', 'btn-arc5': '其他活动归档',
+                'btn-arc1': '2026农历新年庆祝活动归档', 'btn-arc2': '2025圣诞庆祝活动归档', 'btn-arc3': '装饰义卖活动归档', 'btn-arc4': '常规会议活动归档', 'btn-arc5': '其他活动归档', 'btn-arc6': '2026清明节活动归档',
                 'nav-privacy': '隐私政策', 'nav-terms': '使用条款'
             },
             'zh-hant': {
@@ -607,30 +667,30 @@
                 'events-p2': '從充滿活力的傳統節日、學術研討會到輕鬆的團隊建設活動，這裡捕捉到的每一個瞬間都反映了我們致力於營造包容環境的決心。探索我們的照片牆，見證我們如何建立聯繫、賦能成員並共同創造持久的記憶。',
                 'gal-date1': '近期亮點', 'gal-title1': '文化交流與節日慶典', 'gal-desc1': '一個美好的夜晚，大家分享傳統美食、製作手工藝品，並探討文化傳承在校園社區中的重要性。',
                 'gal-date2': '象徵性時刻', 'gal-title2': '團結就是力量', 'gal-desc2': '我們的成員並肩站立，展現了亞洲同伴支持社多元、包容且高度互助的核心精神。',
-                'gal-date3': '學術支持', 'gal-title3': '同伴輔導啟動儀式', 'gal-desc3': '通過我們的協作學習課程強勢開啟新學期，成員們互相幫助，在學術上精益求精並建立自信。',
+                'gal-date3': '學術支持', 'gal-title3': '伙伴式ESOL支持系統啟動', 'gal-desc3': '通過我們的協作學習課程強勢開啟新學期。',
                 'upcoming-h': '清明節文化活動', 'upcoming-p': '加入我們的文化活動！這個傳統的中國節日是緬懷祖先和反思家族遺產的時候。體驗正宗的文化活動，品嚐傳統美食，與我們的社區連接。周一（4月20日）午餐時間在Rm 1008加入我們的會議。',
                 'archive-h': '往期活動歸檔', 'archive-p': '正在尋找早期的活動或小型社團會議記錄？我們記錄了所做的一切。請瀏覽下方的專屬歸檔頁面，重溫我們的歷史時刻。',
                 'collab-h': '合作夥伴與意向',
                 'collab-p': '我們非常希望與不同的社團或組織共同合作創辦活動。如果您有興趣與我們一同創造有意義的體驗，請隨時通過我們提供的任一聯繫方式與我們取得聯繫。',
                 'btn-collab-link': '立即聯繫我們',
-                'btn-arc1': '2026農曆新年慶祝活動歸檔', 'btn-arc2': '2025聖誕慶祝活動歸檔', 'btn-arc3': '裝飾義賣活動歸檔', 'btn-arc4': '常規會議活動歸檔', 'btn-arc5': '其他活動歸檔',
+                'btn-arc1': '2026農曆新年慶祝活動歸檔', 'btn-arc2': '2025聖誕慶祝活動歸檔', 'btn-arc3': '裝飾義賣活動歸檔', 'btn-arc4': '常規會議活動歸檔', 'btn-arc5': '其他活動歸檔', 'btn-arc6': '2026清明節活動歸檔',
                 'nav-privacy': '隱私政策', 'nav-terms': '使用條款'
             },
             'ko': {
-                'nav-home': '홈', 'nav-about': '정보', 'nav-events': '이벤트', 'nav-meeting': '회의',  'nav-support': '지원 받기', 'nav-feedback': '피드백', 'nav-donate': '기부', "nav-announcements": "공지사항", "nav-contact": "문의하기",
-                'tag-moments': '기억에 남는 순간들', 'events-h': '우리의 활동 및 이벤트',
-                'events-p1': '우리 커뮤니티 여정의 중심에 오신 것을 환영합니다. 아시아 동료 지원 클럽에서 우리의 이벤트는 단순한 모임 그 이상입니다. 문화적 축하, 개인적 성장 및 상호 지원의 이정표입니다.',
-                'events-p2': '활기찬 전통 축제와 학술 워크샵부터 캐주얼한 유대감 형성 활동에 이르기까지 여기에 포착된 모든 순간은 환영하는 환경을 조성하려는 우리의 헌신을 반영합니다.',
-                'gal-date1': '최근 하이라이트', 'gal-title1': '문화 교류 및 축제', 'gal-desc1': '전통 음식을 나누고, 공예품을 만들고, 학교 커뮤니티 내에서 문화 유산의 중요성에 대해 토론하는 아름다운 저녁입니다.',
-                'gal-date2': '상징적 순간', 'gal-title2': '연대의 힘', 'gal-desc2': '아시아 동료 지원 클럽의 다양하고 포용적이며 지원적인 핵심을 대표하여 함께 서 있는 우리 회원들.',
-                'gal-date3': '학업 지원', 'gal-title3': '동료 튜터링 시작', 'gal-desc3': '회원들이 학업적으로 탁월하고 자신감을 키울 수 있도록 서로 돕는 협동 학습 세션으로 학기를 힘차게 시작합니다.',
-                'upcoming-h': '청명절 문화 이벤트', 'upcoming-p': '청명절 문화 이벤트에 참여하세요! 이 전통적인 중국 명절은 조상을 기리고 가족 유산을 성찰하는 시간입니다. 정통 문화 활동을 경험하고, 전통 음식을 즐기며, 우리 커뮤니티와 연결하세요. 월요일(4월 20일) 점심 시간에 Rm 1008에서 우리 회의에 참여하세요.',
-                'archive-h': '과거 이벤트 아카이브', 'archive-p': '오래된 활동이나 소규모 동아리 모임을 찾고 계신가요? 우리는 우리가 하는 모든 것을 기록합니다. 아래 전용 아카이브 페이지를 검색하십시오.',
-                'collab-h': '우리와 파트너가 되세요',
-                'collab-p': '우리는 영향력 있는 행사를 공동 주최하기 위해 다양한 클럽이나 조직과 협력하기를 항상 희망합니다. 함께 의미 있는 일을 만드는 데 관심이 있으시다면 주저하지 마시고 연락해 주시기 바랍니다.',
-                'btn-collab-link': '협업을 위해 연락하기',
-                'btn-arc1': '2026년 농력년 축제 아카이브 보기', 'btn-arc2': '2025년 크리스마스 축제 아카이브 보기', 'btn-arc3': '장식 펀드라이징 아카이브 보기', 'btn-arc4': '일반 회의 아카이브 보기', 'btn-arc5': '기타 활동 아카이브 보기',
-                'nav-privacy': '개인정보 처리방침', 'nav-terms': '이용약관'
+                'nav-home': '홈', 'nav-about': '소개', 'nav-events': '이벤트', 'nav-meeting': '회의', 'nav-support': '지원 받기', 'nav-feedback': '피드백', 'nav-donate': '기부하기', "nav-announcements": "공지사항", "nav-contact": "문의하기",
+                'tag-moments': '기억에 남는 순간들', 'events-h': '우리의 활동과 이벤트',
+                'events-p1': '우리 커뮤니티 여정의 중심에 오신 것을 환영합니다. 아시안 피어 서포트 클럽에서 우리의 이벤트는 단순한 모임이 아니라 문화적 축하, 개인적 성장, 그리고 상호 지원의 이정표입니다.',
+                'events-p2': '활기찬 전통 축제와 학술 워크숍부터 캐주얼한 유대감 형성 활동까지, 여기에서 포착된 모든 순간은 환영하는 환경을 조성하려는 우리의 헌신을 반영합니다.',
+                'gal-date1': '최근 하이라이트', 'gal-title1': '문화 교류 및 축제', 'gal-desc1': '맛있는 음식과 재미로 가득한 멋진 시간으로, 우리 회원들과 친구들과 함께 불의 해를 축하했습니다.',
+                'gal-date2': '상징적인 순간', 'gal-title2': '단결의 힘', 'gal-desc2': '우리 회원들이 함께 서서 아시안 피어 서포트 클럽의 다양하고 포용적이며 매우 지원적인 핵심을 대표합니다.',
+                'gal-date3': '학업 지원', 'gal-title3': '버디 기반 ESOL 지원 시스템 시작', 'gal-desc3': '협력 학습 세션으로 학기를 강력하게 시작합니다.',
+                'upcoming-h': '청명절 문화 행사', 'upcoming-p': '청명절 문화 행사에 참여하세요! 이 전통적인 중국 휴일은 조상을 기리고 가족 유산을 되돌아보는 시간입니다. 진정한 문화 활동을 경험하고 전통 음식을 즐기며 우리 커뮤니티와 연결하세요. 월요일(4월 20일) 점심 시간에 Rm 1008에서 회의에 참여하세요.',
+                'archive-h': '과거 이벤트 아카이브', 'archive-p': '이전 활동이나 소규모 클럽 회의를 찾고 계십니까? 우리는 우리가 하는 모든 것을 기록합니다. 아래의 전용 아카이브 페이지를 탐색하여 우리의 역사적 순간을 다시 방문하십시오.',
+                'collab-h': '파트너십 안내',
+                'collab-p': '우리는 의미 있는 이벤트를 공동 주최하기 위해 다양한 클럽이나 조직과 협력하기를 항상 원합니다. 함께 의미 있는 것을 만드는 데 관심이 있는 경우 제공된 연락 방법 중 하나를 통해 언제든지 문의하십시오.',
+                'btn-collab-link': '협업 문의하기',
+                'btn-arc1': '2026년 음력 설날 이벤트 아카이브 보기', 'btn-arc2': '2025년 크리스마스 이벤트 아카이브 보기', 'btn-arc3': '장식 자선 이벤트 아카이브 보기', 'btn-arc4': '일반 회의 이벤트 아카이브 보기', 'btn-arc5': '기타 활동 아카이브 보기', 'btn-arc6': '2026년 청명절 이벤트 아카이브 보기',
+                'nav-privacy': '개인정보 처리방침', 'nav-terms': '이용 약관'
             },
             'ja': {
                 'nav-home': 'ホーム', 'nav-about': '概要', 'nav-events': 'イベント', 'nav-meeting': '会議', 'nav-support': 'サポート', 'nav-feedback': 'フィードバック', 'nav-donate': '寄付', "nav-announcements": "お知らせ", "nav-contact": "お問い合わせ",
@@ -639,13 +699,13 @@
                 'events-p2': '活気に満ちた伝統的なお祭りや学術ワークショップから、カジュアルな絆を深める活動まで、ここにとらえられたすべての瞬間は、歓迎される環境を育むという私たちの献身を反映しています。',
                 'gal-date1': '最近のハイライト', 'gal-title1': '文化交流とフェスティバル', 'gal-desc1': '伝統的な食べ物を分かち合い、工芸品を作り、学校コミュニティ内での文化遺産の重要性について話し合う美しい夜。',
                 'gal-date2': '象徴的な瞬間', 'gal-title2': '団結の強さ', 'gal-desc2': 'アジア・ピア・サポート・クラブの多様で包括的、そして非常に協力的な中核を代表して共に立つ私たちのメンバー。',
-                'gal-date3': '学術サポート', 'gal-title3': 'ピアチュータリングのキックオフ', 'gal-desc3': 'メンバーが学業で優れ、自信を築くのを互いに助け合う共同学習セッションで、学期を力強くスタートします。',
+                'gal-date3': '学術サポート', 'gal-title3': 'バディベースESOLサポートシステム開始', 'gal-desc3': '協力的な学習セッションで学期を強力に開始します。',
                 'upcoming-h': '清明祭文化イベント', 'upcoming-p': '清明祭文化イベントにご参加ください！この伝統的な中国の祝日は、祖先を敬い、家族の遺産を振り返る時間です。正統な文化活動を体験し、伝統料理を楽しんで、私たちのコミュニティとつながってください。月曜日（4月20日）昼食時間にRm 1008で私たちの会議にご参加ください。',
                 'archive-h': '過去のイベントアーカイブ', 'archive-p': '古い活動や小規模なクラブの会議をお探しですか？私たちはすべての記録を保持しています。以下のアーカイブページをご覧ください。',
                 'collab-h': 'パートナーシップのご案内',
                 'collab-p': '私たちは、有意義なイベントを共催するために、さまざまなクラブや組織との協力を常に求めています。一緒に何かを作り上げることに興味がある方は、提供されている連絡方法のいずれかからお気軽にお問い合わせください。',
                 'btn-collab-link': 'コラボレーションについて問い合わせる',
-                'btn-arc1': '2026年農曆新年イベントアーカイブを見る', 'btn-arc2': '2025年クリスマスイベントアーカイブを見る', 'btn-arc3': '装飾義売イベントアーカイブを見る', 'btn-arc4': '一般会議イベントアーカイブを見る', 'btn-arc5': 'その他の活動アーカイブを見る',
+                'btn-arc1': '2026年農曆新年イベントアーカイブを見る', 'btn-arc2': '2025年クリスマスイベントアーカイブを見る', 'btn-arc3': '装飾義売イベントアーカイブを見る', 'btn-arc4': '一般会議イベントアーカイブを見る', 'btn-arc5': 'その他の活動アーカイブを見る', 'btn-arc6': '2026年清明節イベントアーカイブを見る',
                 'nav-privacy': 'プライバシーポリシー', 'nav-terms': '利用規約'
             },
             'es': {
@@ -655,13 +715,13 @@
                 'events-p2': 'Desde vibrantes festivales tradicionales y talleres académicos hasta actividades informales de unión, cada momento capturado aquí refleja nuestra dedicación a fomentar un entorno acogedor.',
                 'gal-date1': 'Acontecimiento Reciente', 'gal-title1': 'Intercambio Cultural y Festival', 'gal-desc1': 'Una hermosa velada compartiendo comida tradicional, haciendo manualidades y discutiendo la importancia de nuestra herencia cultural.',
                 'gal-date2': 'Momento Simbólico', 'gal-title2': 'La Fuerza en la Unidad', 'gal-desc2': 'Nuestros miembros de pie juntos representando el núcleo diverso, inclusivo y altamente solidario del Asian Peer Support Club.',
-                'gal-date3': 'Apoyo Académico', 'gal-title3': 'Inicio de Tutoría entre Compañeros', 'gal-desc3': 'Comenzando el semestre con fuerza con nuestra sesión de estudio colaborativo donde los miembros se ayudan mutuamente a sobresalir.',
+                'gal-date3': 'Apoyo Académico', 'gal-title3': 'Sistema de Soporte ESOL Basado en Pares', 'gal-desc3': 'Comenzar el semestre con fuerza con nuestra sesión de estudio colaborativa.',
                 'upcoming-h': 'Evento Cultural del Festival Qingming', 'upcoming-p': '¡Únete a nuestro Evento Cultural del Festival Qingming! Esta festividad china tradicional es un momento para honrar a nuestros ancestros y reflexionar sobre la herencia familiar. Experimenta actividades culturales auténticas, disfruta de comidas tradicionales y conéctate con nuestra comunidad. Únete a nuestra reunión el lunes (20 de abril) en Rm 1008 durante la hora del almuerzo.',
                 'archive-h': 'Archivo de Eventos Pasados', 'archive-p': '¿Buscas actividades más antiguas o reuniones menores del club? Mantenemos un registro de todo lo que hacemos. Explora nuestras páginas de archivo dedicadas a continuación.',
                 'collab-h': 'Colabora con Nosotros',
                 'collab-p': 'Siempre buscamos colaborar con diferentes clubes u organizaciones para coorganizar eventos impactantes. Si estás interesado en crear algo significativo juntos, no dudes en contactarnos a través de cualquiera de nuestros medios.',
                 'btn-collab-link': 'Contáctanos para colaborar',
-                'btn-arc1': 'Ver Archivo de Eventos 2026', 'btn-arc2': 'Ver Archivo de Eventos 2025', 'btn-arc3': 'Ver Archivo de Actividades de Decoración', 'btn-arc4': 'Ver Archivo de Actividades Generales', 'btn-arc5': 'Ver Archivo de Otras Actividades',
+                'btn-arc1': 'Ver Archivo de Eventos 2026', 'btn-arc2': 'Ver Archivo de Eventos 2025', 'btn-arc3': 'Ver Archivo de Actividades de Decoración', 'btn-arc4': 'Ver Archivo de Actividades Generales', 'btn-arc5': 'Ver Archivo de Otras Actividades', 'btn-arc6': 'Ver Archivo de Eventos del Festival Qingming',
                 'nav-privacy': 'Política de Privacidad', 'nav-terms': 'Términos de Uso'
             },
             'fr': {
@@ -671,13 +731,13 @@
                 'events-p2': 'Des festivals traditionnels dynamiques et des ateliers académiques aux activités de création de liens informelles, chaque instant capturé ici reflète notre dévouement à favoriser un environnement accueillant.',
                 'gal-date1': 'Fait Saillant Récent', 'gal-title1': 'Échange Culturel et Festival', 'gal-desc1': 'Une belle soirée de partage de plats traditionnels, d\'artisanat et de discussion sur l\'importance de notre patrimoine culturel.',
                 'gal-date2': 'Moment Symbolique', 'gal-title2': 'La Force dans l\'Unité', 'gal-desc2': 'Nos membres debout ensemble représentant le noyau diversifié, inclusif et hautement solidaire du Asian Peer Support Club.',
-                'gal-date3': 'Soutien Académique', 'gal-title3': 'Lancement du Tutorat par les Pairs', 'gal-desc3': 'Commencer le semestre en force avec notre session d\'étude collaborative où les membres s\'entraident pour exceller académiquement.',
+                'gal-date3': 'Soutien Académique', 'gal-title3': 'Système de Support ESOL Basé sur les Pairs', 'gal-desc3': 'Commencer le semestre en force avec notre session d\'étude collaborative.',
                 'upcoming-h': 'Événement Culturel du Festival Qingming', 'upcoming-p': 'Rejoignez notre Événement Culturel du Festival Qingming ! Cette fête chinoise traditionnelle est un moment pour honorer nos ancêtres et réfléchir à l\'héritage familial. Expérimentez des activités culturelles authentiques, savourez des plats traditionnels et connectez-vous avec notre communauté. Rejoignez notre réunion lundi (20 avril) à Rm 1008 pendant l\'heure du déjeuner.',
                 'archive-h': 'Archives des Événements Passés', 'archive-p': 'Vous recherchez des activités plus anciennes ou des réunions de club mineures ? Nous gardons une trace de tout ce que nous faisons. Parcourez nos pages d\'archives dédiées ci-dessous.',
                 'collab-h': 'Devenez Partenaire',
                 'collab-p': 'Nous cherchons toujours à collaborer avec différents clubs ou organisations pour co-organiser des événements percutants. Si vous souhaitez créer quelque chose de significatif ensemble, n\'hésitez pas à nous contacter par l\'un de nos moyens de communication.',
                 'btn-collab-link': 'Contactez-nous pour collaborer',
-                'btn-arc1': 'Archives des Événements 2026', 'btn-arc2': 'Archives des Événements 2025', 'btn-arc3': 'Archives des Activités de Décoration', 'btn-arc4': 'Archives des Meetings Générales', 'btn-arc5': 'Archives des Autres Activités',
+                'btn-arc1': 'Archives des Événements 2026', 'btn-arc2': 'Archives des Événements 2025', 'btn-arc3': 'Archives des Activités de Décoration', 'btn-arc4': 'Archives des Meetings Générales', 'btn-arc5': 'Archives des Autres Activités', 'btn-arc6': 'Archives des Événements du Festival Qingming',
                 'nav-privacy': 'Politique de Confidentialité', 'nav-terms': 'Conditions d\'Utilisation'
             }
             };

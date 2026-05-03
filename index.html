@@ -329,21 +329,15 @@
 
     <main class="wrapper">
 
-         <section class="grid-section" id="casp-section" style="margin-bottom: 120px;">
+        <section class="grid-section" id="aanhpi-section" style="margin-bottom: 120px;">
             <div>
-                <h2 class="section-title" data-key="casp-h">Make an Impact. Inspire the Next Generation.</h2>
-                <p class="section-p" data-key="casp-p1">Join our Chinese After School Program at Wilson Wims Elementary School as a Teacher or Teaching Assistant.</p>
-                <p class="section-p" data-key="casp-p2">This is your chance to share your language, culture, and passion while making a meaningful difference in young students’ lives.
-<br><br>✔ Earn SSL Hours
-<br><br>✔ Build leadership and teaching experience
-<br><br>✔ Give back to the community
-<br><br>Program Dates: April 30 – May 28 (Thursdays after school)
-<br><br>Final Call — Don’t miss your last opportunity to apply.
-<br><br>Scan the QR code or click the photo and sign up today.</p>
+                <h2 class="section-title" data-key="aanhpi-h">Celebrate AANHPI Heritage Month</h2>
+                <p class="section-p" data-key="aanhpi-p1">May is Asian American, Native Hawaiian, and Pacific Islander Heritage Month! Join us in honoring the rich cultures, histories, and contributions of the AANHPI community.</p>
+                <p class="section-p" data-key="aanhpi-p2">Throughout the month, we will be hosting a series of events, workshops, and cultural showcases. Check out our upcoming poster for detailed schedules and featured activities. Let's celebrate our diversity and strengthen our community together!</p>
             </div>
-            <a style="cursor: pointer; text-decoration: none; display: flex; align-items: center; justify-content: center;" href="https://docs.google.com/forms/d/e/1FAIpQLSd3rCSihYPr8iFvPMg1jgeeVgSWdwcQJIDNGT-0ZEc-V_7V9Q/viewform">
-                <img src="CASP_FINAL_EN.jpg" class="img-frame" alt="Qingming Festival Poster" style="transition: transform 0.3s ease, box-shadow 0.3s ease;" onmouseover="this.style.transform='scale(1.02)'; this.style.boxShadow='0 30px 60px rgba(0,86,210,0.15)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 20px 40px rgba(0,0,0,0.05)';">
-            </a>
+            <div class="img-frame" style="aspect-ratio: 8.5/11; display: flex; align-items: center; justify-content: center; flex-direction: column; padding: 20px; text-align: center; transition: transform 0.3s ease, box-shadow 0.3s ease;" onmouseover="this.style.transform='scale(1.02)'; this.style.boxShadow='0 30px 60px rgba(0,86,210,0.15)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 20px 40px rgba(0,0,0,0.05)';">
+                <img src="AANHPI_Poster.PNG" alt="AANHPI Heritage Month Poster" style="width: 100%; height: auto; object-fit: contain;">
+            </div>
         </section>
         
         <section id="lny-section" style="margin-bottom: 120px;">
@@ -460,13 +454,6 @@
     </footer>
 
     <script>
-        const hamburger = document.getElementById('hamburger-btn');
-        const navMenu = document.getElementById('nav-menu');
-        hamburger.addEventListener('click', () => {
-            hamburger.classList.toggle('active');
-            navMenu.classList.toggle('active');
-        });
-
         const i18n = {
             'en': {
                 'nav-about': 'About', 'nav-meeting': 'Meetings', 'nav-contact': 'Contact', 'nav-ann': 'Announcements', 'nav-support': 'Get Support', 'nav-feedback': 'Feedback', 'nav-donate': 'Donate', 'nav-events': 'Events',
@@ -477,8 +464,8 @@
                 'fundraiser-h': 'Support Our Initiatives', 'fundraiser-p': 'Your support helps us continue our mission of cultural exchange and community building. Every contribution makes a difference in creating meaningful experiences for our members.',
                 'culture-h': 'The Aesthetic of Hanzi', 'culture-p1': 'Calligraphy is a meditative dance of ink and soul.', 'culture-p2': 'Every stroke carries history.',
                 'events-prev-h': 'Our Activities', 'events-prev-p': 'Discover the vibrant events and workshops hosted by our community.', 'events-link': 'Explore all APSC Events →',
-                'casp-h': 'Make an Impact. Inspire the Next Generation.', 'casp-p1': 'Join our Chinese After School Program at Wilson Wims Elementary School as a Teacher or Teaching Assistant.', 'casp-p2': 'This is your chance to share your language, culture, and passion while making a meaningful difference in young students\' lives.\n✔ Earn SSL Hours \n✔ Build leadership and teaching experience \n✔ Give back to the community \nProgram Dates: April 30 – May 28 (Thursdays after school) \nFinal Call — Don’t miss your last opportunity to apply. \nScan the QR code or click the photo and sign up today.', 'casp-link': 'Learn More →',
-                'meet-h': 'WEEKLY GATHERING', 'meet-p1': 'Mondays @ Lunch | Room 1008', 'meet-p2': 'Next Meeting: April 20, 2026',
+                'aanhpi-h': 'Celebrate AANHPI Heritage Month', 'aanhpi-p1': 'May is Asian American, Native Hawaiian, and Pacific Islander Heritage Month! Join us in honoring the rich cultures, histories, and contributions of the AANHPI community.', 'aanhpi-p2': 'Throughout the month, we will be hosting a series of events, workshops, and cultural showcases. Check out our upcoming poster for detailed schedules and featured activities. Let\'s celebrate our diversity and strengthen our community together!', 
+                'meet-h': 'WEEKLY GATHERING', 'meet-p1': 'Mondays @ Lunch | Room 1008', 'meet-p2': 'Next Meeting: TBD',
                 'fb-title': 'Share Your Feedback', 'fb-sub': 'Your voice helps us make APSC better every day.', 'fb-name': 'Your name', 'fb-email': 'your@email.com', 'fb-msg': 'Tell us what\'s on your mind...', 'fb-btn': 'Submit Message', 'fb-status-loading': 'Sending...', 'fb-status-success': 'Success! Thank you for your message.', 'fb-status-error': 'Submit failed, please try again.', 'fb-name-lbl': 'Name (Optional)', 'fb-email-lbl': 'Email (Optional)', 'fb-msg-lbl': 'Message (Required)',
                 'footer-cp': '© 2026 ASIAN PEER SUPPORT CLUB | CLARKSBURG HIGH SCHOOL', 'nav-privacy': 'Privacy Policy', 'nav-terms': 'Terms of Use'
             },
@@ -491,8 +478,8 @@
                 'fundraiser-h': '支持我们的倡议', 'fundraiser-p': '您的支持帮助我们继续文化交流和社区建设的使命。每一次贡献都在为我们的成员创造有意义的体验方面产生差异。',
                 'culture-h': '汉字美学之韵', 'culture-p1': '书法是笔墨与心灵的禅意共舞。', 'culture-p2': '每一笔一划都承载着历史。',
                 'events-prev-h': '我们的活动', 'events-prev-p': '探索我们社区举办的丰富多彩的活动与工作坊。', 'events-link': '浏览所有 APSC 活动 →',
-                'casp-h': '成就非凡，启迪下一代。', 'casp-p1': '加入我们在Wilson Wims Elementary School的中文课后项目，担任教师或助教。', 'casp-p2': '这是您分享语言、文化和热情的机会，同时在年轻学生的生活中创造有意义的改变。\n✔ 获得SSL学时 \n✔ 建立领导力和教学经验 \n✔ 为社区做出贡献 \n项目日期：4月30日 – 5月28日（每周四放学后） \n最终申请机会 — 不要错过您最后的申请机会。 \n扫描二维码或点击照片今日报名。', 'casp-link': '了解更多 →',
-                'meet-h': '每周会议', 'meet-p1': '每周一午餐时间 | 1008 教室', 'meet-p2': '下一次会议：2026年4月20日',
+                'aanhpi-h': '庆祝亚太裔传统月', 'aanhpi-p1': '五月是亚裔美国人、夏威夷原住民和太平洋岛民（AANHPI）传统月！加入我们，共同向 AANHPI 社区丰富的文化、历史和贡献致敬。', 'aanhpi-p2': '在整个月里，我们将举办一系列活动、工作坊和文化展示。请查看我们即将发布的海报以了解详细日程和特色活动。让我们共同庆祝多元文化，建设更强大的社区！',
+                'meet-h': '每周会议', 'meet-p1': '每周一午餐时间 | 1008 教室', 'meet-p2': '下一次会议：待定',
                 'fb-title': '留下反馈', 'fb-sub': '您的意见帮助我们不断改进 APSC。', 'fb-name': '您的姓名', 'fb-email': '您的邮箱', 'fb-msg': '告诉我们您的想法...', 'fb-btn': '提交留言', 'fb-status-loading': '提交中...', 'fb-status-success': '提交成功，感谢您的反馈！', 'fb-status-error': '提交失败，请重试。', 'fb-name-lbl': '姓名（选填）', 'fb-email-lbl': '邮箱（选填）', 'fb-msg-lbl': '内容（必填）',
                 'footer-cp': '© 2026 ASIAN PEER SUPPORT CLUB | CLARKSBURG HIGH SCHOOL', 'nav-privacy': '隐私政策', 'nav-terms': '使用条款'
             },
@@ -505,81 +492,85 @@
                 'fundraiser-h': '支持我們的倡議', 'fundraiser-p': '您的支持幫助我們繼續文化交流和社區建設的使命。每一次貢獻都在為我們的成員創造有意義的體驗方面產生差異。',
                 'culture-h': '漢字美學之韻', 'culture-p1': '書法是筆墨與心靈的禪意共舞。', 'culture-p2': '每一筆一劃都承載著歷史。',  
                 'events-prev-h': '我們的活動', 'events-prev-p': '探索我們社區舉辦的豐富多彩的活動與工作坊。', 'events-link': '瀏覽所有 APSC 活動 →',
-                'casp-h': '成就非凡，啟迪下一代。', 'casp-p1': '加入我們在Wilson Wims Elementary School的中文課後項目，擔任教師或助教。', 'casp-p2': '這是您分享語言、文化和熱情的機會，同時在年輕學生的生活中創造有意義的改變。\n✔ 獲得SSL學時 \n✔ 建立領導力和教學經驗 \n✔ 為社區做出貢獻 \n項目日期：4月30日 – 5月28日（每週四放學後） \n最終申請機會 — 不要錯過您最後的申請機會。 \n掃描二維碼或點擊照片今日报名。', 'casp-link': '了解更多 →',
-                'meet-h': '每週會議', 'meet-p1': '每週一午餐時間 | 1008 教室', 'meet-p2': '下一次會議：TBD',
-                'fb-title': '留下反饋', 'fb-sub': '您的聲音讓 APSC 更好。', 'fb-name': '您的姓名', 'fb-email': '您的郵箱', 'fb-msg': '告訴我們您的想法...', 'fb-btn': '提交留言', 'fb-status-loading': '提交中...', 'fb-status-success': '提交成功，感謝您的反饋！', 'fb-status-error': '提交失敗，請重試。', 'fb-name-lbl': '姓名（選填）', 'fb-email-lbl': '郵箱（選填）', 'fb-msg-lbl': '內容（必填）',
+                'aanhpi-h': '慶祝亞太裔傳統月', 'aanhpi-p1': '五月是亞裔美國人、夏威夷原住民和太平洋島民（AANHPI）傳統月！加入我們，共同向 AANHPI 社區豐富的文化、歷史和貢獻致敬。', 'aanhpi-p2': '在整個月份裡，我們將舉辦一系列活動、工作坊和文化展示。請查看我們即將發佈的海報以了解詳細日程和特色活動。讓我們共同慶祝多元文化，建設更強大的社區！',
+                'meet-h': '每週會議', 'meet-p1': '每週一午餐時間 | 1008 教室', 'meet-p2': '下一次會議：待定',
+                'fb-title': '留下回饋', 'fb-sub': '您的意見幫助我們不斷改進 APSC。', 'fb-name': '您的姓名', 'fb-email': '您的信箱', 'fb-msg': '告訴我們您的想法...', 'fb-btn': '提交留言', 'fb-status-loading': '提交中...', 'fb-status-success': '提交成功，感謝您的回饋！', 'fb-status-error': '提交失敗，請重試。', 'fb-name-lbl': '姓名（選填）', 'fb-email-lbl': '信箱（選填）', 'fb-msg-lbl': '內容（必填）',
                 'footer-cp': '© 2026 ASIAN PEER SUPPORT CLUB | CLARKSBURG HIGH SCHOOL', 'nav-privacy': '隱私政策', 'nav-terms': '使用條款'
             },
             'ko': {
-                'nav-about': '소개', 'nav-meeting': '모임', 'nav-contact': '연락처', 'nav-ann': '공지사항', 'nav-support': '지원 받기', 'nav-feedback': '피드백', 'nav-donate': '기부하기', 'nav-events': '이벤트',
-                'hero-title': '문화 체험.\n커뮤니티 찾기.', 'cta': '가입하기',
-                'lny-title': '설날 2026', 'lny-h': '말의 해, 활기찬 새해', 'lny-p': '말의 해를 기념하며, 무한한 에너지와 고귀함을 기립니다. 우리 커뮤니티에 힘과 번영이 가득하기를 기원합니다.',
-                'yt-title': '우리의 전통', 'yt-sub': '우리 동아리가 독점 제작한 설날 전통 시리즈를 시청하세요.',
-                'sponsor-h': '우리의 사명에 힘을 실어주세요', 'sponsor-p': 'APSC의 원동력이 되어주세요. 여러분의 후원은 문화 교류를 촉진하고 포용적인 행사를 개최하며 더 강력하고 지원적인 학생 커뮤니티를 구축하는 데 도움이 됩니다. 함께 영향력을 만들어 갑시다.', 'sponsor-btn': '후원자 되기',
-                'fundraiser-h': '우리의 이니셔티브를 지원하세요', 'fundraiser-p': '귀하의 지원은 문화 교류와 커뮤니티 구축이라는 우리의 사명을 계속 이어갈 수 있도록 도와줍니다. 모든 기부는 회원들에게 의미 있는 경험을 만드는 데 차이를 만듭니다.',
-                'culture-h': '한자의 미학', 'culture-p1': '서예는 잉크와 영혼의 명상적인 춤입니다.', 'culture-p2': '모든 획에는 역사가 담겨 있습니다.',
-                'events-prev-h': '우리의 활동', 'events-prev-p': '우리 커뮤니티에서 주최하는 활기찬 이벤트와 워크숍을 발견해보세요.', 'events-link': '모든 APSC 이벤트 살펴보기 →',
-                'casp-h': '성과를 이루고 다음 세대를 영감 주기', 'casp-p1': 'Wilson Wims Elementary School에서 중국어 후속 프로그램에 참여하세요. 교사나 교육 보조자로 참여할 수 있습니다.', 'casp-p2': '이 기회는 귀하의 언어, 문화, 열정을 나누고 젊은 학생들의 삶에 의미 있는 변화를 만드는 기회입니다.\n✔ SSL 시간 획득 \n✔ 리더십과 교육 경험 쌓기 \n✔ 커뮤니티에 기여하기 \n프로그램 기간: 4월 30일 – 5월 28일 (매주 목요일放学后) \n최종 신청 기회 — 마지막 기회를 놓치지 마세요. \nQR 코드 스캔 또는 사진 클릭하여 오늘 신청하세요.', 'casp-link': '더 알아보기 →',
-                'meet-h': '주간 모임', 'meet-p1': '매주 월요일 점심 시간 | 1008호실', 'meet-p2': '다음 모임: TBD',
-                'fb-title': '피드백 보내기', 'fb-sub': '여러분의 의견이 APSC를 더 좋게 만듭니다.', 'fb-name': '귀하의 이름', 'fb-email': '귀하의 이메일', 'fb-msg': '무엇이 마음에 드시나요...', 'fb-btn': '제출', 'fb-status-loading': '제출 중...', 'fb-status-success': '성공! 의견 감사합니다.', 'fb-status-error': '제출 실패, 다시 시도해주세요.', 'fb-name-lbl': '이름 (선택)', 'fb-email-lbl': '이메일 (선택)', 'fb-msg-lbl': '메시지 (필수)',
+                'nav-about': '소개', 'nav-meeting': '회의 일정', 'nav-contact': '문의하기', 'nav-ann': '공지사항', 'nav-support': '지원 받기', 'nav-feedback': '피드백', 'nav-donate': '후원하기', 'nav-events': '이벤트',
+                'hero-title': '문화 경험하기.\n커뮤니티 찾기.', 'cta': '가입하기',
+                'lny-title': '2026년 설날', 'lny-h': '말의 해, 힘찬 시작', 'lny-p': '말의 해를 축하합니다. 말은 활력과 고귀함의 상징입니다. 우리 커뮤니티가 새해에는 힘차고 번영하기를 바랍니다.',
+                'yt-title': '우리의 전통', 'yt-sub': '우리 사회가 만든 설날 전통 시리즈 영상을 시청하세요.',
+                'sponsor-h': '우리의 사명을 지원하세요', 'sponsor-p': 'APSC의 원동력이 되어주세요. 여러분의 후원은 문화 교류를 촉진하고, 포용적인 이벤트를 개최하며, 더 강력하고 지원적인 학생 커뮤니티를 구축하는 데 도움이 됩니다. 함께 영향력을 만들어 봅시다.', 'sponsor-btn': '후원하기',
+                'fundraiser-h': '우리의 이니셔티브 지원', 'fundraiser-p': '여러분의 지원은 문화 교류와 커뮤니티 구축이라는 우리의 사명을 계속하는 데 도움이 됩니다. 모든 기여는 우리 회원들에게 의미 있는 경험을 만드는 데 차이를 만듭니다.',
+                'culture-h': '한자의 미학', 'culture-p1': '서예는 먹과 영혼의 명상적인 춤입니다.', 'culture-p2': '모든 획에는 역사가 담겨 있습니다.',
+                'events-prev-h': '우리의 활동', 'events-prev-p': '우리 커뮤니티가 주최하는 활기찬 이벤트와 워크숍을 발견하세요.', 'events-link': '모든 APSC 이벤트 탐색 →',
+                'aanhpi-h': 'AANHPI 유산의 달 축하', 'aanhpi-p1': '5월은 아시아계 미국인, 하와이 원주민, 태평양 섬 주민 유산의 달입니다! AANHPI 커뮤니티의 풍부한 문화, 역사 및 공헌을 기리는 데 동참하세요.', 'aanhpi-p2': '한 달 동안 일련의 이벤트, 워크숍 및 문화 쇼케이스를 개최할 예정입니다. 자세한 일정과 주요 활동은 곧 공개될 예정인 포스터를 확인하세요. 다양성을 축하하고 함께 커뮤니티를 강화합시다!',
+                'meet-h': '주간 모임', 'meet-p1': '매주 월요일 점심 | 1008 교실', 'meet-p2': '다음 모임: 추후 공지',
+                'fb-title': '피드백 공유', 'fb-sub': '여러분의 의견은 APSC를 더 나은 곳으로 만드는 데 도움이 됩니다.', 'fb-name': '이름 (선택)', 'fb-email': '이메일 (선택)', 'fb-msg': '생각을 알려주세요...', 'fb-btn': '메시지 제출', 'fb-status-loading': '전송 중...', 'fb-status-success': '성공! 메시지를 보내주셔서 감사합니다.', 'fb-status-error': '제출 실패, 다시 시도해주세요.', 'fb-name-lbl': '이름 (선택)', 'fb-email-lbl': '이메일 (선택)', 'fb-msg-lbl': '메시지 (필수)',
                 'footer-cp': '© 2026 ASIAN PEER SUPPORT CLUB | CLARKSBURG HIGH SCHOOL', 'nav-privacy': '개인정보 처리방침', 'nav-terms': '이용 약관'
             },
             'ja': {
-                'nav-about': '私たちについて', 'nav-meeting': 'ミーティング', 'nav-contact': 'お問い合わせ', 'nav-ann': 'お知らせ', 'nav-support': 'サポートを受ける', 'nav-feedback': 'フィードバック', 'nav-donate': '寄付する', 'nav-events': 'イベント',
-                'hero-title': '文化を体験し、\nコミュニティを見つけよう。', 'cta': '参加する',
-                'lny-h': '午年（うまどし）の精神', 'lny-p': '午年を祝して。尽きることのないエネルギーと気高さの象徴です。私たちのコミュニティにとって、力強く繁栄する一年となりますように。',
-                'yt-title': '私たちの伝統', 'yt-sub': '私たちのクラブが独占制作した旧正月の伝統シリーズをご覧ください。',
-                'sponsor-h': '私たちの使命を支援する', 'sponsor-p': 'APSCの原動力になってください。皆様のスポンサーシップは、文化交流の促進、包括的なイベントの開催、そしてより強力でサポートし合える学生コミュニティの構築に役立ちます。一緒にインパクトを創り出しましょう。', 'sponsor-btn': 'スポンサーになる',
-                'fundraiser-h': '私たちの取り組みを支援する', 'fundraiser-p': '皆様の支援は、文化交流とコミュニティ構築という私たちの使命を続けるのに役立ちます。すべての貢献は、私たちのメンバーに意味のある体験を作ることに違いをもたらします。',
-                'culture-h': '漢字の美学', 'culture-p1': '書道はインクと魂の瞑想的なダンスです。', 'culture-p2': 'すべての筆画には歴史が刻まれています。',
-                'events-prev-h': '私たちの活動', 'events-prev-p': 'コミュニティが主催する活気あるイベントやワークショップをご覧ください。', 'events-link': 'すべてのAPSCイベントを見る →',
-                'casp-h': '成就を成し遂げ、次の世代を 영감を与える', 'casp-p1': 'Wilson Wims Elementary Schoolで中国語の後援プログラムに参加してください。教師または教育補助者として参加できます。', 'casp-p2': 'この機会は、あなたの言語、文化、情熱を共有し、若い学生たちの人生に意味のある変化をもたらすものです。\n✔ SSL時間の取得 \n✔ リーダーシップと教育経験の積み上げ \n✔ コミュニティへの貢献 \nプログラム期間: 4月30日 – 5月28日 (毎週木曜日放課後) \n最終申込み期間 — 最後の機会を見逃さないでください。 \nQRコードスキャンまたは写真クリックで今日申し込みください。', 'casp-link': '詳細を見る →',
-                'meet-h': '毎週の集まり', 'meet-p1': '毎週月曜日のランチタイム | 1008教室', 'meet-p2': '次の集まり: TBD',
-                'fb-title': 'フィードバック', 'fb-sub': 'あなたの意見がAPSCをより良くします。', 'fb-name': 'お名前', 'fb-email': 'メールアドレス', 'fb-msg': 'ご意見をお聞かせください...', 'fb-btn': '送信', 'fb-status-loading': '送信中...', 'fb-status-success': '送信完了、ありがとうございます。', 'fb-status-error': '送信失敗、もう一度お試しください。', 'fb-name-lbl': 'お名前 (任意)', 'fb-email-lbl': 'メール (任意)', 'fb-msg-lbl': 'メッセージ (必須)',
-                'footer-cp': '© 2026 ASIAN PEER SUPPORT CLUB | CLARKSBURG HIGH SCHOOL', 'nav-privacy': 'プライバシーポリシー', 'nav-terms': '利用規約'
+                'nav-about': '私たちについて', 'nav-meeting': '会議スケジュール', 'nav-contact': 'お問い合わせ', 'nav-ann': 'お知らせ', 'nav-support': 'サポートを受ける', 'nav-feedback': 'フィードバック', 'nav-donate': '寄付する', 'nav-events': 'イベント',
+                'hero-title': '文化を体験しよう。\nコミュニティを見つけよう。', 'cta': '参加する',
+                'lny-title': '2026年の旧正月', 'lny-h': '馬の年、力強 いスタート', 'lny-p': '馬の年を祝います。馬は活力と高貴さの象徴です。私たちのコミュニティが新しい年に力強く繁栄することを願っています。',
+                'yt-title': '私たちの伝統', 'yt-sub': '私たちのクラブが制作した旧正月の伝統に関する独占シリーズ動画を見てください。',
+                'sponsor-h': '私たちの使命を支援してください', 'sponsor-p': 'APSCの原動力になってください。あなたのスポンサーシップは、文化交流を促進し、包括的なイベントを開催し、より強力で支援的な学生コミュニティを構築するのに役立ちます。一緒に影響力を作りましょう。', 'sponsor-btn': 'スポンサーになる',
+                'fundraiser-h': '私たちのイニシアチブをサポート', 'fundraiser-p': 'あなたのサポートは、文化交流とコミュニティ構築という私たちの使命を継続するのに役立ちます。すべての貢献は、私たちのメンバーにとって意味のある経験を作ることに違いをもたらします。',
+                'culture-h': '漢字の美学', 'culture-p1': '書道は、墨と魂の瞑想的なダンスです。', 'culture-p2': 'すべてのストロークには歴史が込められています。',
+                'events-prev-h': '私たちの活動', 'events-prev-p': '私たちのコミュニティが主催する活気に満ちたイベントやワークショップを発見してください。', 'events-link': 'すべてのAPSCイベントを探索 →',
+                'aanhpi-h': 'AANHPI遺産月を祝う', 'aanhpi-p1': '5月はアジア系アメリカ人、ハワイ先住民、太平洋諸島民の遺産月です！AANHPIコミュニティの豊かな文化、歴史、貢献を称えるために参加してください。', 'aanhpi-p2': '1か月を通して、一連のイベント、ワークショップ、文化ショーケースを開催します。詳細なスケジュールと注目の活動については、近日公開予定のポスターをチェックしてください。多様性を祝福し、一緒にコミュニティを強化しましょう！',
+                'meet-h': '週間集会', 'meet-p1': '毎週月曜日の昼食時 | 1008教室', 'meet-p2': '次回の会議：未定',
+                'fb-title': 'フィードバックを共有', 'fb-sub': 'あなたの声は、APSCをより良いものにするのに役立ちます。','fb-name': 'あなたの名前', 'fb-email': 'あなたのメール', 'fb-msg': 'あなたの考えを教えてください...', 'fb-btn': 'メッセージを送信', 'fb-status-loading': '送信中...', 'fb-status-success': '成功！メッセージを送ってくれてありがとう。', 'fb-status-error': '送信に失敗しました。もう一度お試しください。', 'fb-name-lbl': '名前（任意）', 'fb-email-lbl': 'メール（任意）', 'fb-msg-lbl': 'メッセージ（必須）', 
+                'footer-cp': '© 2026 ASIAN PEER SUPPORT CLUB | CLARKSBURG HIGH SCHOOL', 'nav-privacy': 'プライバシーポリシー', 'nav-terms': '利用規約', 
             },
             'es': {
-                'nav-about': 'Acerca de', 'nav-meeting': 'Reuniones', 'nav-contact': 'Contacto', 'nav-ann': 'Anuncios', 'nav-support': 'Obtener Apoyo', 'nav-feedback': 'Comentarios', 'nav-donate': 'Donar', 'nav-events': 'Eventos',
+                'nav-about': 'Sobre Nosotros', 'nav-meeting': 'Reuniones', 'nav-contact': 'Contacto', 'nav-ann': 'Anuncios', 'nav-support': 'Obtener Apoyo', 'nav-feedback': 'Comentarios', 'nav-donate': 'Donar', 'nav-events': 'Eventos',
                 'hero-title': 'Experimenta la Cultura.\nEncuentra tu Comunidad.', 'cta': 'Únete a Nosotros',
-                'lny-title': 'Año Nuevo Lunar 2026', 'lny-h': 'Espíritu del Caballo', 'lny-p': 'Celebrando el Año del Caballo. Un símbolo de energía desenfrenada y nobleza. Deseando a nuestra comunidad un año de fuerza y prosperidad.',
-                'yt-title': 'Nuestras Tradiciones', 'yt-sub': 'Mira la serie exclusiva de nuestro club sobre las tradiciones del Año Nuevo Lunar.',
-                'sponsor-h': 'Empodera Nuestra Misión', 'sponsor-p': 'Conviértete en una fuerza impulsora detrás de APSC. Tu patrocinio nos ayuda a fomentar el intercambio cultural, organizar eventos inclusivos y construir una comunidad estudiantil más fuerte y solidaria. Creemos un impacto juntos.', 'sponsor-btn': 'Conviértete en Patrocinador',
-                'fundraiser-h': 'Apoya Nuestras Iniciativas', 'fundraiser-p': 'Tu apoyo nos ayuda a continuar nuestra misión de intercambio cultural y construcción comunitaria. Cada contribución marca una diferencia en la creación de experiencias significativas para nuestros miembros.',
-                'culture-h': 'La Estética de los Hanzi', 'culture-p1': 'La caligrafía es una danza meditativa de tinta y alma.', 'culture-p2': 'Cada trazo lleva historia.',
-                'events-prev-h': 'Nuestras Actividades', 'events-prev-p': 'Descubre los vibrantes eventos y talleres organizados por nuestra comunidad.', 'events-link': 'Explora todos los eventos de APSC →',
-                'casp-h': 'Logra el éxito y inspira a la próxima generación', 'casp-p1': 'Únete a nuestro programa de apoyo después de la escuela en Wilson Wims Elementary School. Puedes participar como maestro o asistente educativo.', 'casp-p2': 'Esta oportunidad te permite compartir tu idioma, cultura y pasión, mientras traes cambios significativos en la vida de los estudiantes jóvenes.\n✔ Obtén horas de SSL \n✔ Desarrolla liderazgo y experiencia educativa \n✔ Contribuye a la comunidad \nPeríodo del programa: 30 de abril – 28 de mayo (cada jueves después de la escuela) \nPlazo final para solicitudes — no te pierdas tu última oportunidad. \nEscanea el código QR o haz clic en la foto para inscribirte hoy.', 'casp-link': 'Más Información →',
-                'meet-h': 'REUNIÓN SEMANAL', 'meet-p1': 'Lunes en el Almuerzo | Sala 1008', 'meet-p2': 'Próxima reunión: TBD',
-                'fb-title': 'Enviar Comentarios', 'fb-sub': 'Tu opinión ayuda a mejorar APSC.', 'fb-name': 'Tu nombre', 'fb-email': 'tu@email.com', 'fb-msg': 'Cuéntanos qué piensas...', 'fb-btn': 'Enviar Mensaje', 'fb-status-loading': 'Enviando...', 'fb-status-success': '¡Éxito! Gracias por tu mensaje.', 'fb-status-error': 'Error de envío, intenta de nuevo.', 'fb-name-lbl': 'Nombre (Opcional)', 'fb-email-lbl': 'Email (Opcional)', 'fb-msg-lbl': 'Mensaje (Requerido)',
+                'lny-title': 'Año Nuevo Lunar 2026', 'lny-h': 'Espíritu del Caballo', 'lny-p': 'Celebrando el Año del Caballo. Un símbolo de energía desenfrenada, nobleza y el impulso para avanzar. Deseamos a nuestra comunidad un año de fuerza y prosperidad.',
+                'yt-title': 'Nuestras Tradiciones', 'yt-sub': 'Mira nuestra serie exclusiva sobre las tradiciones del Año Nuevo Lunar.',
+                'sponsor-h': 'Empodera Nuestra Misión', 'sponsor-p': 'Sé una fuerza impulsora detrás de APSC. Tu patrocinio nos ayuda a fomentar el intercambio cultural, organizar eventos inclusivos y construir una comunidad estudiantil más fuerte y solidaria. Creemos un impacto juntos.', 'sponsor-btn': 'Conviértete en Patrocinador',
+                'fundraiser-h': 'Apoya Nuestras Iniciativas', 'fundraiser-p': 'Tu apoyo nos ayuda a continuar con nuestra misión de intercambio cultural y construcción de comunidad. Cada contribución marca la diferencia en la creación de experiencias significativas para nuestros miembros.',
+                'culture-h': 'La Estética de Hanzi', 'culture-p1': 'La caligrafía es una danza meditativa de tinta y alma.', 'culture-p2': 'Cada trazo lleva historia.',
+                'events-prev-h': 'Nuestras Actividades', 'events-prev-p': 'Descubre los vibrantes eventos y talleres organizados por nuestra comunidad.', 'events-link': 'Explora todos los Eventos de APSC →',
+                'aanhpi-h': 'Celebra el Mes del Patrimonio AANHPI', 'aanhpi-p1': '¡Mayo es el Mes del Patrimonio Asiático Americano, Nativo Hawaiano e Isleño del Pacífico! Únete a nosotros para honrar las ricas culturas, historias y contribuciones de la comunidad AANHPI.', 'aanhpi-p2': 'Durante todo el mes, estaremos organizando una serie de eventos, talleres y exhibiciones culturales. Consulta nuestro próximo póster para obtener horarios detallados y actividades destacadas. ¡Celebremos nuestra diversidad y fortalezcamos nuestra comunidad juntos!',
+                'meet-h': 'REUNIÓN SEMANAL', 'meet-p1': ' Lunes @ Almuerzo | Sala 1008', 'meet-p2': 'Próxima Reunión: Por Anunciar',
+                'fb-title': 'Comparte tu Comentarios', 'fb-sub': 'Tu voz nos ayuda a mejorar APSC cada día.', 'fb-name': 'Tu nombre', 'fb-email': 'Tu correo electrónico', 'fb-msg': 'Tu mensaje', 'fb-btn': 'Enviar Mensaje', 'fb-status-loading': 'Enviando...', 'fb-status-success': '¡Éxito! Gracias por tu mensaje.', 'fb-status-error': 'Error al enviar, por favor intenta de nuevo.', 'fb-name-lbl': 'Nombre (Opcional)', 'fb-email-lbl': 'Correo electrónico (Opcional)', 'fb-msg-lbl': 'Mensaje (Requerido)',
                 'footer-cp': '© 2026 ASIAN PEER SUPPORT CLUB | CLARKSBURG HIGH SCHOOL', 'nav-privacy': 'Política de Privacidad', 'nav-terms': 'Términos de Uso'
             },
             'fr': {
-                'nav-about': 'À propos', 'nav-meeting': 'Réunions', 'nav-contact': 'Contact', 'nav-ann': 'Annonces', 'nav-support': 'Obtenir de l\'aide', 'nav-feedback': 'Retour d\'information', 'nav-donate': 'Faire un don', 'nav-events': 'Événements',
-                'hero-title': 'Découvrez la Culture.\nTrouvez Votre Communauté.', 'cta': 'Rejoignez-nous',
-                'events-link': 'Découvrez tous les événements de l\'APSC →',
-                'casp-h': 'Atteignez le succès et inspirez la prochaine génération', 'casp-p1': 'Rejoignez notre Événement Culturel du Festival Qingming ! Cette fête chinoise traditionnelle est un moment pour honorer nos ancêtres et réfléchir à l\'héritage familial.', 'casp-p2': 'Expérimentez des activités culturelles authentiques, savourez des plats traditionnels et connectez-vous avec notre communauté. Rejoignez notre réunion lundi (20 avril) à Rm 1008 pendant l\'heure du déjeuner.', 'casp-link': 'En Savoir Plus →',
-                'fb-title': 'Donnez votre avis', 'fb-sub': 'Votre avis améliore APSC.', 'fb-name': 'Votre nom', 'fb-email': 'votre@email.com', 'fb-msg': 'Dites-nous ce que vous pensez...', 'fb-btn': 'Envoyer', 'fb-status-loading': 'Envoi...', 'fb-status-success': 'Succès ! Merci pour votre message.', 'fb-status-error': 'Échec de l\'envoi, réessayez.', 'fb-name-lbl': 'Nom (Optionnel)', 'fb-email-lbl': 'Email (Optionnel)', 'fb-msg-lbl': 'Message (Requis)',
-                'fundraiser-h': 'Soutenez Nos Initiatives', 'fundraiser-p': 'Votre soutien nous aide à poursuivre notre mission d\'échange culturel et de construction communautaire. Chaque contribution fait une différence dans la création d\'expériences significatives pour nos membres.',
-                'sponsor-h': 'Soutenez Notre Mission', 'sponsor-p': 'Devenez une force motrice derrière APSC. Votre parrainage nous aide à favoriser les échanges culturels, à organiser des événements inclusifs et à construire une communauté étudiante plus forte et plus solidaire. Créons un impact ensemble.', 'sponsor-btn': 'Devenez Parrain',
-                'lny-title': 'Nouvel An Lunaire 2026', 'lny-h': 'Esprit du Cheval', 'lny-p': 'Célébrant l\'Année du Cheval. Un symbole d\'énergie débridée et de noblesse. Souhaitant à notre communauté une année de force et de prospérité.',
+                'nav-about': 'À Propos', 'nav-meeting': 'Réunions', 'nav-contact': 'Contact', 'nav-ann': 'Annonces', 'nav-support': 'Obtenir du Soutien', 'nav-feedback': 'Feedback', 'nav-donate': 'Faire un Don', 'nav-events': 'Événements',
+                'hero-title': 'Vivez la Culture.\nTrouvez Votre Communauté.', 'cta': 'Rejoignez-Nous',
+                'lny-title': 'Nouvel An Lunaire 2026', 'lny-h': 'Esprit du Cheval', 'lny-p': 'Célébrons l\'Année du Cheval. Un symbole d\'énergie débridée, de noblesse et de volonté d\'avancer. Nous souhaitons à notre communauté une année de force et de prospérité.',
                 'yt-title': 'Nos Traditions', 'yt-sub': 'Regardez notre série exclusive sur les traditions du Nouvel An Lunaire.',
-                'culture-h': 'L\'esthétique des Hanzi', 'culture-p1': 'La calligraphie est une danse méditative d\'encre et d\'âme.', 'culture-p2': 'Chaque trait porte l\'histoire.',
-                'meet-h': 'RÉUNION HEBDOMADAIRE', 'meet-p1': 'Lundis à l\'heure du déjeuner | Salle 1008', 'meet-p2': 'Prochaine réunion : TBD',
-                'footer-cp': '© 2026 ASIAN PEER SUPPORT CLUB | CLARKSBURG HIGH SCHOOL', 'nav-privacy': 'Politique de Confidentialité', 'nav-terms': 'Conditions d\'Utilisation'
+                'sponsor-h': 'Soutenez Notre Mission', 'sponsor-p': 'Devenez une force motrice derrière APSC. Votre parrainage nous aide à favoriser les échanges culturels, à organiser des événements inclusifs et à construire une communauté étudiante plus forte et solidaire. Créons un impact ensemble.', 'sponsor-btn': 'Devenir Parrain',
+                'fundraiser-h': 'Soutenez Nos Initiatives', 'fundraiser-p': 'Votre soutien nous aide à poursuivre notre mission d\'échange culturel et de construction de communauté. Chaque contribution fait une différence dans la création d\'expériences significatives pour nos membres.',
+                'culture-h': 'L\'Esthétique de Hanzi', 'culture-p1': 'La calligraphie est une danse méditative d\'encre et d\'âme.', 'culture-p2': 'Chaque trait porte l\'histoire.',
+                'events-prev-h': 'Nos Activités', 'events-prev-p': 'Découvrez les événements et ateliers vibrants organisés par notre communauté.', 'events-link': 'Explorez tous les Événements APSC →',
+                'aanhpi-h': 'Celebra el Mes del Patrimonio AANHPI', 'aanhpi-p1': '¡Mayo es el Mes del Patrimonio Asiático Americano, Nativo Hawaiano e Isleño del Pacífico! Únete a nosotros para honrar las ricas culturas, historias y contribuciones de la comunidad AANHPI.', 'aanhpi-p2': 'Durante todo el mes, estaremos organizando una serie de eventos, talleres y exhibiciones culturales. Consulta nuestro próximo póster para obtener horarios detallados y actividades destacadas. ¡Celebremos nuestra diversidad y fortalezcamos nuestra comunidad juntos!',
+                'meet-h': 'REUNIÓN SEMANAL', 'meet-p1': ' Lunes @ Almuerzo | Sala 1008', 'meet-p2': 'Próxima Reunión: Por Anunciar',
+                'fb-title': 'Comparte tu Comentarios', 'fb-sub': 'Tu voz nos ayuda a mejorar APSC cada día.', 'fb-name': 'Tu nombre', 'fb-email': 'Tu correo electrónico', 'fb-msg': 'Tu mensaje', 'fb-btn': 'Enviar Mensaje', 'fb-status-loading': 'Enviando...', 'fb-status-success': '¡Éxito! Gracias por tu mensaje.', 'fb-status-error': 'Error al enviar, por favor intenta de nuevo.', 'fb-name-lbl': 'Nombre (Opcional)', 'fb-email-lbl': 'Correo electrónico (Opcional)', 'fb-msg-lbl': 'Mensaje (Requerido)',
+                'footer-cp': '© 2026 ASIAN PEER SUPPORT CLUB | CLARKSBURG HIGH SCHOOL', 'nav-privacy': 'Política de Privacidad', 'nav-terms': 'Términos de Uso'
             }
         };
 
-        let currentLang = 'en';
-        const GUESTBOOK_WEBAPP_URL = 'https://script.google.com/macros/s/AKfycbySK4gSDWQMBw97-sDtdjJzV9nmzsq9inX1wQWW0KDNT1BpOg-yyS7XAWeD7x5s3d4/exec';
-
+        // 语言切换执行函数
         function updateLang(lang) {
-            currentLang = lang;
             sessionStorage.setItem('selectedLang', lang);
+
             document.querySelectorAll('.lang-btn').forEach(btn => {
-                btn.classList.toggle('active', btn.getAttribute('onclick').includes(`'${lang}'`));
+                if (btn.getAttribute('onclick').includes(`'${lang}'`)) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
             });
+
             document.querySelectorAll('[data-key]').forEach(el => {
                 const key = el.getAttribute('data-key');
                 if (i18n[lang] && i18n[lang][key]) {
+                    // 增加一步判断：如果是输入框则更新 placeholder，否则更新文本
                     if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
                         el.placeholder = i18n[lang][key];
                     } else {
@@ -589,51 +580,30 @@
             });
         }
 
-        const feedbackForm = document.getElementById('home-feedback-form');
-        const feedbackStatus = document.getElementById('home-fb-status');
-        const feedbackSubmitBtn = document.getElementById('home-fb-submit');
-        if (feedbackForm) {
-            feedbackForm.addEventListener('submit', async (e) => {
-                e.preventDefault();
-                const name = document.getElementById('home-fb-name').value.trim();
-                const email = document.getElementById('home-fb-email').value.trim();
-                const message = document.getElementById('home-fb-message').value.trim();
-                if (!message) return;
-
-                feedbackSubmitBtn.disabled = true;
-                feedbackSubmitBtn.innerText = i18n[currentLang]['fb-status-loading'];
-                feedbackStatus.style.color = '#556a84';
-                feedbackStatus.innerText = i18n[currentLang]['fb-status-loading'];
-
-                try {
-                    const res = await fetch(GUESTBOOK_WEBAPP_URL, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
-                        body: new URLSearchParams({ name, email, message }).toString(),
-                    });
-                    const data = await res.json();
-                    if (data.result === 'success') {
-                        feedbackStatus.style.color = '#008000';
-                        feedbackStatus.innerText = i18n[currentLang]['fb-status-success'];
-                        feedbackForm.reset();
-                    } else {
-                        throw new Error('submit failure');
-                    }
-                } catch (err) {
-                    feedbackStatus.style.color = '#FF3B30';
-                    feedbackStatus.innerText = i18n[currentLang]['fb-status-error'];
-                } finally {
-                    feedbackSubmitBtn.disabled = false;
-                    feedbackSubmitBtn.innerText = i18n[currentLang]['fb-btn'];
-                }
-            });
-        }
-
+        // 页面加载时自动初始化语言
         window.addEventListener('DOMContentLoaded', () => {
             const savedLang = sessionStorage.getItem('selectedLang');
-            if (savedLang) updateLang(savedLang);
+            if (savedLang && savedLang !== 'en') {
+                updateLang(savedLang);
+            }
+        });
+
+        // 汉堡菜单逻辑 (已修复关联)
+        const hamburger = document.getElementById('hamburger-btn');
+        const navMenu = document.getElementById('nav-menu');
+        
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+
+        // 点击菜单外的任意地方或链接自动收起菜单
+        document.addEventListener('click', (e) => {
+            if (!hamburger.contains(e.target) && !navMenu.contains(e.target) && navMenu.classList.contains('active')) {
+                hamburger.classList.remove('active');
+                navMenu.classList.remove('active');
+            }
         });
     </script>
-    <p style="text-align: center; font-size: 12px; color: #666; margin: 20px 0;">Maintained by the APSC Web Team</p>
 </body>
 </html>

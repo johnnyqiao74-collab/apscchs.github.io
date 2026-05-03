@@ -32,13 +32,29 @@
         .lang-btn { background: none; border: none; font-size: 10px; font-weight: 600; letter-spacing: 0.1em; color: var(--text-sub); margin: 0 10px; cursor: pointer; transition: var(--transition); }
         .lang-btn.active { color: var(--brand-red); border-bottom: 1px solid var(--brand-red); }
 
-        nav { background: rgba(255,255,255,0.85); backdrop-filter: blur(25px); position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid var(--border-color); }
-        .nav-container { max-width: 1300px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 12px 40px; }
-        .nav-brand-link img { height: 35px; }
-        .nav-links { display: flex; list-style: none; gap: 25px; align-items: center; }
+         nav {
+            background: rgba(255,255,255,0.85); backdrop-filter: blur(25px);
+            position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid var(--border-color);
+        }
+        .nav-container {
+            max-width: 1300px; margin: 0 auto;
+            display: flex; justify-content: space-between; align-items: center; padding: 12px 40px;
+            position: relative;
+        }
+        .nav-brand-link img { height: 44px; transition: transform 0.25s ease; }
+        .nav-brand-link img:hover { transform: scale(1.05); }
+        .nav-links { display: flex; list-style: none; gap: 20px; align-items: center; }
         .nav-links a { text-decoration: none; color: var(--text-main); font-size: 13px; font-weight: 500; transition: var(--transition); }
-        .nav-links a:hover { color: var(--brand-red); }
-        .btn-donate-nav { border: 1.5px solid var(--brand-red); padding: 7px 20px; border-radius: 50px; color: var(--brand-red) !important; font-weight: 600; }
+        .nav-links a:hover { color: var(--brand-blue); }
+        .btn-donate-nav { border: 1px solid var(--brand-blue); padding: 6px 15px; border-radius: 50px; color: var(--brand-blue) !important; }
+        .btn-donate-nav:hover { background: var(--brand-blue); color: #fff !important; }
+        
+        .btn-donate-nav {
+            border: 1px solid var(--brand-blue);
+            padding: 6px 15px; border-radius: 50px;
+            color: var(--brand-blue) !important;
+        }
+        .btn-donate-nav:hover { background: var(--brand-blue); color: #fff !important; }
 
         .hamburger { display: none; cursor: pointer; width: 30px; height: 20px; position: relative; z-index: 1001; }
         .hamburger span { display: block; width: 100%; height: 2px; background-color: var(--text-main); position: absolute; transition: var(--transition); border-radius: 2px; }
@@ -50,43 +66,48 @@
         .hamburger.active span:nth-child(3) { transform: rotate(-45deg); top: 9px; }
 
         /* --- Banner (16:9) --- */
-        .banner-section { max-width: 1200px; margin: 30px auto; padding: 0 40px; position: relative; z-index: 2; }
-        .banner-frame { width: 100%; aspect-ratio: 16 / 9; border-radius: 24px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.08); background: #f5f5f7; }
-        .banner-frame img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .banner-section { max-width: 1200px; margin: 50px auto; padding: 0 40px; position: relative; z-index: 2; }
+        .banner-frame { width: 100%; aspect-ratio: 16 / 9; border-radius: 28px; overflow: hidden; box-shadow: 0 30px 60px rgba(178, 34, 34, 0.12); background: #f5f5f7; border: 1px solid var(--border-color); transition: transform 0.6s ease; }
+        .banner-frame img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.8s ease; }
+        .banner-frame:hover img { transform: scale(1.02); }
 
         /* --- Header --- */
-        .page-header { text-align: center; padding: 60px 40px 20px; }
-        .page-header h1 { font-family: 'Playfair Display', serif; font-size: 3.5rem; font-weight: 900; color: var(--brand-red); margin-bottom: 10px; }
-        .page-header p { font-size: 1.1rem; color: var(--text-sub); letter-spacing: 0.1em; text-transform: uppercase; }
+        .page-header { text-align: center; padding: 80px 40px 40px; background: linear-gradient(135deg, rgba(178, 34, 34, 0.03) 0%, rgba(178, 34, 34, 0.01) 100%); }
+        .page-header h1 { font-family: 'Playfair Display', serif; font-size: 4rem; font-weight: 900; color: var(--brand-red); margin-bottom: 15px; letter-spacing: -0.03em; }
+        .page-header p { font-size: 1.15rem; color: var(--text-sub); letter-spacing: 0.12em; text-transform: uppercase; font-weight: 600; }
 
         /* --- 主内容布局 --- */
-        .content-wrapper { max-width: 1200px; margin: 0 auto; padding: 40px; display: flex; gap: 80px; position: relative; z-index: 2; }
+        .content-wrapper { max-width: 1200px; margin: 0 auto; padding: 60px 40px; display: flex; gap: 100px; position: relative; z-index: 2; align-items: flex-start; }
         
         /* 【海报预留位置样式】 */
-        .poster-container { flex: 0 0 400px; position: sticky; top: 120px; height: fit-content; }
+        .poster-container { flex: 0 0 320px; position: sticky; top: 140px; height: fit-content; }
         .poster-frame { 
             width: 100%; 
             aspect-ratio: 3 / 4; 
             background: #fdfdfd; 
-            border-radius: 20px; 
-            box-shadow: 0 30px 60px rgba(0,0,0,0.1); 
-            border: 1px solid var(--border-color);
+            border-radius: 24px; 
+            box-shadow: 0 35px 70px rgba(178, 34, 34, 0.15); 
+            border: 1.5px solid var(--border-color);
             overflow: hidden;
+            transition: var(--transition);
         }
+        .poster-frame:hover { transform: translateY(-8px); box-shadow: 0 45px 90px rgba(178, 34, 34, 0.2); }
         .poster-image-file { 
             width: 100%; 
             height: 100%; 
-            object-fit: cover; /* 确保您的海报图片完美填充容器 */
+            object-fit: cover;
             display: block;
+            transition: transform 0.6s ease;
         }
-        .back-link { display: inline-flex; align-items: center; font-size: 14px; font-weight: 600; color: var(--text-sub); text-decoration: none; margin-bottom: 40px; transition: var(--transition); }
-        .back-link:hover { color: var(--brand-blue); transform: translateX(-5px); }
+        .poster-frame:hover .poster-image-file { transform: scale(1.03); }
+        .back-link { display: inline-flex; align-items: center; font-size: 13px; font-weight: 600; color: var(--brand-red); text-decoration: none; margin-bottom: 50px; transition: var(--transition); gap: 6px; }
+        .back-link:hover { transform: translateX(-5px); opacity: 0.8; }
 
-        .details-container { flex: 1; display: flex; flex-direction: column; gap: 80px; }
+        .details-container { flex: 1; display: flex; flex-direction: column; gap: 70px; }
         .activity-block { transition: var(--transition); }
-        .activity-img { width: 100%; height: 350px; border-radius: 18px; object-fit: cover; margin-bottom: 25px; background: #f9f9fb; border: 1px solid var(--border-color); }
-        .activity-block h3 { font-family: 'Playfair Display', serif; font-size: 2.2rem; color: var(--brand-red); margin-bottom: 15px; font-style: italic; }
-        .activity-block p { font-size: 1.1rem; color: var(--text-sub); font-weight: 300; line-height: 1.8; }
+        .activity-img { width: 100%; height: 380px; border-radius: 22px; object-fit: cover; margin-bottom: 28px; background: #f9f9fb; border: 1px solid var(--border-color); box-shadow: 0 15px 40px rgba(178, 34, 34, 0.08); }
+        .activity-block h3 { font-family: 'Playfair Display', serif; font-size: 2.3rem; color: var(--brand-red); margin-bottom: 18px; font-style: italic; font-weight: 900; }
+        .activity-block p { font-size: 1.15rem; color: #555; font-weight: 300; line-height: 1.85; font-family: 'Times New Roman', serif; }
 
         /* --- Footer --- */
         footer { padding: 80px 0; border-top: 1px solid var(--border-color); text-align: center; background: #fbfbfd; }
