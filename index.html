@@ -129,13 +129,11 @@
 
         .video-container {
             position: relative;
-            padding-bottom: 56.25%; 
-            height: 0;
-            overflow: hidden;
             width: 100%;
-            border-radius: 20px;
-            box-shadow: 0 30px 60px -15px rgba(0,0,0,0.15);
-            margin-top: 20px;
+            aspect-ratio: 16 / 9;
+            overflow: hidden;
+            border-radius: 24px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.08);
             background: #000;
         }
         .video-container iframe {
@@ -145,6 +143,94 @@
             width: 100%;
             height: 100%;
             border: 0;
+        }
+
+        /* Brochure Carousel Styles */
+        .brochure-carousel {
+            position: relative;
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+            overflow: hidden;
+            border-radius: 24px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+            background: #f5f5f7;
+        }
+
+        .brochure-container {
+            display: flex;
+            width: 1200%; /* 12 images */
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .brochure-slide {
+            flex: 0 0 8.333%; /* 100% / 12 */
+            position: relative;
+        }
+
+        .brochure-slide img {
+            width: 100%;
+            height: auto;
+            display: block;
+            aspect-ratio: 8.5 / 11; /* Standard brochure ratio */
+            object-fit: cover;
+        }
+
+        .carousel-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255,255,255,0.9);
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: var(--brand-blue);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            z-index: 10;
+        }
+
+        .carousel-nav:hover {
+            background: var(--brand-blue);
+            color: white;
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .carousel-prev {
+            left: 20px;
+        }
+
+        .carousel-next {
+            right: 20px;
+        }
+
+        .carousel-indicators {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+        }
+
+        .indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.5);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .indicator.active {
+            background: var(--brand-blue);
+            transform: scale(1.2);
         }
 
         .sponsor-wrapper {
@@ -329,6 +415,53 @@
 
     <main class="wrapper">
 
+        <section style="text-align: center; margin-bottom: 140px;">
+            <span class="section-tag" data-key="intro-tag" style="color: var(--brand-blue); font-size: 0.9rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; display: block; margin-bottom: 15px;">Club Introduction</span>
+            <h2 class="section-title" data-key="intro-h" style="margin-bottom: 15px;">Discover Our Mission</h2>
+            <p class="section-p" data-key="intro-p" style="max-width: 700px; margin: 0 auto 50px; color: var(--text-sub);">Watch our exclusive club introduction video to learn about APSC's mission, values, and the vibrant community we've built together.</p>
+            <div class="video-container" style="max-width: 900px; margin: 0 auto;">
+                <iframe src="https://www.youtube.com/embed/ISXpDeim-H8?si=hY9DPBkhhSjHV2XO" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+            </div>
+        </section>
+
+        <section style="text-align: center; margin-bottom: 140px;">
+            <span class="section-tag" data-key="brochure-tag" style="color: var(--brand-blue); font-size: 0.9rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; display: block; margin-bottom: 15px;">Club Brochure</span>
+            <h2 class="section-title" data-key="brochure-h" style="margin-bottom: 15px;">Explore Our Story</h2>
+            <p class="section-p" data-key="brochure-p" style="max-width: 700px; margin: 0 auto 50px; color: var(--text-sub);">Browse through our comprehensive club brochure to learn more about our activities, events, and community initiatives.</p>
+            <div class="brochure-carousel">
+                <div class="brochure-container" id="brochure-container">
+                    <div class="brochure-slide"><img src="2026APSC_Brochure1.jpg" alt="Brochure Page 1"></div>
+                    <div class="brochure-slide"><img src="2026APSC_Brochure2.jpg" alt="Brochure Page 2"></div>
+                    <div class="brochure-slide"><img src="2026APSC_Brochure3.jpg" alt="Brochure Page 3"></div>
+                    <div class="brochure-slide"><img src="2026APSC_Brochure4.jpg" alt="Brochure Page 4"></div>
+                    <div class="brochure-slide"><img src="2026APSC_Brochure5.jpg" alt="Brochure Page 5"></div>
+                    <div class="brochure-slide"><img src="2026APSC_Brochure6.jpg" alt="Brochure Page 6"></div>
+                    <div class="brochure-slide"><img src="2026APSC_Brochure7.jpg" alt="Brochure Page 7"></div>
+                    <div class="brochure-slide"><img src="2026APSC_Brochure8.jpg" alt="Brochure Page 8"></div>
+                    <div class="brochure-slide"><img src="2026APSC_Brochure9.jpg" alt="Brochure Page 9"></div>
+                    <div class="brochure-slide"><img src="2026APSC_Brochure10.jpg" alt="Brochure Page 10"></div>
+                    <div class="brochure-slide"><img src="2026APSC_Brochure11.jpg" alt="Brochure Page 11"></div>
+                    <div class="brochure-slide"><img src="2026APSC_Brochure12.jpg" alt="Brochure Page 12"></div>
+                </div>
+                <button class="carousel-nav carousel-prev" onclick="prevSlide()">&#10094;</button>
+                <button class="carousel-nav carousel-next" onclick="nextSlide()">&#10095;</button>
+                <div class="carousel-indicators">
+                    <div class="indicator active" onclick="goToSlide(0)"></div>
+                    <div class="indicator" onclick="goToSlide(1)"></div>
+                    <div class="indicator" onclick="goToSlide(2)"></div>
+                    <div class="indicator" onclick="goToSlide(3)"></div>
+                    <div class="indicator" onclick="goToSlide(4)"></div>
+                    <div class="indicator" onclick="goToSlide(5)"></div>
+                    <div class="indicator" onclick="goToSlide(6)"></div>
+                    <div class="indicator" onclick="goToSlide(7)"></div>
+                    <div class="indicator" onclick="goToSlide(8)"></div>
+                    <div class="indicator" onclick="goToSlide(9)"></div>
+                    <div class="indicator" onclick="goToSlide(10)"></div>
+                    <div class="indicator" onclick="goToSlide(11)"></div>
+                </div>
+            </div>
+        </section>
+
         <section class="grid-section" id="aanhpi-section" style="margin-bottom: 120px;">
             <div>
                 <h2 class="section-title" data-key="aanhpi-h">Celebrate AANHPI Heritage Month</h2>
@@ -406,8 +539,8 @@
 
         <section class="meeting-box" id="meeting-section">
             <h3 style="color: var(--brand-blue); margin-bottom: 15px; font-weight: 700; letter-spacing: 0.1em;" data-key="meet-h">WEEKLY GATHERING</h3>
-            <p style="font-size: 1.6rem; font-weight: 700; color: var(--text-main);" data-key="meet-p1">Mondays @ Lunch | Room 1008</p>
-            <p style="font-size: 1rem; color: var(--text-sub); margin-top: 15px;" data-key="meet-p2">Next Meeting: TBD</p>
+            <p style="font-size: 1.6rem; font-weight: 700; color: var(--text-main);" data-key="meet-p1">Mondays @ Lunch | Room 244A</p>
+            <p style="font-size: 1rem; color: var(--text-sub); margin-top: 15px;" data-key="meet-p2">Next Meeting: May 18th, 2026</p>
         </section>
 
         <section class="meeting-box" id="home-feedback-section" style="background: linear-gradient(135deg, #f8fafc 0%, #edf2f7 100%); border: 1px solid #d1e0f0; margin-top: 120px; box-shadow: 0 12px 32px rgba(0,86,210,0.08); border-radius: 20px; margin-left: auto; margin-right: auto; max-width: 900px;">
@@ -458,6 +591,8 @@
             'en': {
                 'nav-about': 'About', 'nav-meeting': 'Meetings', 'nav-contact': 'Contact', 'nav-ann': 'Announcements', 'nav-support': 'Get Support', 'nav-feedback': 'Feedback', 'nav-donate': 'Donate', 'nav-events': 'Events',
                 'hero-title': 'Experience Culture.\nFind Your Community.', 'cta': 'Join Us',
+                'intro-tag': 'Club Introduction', 'intro-h': 'Discover Our Mission', 'intro-p': 'Watch our exclusive club introduction video to learn about APSC\'s mission, values, and the vibrant community we\'ve built together.',
+                'brochure-tag': 'Club Brochure', 'brochure-h': 'Explore Our Story', 'brochure-p': 'Browse through our comprehensive club brochure to learn more about our activities, events, and community initiatives.',
                 'lny-title': 'Lunar New Year 2026', 'lny-h': 'Spirit of the Horse', 'lny-p': 'Celebrating the Year of the Horse. A symbol of unbridled energy, nobility, and the drive to move forward. Wishing our community a year of strength and prosperity.',
                 'yt-title': 'Our Traditions', 'yt-sub': 'Watch our club\'s exclusive series on Lunar New Year traditions.',
                 'sponsor-h': 'Empower Our Mission', 'sponsor-p': 'Become a driving force behind APSC. Your sponsorship helps us foster cultural exchange, host inclusive events, and build a stronger, more supportive student community. Let\'s create an impact together.', 'sponsor-btn': 'Become a Sponsor',
@@ -472,6 +607,8 @@
             'zh-hans': {
                 'nav-about': '关于我们', 'nav-meeting': '会议安排', 'nav-contact': '联系我们', 'nav-ann': '公告通知', 'nav-support': '获取支持', 'nav-feedback': '反馈', 'nav-donate': '捐赠支持', 'nav-events': '活动展示',
                 'hero-title': '体验文化底蕴\n融入温暖社群', 'cta': '加入 APSC 社团',
+                'intro-tag': '社团介绍', 'intro-h': '探索我们的使命', 'intro-p': '观看我们的社团介绍视频，了解 APSC 的使命、价值观和我们共同打造的充满活力的社区。',
+                'brochure-tag': '社团手册', 'brochure-h': '探索我们的故事', 'brochure-p': '浏览我们全面的社团手册，了解更多关于我们的活动、事件和社区倡议的信息。',
                 'lny-title': '中国新年 2026', 'lny-h': '龙马精神，共迎新岁', 'lny-p': '庆祝农历马年。象征着奔腾的活力与高贵的精神。祝愿我们的社区在新的一年里力量充沛，繁荣昌盛。',
                 'yt-title': '探索我们的传统', 'yt-sub': '观看由我们社团独家制作的春节传统系列视频。',
                 'sponsor-h': '赋能我们的使命', 'sponsor-p': '成为 APSC 背后的驱动力。您的赞助将帮助我们促进文化交流，举办包容性活动，并建立一个更强大、互助的学生社区。让我们共同创造影响力。', 'sponsor-btn': '成为赞助商',
@@ -486,6 +623,8 @@
             'zh-hant': {
                 'nav-about': '關於我們', 'nav-meeting': '會議安排', 'nav-contact': '聯絡我們', 'nav-ann': '公告通知', 'nav-support': '獲取支持', 'nav-feedback': '回饋', 'nav-donate': '捐贈支持', 'nav-events': '活動展示',
                 'hero-title': '體驗文化底蘊\n融入溫暖社群', 'cta': '加入 APSC 社團',
+                'intro-tag': '社團介紹', 'intro-h': '探索我們的使命', 'intro-p': '觀看我們的社團介紹影片，了解 APSC 的使命、價值觀和我們共同打造的充滿活力的社區。',
+                'brochure-tag': '社团手册', 'brochure-h': '探索我们的故事', 'brochure-p': '浏览我们全面的社团手册，了解更多关于我们的活动、事件和社区倡议的信息。',
                 'lny-title': '中國新年 2026', 'lny-h': '龍馬精神，共迎新歲', 'lny-p': '慶祝農曆馬年。象徵著奔騰的活力與高貴的精神。祝願我們的社區在新的一年裡力量充沛，繁榮昌盛。',
                 'yt-title': '探索我們的傳統', 'yt-sub': '觀看由我們社團獨家製作的春節傳統系列影片。',
                 'sponsor-h': '賦能我們的使命', 'sponsor-p': '成為 APSC 背後的驅動力。您的贊助將幫助我們促進文化交流，舉辦包容性活動，並建立一個更強大、互助的學生社區。讓我們共同創造影響力。', 'sponsor-btn': '成為贊助商',
@@ -500,6 +639,8 @@
             'ko': {
                 'nav-about': '소개', 'nav-meeting': '회의 일정', 'nav-contact': '문의하기', 'nav-ann': '공지사항', 'nav-support': '지원 받기', 'nav-feedback': '피드백', 'nav-donate': '후원하기', 'nav-events': '이벤트',
                 'hero-title': '문화 경험하기.\n커뮤니티 찾기.', 'cta': '가입하기',
+                'intro-tag': '클럽 소개', 'intro-h': '우리의 사명 발견', 'intro-p': '우리의 클럽 소개 비디오를 시청하고 APSC의 사명, 가치관 및 우리가 함께 구축한 생생한 커뮤니티에 대해 알아보세요.',
+                'brochure-tag': '클럽 브로셔', 'brochure-h': '우리의 이야기 탐험', 'brochure-p': '우리의 포괄적인 클럽 브로셔를 살펴보고 우리의 활동, 이벤트 및 커뮤니티 이니셔티브에 대해 자세히 알아보세요.',
                 'lny-title': '2026년 설날', 'lny-h': '말의 해, 힘찬 시작', 'lny-p': '말의 해를 축하합니다. 말은 활력과 고귀함의 상징입니다. 우리 커뮤니티가 새해에는 힘차고 번영하기를 바랍니다.',
                 'yt-title': '우리의 전통', 'yt-sub': '우리 사회가 만든 설날 전통 시리즈 영상을 시청하세요.',
                 'sponsor-h': '우리의 사명을 지원하세요', 'sponsor-p': 'APSC의 원동력이 되어주세요. 여러분의 후원은 문화 교류를 촉진하고, 포용적인 이벤트를 개최하며, 더 강력하고 지원적인 학생 커뮤니티를 구축하는 데 도움이 됩니다. 함께 영향력을 만들어 봅시다.', 'sponsor-btn': '후원하기',
@@ -514,6 +655,8 @@
             'ja': {
                 'nav-about': '私たちについて', 'nav-meeting': '会議スケジュール', 'nav-contact': 'お問い合わせ', 'nav-ann': 'お知らせ', 'nav-support': 'サポートを受ける', 'nav-feedback': 'フィードバック', 'nav-donate': '寄付する', 'nav-events': 'イベント',
                 'hero-title': '文化を体験しよう。\nコミュニティを見つけよう。', 'cta': '参加する',
+                'intro-tag': 'クラブ紹介', 'intro-h': '私たちの使命を発見', 'intro-p': '私たちのクラブ紹介ビデオをご覧になり、APSCの使命、価値観、および私たちが一緒に構築した活気に満ちたコミュニティについて詳しく知ってください。',
+                'brochure-tag': 'クラブブローチャー', 'brochure-h': '私たちの物語を探索', 'brochure-p': '私たちの包括的なクラブブローチャーを閲覧し、私たちの活動、イベント、およびコミュニティイニシアチブについて詳しく知ることができます。',
                 'lny-title': '2026年の旧正月', 'lny-h': '馬の年、力強 いスタート', 'lny-p': '馬の年を祝います。馬は活力と高貴さの象徴です。私たちのコミュニティが新しい年に力強く繁栄することを願っています。',
                 'yt-title': '私たちの伝統', 'yt-sub': '私たちのクラブが制作した旧正月の伝統に関する独占シリーズ動画を見てください。',
                 'sponsor-h': '私たちの使命を支援してください', 'sponsor-p': 'APSCの原動力になってください。あなたのスポンサーシップは、文化交流を促進し、包括的なイベントを開催し、より強力で支援的な学生コミュニティを構築するのに役立ちます。一緒に影響力を作りましょう。', 'sponsor-btn': 'スポンサーになる',
@@ -528,6 +671,8 @@
             'es': {
                 'nav-about': 'Sobre Nosotros', 'nav-meeting': 'Reuniones', 'nav-contact': 'Contacto', 'nav-ann': 'Anuncios', 'nav-support': 'Obtener Apoyo', 'nav-feedback': 'Comentarios', 'nav-donate': 'Donar', 'nav-events': 'Eventos',
                 'hero-title': 'Experimenta la Cultura.\nEncuentra tu Comunidad.', 'cta': 'Únete a Nosotros',
+                'intro-tag': 'Introducción del Club', 'intro-h': 'Descubre Nuestra Misión', 'intro-p': 'Mira nuestro video de introducción del club para conocer la misión de APSC, nuestros valores y la comunidad vibrante que hemos construido juntos.',
+                'brochure-tag': 'Folleto del Club', 'brochure-h': 'Explora Nuestra Historia', 'brochure-p': 'Explora nuestro completo folleto del club para conocer más sobre nuestras actividades, eventos e iniciativas comunitarias.',
                 'lny-title': 'Año Nuevo Lunar 2026', 'lny-h': 'Espíritu del Caballo', 'lny-p': 'Celebrando el Año del Caballo. Un símbolo de energía desenfrenada, nobleza y el impulso para avanzar. Deseamos a nuestra comunidad un año de fuerza y prosperidad.',
                 'yt-title': 'Nuestras Tradiciones', 'yt-sub': 'Mira nuestra serie exclusiva sobre las tradiciones del Año Nuevo Lunar.',
                 'sponsor-h': 'Empodera Nuestra Misión', 'sponsor-p': 'Sé una fuerza impulsora detrás de APSC. Tu patrocinio nos ayuda a fomentar el intercambio cultural, organizar eventos inclusivos y construir una comunidad estudiantil más fuerte y solidaria. Creemos un impacto juntos.', 'sponsor-btn': 'Conviértete en Patrocinador',
@@ -542,6 +687,7 @@
             'fr': {
                 'nav-about': 'À Propos', 'nav-meeting': 'Réunions', 'nav-contact': 'Contact', 'nav-ann': 'Annonces', 'nav-support': 'Obtenir du Soutien', 'nav-feedback': 'Feedback', 'nav-donate': 'Faire un Don', 'nav-events': 'Événements',
                 'hero-title': 'Vivez la Culture.\nTrouvez Votre Communauté.', 'cta': 'Rejoignez-Nous',
+                'brochure-tag': 'Folleto del Club', 'brochure-h': 'Explora Nuestra Historia', 'brochure-p': 'Explora nuestro completo folleto del club para conocer más sobre nuestras actividades, eventos e iniciativas comunitarias.',
                 'lny-title': 'Nouvel An Lunaire 2026', 'lny-h': 'Esprit du Cheval', 'lny-p': 'Célébrons l\'Année du Cheval. Un symbole d\'énergie débridée, de noblesse et de volonté d\'avancer. Nous souhaitons à notre communauté une année de force et de prospérité.',
                 'yt-title': 'Nos Traditions', 'yt-sub': 'Regardez notre série exclusive sur les traditions du Nouvel An Lunaire.',
                 'sponsor-h': 'Soutenez Notre Mission', 'sponsor-p': 'Devenez une force motrice derrière APSC. Votre parrainage nous aide à favoriser les échanges culturels, à organiser des événements inclusifs et à construire une communauté étudiante plus forte et solidaire. Créons un impact ensemble.', 'sponsor-btn': 'Devenir Parrain',
@@ -602,6 +748,56 @@
             if (!hamburger.contains(e.target) && !navMenu.contains(e.target) && navMenu.classList.contains('active')) {
                 hamburger.classList.remove('active');
                 navMenu.classList.remove('active');
+            }
+        });
+
+        // Brochure Carousel Functionality
+        let currentSlide = 0;
+        const totalSlides = 12;
+        const brochureContainer = document.getElementById('brochure-container');
+        const indicators = document.querySelectorAll('.indicator');
+
+        function updateCarousel() {
+            brochureContainer.style.transform = `translateX(-${currentSlide * (100 / totalSlides)}%)`;
+            indicators.forEach((indicator, index) => {
+                indicator.classList.toggle('active', index === currentSlide);
+            });
+        }
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % totalSlides;
+            updateCarousel();
+        }
+
+        function prevSlide() {
+            currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+            updateCarousel();
+        }
+
+        function goToSlide(slideIndex) {
+            currentSlide = slideIndex;
+            updateCarousel();
+        }
+
+        // Auto-play functionality (optional)
+        let autoPlayInterval = setInterval(nextSlide, 5000); // Change slide every 5 seconds
+
+        // Pause auto-play on hover
+        document.querySelector('.brochure-carousel').addEventListener('mouseenter', () => {
+            clearInterval(autoPlayInterval);
+        });
+
+        // Resume auto-play when mouse leaves
+        document.querySelector('.brochure-carousel').addEventListener('mouseleave', () => {
+            autoPlayInterval = setInterval(nextSlide, 5000);
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') {
+                prevSlide();
+            } else if (e.key === 'ArrowRight') {
+                nextSlide();
             }
         });
     </script>

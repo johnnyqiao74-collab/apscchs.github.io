@@ -132,6 +132,94 @@
             line-height: 1.5;
         }
 
+        /* Brochure Carousel Styles */
+        .brochure-carousel {
+            position: relative;
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+            overflow: hidden;
+            border-radius: 24px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+            background: #f5f5f7;
+        }
+
+        .brochure-container {
+            display: flex;
+            width: 1200%; /* 12 images */
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .brochure-slide {
+            flex: 0 0 8.333%; /* 100% / 12 */
+            position: relative;
+        }
+
+        .brochure-slide img {
+            width: 100%;
+            height: auto;
+            display: block;
+            aspect-ratio: 8.5 / 11; /* Standard brochure ratio */
+            object-fit: cover;
+        }
+
+        .carousel-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255,255,255,0.9);
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: var(--brand-blue);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            z-index: 10;
+        }
+
+        .carousel-nav:hover {
+            background: var(--brand-blue);
+            color: white;
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .carousel-prev {
+            left: 20px;
+        }
+
+        .carousel-next {
+            right: 20px;
+        }
+
+        .carousel-indicators {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+        }
+
+        .indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.5);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .indicator.active {
+            background: var(--brand-blue);
+            transform: scale(1.2);
+        }
+
         footer { padding: 60px 0; border-top: 1px solid var(--border-color); text-align: center; color: #aaa; font-size: 11px; background: #fbfbfd; }
         .social-icons { 
             display: flex; 
@@ -243,6 +331,15 @@
             <div class="social-mentions" data-key="social-p">
                 Follow us on <a href="https://www.instagram.com/cburg_apsc/" target="_blank">Instagram</a>, <a href="https://www.facebook.com/share/1JPeJSg5Lu/?mibextid=wwXIfr" target="_blank">Facebook</a>, <a href="https://youtube.com/@asianpeersupportclub?si=KEjXASrIdc-YnPQK/K" target="_blank">YouTube</a>, <a href="https://www.tiktok.com/@asian.peer.support.club?_r=1&_t=ZT-92ENWhIaqPF" target="_blank">TikTok</a>
             </div>
+
+            <div style="margin-top: 100px; margin-bottom: 0;">
+                <div style="max-width: 900px; margin: 0 auto;">
+                    <div style="position: relative; width: 100%; aspect-ratio: 16 / 9; border-radius: 24px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.08); background: #000;">
+                        <iframe style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;" src="https://www.youtube.com/embed/ISXpDeim-H8?si=hY9DPBkhhSjHV2XO" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                    </div>
+                    <p style="text-align: center; margin-top: 30px; font-size: 1rem; color: var(--text-sub); line-height: 1.6; max-width: 750px; margin-left: auto; margin-right: auto;" data-key="video-sub">Watch our exclusive club introduction to discover our mission, values, and the vibrant community we're building together.</p>
+                </div>
+            </div>
         </section>
 
         <section class="team-container">
@@ -352,6 +449,44 @@ Johnny’s ambition is to scale this community’s impact, fostering a legacy of
                 </div>
             </div>
         </section>
+
+        <section style="text-align: center; margin-bottom: 140px;">
+            <span class="section-tag" data-key="brochure-tag" style="color: var(--brand-blue); font-size: 0.9rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; display: block; margin-bottom: 15px; margin-top: 50px;">Club Brochure</span>
+            <h2 class="section-title" data-key="brochure-h" style="margin-bottom: 15px;">Explore Our Story</h2>
+            <p class="section-p" data-key="brochure-p" style="max-width: 700px; margin: 0 auto 50px; color: var(--text-sub);">Browse through our comprehensive club brochure to learn more about our activities, events, and community initiatives.</p>
+            <div class="brochure-carousel">
+                <div class="brochure-container" id="brochure-container">
+                    <div class="brochure-slide"><img src="2026APSC_Brochure1.jpg" alt="Brochure Page 1"></div>
+                    <div class="brochure-slide"><img src="2026APSC_Brochure2.jpg" alt="Brochure Page 2"></div>
+                    <div class="brochure-slide"><img src="2026APSC_Brochure3.jpg" alt="Brochure Page 3"></div>
+                    <div class="brochure-slide"><img src="2026APSC_Brochure4.jpg" alt="Brochure Page 4"></div>
+                    <div class="brochure-slide"><img src="2026APSC_Brochure5.jpg" alt="Brochure Page 5"></div>
+                    <div class="brochure-slide"><img src="2026APSC_Brochure6.jpg" alt="Brochure Page 6"></div>
+                    <div class="brochure-slide"><img src="2026APSC_Brochure7.jpg" alt="Brochure Page 7"></div>
+                    <div class="brochure-slide"><img src="2026APSC_Brochure8.jpg" alt="Brochure Page 8"></div>
+                    <div class="brochure-slide"><img src="2026APSC_Brochure9.jpg" alt="Brochure Page 9"></div>
+                    <div class="brochure-slide"><img src="2026APSC_Brochure10.jpg" alt="Brochure Page 10"></div>
+                    <div class="brochure-slide"><img src="2026APSC_Brochure11.jpg" alt="Brochure Page 11"></div>
+                    <div class="brochure-slide"><img src="2026APSC_Brochure12.jpg" alt="Brochure Page 12"></div>
+                </div>
+                <button class="carousel-nav carousel-prev" onclick="prevSlide()">&#10094;</button>
+                <button class="carousel-nav carousel-next" onclick="nextSlide()">&#10095;</button>
+                <div class="carousel-indicators">
+                    <div class="indicator active" onclick="goToSlide(0)"></div>
+                    <div class="indicator" onclick="goToSlide(1)"></div>
+                    <div class="indicator" onclick="goToSlide(2)"></div>
+                    <div class="indicator" onclick="goToSlide(3)"></div>
+                    <div class="indicator" onclick="goToSlide(4)"></div>
+                    <div class="indicator" onclick="goToSlide(5)"></div>
+                    <div class="indicator" onclick="goToSlide(6)"></div>
+                    <div class="indicator" onclick="goToSlide(7)"></div>
+                    <div class="indicator" onclick="goToSlide(8)"></div>
+                    <div class="indicator" onclick="goToSlide(9)"></div>
+                    <div class="indicator" onclick="goToSlide(10)"></div>
+                    <div class="indicator" onclick="goToSlide(11)"></div>
+                </div>
+            </div>
+        </section>
     </main>
 
    <footer>
@@ -383,6 +518,8 @@ Johnny’s ambition is to scale this community’s impact, fostering a legacy of
            'en': {
                 'nav-home': 'Home', 'nav-about': 'About', 'nav-meeting': 'Meetings', 'nav-support': 'Get Support', 'nav-feedback': 'Feedback', 'nav-donate': 'Donate', "nav-announcements": "Announcements", "nav-contact": "Contact", 'nav-events': 'Events',
                 'tag-story': 'Empowering Community', 'about-h': 'About Our Club', 'about-p1': 'The Asian Peer Support Club (APSC) is a student-led organization at Clarksburg High School is dedicated to fostering a supportive community for Asian students. Our mission is to provide a safe space for sharing experiences, cultural exchange, and personal growth. We welcome all students regardless of their background to join our club and be part of our family to build a stronger and more inclusive community.', 'about-p2': 'We organize regular meetings, workshops, and social events to promote understanding and collaboration among members.', 'social-p': 'Follow us on Instagram, Facebook, YouTube, and TikTok.',
+                'brochure-tag': 'Club Brochure', 'brochure-h': 'Explore Our Story', 'brochure-p': 'Browse through our comprehensive club brochure to learn more about our activities, events, and community initiatives.',
+                'video-h': 'Our Club Introduction', 'video-sub': 'Watch this video to learn more about our mission and the amazing community we\'re building together.',
                 'tag-team': 'Our Leadership', 'team-h': 'Meet the Team',
                 'pos-pres': 'President', 'pos-vp': 'Vice President', 'pos-sec': 'Secretary', 'pos-ec': 'Event Coordinator', 'pos-pub': 'Publicist', 'pos-tre': 'Treasurer', 'pos-ac': 'Academic Coordinator', 'pos-des': 'Designer', 'pos-it': 'IT Support Officer', 'pos-pr': 'Public Relations Officer', 
                 'intro-johnny': 'Johnny is the Founder and currently serving his second consecutive term as President of the Asian Peer Support Club. A dedicated high school leader with a proven track record in organizational management—having previously directed a performance troupe—Johnny established this club with a profound vision: to bridge the gap between cultural transition and personal success. \nUnder Johnny\'s leadership, the organization serves as a cornerstone for students navigating the complexities of a new country and school environment. His mission is to cultivate a premier, inclusive sanctuary where students aren\'t just adjusting, but are empowered to learn, love, and grow. Johnny is steadfast in his commitment to radical inclusivity, ensuring that the diverse voices of the community are not only heard but are instrumental in shaping the club\'s trajectory. \nTo institutionalize this vision, Johnny leads through the RISE framework: \nResilience (Fortifying the ability of peers to navigate and overcome systemic and personal challenges) \nIntegration (Facilitating seamless cultural and academic transitions for new members) \nSupport (Providing a robust infrastructure of peer-to-peer emotional and social resources) \nEquity (Championing a platform where every individual has equal access to opportunity and influence) \nJohnny\'s ambition is to scale this community\'s impact, fostering a legacy of excellence and belonging that will endure for years to come. He invites all who share this vision to join the movement in elevating our community to unprecedented heights.',
@@ -398,8 +535,7 @@ Johnny’s ambition is to scale this community’s impact, fostering a legacy of
             },
             'zh-hans': {
                 'nav-home': '首页', 'nav-about': '关于我们', 'nav-meeting': '会议安排', 'nav-support': '获取支持', 'nav-feedback': '反馈', 'nav-donate': '捐赠支持', "nav-announcements": "公告通知", "nav-contact": "联系我们", 'nav-events': '活动展示',
-                'tag-story': '赋能亚裔群体', 'about-h': '关于社团', 'about-p1': '克拉克斯堡高中的亚洲同伴支持社 (APSC) 致力于为亚洲学生建立一个相互支持的社区。我们的使命是提供一个分享经验、文化交流和个人成长的安全空间。我们欢迎所有学生，无论其背景如何，加入我们的社团，成为我们大家庭的一员，共同建设一个更强大、更包容的社区。', 'about-p2': '我们组织定期会议、工作坊和社交活动，以促进成员之间的理解与合作。', 'social-p': '在 Instagram, Facebook, YouTube, TikTok 和小红书上关注我们。',
-                'tag-team': '领导团队', 'team-h': '核心成员',
+                'tag-story': '赋能亚裔群体', 'about-h': '关于社团', 'about-p1': '克拉克斯堡高中的亚洲同伴支持社 (APSC) 致力于为亚洲学生建立一个相互支持的社区。我们的使命是提供一个分享经验、文化交流和个人成长的安全空间。我们欢迎所有学生，无论其背景如何，加入我们的社团，成为我们大家庭的一员，共同建设一个更强大、更包容的社区。', 'about-p2': '我们组织定期会议、工作坊和社交活动，以促进成员之间的理解与合作。', 'social-p': '在 Instagram, Facebook, YouTube, TikTok 和小红书上关注我们。',                'brochure-tag': '社团手册', 'brochure-h': '探索我们的故事', 'brochure-p': '浏览我们的综合社团手册，了解更多关于我们的活动、事件和社区倡议。',                'tag-team': '领导团队', 'team-h': '核心成员',
                 'pos-pres': '主席', 'pos-vp': '副主席', 'pos-sec': '秘书', 'pos-ec': '活动协调员', 'pos-pub': '宣传员', 'pos-tre': '财务员', 'pos-ac': '学术协调员', 'pos-des': '设计师', 'pos-it': 'IT 支持员', 'pos-pr': '公关官',
                 'intro-johnny': 'Johnny是亚洲同伴支持社的创始人，目前担任第二任主席。作为一位有着丰富组织管理经验的高中领袖—曾领导过一个表演艺术团—Johnny以深远的愿景创立了这个社团：弥合文化转变与个人成功之间的鸿沟。 \n在Johnny的领导下，该组织成为帮助学生适应新国家和新学校环境复杂性的基石。他的使命是培育一个一流、包容的避风港，让学生不仅仅是在调适，而是被赋予学习、热爱和成长的力量。Johnny始终致力于彻底的包容性，确保社区的多元声音不仅被听见，而且对塑造社团的发展轨迹至关重要。 \n为了制度化这一愿景，Johnny通过RISE框架领导： \n韧性：增强同伴应对系统性和个人挑战的能力。 \n融合：为新成员提供无缝的文化和学术转变。 \n支持：提供强大的同伴间情感和社会资源基础设施。 \n平等：倡导每个人都有平等获得机会和影响力的平台。 \nJohnny的雄心是扩大这个社区的影响力，培育卓越和归属感的遗产，这将持久存在。他邀请所有认同这一愿景的人加入这一运动，把我们的社区推向前所未有的高度。',
                 'intro-jason': '他擅长篮球。如果你需要中文或数学方面的帮助，请随时联系他。',
@@ -415,6 +551,7 @@ Johnny’s ambition is to scale this community’s impact, fostering a legacy of
             'zh-hant': {
                 'nav-home': '首頁', 'nav-about': '關於我們', 'nav-meeting': '會議安排', 'nav-support': '獲取支持', 'nav-feedback': '反饋', 'nav-donate': '捐贈支持', "nav-announcements": "公告通知", "nav-contact": "聯繫我們", 'nav-events': '活動展示',
                 'tag-story': '賦能亞裔群體', 'about-h': '關於社團', 'about-p1': '克拉克斯堡高中的亞洲同伴支持社 (APSC) 致力於為亞洲學生建立一個相互支持的社區。我們的使命是提供一個分享經驗、文化交流和個人成長的安全空間。我們歡迎所有學生，無論其背景如何，加入我們的社團，成為我們大家庭的一員，共同建設一個更強大、更包容的社區。', 'about-p2': '我們組織定期會議、工作坊和社交活動，以促進成員之間的理解與合作。', 'social-p': '在 Instagram, Facebook, YouTube, TikTok 和小紅書上關注我們。',
+                'brochure-tag': '社團手冊', 'brochure-h': '探索我們的故', 'brochure-p': '瀏覽我們的綜合社團手冊，了解更多關於我們的活動、事件和社區倡議。',
                 'tag-team': '領導團隊', 'team-h': '核心成員',
                 'pos-pres': '主席', 'pos-vp': '副主席', 'pos-sec': '秘書', 'pos-ec': '活動協調員', 'pos-pub': '宣傳員', 'pos-tre': '財務員', 'pos-ac': '學術協調員', 'pos-des': '設計師', 'pos-it': 'IT 支持員', 'pos-pr': '公關官',
                 'intro-johnny': 'Johnny是亞洲同伴支持社的創始人，目前擔任第二任主席。作為一位有著豐富組織管理經驗的高中領袖—曾領導過一個表演藝術團—Johnny以深遠的願景創立了這個社團：彌合文化轉變與個人成功之間的鴻溝。 \n在Johnny的領導下，該組織成為幫助學生適應新國家和新學校環境複雜性的基石。他的使命是培育一個一流、包容的避風港，讓學生不僅僅是在調適，而是被賦予學習、熱愛和成長的力量。Johnny始終致力於徹底的包容性，確保社區的多元聲音不僅被聽見，而且對塑造社團的發展軌跡至關重要。 \n為了制度化這一願景，Johnny通過RISE框架領導： \n韌性：增強同伴應對系統性和個人挑戰的能力。 \n融合：為新成員提供無縫的文化和學術轉變。 \n支持：提供強大的同伴間情感和社會資源基礎設施。 \n平等：倡導每個人都有平等獲得機會和影響力的平台。 \nJohnny的雄心是擴大這個社區的影響力，培育卓越和歸屬感的遺產，這將持久存在。他邀請所有認同這一願景的人加入這一運動，把我們的社區推向前所未有的高度。',
@@ -431,7 +568,9 @@ Johnny’s ambition is to scale this community’s impact, fostering a legacy of
             'ko': {
               'nav-home': '홈', 'nav-about': '소개', 'nav-meeting': '회의', 'nav-support': '지원 받기', 'nav-feedback': '피드백', 'nav-donate': '기부하기', "nav-announcements": "공지사항", "nav-contact": "문의하기", 'nav-events': '이벤트',
                 'tag-story': '커뮤니티 강화', 'about-h': '우리 클럽 소개', 'about-p1': '클락스버그 고등학교의 아시안 피어 서포트 클럽(APSC)은 아시아 학생들을 위한 지원 커뮤니티를 조성하는 데 전념하는 학생 주도 조직입니다. 우리의 사명은 경험 공유, 문화 교류 및 개인적 성장을 위한 안전한 공간을 제공하는 것입니다. 우리는 모든 학생들이 배경에 관계없이 우리 클럽에 가입하여 더 강력하고 포용적인 커뮤니티를 구축하기 위해 우리 가족의 일원이 되도록 환영합니다.', 'about-p2': '우리는 정기적인 회의, 워크숍 및 사회적 이벤트를 조직하여 회원 간의 이해와 협력을 촉진합니다.', 'social-p': 'Instagram, Facebook, YouTube 및 TikTok에서 우리를 팔로우하세요.',
+                'brochure-tag': '클럽 브로셔', 'brochure-h': '우리의 이야기 탐색', 'brochure-p': '우리의 활동, 이벤트 및 커뮤니티 이니셔티브에 대해 자세히 알아보기 위해 포괄적인 클럽 브로셔를 탐색하세요.',
                 'tag-team': '우리의 리더십', 'team-h': '팀 소개',
+                'video-h': '우리의 클럽 소개', 'video-sub': '이 비디오를 시청하여 우리의 사명과 우리가 함께 구축하고 있는 놀라운 커뮤니티에 대해 자세히 알아보세요.',
                 'pos-pres': '회장', 'pos-vp': '부회장', 'pos-sec': '비서', 'pos-ec': '이벤트 코디네이터', 'pos-pub': '홍보 담당자', 'pos-tre': '회계 담당자', 'pos-ac': '학술 코디네이터', 'pos-des': '디자이너', 'pos-it': 'IT 지원 담당자', 'pos-pr': '홍보 담당자',
                 'intro-johnny': 'Johnny는 아시안 피어 서포트 클럽의 창립자이며 현재 2기 회장을 역임하고 있습니다. 조직 관리에서 입증된 실적을 가진 헌신적인 고등학교 지도자인 Johnny는—이전에 공연 예술단을 지도했던—이 클럽을 문화적 전환과 개인의 성공 사이의 격차를 해소하려는 심원한 비전으로 설립했습니다. \nJohnny의 리더십 아래, 이 조직은 새로운 국가와 학교 환경의 복잡성을 헤쳐나가는 학생들의 기초가 됩니다. 그의 사명은 학생들이 단순히 적응하는 것이 아니라 배우고, 사랑하고, 성장할 수 있도록 힘을 부여받는 최고의 포용적 성소를 육성하는 것입니다. Johnny는 근본적인 포용성에 대한 헌신을 굳게 유지하며, 지역사회의 다양한 목소리가 들릴 뿐만 아니라 클럽의 궤적을 형성하는 데 도움이 되도록 합니다. \n이 비전을 제도화하기 위해 Johnny는 RISE 프레임워크를 통해 리더십을 발휘합니다: \n회복력: 체계적이고 개인적인 도전을 헤쳐나갈 수 있는 동료의 능력 강화. \n통합: 새 멤버들을 위한 원활한 문화 및 학문적 전환 촉진. \n지원: 강력한 동료 간 정서 및 사회적 자원 기반 제공. \n형평성: 모든 개인이 기회와 영향력에 동등하게 접근할 수 있는 플랫폼 옹호.\nJohnny의 야심은 이 지역사회의 영향을 확대하고, 앞으로 수년 동안 지속될 탁월함과 소속감의 유산을 키우는 것입니다. 그는 이 비전을 공유하는 모든 사람을 이 운동에 참여하여 우리 지역사회를 전례 없는 높이로 끌어올리기를 초대합니다.',
                 'intro-jason': '그는 농구에 능숙합니다. 중국어나 수학 지원이 필요한 경우 언제든지 그에게 연락하십시오.',
@@ -447,6 +586,7 @@ Johnny’s ambition is to scale this community’s impact, fostering a legacy of
             'ja': {
                'nav-home': 'ホーム', 'nav-about': '私たちについて', 'nav-meeting': 'ミーティング', 'nav-support': 'サポートを受ける', 'nav-feedback': 'フィードバック', 'nav-donate': '寄付する', "nav-announcements": "お知らせ", "nav-contact": "お問い合わせ", 'nav-events': 'イベント',
                 'tag-story': 'コミュニティの強化', 'about-h': '私たちのクラブについて', 'about-p1': 'クラークスバーグ高校のアジアンピアサポートクラブ（APSC）は、アジア系学生のための支援コミュニティを育成することに専念する学生主導の組織です。私たちの使命は、経験の共有、文化交流、個人の成長のための安全なスペースを提供することです。私たちは、すべての学生が背景に関係なく私たちのクラブに参加し、より強力で包括的なコミュニティを構築するために私たちの家族の一員になることを歓迎します。', 'about-p2': '私たちは定期的なミーティング、ワークショップ、社交イベントを組織して、メンバー間の理解と協力を促進します。', 'social-p': 'Instagram、Facebook、YouTube、およびTikTokでフォローしてください。',
+                'brochure-tag': 'クラブパンフレット', 'brochure-h': '私たちのストーリーを探索', 'brochure-p': '私たちの活動、イベント、コミュニティイニシアチブについて詳しく知るために、包括的なクラブパンフレットを閲覧してください。',
                 'tag-team': '私たちのリーダーシップ', 'team-h': 'チーム紹介',
                 'pos-pres': '会長', 'pos-vp': '副会長', 'pos-sec': '書記', 'pos-ec': 'イベントコーディネーター', 'pos-pub': '広報担当者', 'pos-tre': '会計担当者', 'pos-ac': '学術コーディネーター', 'pos-des': 'デザイナー', 'pos-it': 'ITサポート担当者', 'pos-pr': '広報担当者',
                 'intro-johnny': 'Johnny はアジアンピアサポートクラブの創始者であり、現在2期目の会長を務めています。組織管理で実績のある献身的な高校指導者である Johnny は—以前にパフォーマンス芸術団を指導していた—文化的転換と個人の成功の間の溝を埋めるという深い理想を持ってこのクラブを設立しました。 \nJohnny のリーダーシップの下、この組織は新しい国と学校環境の複雑性に直面する学生にとって基盤となります。彼の使命は、学生が単に適応するだけでなく、学び、愛し、成長することを可能にする優れた包括的な聖域を育成することです。Johnny は根本的な包括性への取り組みを堅持しており、地域社会の多様な声が聞かれるだけでなく、クラブの軌跡を形作る上で重要な役割を果たすようにしています。 \nこのビジョンを制度化するために、Johnny は RISE フレームワークを通じてリーダーシップを発揮します： \n回復力：システミックおよび個人的な課題に対処する同僚の能力を強化する。 \n統合：新しいメンバーのシームレスな文化的および学問的転換を促進する。 \nサポート：堅牢なピアツーピア感情および社会的リソースインフラストラクチャを提供する。 \n平等：すべての個人が機会と影響力に平等にアクセスできるプラットフォームを推進する。 \nJohnny の野心は、このコミュニティの影響力を拡大し、これからも続く卓越性と帰属意識のレガシーを育成することです。彼は、このビジョンを共有するすべての人を招待して、この運動に参加し、私たちのコミュニティを前例のない高さに引き上げます。',
@@ -463,6 +603,7 @@ Johnny’s ambition is to scale this community’s impact, fostering a legacy of
             'es': {
                'nav-home': 'Inicio', 'nav-about': 'Acerca de', 'nav-meeting': 'Reuniones', 'nav-support': 'Obtener apoyo', 'nav-feedback': 'Comentarios', 'nav-donate': 'Donar', "nav-announcements": "Anuncios", "nav-contact": "Contacto", 'nav-events': 'Eventos',
                 'tag-story': 'Empoderando a la Comunidad', 'about-h': 'Acerca de Nuestro Club', 'about-p1': 'El Asian Peer Support Club (APSC) es una organización dirigida por estudiantes en Clarksburg High School dedicada a fomentar una comunidad de apoyo para los estudiantes asiáticos. Nuestra misión es proporcionar un espacio seguro para compartir experiencias, intercambio cultural y crecimiento personal. Damos la bienvenida a todos los estudiantes, independientemente de su origen, a unirse a nuestro club y ser parte de nuestra familia para construir una comunidad más fuerte e inclusiva.', 'about-p2': 'Organizamos reuniones regulares, talleres y eventos sociales para promover la comprensión y colaboración entre los miembros.', 'social-p': 'Síguenos en Instagram, Facebook, YouTube y TikTok.',
+                'brochure-tag': 'Folleto del Club', 'brochure-h': 'Explora Nuestra Historia', 'brochure-p': 'Navega por nuestro folleto completo del club para aprender más sobre nuestras actividades, eventos e iniciativas comunitarias.',
                 'tag-team': 'Nuestro Liderazgo', 'team-h': 'Conoce al Equipo',
                 'pos-pres': 'Presidente', 'pos-vp': 'Vicepresidente', 'pos-sec': 'Secretario', 'pos-ec': 'Coordinador de Eventos', 'pos-pub': 'Publicista', 'pos-tre': 'Tesorero', 'pos-ac': 'Coordinador Académico', 'pos-des': 'Diseñador', 'pos-it': 'Responsable de Soporte IT', 'pos-pr': 'Responsable de Relaciones Públicas',
                 'intro-johnny': 'Johnny es el fundador y actualmente cumple su segundo mandato consecutivo como Presidente del Asian Peer Support Club. Como un líder dedicado de la escuela secundaria con un historial comprobado en gestión organizacional—habiendo dirigido previamente una troupe de artes escénicas—Johnny estableció este club con una visión profunda: cerrar la brecha entre la transición cultural y el éxito personal. \nBajo el liderazgo de Johnny, la organización sirve como piedra angular para estudiantes navegando las complejidades de un nuevo país y ambiente escolar. Su misión es cultivar un santuario premier e inclusivo donde los estudiantes no solo se estén ajustando, sino que estén empoderados para aprender, amar y crecer. Johnny es firme en su compromiso con la inclusividad radical, asegurando que las diversas voces de la comunidad no solo sean escuchadas sino que sean fundamentales para moldear la trayectoria del club. \nPara institucionalizar esta visión, Johnny lidera a través del marco RISE: \nResiliencia: Fortalecer la capacidad de los compañeros para navegar y superar desafíos sistémicos y personales. \nIntegración: Facilitar transiciones culturales y académicas fluidas para nuevos miembros. \nApoyo: Proporcionar una infraestructura sólida de recursos emocionales y sociales de compañero a compañero. \nIgualdad: Campeón de una plataforma donde cada individuo tiene igual acceso a oportunidades e influencia. \nLa ambición de Johnny es escalar el impacto de esta comunidad, fomentando un legado de excelencia y pertenencia que perdurará por años venideros. Invita a todos los que compartan esta visión a unirse al movimiento para llevar nuestra comunidad a alturas sin precedentes.',
@@ -479,6 +620,7 @@ Johnny’s ambition is to scale this community’s impact, fostering a legacy of
             'fr': {
                'nav-home': 'Accueil', 'nav-about': 'À propos', 'nav-meeting': 'Réunions', 'nav-support': 'Obtenir de l\'aide', 'nav-feedback': 'Feedback', 'nav-donate': 'Faire un don', "nav-announcements": "Annonces", "nav-contact": "Contact", 'nav-events': 'Événements',
                 'tag-story': 'Renforcer la Communauté', 'about-h': 'À propos de notre club', 'about-p1': 'Le Asian Peer Support Club (APSC) est une organisation dirigée par des étudiants à Clarksburg High School dédiée à favoriser une communauté de soutien pour les étudiants asiatiques. Notre mission est de fournir un espace sûr pour partager des expériences, des échanges culturels et une croissance personnelle. Nous accueillons tous les étudiants, quel que soit leur origine, à rejoindre notre club et à faire partie de notre famille pour construire une communauté plus forte et plus inclusive.', 'about-p2': 'Nous organisons des réunions régulières, des ateliers et des événements sociaux pour promouvoir la compréhension et la collaboration entre les membres.', 'social-p': 'Suivez-nous sur Instagram, Facebook, YouTube et TikTok.',
+                'brochure-tag': 'Brochure du Club', 'brochure-h': 'Explorez Notre Histoire', 'brochure-p': 'Parcourez notre brochure complète du club pour en savoir plus sur nos activités, événements et initiatives communautaires.',
                 'tag-team': 'Notre Leadership', 'team-h': 'Rencontrez l\'équipe',
                 'pos-pres': 'Président', 'pos-vp': 'Vice-président', 'pos-sec': 'Secrétaire', 'pos-ec': 'Coordinateur d\'événements', 'pos-pub': 'Publiciste', 'pos-tre': 'Trésorier', 'pos-ac': 'Coordinateur académique', 'pos-des': 'Designer', 'pos-it': 'Responsable du support IT', 'pos-pr': 'Responsable des relations publiques',
                 'intro-johnny': "Johnny est le fondateur et occupe actuellement son deuxième mandat consécutif en tant que président du Asian Peer Support Club. En tant que leader scolaire secondaire dévoué avec un bilan éprouvé en gestion organisationnelle—ayant auparavant dirigé une troupe d'arts de la scène—Johnny a établi ce club avec une vision profonde : combler le fossé entre la transition culturelle et le succès personnel. \nSous la direction de Johnny, l'organisation sert de pierre angulaire pour les étudiants qui naviguent dans les complexités d'un nouveau pays et d'un nouvel environnement scolaire. Sa mission est de cultiver un sanctuaire premier et inclusif où les étudiants ne font pas que s'adapter, mais sont autonomisés pour apprendre, aimer et grandir. Johnny est inébranlable dans son engagement envers l'inclusivité radicale, en veillant à ce que les voix diverses de la communauté non seulement soient entendues, mais soient essentielles pour façonner la trajectoire du club. \nPour institutionnaliser cette vision, Johnny dirige à travers le cadre RISE : \nRésilience : Renforcer la capacité des pairs à naviguer et à surmonter les défis systémiques et personnels. \nIntégration : Faciliter les transitions culturelles et académiques transparentes pour les nouveaux membres. \nSoutien : Fournir une infrastructure robuste de ressources émotionnelles et sociales entre pairs. \nÉquité : Défendre une plateforme où chaque individu a un accès égal aux opportunités et à l'influence. \nL'ambition de Johnny est d'augmenter l'impact de cette communauté, en favorisant un héritage d'excellence et d'appartenance qui durera pendant des années à venir. Il invite tous ceux qui partagent cette vision à rejoindre le mouvement pour élever notre communauté à des hauteurs sans précédent.",
@@ -542,6 +684,56 @@ Johnny’s ambition is to scale this community’s impact, fostering a legacy of
         function toggleMember(card) {
             card.classList.toggle('active');
         }
+
+        // Brochure Carousel Functionality
+        let currentSlide = 0;
+        const totalSlides = 12;
+        const brochureContainer = document.getElementById('brochure-container');
+        const indicators = document.querySelectorAll('.indicator');
+
+        function updateCarousel() {
+            brochureContainer.style.transform = `translateX(-${currentSlide * (100 / totalSlides)}%)`;
+            indicators.forEach((indicator, index) => {
+                indicator.classList.toggle('active', index === currentSlide);
+            });
+        }
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % totalSlides;
+            updateCarousel();
+        }
+
+        function prevSlide() {
+            currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+            updateCarousel();
+        }
+
+        function goToSlide(slideIndex) {
+            currentSlide = slideIndex;
+            updateCarousel();
+        }
+
+        // Auto-play functionality (optional)
+        let autoPlayInterval = setInterval(nextSlide, 5000); // Change slide every 5 seconds
+
+        // Pause auto-play on hover
+        document.querySelector('.brochure-carousel').addEventListener('mouseenter', () => {
+            clearInterval(autoPlayInterval);
+        });
+
+        // Resume auto-play when mouse leaves
+        document.querySelector('.brochure-carousel').addEventListener('mouseleave', () => {
+            autoPlayInterval = setInterval(nextSlide, 5000);
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') {
+                prevSlide();
+            } else if (e.key === 'ArrowRight') {
+                nextSlide();
+            }
+        });
     </script>
 </body>
 </html>
