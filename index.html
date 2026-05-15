@@ -10,15 +10,18 @@
     <style>
         :root {
             --brand-blue: #0056D2;
+            --brand-blue-light: #3b82f6;
             --lny-red: #B91C1C;
             --text-main: #1d1d1f;
             --text-sub: #6e6e73;
             --bg-body: #ffffff;
-            --border-color: #f5f5f7;
+            --border-color: #f0f0f5;
             --transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
+        
         body {
             font-family: 'Inter', -apple-system, sans-serif;
             background-color: var(--bg-body);
@@ -26,354 +29,515 @@
             line-height: 1.7;
             -webkit-font-smoothing: antialiased;
             scroll-behavior: smooth;
+            overflow-x: hidden;
         }
 
+        /* ── PAGE LOAD OVERLAY ── */
+        #page-loader {
+            position: fixed; inset: 0; z-index: 9999;
+            background: #fff;
+            display: flex; align-items: center; justify-content: center;
+            transition: opacity 0.6s ease, visibility 0.6s ease;
+        }
+        #page-loader.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+        .loader-logo {
+            width: 80px;
+            animation: loaderPulse 1s ease-in-out infinite;
+        }
+        @keyframes loaderPulse {
+            0%, 100% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.12); opacity: 1; }
+        }
+
+        /* ── SCROLL REVEAL ── */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+                        transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .reveal.reveal-left { transform: translateX(-50px); }
+        .reveal.reveal-right { transform: translateX(50px); }
+        .reveal.reveal-scale { transform: scale(0.92); }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0) translateX(0) scale(1);
+        }
+        .reveal-delay-1 { transition-delay: 0.1s; }
+        .reveal-delay-2 { transition-delay: 0.2s; }
+        .reveal-delay-3 { transition-delay: 0.35s; }
+
+        /* ── LANG SWITCHER ── */
         .lang-switcher {
-            background: #fff; padding: 12px 0; text-align: center; border-bottom: 1px solid var(--border-color);
+            background: #fff; padding: 12px 0; text-align: center;
+            border-bottom: 1px solid var(--border-color);
+            position: relative; z-index: 100;
         }
         .lang-btn {
             background: none; border: none; font-size: 10px; font-weight: 600;
             letter-spacing: 0.1em; color: var(--text-sub); margin: 0 10px;
             cursor: pointer; transition: var(--transition);
+            position: relative;
+        }
+        .lang-btn::after {
+            content: ''; position: absolute; bottom: -2px; left: 0; right: 0;
+            height: 1px; background: var(--brand-blue);
+            transform: scaleX(0); transition: transform 0.3s ease;
         }
         .lang-btn.active { color: var(--brand-blue); }
+        .lang-btn.active::after,
+        .lang-btn:hover::after { transform: scaleX(1); }
+        .lang-btn:hover { color: var(--brand-blue); }
 
+        /* ── NAV ── */
         nav {
-            background: rgba(255,255,255,0.85); backdrop-filter: blur(25px);
-            position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid var(--border-color);
+            background: rgba(255,255,255,0.82);
+            backdrop-filter: blur(30px) saturate(180%);
+            -webkit-backdrop-filter: blur(30px) saturate(180%);
+            position: sticky; top: 0; z-index: 1000;
+            border-bottom: 1px solid rgba(0,0,0,0.06);
+            transition: box-shadow 0.4s ease, background 0.4s ease;
+        }
+        nav.scrolled {
+            box-shadow: 0 4px 30px rgba(0,0,0,0.08);
+            background: rgba(255,255,255,0.95);
         }
         .nav-container {
             max-width: 1300px; margin: 0 auto;
-            display: flex; justify-content: space-between; align-items: center; padding: 12px 40px;
-            position: relative;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 12px 40px; position: relative;
         }
-        .nav-brand-link img { height: 44px; transition: transform 0.25s ease; }
-        .nav-brand-link img:hover { transform: scale(1.05); }
+        .nav-brand-link img { height: 44px; transition: transform 0.3s var(--ease-spring), filter 0.3s ease; }
+        .nav-brand-link img:hover { transform: scale(1.08) rotate(-2deg); filter: drop-shadow(0 4px 12px rgba(0,86,210,0.25)); }
         .nav-links { display: flex; list-style: none; gap: 20px; align-items: center; }
-        .nav-links a { text-decoration: none; color: var(--text-main); font-size: 13px; font-weight: 500; transition: var(--transition); }
+        .nav-links a {
+            text-decoration: none; color: var(--text-main); font-size: 13px; font-weight: 500;
+            transition: color 0.3s ease; position: relative;
+        }
+        .nav-links a:not(.btn-donate-nav)::after {
+            content: ''; position: absolute; bottom: -2px; left: 0; right: 0;
+            height: 1px; background: var(--brand-blue);
+            transform: scaleX(0); transition: transform 0.3s ease; transform-origin: left;
+        }
+        .nav-links a:not(.btn-donate-nav):hover::after { transform: scaleX(1); }
         .nav-links a:hover { color: var(--brand-blue); }
-        .btn-donate-nav { border: 1px solid var(--brand-blue); padding: 6px 15px; border-radius: 50px; color: var(--brand-blue) !important; }
-        .btn-donate-nav:hover { background: var(--brand-blue); color: #fff !important; }
+        .btn-donate-nav {
+            border: 1px solid var(--brand-blue); padding: 6px 15px;
+            border-radius: 50px; color: var(--brand-blue) !important;
+            transition: background 0.3s ease, color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease !important;
+        }
+        .btn-donate-nav:hover {
+            background: var(--brand-blue); color: #fff !important;
+            transform: scale(1.05) !important; box-shadow: 0 6px 20px rgba(0,86,210,0.3) !important;
+        }
+        .btn-donate-nav::after { display: none !important; }
 
-       .hamburger { display: none; cursor: pointer; width: 30px; height: 20px; position: relative; z-index: 1001; }
+        .hamburger { display: none; cursor: pointer; width: 30px; height: 20px; position: relative; z-index: 1001; }
         .hamburger span { display: block; width: 100%; height: 2px; background-color: var(--text-main); position: absolute; transition: var(--transition); border-radius: 2px; }
         .hamburger span:nth-child(1) { top: 0; }
         .hamburger span:nth-child(2) { top: 9px; }
         .hamburger span:nth-child(3) { top: 18px; }
         .hamburger.active span:nth-child(1) { transform: rotate(45deg); top: 9px; }
-        .hamburger.active span:nth-child(2) { opacity: 0; }
+        .hamburger.active span:nth-child(2) { opacity: 0; transform: translateX(10px); }
         .hamburger.active span:nth-child(3) { transform: rotate(-45deg); top: 9px; }
 
+        /* ── HERO ── */
         .hero-banner {
             width: 100%; height: 75vh; position: relative;
-            background: #fff; display: flex; align-items: center; justify-content: center; overflow: hidden;
+            background: #fff; display: flex; align-items: center; justify-content: center;
+            overflow: hidden;
         }
+        /* Animated gradient orbs */
+        .hero-orbs { position: absolute; inset: 0; z-index: 1; overflow: hidden; }
+        .orb {
+            position: absolute; border-radius: 50%;
+            filter: blur(80px); opacity: 0.25;
+            animation: orbFloat 12s ease-in-out infinite;
+        }
+        .orb-1 { width: 500px; height: 500px; background: radial-gradient(circle, #93c5fd, #3b82f6); top: -150px; right: -100px; animation-delay: 0s; }
+        .orb-2 { width: 350px; height: 350px; background: radial-gradient(circle, #fbbf24, #f59e0b); bottom: -80px; left: -80px; animation-delay: -4s; }
+        .orb-3 { width: 250px; height: 250px; background: radial-gradient(circle, #f87171, #ef4444); top: 40%; left: 30%; animation-delay: -8s; }
+        @keyframes orbFloat {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(30px, -40px) scale(1.05); }
+            66% { transform: translate(-20px, 20px) scale(0.95); }
+        }
+
+        /* Canvas particles */
+        #hero-canvas { position: absolute; inset: 0; z-index: 2; pointer-events: none; }
+
         .hero-banner img.bg {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            object-fit: cover; opacity: 0.5;
-            mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 30%, transparent 100%);
+            object-fit: cover; opacity: 0.35; z-index: 3;
+            mask-image: linear-gradient(to bottom, rgba(0,0,0,0.8) 30%, transparent 100%);
+            -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0.8) 30%, transparent 100%);
+            transform: scale(1.05);
+            animation: heroParallax 20s ease-in-out infinite alternate;
         }
+        @keyframes heroParallax {
+            from { transform: scale(1.05) translateY(0); }
+            to { transform: scale(1.1) translateY(-20px); }
+        }
+
         .hero-content { position: relative; z-index: 10; text-align: center; }
         .hero-logo-large {
             width: 220px; margin-bottom: 25px;
-            animation: logoFlow 5s ease-in-out infinite, logoGlow 2.5s ease-in-out infinite;
-            transform-origin: center;
-            will-change: transform, filter;
+            animation: logoFloat 6s ease-in-out infinite, logoGlow 3s ease-in-out infinite;
+            transform-origin: center; will-change: transform, filter;
         }
-        .hero-logo-large:hover {
-            animation: logoFlow 3s ease-in-out infinite, logoGlow 1.5s ease-in-out infinite;
-            transform: translateY(-5px) scale(1.12) rotateZ(1deg);
-            filter: drop-shadow(0 0 18px rgba(0, 86, 210, 0.45));
-        }
-        @keyframes logoFlow {
-            0%, 100% { transform: translateY(0) rotateZ(0deg) scale(1); }
-            25% { transform: translateY(-8px) rotateZ(-0.8deg) scale(1.02); }
-            50% { transform: translateY(6px) rotateZ(0.8deg) scale(0.98); }
-            75% { transform: translateY(-4px) rotateZ(-0.4deg) scale(1.01); }
+        @keyframes logoFloat {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            25% { transform: translateY(-10px) rotate(-0.5deg); }
+            75% { transform: translateY(6px) rotate(0.5deg); }
         }
         @keyframes logoGlow {
-            0%, 100% { filter: drop-shadow(0 0 0 rgba(0, 86, 210, 0.2)); }
-            50% { filter: drop-shadow(0 0 22px rgba(0, 86, 210, 0.38)); }
+            0%, 100% { filter: drop-shadow(0 0 0px rgba(0,86,210,0)); }
+            50% { filter: drop-shadow(0 0 28px rgba(0,86,210,0.4)); }
         }
-        .hero-title { font-size: 3.5rem; font-weight: 800; letter-spacing: -0.05em; margin-bottom: 30px; line-height: 1.1; }
+        .hero-logo-large:hover {
+            animation: none;
+            transform: scale(1.12) rotate(2deg);
+            filter: drop-shadow(0 0 20px rgba(0,86,210,0.5));
+            transition: transform 0.4s var(--ease-spring), filter 0.4s ease;
+        }
+
+        /* Hero text animation */
+        .hero-title {
+            font-size: 3.5rem; font-weight: 800; letter-spacing: -0.05em;
+            margin-bottom: 30px; line-height: 1.1;
+            animation: heroTitleIn 1s cubic-bezier(0.4, 0, 0.2, 1) 0.5s both;
+        }
         .cta-btn {
             display: inline-block; background: var(--brand-blue); color: #fff;
             padding: 16px 40px; border-radius: 100px; text-decoration: none;
-            font-weight: 600; font-size: 14px; transition: var(--transition);
+            font-weight: 600; font-size: 14px;
+            transition: transform 0.3s var(--ease-spring), box-shadow 0.3s ease, background 0.3s ease;
+            animation: heroCtaIn 1s cubic-bezier(0.4, 0, 0.2, 1) 0.7s both;
+            position: relative; overflow: hidden;
         }
-        .cta-btn:hover { transform: scale(1.05); background: #0046b0; }
+        .cta-btn::before {
+            content: ''; position: absolute; inset: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.6s ease;
+        }
+        .cta-btn:hover::before { transform: translateX(100%); }
+        .cta-btn:hover {
+            transform: scale(1.06) translateY(-2px);
+            box-shadow: 0 16px 40px rgba(0,86,210,0.35);
+            background: #0046b0;
+        }
+        @keyframes heroTitleIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes heroCtaIn {
+            from { opacity: 0; transform: translateY(20px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
 
+        /* Scroll indicator */
+        .scroll-indicator {
+            position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);
+            z-index: 10; display: flex; flex-direction: column; align-items: center; gap: 8px;
+            animation: scrollIndicatorIn 1s ease 1.2s both;
+            cursor: pointer;
+        }
+        .scroll-indicator span { font-size: 10px; font-weight: 600; letter-spacing: 0.15em; color: rgba(0,0,0,0.4); text-transform: uppercase; }
+        .scroll-arrow {
+            width: 20px; height: 20px;
+            border-right: 2px solid rgba(0,0,0,0.3);
+            border-bottom: 2px solid rgba(0,0,0,0.3);
+            transform: rotate(45deg);
+            animation: scrollBounce 1.5s ease-in-out infinite;
+        }
+        @keyframes scrollBounce {
+            0%, 100% { transform: rotate(45deg) translate(0, 0); opacity: 1; }
+            50% { transform: rotate(45deg) translate(4px, 4px); opacity: 0.5; }
+        }
+        @keyframes scrollIndicatorIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* ── SECTION COMMON ── */
         .wrapper { max-width: 1100px; margin: 0 auto; padding: 80px 40px; }
-        .section-title { font-size: 2.8rem; margin-bottom: 20px; font-weight: 800; letter-spacing: -0.03em; }
+        .section-title {
+            font-size: 2.8rem; margin-bottom: 20px; font-weight: 800; letter-spacing: -0.03em;
+        }
         .section-p { color: var(--text-sub); font-size: 1.15rem; margin-bottom: 15px; }
-        .img-frame { width: 100%; border-radius: 24px; box-shadow: 0 20px 40px rgba(0,0,0,0.05); }
+        .img-frame { width: 100%; border-radius: 24px; box-shadow: 0 20px 40px rgba(0,0,0,0.06); }
 
+        /* ── 3D TILT CARD ── */
+        .tilt-card {
+            transition: transform 0.1s ease, box-shadow 0.3s ease;
+            transform-style: preserve-3d;
+            will-change: transform;
+        }
+
+        /* ── GRID ── */
         .grid-section { display: grid; grid-template-columns: 1.1fr 1fr; gap: 80px; align-items: center; margin-bottom: 120px; }
 
+        /* ── EVENTS ── */
         .events-gallery { display: flex; flex-direction: column; gap: 30px; max-width: 940px; margin: 0 auto 40px; }
-        .events-gallery img { width: 100%; border-radius: 24px; box-shadow: 0 20px 40px rgba(0,0,0,0.05); object-fit: cover; }
+        .events-gallery img {
+            width: 100%; border-radius: 24px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.05); object-fit: cover;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+        .events-gallery img:hover { transform: scale(1.01); box-shadow: 0 30px 60px rgba(0,0,0,0.1); }
 
-        .direct-link-btn { display: inline-block; margin-top: 20px; color: var(--brand-blue); text-decoration: none; font-weight: 600; }
+        .direct-link-btn {
+            display: inline-flex; align-items: center; gap: 6px;
+            margin-top: 20px; color: var(--brand-blue); text-decoration: none;
+            font-weight: 600; transition: gap 0.3s ease;
+        }
+        .direct-link-btn:hover { gap: 12px; }
 
-        .meeting-box { background: #fbfbfd; padding: 60px; border-radius: 24px; text-align: center; border: 1px solid var(--border-color); }
+        /* ── MEETING BOX ── */
+        .meeting-box {
+            background: #fbfbfd; padding: 60px; border-radius: 24px;
+            text-align: center; border: 1px solid var(--border-color);
+            transition: box-shadow 0.4s ease, transform 0.4s ease;
+        }
+        .meeting-box:hover {
+            box-shadow: 0 20px 60px rgba(0,86,210,0.1);
+            transform: translateY(-4px);
+        }
 
+        /* ── VIDEO ── */
+        .video-container {
+            position: relative; width: 100%; aspect-ratio: 16/9;
+            overflow: hidden; border-radius: 24px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.08); background: #000;
+            transition: box-shadow 0.4s ease, transform 0.4s ease;
+        }
+        .video-container:hover {
+            box-shadow: 0 30px 80px rgba(0,0,0,0.15);
+            transform: scale(1.005);
+        }
+        .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+
+        /* ── BROCHURE CAROUSEL ── */
+        .brochure-carousel {
+            position: relative; width: 100%; max-width: 900px;
+            margin: 0 auto; overflow: hidden; border-radius: 24px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.08); background: #f5f5f7;
+            transition: box-shadow 0.4s ease;
+        }
+        .brochure-carousel:hover { box-shadow: 0 30px 70px rgba(0,0,0,0.12); }
+        .brochure-container { display: flex; width: 1200%; transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
+        .brochure-slide { flex: 0 0 8.333%; position: relative; }
+        .brochure-slide img { width: 100%; height: auto; display: block; aspect-ratio: 8.5/11; object-fit: cover; }
+        .carousel-nav {
+            position: absolute; top: 50%; transform: translateY(-50%);
+            background: rgba(255,255,255,0.92); border: none;
+            width: 50px; height: 50px; border-radius: 50%; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 20px; color: var(--brand-blue);
+            transition: background 0.3s ease, color 0.3s ease, transform 0.3s var(--ease-spring), box-shadow 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15); z-index: 10;
+        }
+        .carousel-nav:hover {
+            background: var(--brand-blue); color: white;
+            transform: translateY(-50%) scale(1.12);
+            box-shadow: 0 8px 24px rgba(0,86,210,0.35);
+        }
+        .carousel-prev { left: 20px; }
+        .carousel-next { right: 20px; }
+        .carousel-indicators { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); display: flex; gap: 8px; }
+        .indicator {
+            width: 8px; height: 8px; border-radius: 50%;
+            background: rgba(255,255,255,0.5); cursor: pointer;
+            transition: all 0.3s var(--ease-spring);
+        }
+        .indicator.active { background: var(--brand-blue); transform: scale(1.3); width: 20px; border-radius: 4px; }
+
+        /* ── SPONSOR SECTION ── */
+        .sponsor-wrapper {
+            background: linear-gradient(135deg, #f8faff 0%, #eef4ff 100%);
+            border-radius: 32px; padding: 80px 40px; text-align: center;
+            margin-bottom: 100px; border: 1px solid rgba(0,86,210,0.1);
+            box-shadow: 0 20px 60px rgba(0,86,210,0.05);
+            position: relative; overflow: hidden;
+            transition: box-shadow 0.4s ease, transform 0.4s ease;
+        }
+        .sponsor-wrapper:hover {
+            box-shadow: 0 30px 80px rgba(0,86,210,0.1);
+            transform: translateY(-3px);
+        }
+        .sponsor-wrapper::before {
+            content: ''; position: absolute; top: -50%; right: -20%;
+            width: 400px; height: 400px; border-radius: 50%;
+            background: radial-gradient(circle, rgba(0,86,210,0.06), transparent);
+            animation: sponsorOrb 8s ease-in-out infinite;
+        }
+        @keyframes sponsorOrb {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(-20px, 20px); }
+        }
+        .sponsor-title { font-size: 2.8rem; font-weight: 800; margin-bottom: 20px; letter-spacing: -0.03em; color: var(--text-main); }
+        .sponsor-text { font-size: 1.15rem; color: var(--text-sub); margin-bottom: 40px; line-height: 1.8; max-width: 600px; margin-left: auto; margin-right: auto; }
+        .btn-sponsor {
+            display: inline-flex; align-items: center; justify-content: center;
+            gap: 10px; background: var(--brand-blue); color: #fff;
+            padding: 15px 36px; border-radius: 100px; text-decoration: none;
+            font-weight: 600; font-size: 15px; position: relative; overflow: hidden;
+            transition: transform 0.3s var(--ease-spring), box-shadow 0.3s ease, background 0.3s ease;
+        }
+        .btn-sponsor::before {
+            content: ''; position: absolute; inset: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+            transform: translateX(-100%); transition: transform 0.5s ease;
+        }
+        .btn-sponsor:hover::before { transform: translateX(100%); }
+        .btn-sponsor:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 16px 40px rgba(0,86,210,0.3);
+            background: #0046b0; color: #fff;
+        }
+        .btn-sponsor svg { width: 18px; height: 18px; transition: transform 0.3s ease; }
+        .btn-sponsor:hover svg { transform: translateX(5px); }
+
+        /* ── LNY SECTION ── */
+        .lny-poster-wrap {
+            width: 100%; max-width: 450px; aspect-ratio: 2/3;
+            margin: 0 auto; border-radius: 20px; overflow: hidden;
+            box-shadow: 0 30px 60px -15px rgba(0,0,0,0.15);
+            border: 1px solid rgba(0,0,0,0.05);
+            transition: transform 0.5s var(--ease-spring), box-shadow 0.5s ease;
+        }
+        .lny-poster-wrap:hover {
+            transform: scale(1.03) rotate(0.5deg);
+            box-shadow: 0 50px 100px -15px rgba(185,28,28,0.25);
+        }
+        .lny-poster-wrap img { width: 100%; height: 100%; object-fit: cover; }
+
+        /* ── AANHPI ── */
+        .aanhpi-img-wrap {
+            aspect-ratio: 8.5/11;
+            display: flex; align-items: center; justify-content: center;
+            flex-direction: column; padding: 20px; text-align: center;
+            transition: transform 0.4s var(--ease-spring), box-shadow 0.4s ease;
+        }
+        .aanhpi-img-wrap:hover {
+            transform: scale(1.03);
+            box-shadow: 0 40px 80px rgba(0,86,210,0.15) !important;
+        }
+
+        /* ── TAG LABEL ── */
+        .section-tag {
+            color: var(--brand-blue); font-size: 0.9rem; font-weight: 700;
+            letter-spacing: 0.15em; text-transform: uppercase;
+            display: inline-block; margin-bottom: 15px;
+            position: relative;
+        }
+        .section-tag::before {
+            content: ''; display: inline-block; width: 6px; height: 6px;
+            background: var(--brand-blue); border-radius: 50%;
+            margin-right: 8px; vertical-align: middle;
+            animation: tagDot 2s ease-in-out infinite;
+        }
+        @keyframes tagDot {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(0.6); }
+        }
+
+        /* ── FOOTER ── */
         footer { padding: 80px 0 60px; border-top: 1px solid var(--border-color); text-align: center; }
-         .footer-legal { display: flex; justify-content: center; gap: 20px; }
-        .footer-legal a { font-size: 11px; color: #86868b; text-decoration: none; transition: var(--transition); }
+        .footer-legal { display: flex; justify-content: center; gap: 20px; }
+        .footer-legal a { font-size: 11px; color: #86868b; text-decoration: none; transition: color 0.3s ease; }
         .footer-legal a:hover { color: var(--brand-blue); text-decoration: underline; }
-
         .social-icons { display: flex; justify-content: center; gap: 30px; margin-bottom: 30px; }
-        .social-icons img { width: 26px; filter: grayscale(1); opacity: 0.5; transition: 0.3s; }
-        .social-icons a:hover img { filter: grayscale(0); opacity: 1; transform: translateY(-5px); }
+        .social-icons img { width: 26px; filter: grayscale(1); opacity: 0.4; transition: filter 0.3s ease, opacity 0.3s ease, transform 0.3s var(--ease-spring); }
+        .social-icons a:hover img { filter: grayscale(0); opacity: 1; transform: translateY(-6px) scale(1.1); }
         .footer-text { font-size: 11px; color: #aaa; margin-bottom: 15px; }
 
-        .video-container {
-            position: relative;
-            width: 100%;
-            aspect-ratio: 16 / 9;
-            overflow: hidden;
-            border-radius: 24px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.08);
-            background: #000;
+        /* ── COUNTER ANIMATION ── */
+        .animated-number { display: inline-block; }
+
+        /* ── SHIMMER TEXT ── */
+        .shimmer-text {
+            background: linear-gradient(90deg, var(--text-main) 0%, var(--brand-blue) 50%, var(--text-main) 100%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: shimmerMove 4s linear infinite;
         }
-        .video-container iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: 0;
+        @keyframes shimmerMove {
+            from { background-position: 200% center; }
+            to { background-position: -200% center; }
         }
 
-        /* Brochure Carousel Styles */
-        .brochure-carousel {
-            position: relative;
-            width: 100%;
+        /* ── FEEDBACK SECTION ── */
+        .feedback-section {
+            background: linear-gradient(135deg, #f8fafc 0%, #edf2f7 100%);
+            border: 1px solid #d1e0f0; margin-top: 120px;
+            box-shadow: 0 12px 32px rgba(0,86,210,0.08);
+            border-radius: 20px; margin-left: auto; margin-right: auto;
             max-width: 900px;
-            margin: 0 auto;
-            overflow: hidden;
-            border-radius: 24px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.08);
-            background: #f5f5f7;
+            transition: box-shadow 0.4s ease, transform 0.4s ease;
         }
-
-        .brochure-container {
-            display: flex;
-            width: 1200%; /* 12 images */
-            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .brochure-slide {
-            flex: 0 0 8.333%; /* 100% / 12 */
-            position: relative;
-        }
-
-        .brochure-slide img {
-            width: 100%;
-            height: auto;
-            display: block;
-            aspect-ratio: 8.5 / 11; /* Standard brochure ratio */
-            object-fit: cover;
-        }
-
-        .carousel-nav {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(255,255,255,0.9);
-            border: none;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-            color: var(--brand-blue);
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            z-index: 10;
-        }
-
-        .carousel-nav:hover {
-            background: var(--brand-blue);
-            color: white;
-            transform: translateY(-50%) scale(1.1);
-        }
-
-        .carousel-prev {
-            left: 20px;
-        }
-
-        .carousel-next {
-            right: 20px;
-        }
-
-        .carousel-indicators {
-            position: absolute;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 8px;
-        }
-
-        .indicator {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.5);
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .indicator.active {
-            background: var(--brand-blue);
-            transform: scale(1.2);
-        }
-
-        .sponsor-wrapper {
-            background: #fbfbfd;
-            border-radius: 32px;
-            padding: 80px 40px;
-            text-align: center;
-            margin-bottom: 100px;
-            border: 1px solid var(--border-color);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.02);
-            color: var(--text-main);
-        }
-
-        .sponsor-content {
-            margin: 0 auto;
-        }
-
-        .sponsor-title {
-            font-size: 2.8rem;
-            font-weight: 800;
-            margin-bottom: 20px;
-            letter-spacing: -0.03em;
-            color: var(--text-main);
-        }
-
-        .sponsor-text {
-            font-size: 1.15rem;
-            color: var(--text-sub);
-            margin-bottom: 40px;
-            line-height: 1.8;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .btn-sponsor {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            background: var(--brand-blue);
-            color: #ffffff;
-            padding: 15px 36px;
-            border-radius: 100px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 15px;
-            transition: var(--transition);
-        }
-        
-        .btn-sponsor:hover {
+        .feedback-section:hover {
+            box-shadow: 0 20px 60px rgba(0,86,210,0.12);
             transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(0, 86, 210, 0.2);
-            background: #0046b0;
-            color: #ffffff;
         }
+        .feedback-input {
+            width: 100%; padding: 14px 16px; border-radius: 12px;
+            border: 2px solid #e5e7eb; font-size: 16px;
+            background: rgba(255,255,255,0.8);
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            font-family: inherit;
+        }
+        .feedback-input:focus {
+            outline: none;
+            border-color: var(--brand-blue);
+            box-shadow: 0 0 0 4px rgba(0,86,210,0.1);
+        }
+        .feedback-submit {
+            background: linear-gradient(135deg, #0056D2, #003d99);
+            color: white; border: none; padding: 14px 28px; border-radius: 12px;
+            font-size: 16px; font-weight: 600; cursor: pointer; font-family: inherit;
+            transition: transform 0.2s var(--ease-spring), box-shadow 0.2s ease;
+            box-shadow: 0 4px 12px rgba(0,86,210,0.3);
+        }
+        .feedback-submit:hover {
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 8px 24px rgba(0,86,210,0.35);
+        }
+        .feedback-submit:active { transform: scale(0.98); }
 
-        .btn-sponsor svg {
-            width: 18px; height: 18px;
-            transition: transform 0.3s ease;
-        }
-        .btn-sponsor:hover svg {
-            transform: translateX(4px); 
-        }
-
-        .fundraiser-wrapper {
-            background: linear-gradient(135deg, rgba(252, 228, 236, 0.2) 0%, rgba(248, 187, 217, 0.2) 100%);
-            border-radius: 32px;
-            padding: 80px 40px;
-            text-align: center;
-            margin-bottom: 100px;
-            border: 1px solid var(--border-color);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.03);
-            color: var(--text-main);
-        }
-
-        .fundraiser-content {
-            margin: 0 auto;
-            max-width: 800px;
-        }
-
-        .fundraiser-title {
-            font-size: 2.8rem;
-            font-weight: 800;
-            margin-bottom: 20px;
-            letter-spacing: -0.03em;
-            color: var(--text-main);
-        }
-
-        .fundraiser-text {
-            font-size: 1.15rem;
-            color: var(--text-sub);
-            margin-bottom: 40px;
-            line-height: 1.8;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .fundraiser-image {
-            margin-top: 40px;
-        }
-
-        .fundraiser-image img {
-            transition: transform 0.3s ease;
-        }
-
-        .fundraiser-image img:hover {
-            transform: scale(1.02);
-        }
-
+        /* ── RESPONSIVE ── */
         @media (max-width: 768px) {
-            .fundraiser-wrapper { padding: 50px 20px; margin-bottom: 60px; }
-            .fundraiser-title { font-size: 2rem; }
-            .wrapper { padding: 40px 20px; }
-
             .nav-container { padding: 12px 16px; }
             .grid-section { grid-template-columns: 1fr; text-align: center; gap: 40px; }
             .hero-title { font-size: 2.5rem; }
-            
+            .section-title { font-size: 2rem; }
+            .wrapper { padding: 40px 20px; }
             .sponsor-wrapper { padding: 50px 20px; margin-bottom: 60px; }
-            .sponsor-title { font-size: 2rem; }
-            .btn-sponsor { padding: 12px 24px; font-size: 14px; width: 100%; max-width: 280px; }
-            
             .meeting-box { padding: 24px 20px; margin-left: auto; margin-right: auto; }
-            #home-feedback-section > div { padding: 20px !important; }
-            #home-feedback-form > div:first-child { grid-template-columns: 1fr !important; }
-            #home-feedback-section h3 { font-size: 1.5rem; }
-
             .hamburger { display: block; }
             .nav-links {
                 position: absolute; top: 100%; left: 0; width: 100%;
-                background: rgba(255, 255, 255, 0.98); backdrop-filter: blur(20px);
-                flex-direction: column; padding: 20px 0; gap: 0; opacity: 0; 
-                transform: translateY(-20px); pointer-events: none; transition: var(--transition);
+                background: rgba(255,255,255,0.98); backdrop-filter: blur(20px);
+                flex-direction: column; padding: 20px 0; gap: 0;
+                opacity: 0; transform: translateY(-20px);
+                pointer-events: none; transition: var(--transition);
                 border-bottom: 1px solid var(--border-color);
             }
             .nav-links.active { opacity: 1; transform: translateY(0); pointer-events: auto; }
             .nav-links a { display: block; padding: 15px 0; font-size: 16px; text-align: center; }
+            #home-feedback-form > div:first-child { grid-template-columns: 1fr !important; }
         }
     </style>
 </head>
 <body>
+
+    <!-- Page Loader -->
+    <div id="page-loader">
+        <img src="apsc_new_logo.png" class="loader-logo" alt="Loading...">
+    </div>
 
     <div class="lang-switcher">
         <button class="lang-btn active" onclick="updateLang('en')">ENGLISH</button>
@@ -385,7 +549,7 @@
         <button class="lang-btn" onclick="updateLang('fr')">FRANÇAIS</button>
     </div>
 
-    <nav>
+    <nav id="main-nav">
         <div class="nav-container">
             <a href="index.html" class="nav-brand-link"><img src="APSC_LOGO.png" alt="APSC Logo"></a>
             <div class="hamburger" id="hamburger-btn"><span></span><span></span><span></span></div>
@@ -403,32 +567,48 @@
     </nav>
 
     <header class="hero-banner">
-        <img src="banner_image.jpg" class="bg">
+        <!-- Ambient orbs -->
+        <div class="hero-orbs">
+            <div class="orb orb-1"></div>
+            <div class="orb orb-2"></div>
+            <div class="orb orb-3"></div>
+        </div>
+        <!-- Particle canvas -->
+        <canvas id="hero-canvas"></canvas>
+        <!-- Background image -->
+        <img src="banner_image.jpg" class="bg" alt="">
+        <!-- Content -->
         <div class="hero-content">
             <a href="about.html">
-                <img src="apsc_new_logo.png" class="hero-logo-large">
+                <img src="apsc_new_logo.png" class="hero-logo-large" alt="APSC Logo">
             </a>
             <h1 class="hero-title" data-key="hero-title">Experience Culture.<br>Find Your Community.</h1>
             <a href="https://docs.google.com/forms/d/e/1FAIpQLSewbthoNNrEnw1DsBZh5CwyCMrs92ZlfiHQqXSYuCM-1y4vhA/viewform?usp=header" class="cta-btn" data-key="cta">Join Us</a>
+        </div>
+        <div class="scroll-indicator" onclick="document.querySelector('main').scrollIntoView({behavior:'smooth'})">
+            <span>Scroll</span>
+            <div class="scroll-arrow"></div>
         </div>
     </header>
 
     <main class="wrapper">
 
+        <!-- INTRO VIDEO -->
         <section style="text-align: center; margin-bottom: 140px;">
-            <span class="section-tag" data-key="intro-tag" style="color: var(--brand-blue); font-size: 0.9rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; display: block; margin-bottom: 15px;">Club Introduction</span>
-            <h2 class="section-title" data-key="intro-h" style="margin-bottom: 15px;">Discover Our Mission</h2>
-            <p class="section-p" data-key="intro-p" style="max-width: 700px; margin: 0 auto 50px; color: var(--text-sub);">Watch our exclusive club introduction video to learn about APSC's mission, values, and the vibrant community we've built together.</p>
-            <div class="video-container" style="max-width: 900px; margin: 0 auto;">
+            <span class="section-tag reveal" data-key="intro-tag">Club Introduction</span>
+            <h2 class="section-title reveal reveal-delay-1 shimmer-text" data-key="intro-h">Discover Our Mission</h2>
+            <p class="section-p reveal reveal-delay-2" data-key="intro-p" style="max-width: 700px; margin: 0 auto 50px;">Watch our exclusive club introduction video to learn about APSC's mission, values, and the vibrant community we've built together.</p>
+            <div class="video-container reveal reveal-scale reveal-delay-3" style="max-width: 900px; margin: 0 auto;">
                 <iframe src="https://www.youtube.com/embed/ISXpDeim-H8?si=hY9DPBkhhSjHV2XO" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
             </div>
         </section>
 
+        <!-- BROCHURE -->
         <section style="text-align: center; margin-bottom: 140px;">
-            <span class="section-tag" data-key="brochure-tag" style="color: var(--brand-blue); font-size: 0.9rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; display: block; margin-bottom: 15px;">Club Brochure</span>
-            <h2 class="section-title" data-key="brochure-h" style="margin-bottom: 15px;">Explore Our Story</h2>
-            <p class="section-p" data-key="brochure-p" style="max-width: 700px; margin: 0 auto 50px; color: var(--text-sub);">Browse through our comprehensive club brochure to learn more about our activities, events, and community initiatives.</p>
-            <div class="brochure-carousel">
+            <span class="section-tag reveal" data-key="brochure-tag">Club Brochure</span>
+            <h2 class="section-title reveal reveal-delay-1" data-key="brochure-h">Explore Our Story</h2>
+            <p class="section-p reveal reveal-delay-2" data-key="brochure-p" style="max-width: 700px; margin: 0 auto 50px;">Browse through our comprehensive club brochure to learn more about our activities, events, and community initiatives.</p>
+            <div class="brochure-carousel reveal reveal-scale reveal-delay-3">
                 <div class="brochure-container" id="brochure-container">
                     <div class="brochure-slide"><img src="2026APSC_Brochure1.jpg" alt="Brochure Page 1"></div>
                     <div class="brochure-slide"><img src="2026APSC_Brochure2.jpg" alt="Brochure Page 2"></div>
@@ -445,7 +625,7 @@
                 </div>
                 <button class="carousel-nav carousel-prev" onclick="prevSlide()">&#10094;</button>
                 <button class="carousel-nav carousel-next" onclick="nextSlide()">&#10095;</button>
-                <div class="carousel-indicators">
+                <div class="carousel-indicators" id="carousel-indicators">
                     <div class="indicator active" onclick="goToSlide(0)"></div>
                     <div class="indicator" onclick="goToSlide(1)"></div>
                     <div class="indicator" onclick="goToSlide(2)"></div>
@@ -462,109 +642,113 @@
             </div>
         </section>
 
+        <!-- AANHPI -->
         <section class="grid-section" id="aanhpi-section" style="margin-bottom: 120px;">
             <div>
-                <h2 class="section-title" data-key="aanhpi-h">Celebrate AANHPI Heritage Month</h2>
-                <p class="section-p" data-key="aanhpi-p1">May is Asian American, Native Hawaiian, and Pacific Islander Heritage Month! Join us in honoring the rich cultures, histories, and contributions of the AANHPI community.</p>
-                <p class="section-p" data-key="aanhpi-p2">Throughout the month, we will be hosting a series of events, workshops, and cultural showcases. Check out our upcoming poster for detailed schedules and featured activities. Let's celebrate our diversity and strengthen our community together!</p>
+                <h2 class="section-title reveal reveal-left" data-key="aanhpi-h">Celebrate AANHPI Heritage Month</h2>
+                <p class="section-p reveal reveal-left reveal-delay-1" data-key="aanhpi-p1">May is Asian American, Native Hawaiian, and Pacific Islander Heritage Month! Join us in honoring the rich cultures, histories, and contributions of the AANHPI community.</p>
+                <p class="section-p reveal reveal-left reveal-delay-2" data-key="aanhpi-p2">Throughout the month, we will be hosting a series of events, workshops, and cultural showcases. Check out our upcoming poster for detailed schedules and featured activities. Let's celebrate our diversity and strengthen our community together!</p>
             </div>
-            <div class="img-frame" style="aspect-ratio: 8.5/11; display: flex; align-items: center; justify-content: center; flex-direction: column; padding: 20px; text-align: center; transition: transform 0.3s ease, box-shadow 0.3s ease;" onmouseover="this.style.transform='scale(1.02)'; this.style.boxShadow='0 30px 60px rgba(0,86,210,0.15)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 20px 40px rgba(0,0,0,0.05)';">
+            <div class="img-frame aanhpi-img-wrap tilt-card reveal reveal-right"
+                style="box-shadow: 0 20px 40px rgba(0,0,0,0.05);">
                 <img src="AANHPI_Poster.PNG" alt="AANHPI Heritage Month Poster" style="width: 100%; height: auto; object-fit: contain;">
             </div>
         </section>
         
+        <!-- LNY -->
         <section id="lny-section" style="margin-bottom: 120px;">
             <div style="margin: 0 auto; text-align: center;">
-                <span style="color: var(--lny-red); font-size: 0.9rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; display: block; margin-bottom: 15px;" data-key="lny-title">Lunar New Year 2026</span>
-                <h2 class="section-title" data-key="lny-h" style="margin-bottom: 25px;">Spirit of the Horse</h2>
-                <p class="section-p" data-key="lny-p" style="max-width: 650px; margin: 0 auto 50px;">
+                <span class="section-tag reveal" style="color: var(--lny-red);" data-key="lny-title">Lunar New Year 2026</span>
+                <h2 class="section-title reveal reveal-delay-1" data-key="lny-h" style="margin-bottom: 25px;">Spirit of the Horse</h2>
+                <p class="section-p reveal reveal-delay-2" data-key="lny-p" style="max-width: 650px; margin: 0 auto 50px;">
                     Celebrating the Year of the Horse. A symbol of unbridled energy, nobility, and the drive to move forward. Wishing our community a year of strength and prosperity.
                 </p>
                 
-                <div style="width: 100%; max-width: 450px; aspect-ratio: 2/3; margin: 0 auto; border-radius: 20px; overflow: hidden; box-shadow: 0 30px 60px -15px rgba(0,0,0,0.15); border: 1px solid rgba(0,0,0,0.05); background-color: #fafafa; position: relative;">
-                    <img src="LNY_Poster.png" alt="Year of the Horse Poster" style="width: 100%; height: 100%; object-fit: cover;">
+                <div class="lny-poster-wrap reveal reveal-scale tilt-card">
+                    <img src="LNY_Poster.png" alt="Year of the Horse Poster">
                 </div>
 
-                <div style="width: 100%; aspect-ratio: 8064/4182; margin: 60px auto 40px; border-radius: 20px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.08);">
+                <div style="width: 100%; aspect-ratio: 8064/4182; margin: 60px auto 40px; border-radius: 20px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.08); transition: transform 0.4s ease, box-shadow 0.4s ease;" class="reveal"
+                    onmouseover="this.style.transform='scale(1.01)'; this.style.boxShadow='0 30px 60px rgba(0,0,0,0.12)'"
+                    onmouseout="this.style.transform=''; this.style.boxShadow=''">
                     <img src="Event_LNY4.jpg" alt="Group Picture" style="width: 100%; height: 100%; object-fit: cover;">
                 </div>
 
                 <div style="margin-top: 80px;">
-                    <h3 style="font-size: 1.8rem; font-weight: 800; margin-bottom: 10px;" data-key="yt-title">Our Traditions</h3>
-                    <p class="section-p" data-key="yt-sub" style="margin-bottom: 30px;">Watch our club's exclusive series on Lunar New Year traditions.</p>
-                    <div class="video-container">
-                        <iframe width="560" height="315" src="https://www.youtube.com/embed/WL51hZOGMz4?si=W5y0rmU5oYtGRhxy" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                    <h3 class="reveal" style="font-size: 1.8rem; font-weight: 800; margin-bottom: 10px;" data-key="yt-title">Our Traditions</h3>
+                    <p class="section-p reveal reveal-delay-1" data-key="yt-sub" style="margin-bottom: 30px;">Watch our club's exclusive series on Lunar New Year traditions.</p>
+                    <div class="video-container reveal reveal-delay-2">
+                        <iframe src="https://www.youtube.com/embed/WL51hZOGMz4?si=W5y0rmU5oZTYYhxy" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
                     </div>
                 </div>
             </div>
         </section>
         
-        <section class="sponsor-wrapper" id="support">
-            <div class="sponsor-content">
+        <!-- SPONSOR -->
+        <section class="sponsor-wrapper reveal reveal-scale" id="support">
+            <div class="sponsor-content" style="position: relative; z-index: 1;">
                 <h2 class="sponsor-title" data-key="sponsor-h">Empower Our Mission</h2>
                 <p class="sponsor-text" data-key="sponsor-p">
                     Become a driving force behind APSC. Your sponsorship helps us foster cultural exchange, host inclusive events, and build a stronger, more supportive student community. Let's create an impact together.
                 </p>
-                
                 <a href="contact.html" class="btn-sponsor">
                     <span data-key="sponsor-btn">Become a Sponsor</span>
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
-                    </svg>
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
                 </a>
             </div>
         </section>
 
+        <!-- CULTURE -->
         <section class="grid-section" id="culture">
             <div>
-                <h2 class="section-title" data-key="culture-h">The Aesthetic of Hanzi</h2>
-                <p class="section-p" data-key="culture-p1">Calligraphy is a meditative dance of ink and soul. We explore the profound beauty of Hanzi aesthetics.</p>
-                <p class="section-p" data-key="culture-p2">Every stroke carries history, connecting our heritage to the modern world.</p>
+                <h2 class="section-title reveal reveal-left" data-key="culture-h">The Aesthetic of Hanzi</h2>
+                <p class="section-p reveal reveal-left reveal-delay-1" data-key="culture-p1">Calligraphy is a meditative dance of ink and soul. We explore the profound beauty of Hanzi aesthetics.</p>
+                <p class="section-p reveal reveal-left reveal-delay-2" data-key="culture-p2">Every stroke carries history, connecting our heritage to the modern world.</p>
             </div>
-            <img src="calligraphy_work.jpg" class="img-frame">
+            <img src="calligraphy_work.jpg" class="img-frame tilt-card reveal reveal-right"
+                style="transition: transform 0.1s ease, box-shadow 0.4s ease;">
         </section>
 
+        <!-- EVENTS -->
         <section id="events-preview-section" style="text-align: center; margin-bottom: 120px;">
-            <h2 class="section-title" data-key="events-prev-h">Our Activities</h2>
-            <p class="section-p" data-key="events-prev-p" style="margin-bottom: 40px;">Discover the vibrant events and workshops hosted by our community.</p>
-            
+            <h2 class="section-title reveal" data-key="events-prev-h">Our Activities</h2>
+            <p class="section-p reveal reveal-delay-1" data-key="events-prev-p" style="margin-bottom: 40px;">Discover the vibrant events and workshops hosted by our community.</p>
             <div class="events-gallery">
-                <img src="Xmas_members.jpg" alt="Event Members">
-                <img src="Xmas_photo1.png" alt="Event Activity" style="max-width: 600px; margin: 0 auto;">
+                <img src="Xmas_members.jpg" alt="Event Members" class="reveal reveal-left">
+                <img src="Xmas_photo1.png" alt="Event Activity" class="reveal reveal-right" style="max-width: 600px; margin: 0 auto;">
             </div>
-            
-            <a class="direct-link-btn" data-key="events-link" href="events.html"> Explore all APSC Events → </a>
+            <a class="direct-link-btn reveal" data-key="events-link" href="events.html">Explore all APSC Events →</a>
         </section>
 
-
-        <section class="meeting-box" id="meeting-section">
+        <!-- MEETING -->
+        <section class="meeting-box reveal reveal-scale" id="meeting-section">
             <h3 style="color: var(--brand-blue); margin-bottom: 15px; font-weight: 700; letter-spacing: 0.1em;" data-key="meet-h">WEEKLY GATHERING</h3>
             <p style="font-size: 1.6rem; font-weight: 700; color: var(--text-main);" data-key="meet-p1">Mondays @ Lunch | Room 244A</p>
             <p style="font-size: 1rem; color: var(--text-sub); margin-top: 15px;" data-key="meet-p2">Next Meeting: May 18th, 2026</p>
         </section>
 
-        <section class="meeting-box" id="home-feedback-section" style="background: linear-gradient(135deg, #f8fafc 0%, #edf2f7 100%); border: 1px solid #d1e0f0; margin-top: 120px; box-shadow: 0 12px 32px rgba(0,86,210,0.08); border-radius: 20px; margin-left: auto; margin-right: auto; max-width: 900px;">
+        <!-- FEEDBACK -->
+        <section class="feedback-section reveal" id="home-feedback-section">
             <div style="padding: 32px; position: relative;">
                 <h3 data-key="fb-title" style="margin-bottom: 16px; font-size: 1.8rem; font-weight: 700; color: #1d4a7a;">Share Your Feedback</h3>
                 <p data-key="fb-sub" style="color: #5a6c7d; margin-bottom: 24px; font-size: 1.05rem; line-height: 1.6;">Your voice helps us make APSC better every day.</p>
-
                 <form id="home-feedback-form" style="display: grid; gap: 16px;">
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; width: 100%;">
                         <div>
                             <label for="home-fb-name" style="display: block; font-size: 0.9rem; font-weight: 600; color: #374151; margin-bottom: 6px;" data-key="fb-name-lbl">Name (Optional)</label>
-                            <input type="text" id="home-fb-name" data-key="fb-name" placeholder="Your name" style="width:100%; padding:14px 16px; border-radius:12px; border:2px solid #e5e7eb; font-size: 16px; transition: border-color 0.3s ease; background: rgba(255,255,255,0.8);" />
+                            <input type="text" id="home-fb-name" class="feedback-input" data-key="fb-name" placeholder="Your name">
                         </div>
                         <div>
                             <label for="home-fb-email" style="display: block; font-size: 0.9rem; font-weight: 600; color: #374151; margin-bottom: 6px;" data-key="fb-email-lbl">Email (Optional)</label>
-                            <input type="email" id="home-fb-email" data-key="fb-email" placeholder="your@email.com" style="width:100%; padding:14px 16px; border-radius:12px; border:2px solid #e5e7eb; font-size: 16px; transition: border-color 0.3s ease; background: rgba(255,255,255,0.8);" />
+                            <input type="email" id="home-fb-email" class="feedback-input" data-key="fb-email" placeholder="your@email.com">
                         </div>
                     </div>
                     <div>
                         <label for="home-fb-message" style="display: block; font-size: 0.9rem; font-weight: 600; color: #374151; margin-bottom: 6px;" data-key="fb-msg-lbl">Message (Required)</label>
-                        <textarea id="home-fb-message" rows="6" data-key="fb-msg" placeholder="Tell us what's on your mind..." required style="width:100%; padding:14px 16px; border-radius:12px; border:2px solid #e5e7eb; font-size: 16px; transition: border-color 0.3s ease; background: rgba(255,255,255,0.8); resize: vertical; min-height: 120px;"></textarea>
+                        <textarea id="home-fb-message" rows="6" class="feedback-input" data-key="fb-msg" placeholder="Tell us what's on your mind..." required style="resize: vertical; min-height: 120px;"></textarea>
                     </div>
                     <div style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap; justify-content: center;">
-                        <button type="submit" id="home-fb-submit" style="background: linear-gradient(135deg, #0056D2, #003d99); color: white; border: none; padding: 14px 28px; border-radius: 12px; font-size: 16px; font-weight: 600; cursor: pointer; transition: transform 0.2s ease, box-shadow 0.2s ease; box-shadow: 0 4px 12px rgba(0,86,210,0.3);" data-key="fb-btn">Submit Message</button>
+                        <button type="submit" id="home-fb-submit" class="feedback-submit" data-key="fb-btn">Submit Message</button>
                         <div id="home-fb-status" style="font-weight: 600; color: #6b7280; font-size: 0.95rem; min-height: 24px; display: flex; align-items: center; gap: 8px;"></div>
                     </div>
                 </form>
@@ -572,7 +756,7 @@
         </section>
     </main>
 
-   <footer>
+    <footer class="reveal">
         <div class="social-icons">
             <a href="https://www.instagram.com/cburg_apsc/" target="_blank"><img src="instagram_icon.png" alt="Instagram"></a>
             <a href="https://www.tiktok.com/@asian.peer.support.club" target="_blank"><img src="tiktok_icon.png" alt="TikTok"></a>
@@ -587,219 +771,302 @@
     </footer>
 
     <script>
-        const i18n = {
-            'en': {
-                'nav-about': 'About', 'nav-meeting': 'Meetings', 'nav-contact': 'Contact', 'nav-ann': 'Announcements', 'nav-support': 'Get Support', 'nav-feedback': 'Feedback', 'nav-donate': 'Donate', 'nav-events': 'Events',
-                'hero-title': 'Experience Culture.\nFind Your Community.', 'cta': 'Join Us',
-                'intro-tag': 'Club Introduction', 'intro-h': 'Discover Our Mission', 'intro-p': 'Watch our exclusive club introduction video to learn about APSC\'s mission, values, and the vibrant community we\'ve built together.',
-                'brochure-tag': 'Club Brochure', 'brochure-h': 'Explore Our Story', 'brochure-p': 'Browse through our comprehensive club brochure to learn more about our activities, events, and community initiatives.',
-                'lny-title': 'Lunar New Year 2026', 'lny-h': 'Spirit of the Horse', 'lny-p': 'Celebrating the Year of the Horse. A symbol of unbridled energy, nobility, and the drive to move forward. Wishing our community a year of strength and prosperity.',
-                'yt-title': 'Our Traditions', 'yt-sub': 'Watch our club\'s exclusive series on Lunar New Year traditions.',
-                'sponsor-h': 'Empower Our Mission', 'sponsor-p': 'Become a driving force behind APSC. Your sponsorship helps us foster cultural exchange, host inclusive events, and build a stronger, more supportive student community. Let\'s create an impact together.', 'sponsor-btn': 'Become a Sponsor',
-                'fundraiser-h': 'Support Our Initiatives', 'fundraiser-p': 'Your support helps us continue our mission of cultural exchange and community building. Every contribution makes a difference in creating meaningful experiences for our members.',
-                'culture-h': 'The Aesthetic of Hanzi', 'culture-p1': 'Calligraphy is a meditative dance of ink and soul.', 'culture-p2': 'Every stroke carries history.',
-                'events-prev-h': 'Our Activities', 'events-prev-p': 'Discover the vibrant events and workshops hosted by our community.', 'events-link': 'Explore all APSC Events →',
-                'aanhpi-h': 'Celebrate AANHPI Heritage Month', 'aanhpi-p1': 'May is Asian American, Native Hawaiian, and Pacific Islander Heritage Month! Join us in honoring the rich cultures, histories, and contributions of the AANHPI community.', 'aanhpi-p2': 'Throughout the month, we will be hosting a series of events, workshops, and cultural showcases. Check out our upcoming poster for detailed schedules and featured activities. Let\'s celebrate our diversity and strengthen our community together!', 
-                'meet-h': 'WEEKLY GATHERING', 'meet-p1': 'Mondays @ Lunch | Room 1008', 'meet-p2': 'Next Meeting: TBD',
-                'fb-title': 'Share Your Feedback', 'fb-sub': 'Your voice helps us make APSC better every day.', 'fb-name': 'Your name', 'fb-email': 'your@email.com', 'fb-msg': 'Tell us what\'s on your mind...', 'fb-btn': 'Submit Message', 'fb-status-loading': 'Sending...', 'fb-status-success': 'Success! Thank you for your message.', 'fb-status-error': 'Submit failed, please try again.', 'fb-name-lbl': 'Name (Optional)', 'fb-email-lbl': 'Email (Optional)', 'fb-msg-lbl': 'Message (Required)',
-                'footer-cp': '© 2026 ASIAN PEER SUPPORT CLUB | CLARKSBURG HIGH SCHOOL', 'nav-privacy': 'Privacy Policy', 'nav-terms': 'Terms of Use'
-            },
-            'zh-hans': {
-                'nav-about': '关于我们', 'nav-meeting': '会议安排', 'nav-contact': '联系我们', 'nav-ann': '公告通知', 'nav-support': '获取支持', 'nav-feedback': '反馈', 'nav-donate': '捐赠支持', 'nav-events': '活动展示',
-                'hero-title': '体验文化底蕴\n融入温暖社群', 'cta': '加入 APSC 社团',
-                'intro-tag': '社团介绍', 'intro-h': '探索我们的使命', 'intro-p': '观看我们的社团介绍视频，了解 APSC 的使命、价值观和我们共同打造的充满活力的社区。',
-                'brochure-tag': '社团手册', 'brochure-h': '探索我们的故事', 'brochure-p': '浏览我们全面的社团手册，了解更多关于我们的活动、事件和社区倡议的信息。',
-                'lny-title': '中国新年 2026', 'lny-h': '龙马精神，共迎新岁', 'lny-p': '庆祝农历马年。象征着奔腾的活力与高贵的精神。祝愿我们的社区在新的一年里力量充沛，繁荣昌盛。',
-                'yt-title': '探索我们的传统', 'yt-sub': '观看由我们社团独家制作的春节传统系列视频。',
-                'sponsor-h': '赋能我们的使命', 'sponsor-p': '成为 APSC 背后的驱动力。您的赞助将帮助我们促进文化交流，举办包容性活动，并建立一个更强大、互助的学生社区。让我们共同创造影响力。', 'sponsor-btn': '成为赞助商',
-                'fundraiser-h': '支持我们的倡议', 'fundraiser-p': '您的支持帮助我们继续文化交流和社区建设的使命。每一次贡献都在为我们的成员创造有意义的体验方面产生差异。',
-                'culture-h': '汉字美学之韵', 'culture-p1': '书法是笔墨与心灵的禅意共舞。', 'culture-p2': '每一笔一划都承载着历史。',
-                'events-prev-h': '我们的活动', 'events-prev-p': '探索我们社区举办的丰富多彩的活动与工作坊。', 'events-link': '浏览所有 APSC 活动 →',
-                'aanhpi-h': '庆祝亚太裔传统月', 'aanhpi-p1': '五月是亚裔美国人、夏威夷原住民和太平洋岛民（AANHPI）传统月！加入我们，共同向 AANHPI 社区丰富的文化、历史和贡献致敬。', 'aanhpi-p2': '在整个月里，我们将举办一系列活动、工作坊和文化展示。请查看我们即将发布的海报以了解详细日程和特色活动。让我们共同庆祝多元文化，建设更强大的社区！',
-                'meet-h': '每周会议', 'meet-p1': '每周一午餐时间 | 1008 教室', 'meet-p2': '下一次会议：待定',
-                'fb-title': '留下反馈', 'fb-sub': '您的意见帮助我们不断改进 APSC。', 'fb-name': '您的姓名', 'fb-email': '您的邮箱', 'fb-msg': '告诉我们您的想法...', 'fb-btn': '提交留言', 'fb-status-loading': '提交中...', 'fb-status-success': '提交成功，感谢您的反馈！', 'fb-status-error': '提交失败，请重试。', 'fb-name-lbl': '姓名（选填）', 'fb-email-lbl': '邮箱（选填）', 'fb-msg-lbl': '内容（必填）',
-                'footer-cp': '© 2026 ASIAN PEER SUPPORT CLUB | CLARKSBURG HIGH SCHOOL', 'nav-privacy': '隐私政策', 'nav-terms': '使用条款'
-            },
-            'zh-hant': {
-                'nav-about': '關於我們', 'nav-meeting': '會議安排', 'nav-contact': '聯絡我們', 'nav-ann': '公告通知', 'nav-support': '獲取支持', 'nav-feedback': '回饋', 'nav-donate': '捐贈支持', 'nav-events': '活動展示',
-                'hero-title': '體驗文化底蘊\n融入溫暖社群', 'cta': '加入 APSC 社團',
-                'intro-tag': '社團介紹', 'intro-h': '探索我們的使命', 'intro-p': '觀看我們的社團介紹影片，了解 APSC 的使命、價值觀和我們共同打造的充滿活力的社區。',
-                'brochure-tag': '社团手册', 'brochure-h': '探索我们的故事', 'brochure-p': '浏览我们全面的社团手册，了解更多关于我们的活动、事件和社区倡议的信息。',
-                'lny-title': '中國新年 2026', 'lny-h': '龍馬精神，共迎新歲', 'lny-p': '慶祝農曆馬年。象徵著奔騰的活力與高貴的精神。祝願我們的社區在新的一年裡力量充沛，繁榮昌盛。',
-                'yt-title': '探索我們的傳統', 'yt-sub': '觀看由我們社團獨家製作的春節傳統系列影片。',
-                'sponsor-h': '賦能我們的使命', 'sponsor-p': '成為 APSC 背後的驅動力。您的贊助將幫助我們促進文化交流，舉辦包容性活動，並建立一個更強大、互助的學生社區。讓我們共同創造影響力。', 'sponsor-btn': '成為贊助商',
-                'fundraiser-h': '支持我們的倡議', 'fundraiser-p': '您的支持幫助我們繼續文化交流和社區建設的使命。每一次貢獻都在為我們的成員創造有意義的體驗方面產生差異。',
-                'culture-h': '漢字美學之韻', 'culture-p1': '書法是筆墨與心靈的禪意共舞。', 'culture-p2': '每一筆一劃都承載著歷史。',  
-                'events-prev-h': '我們的活動', 'events-prev-p': '探索我們社區舉辦的豐富多彩的活動與工作坊。', 'events-link': '瀏覽所有 APSC 活動 →',
-                'aanhpi-h': '慶祝亞太裔傳統月', 'aanhpi-p1': '五月是亞裔美國人、夏威夷原住民和太平洋島民（AANHPI）傳統月！加入我們，共同向 AANHPI 社區豐富的文化、歷史和貢獻致敬。', 'aanhpi-p2': '在整個月份裡，我們將舉辦一系列活動、工作坊和文化展示。請查看我們即將發佈的海報以了解詳細日程和特色活動。讓我們共同慶祝多元文化，建設更強大的社區！',
-                'meet-h': '每週會議', 'meet-p1': '每週一午餐時間 | 1008 教室', 'meet-p2': '下一次會議：待定',
-                'fb-title': '留下回饋', 'fb-sub': '您的意見幫助我們不斷改進 APSC。', 'fb-name': '您的姓名', 'fb-email': '您的信箱', 'fb-msg': '告訴我們您的想法...', 'fb-btn': '提交留言', 'fb-status-loading': '提交中...', 'fb-status-success': '提交成功，感謝您的回饋！', 'fb-status-error': '提交失敗，請重試。', 'fb-name-lbl': '姓名（選填）', 'fb-email-lbl': '信箱（選填）', 'fb-msg-lbl': '內容（必填）',
-                'footer-cp': '© 2026 ASIAN PEER SUPPORT CLUB | CLARKSBURG HIGH SCHOOL', 'nav-privacy': '隱私政策', 'nav-terms': '使用條款'
-            },
-            'ko': {
-                'nav-about': '소개', 'nav-meeting': '회의 일정', 'nav-contact': '문의하기', 'nav-ann': '공지사항', 'nav-support': '지원 받기', 'nav-feedback': '피드백', 'nav-donate': '후원하기', 'nav-events': '이벤트',
-                'hero-title': '문화 경험하기.\n커뮤니티 찾기.', 'cta': '가입하기',
-                'intro-tag': '클럽 소개', 'intro-h': '우리의 사명 발견', 'intro-p': '우리의 클럽 소개 비디오를 시청하고 APSC의 사명, 가치관 및 우리가 함께 구축한 생생한 커뮤니티에 대해 알아보세요.',
-                'brochure-tag': '클럽 브로셔', 'brochure-h': '우리의 이야기 탐험', 'brochure-p': '우리의 포괄적인 클럽 브로셔를 살펴보고 우리의 활동, 이벤트 및 커뮤니티 이니셔티브에 대해 자세히 알아보세요.',
-                'lny-title': '2026년 설날', 'lny-h': '말의 해, 힘찬 시작', 'lny-p': '말의 해를 축하합니다. 말은 활력과 고귀함의 상징입니다. 우리 커뮤니티가 새해에는 힘차고 번영하기를 바랍니다.',
-                'yt-title': '우리의 전통', 'yt-sub': '우리 사회가 만든 설날 전통 시리즈 영상을 시청하세요.',
-                'sponsor-h': '우리의 사명을 지원하세요', 'sponsor-p': 'APSC의 원동력이 되어주세요. 여러분의 후원은 문화 교류를 촉진하고, 포용적인 이벤트를 개최하며, 더 강력하고 지원적인 학생 커뮤니티를 구축하는 데 도움이 됩니다. 함께 영향력을 만들어 봅시다.', 'sponsor-btn': '후원하기',
-                'fundraiser-h': '우리의 이니셔티브 지원', 'fundraiser-p': '여러분의 지원은 문화 교류와 커뮤니티 구축이라는 우리의 사명을 계속하는 데 도움이 됩니다. 모든 기여는 우리 회원들에게 의미 있는 경험을 만드는 데 차이를 만듭니다.',
-                'culture-h': '한자의 미학', 'culture-p1': '서예는 먹과 영혼의 명상적인 춤입니다.', 'culture-p2': '모든 획에는 역사가 담겨 있습니다.',
-                'events-prev-h': '우리의 활동', 'events-prev-p': '우리 커뮤니티가 주최하는 활기찬 이벤트와 워크숍을 발견하세요.', 'events-link': '모든 APSC 이벤트 탐색 →',
-                'aanhpi-h': 'AANHPI 유산의 달 축하', 'aanhpi-p1': '5월은 아시아계 미국인, 하와이 원주민, 태평양 섬 주민 유산의 달입니다! AANHPI 커뮤니티의 풍부한 문화, 역사 및 공헌을 기리는 데 동참하세요.', 'aanhpi-p2': '한 달 동안 일련의 이벤트, 워크숍 및 문화 쇼케이스를 개최할 예정입니다. 자세한 일정과 주요 활동은 곧 공개될 예정인 포스터를 확인하세요. 다양성을 축하하고 함께 커뮤니티를 강화합시다!',
-                'meet-h': '주간 모임', 'meet-p1': '매주 월요일 점심 | 1008 교실', 'meet-p2': '다음 모임: 추후 공지',
-                'fb-title': '피드백 공유', 'fb-sub': '여러분의 의견은 APSC를 더 나은 곳으로 만드는 데 도움이 됩니다.', 'fb-name': '이름 (선택)', 'fb-email': '이메일 (선택)', 'fb-msg': '생각을 알려주세요...', 'fb-btn': '메시지 제출', 'fb-status-loading': '전송 중...', 'fb-status-success': '성공! 메시지를 보내주셔서 감사합니다.', 'fb-status-error': '제출 실패, 다시 시도해주세요.', 'fb-name-lbl': '이름 (선택)', 'fb-email-lbl': '이메일 (선택)', 'fb-msg-lbl': '메시지 (필수)',
-                'footer-cp': '© 2026 ASIAN PEER SUPPORT CLUB | CLARKSBURG HIGH SCHOOL', 'nav-privacy': '개인정보 처리방침', 'nav-terms': '이용 약관'
-            },
-            'ja': {
-                'nav-about': '私たちについて', 'nav-meeting': '会議スケジュール', 'nav-contact': 'お問い合わせ', 'nav-ann': 'お知らせ', 'nav-support': 'サポートを受ける', 'nav-feedback': 'フィードバック', 'nav-donate': '寄付する', 'nav-events': 'イベント',
-                'hero-title': '文化を体験しよう。\nコミュニティを見つけよう。', 'cta': '参加する',
-                'intro-tag': 'クラブ紹介', 'intro-h': '私たちの使命を発見', 'intro-p': '私たちのクラブ紹介ビデオをご覧になり、APSCの使命、価値観、および私たちが一緒に構築した活気に満ちたコミュニティについて詳しく知ってください。',
-                'brochure-tag': 'クラブブローチャー', 'brochure-h': '私たちの物語を探索', 'brochure-p': '私たちの包括的なクラブブローチャーを閲覧し、私たちの活動、イベント、およびコミュニティイニシアチブについて詳しく知ることができます。',
-                'lny-title': '2026年の旧正月', 'lny-h': '馬の年、力強 いスタート', 'lny-p': '馬の年を祝います。馬は活力と高貴さの象徴です。私たちのコミュニティが新しい年に力強く繁栄することを願っています。',
-                'yt-title': '私たちの伝統', 'yt-sub': '私たちのクラブが制作した旧正月の伝統に関する独占シリーズ動画を見てください。',
-                'sponsor-h': '私たちの使命を支援してください', 'sponsor-p': 'APSCの原動力になってください。あなたのスポンサーシップは、文化交流を促進し、包括的なイベントを開催し、より強力で支援的な学生コミュニティを構築するのに役立ちます。一緒に影響力を作りましょう。', 'sponsor-btn': 'スポンサーになる',
-                'fundraiser-h': '私たちのイニシアチブをサポート', 'fundraiser-p': 'あなたのサポートは、文化交流とコミュニティ構築という私たちの使命を継続するのに役立ちます。すべての貢献は、私たちのメンバーにとって意味のある経験を作ることに違いをもたらします。',
-                'culture-h': '漢字の美学', 'culture-p1': '書道は、墨と魂の瞑想的なダンスです。', 'culture-p2': 'すべてのストロークには歴史が込められています。',
-                'events-prev-h': '私たちの活動', 'events-prev-p': '私たちのコミュニティが主催する活気に満ちたイベントやワークショップを発見してください。', 'events-link': 'すべてのAPSCイベントを探索 →',
-                'aanhpi-h': 'AANHPI遺産月を祝う', 'aanhpi-p1': '5月はアジア系アメリカ人、ハワイ先住民、太平洋諸島民の遺産月です！AANHPIコミュニティの豊かな文化、歴史、貢献を称えるために参加してください。', 'aanhpi-p2': '1か月を通して、一連のイベント、ワークショップ、文化ショーケースを開催します。詳細なスケジュールと注目の活動については、近日公開予定のポスターをチェックしてください。多様性を祝福し、一緒にコミュニティを強化しましょう！',
-                'meet-h': '週間集会', 'meet-p1': '毎週月曜日の昼食時 | 1008教室', 'meet-p2': '次回の会議：未定',
-                'fb-title': 'フィードバックを共有', 'fb-sub': 'あなたの声は、APSCをより良いものにするのに役立ちます。','fb-name': 'あなたの名前', 'fb-email': 'あなたのメール', 'fb-msg': 'あなたの考えを教えてください...', 'fb-btn': 'メッセージを送信', 'fb-status-loading': '送信中...', 'fb-status-success': '成功！メッセージを送ってくれてありがとう。', 'fb-status-error': '送信に失敗しました。もう一度お試しください。', 'fb-name-lbl': '名前（任意）', 'fb-email-lbl': 'メール（任意）', 'fb-msg-lbl': 'メッセージ（必須）', 
-                'footer-cp': '© 2026 ASIAN PEER SUPPORT CLUB | CLARKSBURG HIGH SCHOOL', 'nav-privacy': 'プライバシーポリシー', 'nav-terms': '利用規約', 
-            },
-            'es': {
-                'nav-about': 'Sobre Nosotros', 'nav-meeting': 'Reuniones', 'nav-contact': 'Contacto', 'nav-ann': 'Anuncios', 'nav-support': 'Obtener Apoyo', 'nav-feedback': 'Comentarios', 'nav-donate': 'Donar', 'nav-events': 'Eventos',
-                'hero-title': 'Experimenta la Cultura.\nEncuentra tu Comunidad.', 'cta': 'Únete a Nosotros',
-                'intro-tag': 'Introducción del Club', 'intro-h': 'Descubre Nuestra Misión', 'intro-p': 'Mira nuestro video de introducción del club para conocer la misión de APSC, nuestros valores y la comunidad vibrante que hemos construido juntos.',
-                'brochure-tag': 'Folleto del Club', 'brochure-h': 'Explora Nuestra Historia', 'brochure-p': 'Explora nuestro completo folleto del club para conocer más sobre nuestras actividades, eventos e iniciativas comunitarias.',
-                'lny-title': 'Año Nuevo Lunar 2026', 'lny-h': 'Espíritu del Caballo', 'lny-p': 'Celebrando el Año del Caballo. Un símbolo de energía desenfrenada, nobleza y el impulso para avanzar. Deseamos a nuestra comunidad un año de fuerza y prosperidad.',
-                'yt-title': 'Nuestras Tradiciones', 'yt-sub': 'Mira nuestra serie exclusiva sobre las tradiciones del Año Nuevo Lunar.',
-                'sponsor-h': 'Empodera Nuestra Misión', 'sponsor-p': 'Sé una fuerza impulsora detrás de APSC. Tu patrocinio nos ayuda a fomentar el intercambio cultural, organizar eventos inclusivos y construir una comunidad estudiantil más fuerte y solidaria. Creemos un impacto juntos.', 'sponsor-btn': 'Conviértete en Patrocinador',
-                'fundraiser-h': 'Apoya Nuestras Iniciativas', 'fundraiser-p': 'Tu apoyo nos ayuda a continuar con nuestra misión de intercambio cultural y construcción de comunidad. Cada contribución marca la diferencia en la creación de experiencias significativas para nuestros miembros.',
-                'culture-h': 'La Estética de Hanzi', 'culture-p1': 'La caligrafía es una danza meditativa de tinta y alma.', 'culture-p2': 'Cada trazo lleva historia.',
-                'events-prev-h': 'Nuestras Actividades', 'events-prev-p': 'Descubre los vibrantes eventos y talleres organizados por nuestra comunidad.', 'events-link': 'Explora todos los Eventos de APSC →',
-                'aanhpi-h': 'Celebra el Mes del Patrimonio AANHPI', 'aanhpi-p1': '¡Mayo es el Mes del Patrimonio Asiático Americano, Nativo Hawaiano e Isleño del Pacífico! Únete a nosotros para honrar las ricas culturas, historias y contribuciones de la comunidad AANHPI.', 'aanhpi-p2': 'Durante todo el mes, estaremos organizando una serie de eventos, talleres y exhibiciones culturales. Consulta nuestro próximo póster para obtener horarios detallados y actividades destacadas. ¡Celebremos nuestra diversidad y fortalezcamos nuestra comunidad juntos!',
-                'meet-h': 'REUNIÓN SEMANAL', 'meet-p1': ' Lunes @ Almuerzo | Sala 1008', 'meet-p2': 'Próxima Reunión: Por Anunciar',
-                'fb-title': 'Comparte tu Comentarios', 'fb-sub': 'Tu voz nos ayuda a mejorar APSC cada día.', 'fb-name': 'Tu nombre', 'fb-email': 'Tu correo electrónico', 'fb-msg': 'Tu mensaje', 'fb-btn': 'Enviar Mensaje', 'fb-status-loading': 'Enviando...', 'fb-status-success': '¡Éxito! Gracias por tu mensaje.', 'fb-status-error': 'Error al enviar, por favor intenta de nuevo.', 'fb-name-lbl': 'Nombre (Opcional)', 'fb-email-lbl': 'Correo electrónico (Opcional)', 'fb-msg-lbl': 'Mensaje (Requerido)',
-                'footer-cp': '© 2026 ASIAN PEER SUPPORT CLUB | CLARKSBURG HIGH SCHOOL', 'nav-privacy': 'Política de Privacidad', 'nav-terms': 'Términos de Uso'
-            },
-            'fr': {
-                'nav-about': 'À Propos', 'nav-meeting': 'Réunions', 'nav-contact': 'Contact', 'nav-ann': 'Annonces', 'nav-support': 'Obtenir du Soutien', 'nav-feedback': 'Feedback', 'nav-donate': 'Faire un Don', 'nav-events': 'Événements',
-                'hero-title': 'Vivez la Culture.\nTrouvez Votre Communauté.', 'cta': 'Rejoignez-Nous',
-                'brochure-tag': 'Folleto del Club', 'brochure-h': 'Explora Nuestra Historia', 'brochure-p': 'Explora nuestro completo folleto del club para conocer más sobre nuestras actividades, eventos e iniciativas comunitarias.',
-                'lny-title': 'Nouvel An Lunaire 2026', 'lny-h': 'Esprit du Cheval', 'lny-p': 'Célébrons l\'Année du Cheval. Un symbole d\'énergie débridée, de noblesse et de volonté d\'avancer. Nous souhaitons à notre communauté une année de force et de prospérité.',
-                'yt-title': 'Nos Traditions', 'yt-sub': 'Regardez notre série exclusive sur les traditions du Nouvel An Lunaire.',
-                'sponsor-h': 'Soutenez Notre Mission', 'sponsor-p': 'Devenez une force motrice derrière APSC. Votre parrainage nous aide à favoriser les échanges culturels, à organiser des événements inclusifs et à construire une communauté étudiante plus forte et solidaire. Créons un impact ensemble.', 'sponsor-btn': 'Devenir Parrain',
-                'fundraiser-h': 'Soutenez Nos Initiatives', 'fundraiser-p': 'Votre soutien nous aide à poursuivre notre mission d\'échange culturel et de construction de communauté. Chaque contribution fait une différence dans la création d\'expériences significatives pour nos membres.',
-                'culture-h': 'L\'Esthétique de Hanzi', 'culture-p1': 'La calligraphie est une danse méditative d\'encre et d\'âme.', 'culture-p2': 'Chaque trait porte l\'histoire.',
-                'events-prev-h': 'Nos Activités', 'events-prev-p': 'Découvrez les événements et ateliers vibrants organisés par notre communauté.', 'events-link': 'Explorez tous les Événements APSC →',
-                'aanhpi-h': 'Celebra el Mes del Patrimonio AANHPI', 'aanhpi-p1': '¡Mayo es el Mes del Patrimonio Asiático Americano, Nativo Hawaiano e Isleño del Pacífico! Únete a nosotros para honrar las ricas culturas, historias y contribuciones de la comunidad AANHPI.', 'aanhpi-p2': 'Durante todo el mes, estaremos organizando una serie de eventos, talleres y exhibiciones culturales. Consulta nuestro próximo póster para obtener horarios detallados y actividades destacadas. ¡Celebremos nuestra diversidad y fortalezcamos nuestra comunidad juntos!',
-                'meet-h': 'REUNIÓN SEMANAL', 'meet-p1': ' Lunes @ Almuerzo | Sala 1008', 'meet-p2': 'Próxima Reunión: Por Anunciar',
-                'fb-title': 'Comparte tu Comentarios', 'fb-sub': 'Tu voz nos ayuda a mejorar APSC cada día.', 'fb-name': 'Tu nombre', 'fb-email': 'Tu correo electrónico', 'fb-msg': 'Tu mensaje', 'fb-btn': 'Enviar Mensaje', 'fb-status-loading': 'Enviando...', 'fb-status-success': '¡Éxito! Gracias por tu mensaje.', 'fb-status-error': 'Error al enviar, por favor intenta de nuevo.', 'fb-name-lbl': 'Nombre (Opcional)', 'fb-email-lbl': 'Correo electrónico (Opcional)', 'fb-msg-lbl': 'Mensaje (Requerido)',
-                'footer-cp': '© 2026 ASIAN PEER SUPPORT CLUB | CLARKSBURG HIGH SCHOOL', 'nav-privacy': 'Política de Privacidad', 'nav-terms': 'Términos de Uso'
+    /* ═══════════════════════════════════════
+       PAGE LOADER
+    ═══════════════════════════════════════ */
+    window.addEventListener('load', () => {
+        setTimeout(() => {
+            document.getElementById('page-loader').classList.add('hidden');
+        }, 600);
+    });
+
+    /* ═══════════════════════════════════════
+       NAV SCROLL EFFECT
+    ═══════════════════════════════════════ */
+    const mainNav = document.getElementById('main-nav');
+    window.addEventListener('scroll', () => {
+        mainNav.classList.toggle('scrolled', window.scrollY > 60);
+    });
+
+    /* ═══════════════════════════════════════
+       HERO PARTICLE CANVAS
+    ═══════════════════════════════════════ */
+    (function() {
+        const canvas = document.getElementById('hero-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        let W, H;
+
+        function resize() {
+            W = canvas.width = canvas.offsetWidth;
+            H = canvas.height = canvas.offsetHeight;
+        }
+        resize();
+        window.addEventListener('resize', resize);
+
+        class Particle {
+            constructor() { this.reset(); }
+            reset() {
+                this.x = Math.random() * W;
+                this.y = Math.random() * H;
+                this.r = Math.random() * 2.5 + 0.5;
+                this.vx = (Math.random() - 0.5) * 0.4;
+                this.vy = -Math.random() * 0.6 - 0.2;
+                this.alpha = Math.random() * 0.5 + 0.1;
+                this.life = 0;
+                this.maxLife = Math.random() * 200 + 100;
             }
-        };
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+                this.life++;
+                const progress = this.life / this.maxLife;
+                this.currentAlpha = this.alpha * Math.sin(progress * Math.PI);
+                if (this.life >= this.maxLife) this.reset();
+            }
+            draw() {
+                ctx.save();
+                ctx.globalAlpha = Math.max(0, this.currentAlpha);
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+                ctx.fillStyle = '#0056D2';
+                ctx.fill();
+                ctx.restore();
+            }
+        }
 
-        // 语言切换执行函数
-        function updateLang(lang) {
-            sessionStorage.setItem('selectedLang', lang);
+        for (let i = 0; i < 60; i++) {
+            const p = new Particle();
+            p.life = Math.random() * p.maxLife; // stagger
+            particles.push(p);
+        }
 
-            document.querySelectorAll('.lang-btn').forEach(btn => {
-                if (btn.getAttribute('onclick').includes(`'${lang}'`)) {
-                    btn.classList.add('active');
+        function animate() {
+            ctx.clearRect(0, 0, W, H);
+            particles.forEach(p => { p.update(); p.draw(); });
+            requestAnimationFrame(animate);
+        }
+        animate();
+    })();
+
+    /* ═══════════════════════════════════════
+       SCROLL REVEAL (IntersectionObserver)
+    ═══════════════════════════════════════ */
+    const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, { threshold: 0.12, rootMargin: '0px 0px -50px 0px' });
+
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+    /* ═══════════════════════════════════════
+       3D TILT ON HOVER
+    ═══════════════════════════════════════ */
+    document.querySelectorAll('.tilt-card').forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            const rotX = ((y - centerY) / centerY) * -6;
+            const rotY = ((x - centerX) / centerX) * 6;
+            card.style.transform = `perspective(800px) rotateX(${rotX}deg) rotateY(${rotY}deg) scale(1.02)`;
+            card.style.boxShadow = `${-rotY * 2}px ${rotX * 2}px 40px rgba(0,86,210,0.18)`;
+            card.style.transition = 'transform 0.05s ease, box-shadow 0.05s ease';
+        });
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = '';
+            card.style.boxShadow = '';
+            card.style.transition = 'transform 0.5s ease, box-shadow 0.5s ease';
+        });
+    });
+
+    /* ═══════════════════════════════════════
+       BROCHURE CAROUSEL
+    ═══════════════════════════════════════ */
+    let currentSlide = 0;
+    const totalSlides = 12;
+    const brochureContainer = document.getElementById('brochure-container');
+    const indicators = document.querySelectorAll('.indicator');
+
+    function updateCarousel() {
+        brochureContainer.style.transform = `translateX(-${currentSlide * (100 / totalSlides)}%)`;
+        indicators.forEach((ind, i) => ind.classList.toggle('active', i === currentSlide));
+    }
+    function nextSlide() { currentSlide = (currentSlide + 1) % totalSlides; updateCarousel(); }
+    function prevSlide() { currentSlide = (currentSlide - 1 + totalSlides) % totalSlides; updateCarousel(); }
+    function goToSlide(i) { currentSlide = i; updateCarousel(); }
+
+    let autoPlay = setInterval(nextSlide, 5000);
+    const bc = document.querySelector('.brochure-carousel');
+    bc.addEventListener('mouseenter', () => clearInterval(autoPlay));
+    bc.addEventListener('mouseleave', () => { autoPlay = setInterval(nextSlide, 5000); });
+
+    // Touch/swipe support
+    let touchStartX = 0;
+    bc.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
+    bc.addEventListener('touchend', e => {
+        const diff = touchStartX - e.changedTouches[0].clientX;
+        if (Math.abs(diff) > 40) { diff > 0 ? nextSlide() : prevSlide(); }
+    });
+
+    document.addEventListener('keydown', e => {
+        if (e.key === 'ArrowLeft') prevSlide();
+        else if (e.key === 'ArrowRight') nextSlide();
+    });
+
+    /* ═══════════════════════════════════════
+       HAMBURGER MENU
+    ═══════════════════════════════════════ */
+    const hamburger = document.getElementById('hamburger-btn');
+    const navMenu = document.getElementById('nav-menu');
+    hamburger.addEventListener('click', () => {
+        hamburger.classList.toggle('active');
+        navMenu.classList.toggle('active');
+    });
+    document.addEventListener('click', (e) => {
+        if (!hamburger.contains(e.target) && !navMenu.contains(e.target) && navMenu.classList.contains('active')) {
+            hamburger.classList.remove('active');
+            navMenu.classList.remove('active');
+        }
+    });
+
+    /* ═══════════════════════════════════════
+       i18n TRANSLATIONS
+    ═══════════════════════════════════════ */
+    const i18n = {
+        'en': {
+            'nav-about': 'About', 'nav-meeting': 'Meetings', 'nav-contact': 'Contact', 'nav-ann': 'Announcements', 'nav-support': 'Get Support', 'nav-feedback': 'Feedback', 'nav-donate': 'Donate', 'nav-events': 'Events',
+            'hero-title': 'Experience Culture.\nFind Your Community.', 'cta': 'Join Us',
+            'intro-tag': 'Club Introduction', 'intro-h': 'Discover Our Mission', 'intro-p': 'Watch our exclusive club introduction video to learn about APSC\'s mission, values, and the vibrant community we\'ve built together.',
+            'brochure-tag': 'Club Brochure', 'brochure-h': 'Explore Our Story', 'brochure-p': 'Browse through our comprehensive club brochure to learn more about our activities, events, and community initiatives.',
+            'lny-title': 'Lunar New Year 2026', 'lny-h': 'Spirit of the Horse', 'lny-p': 'Celebrating the Year of the Horse. A symbol of unbridled energy, nobility, and the drive to move forward. Wishing our community a year of strength and prosperity.',
+            'yt-title': 'Our Traditions', 'yt-sub': 'Watch our club\'s exclusive series on Lunar New Year traditions.',
+            'sponsor-h': 'Empower Our Mission', 'sponsor-p': 'Become a driving force behind APSC. Your sponsorship helps us foster cultural exchange, host inclusive events, and build a stronger, more supportive student community. Let\'s create an impact together.', 'sponsor-btn': 'Become a Sponsor',
+            'culture-h': 'The Aesthetic of Hanzi', 'culture-p1': 'Calligraphy is a meditative dance of ink and soul.', 'culture-p2': 'Every stroke carries history.',
+            'events-prev-h': 'Our Activities', 'events-prev-p': 'Discover the vibrant events and workshops hosted by our community.', 'events-link': 'Explore all APSC Events →',
+            'aanhpi-h': 'Celebrate AANHPI Heritage Month', 'aanhpi-p1': 'May is Asian American, Native Hawaiian, and Pacific Islander Heritage Month! Join us in honoring the rich cultures, histories, and contributions of the AANHPI community.', 'aanhpi-p2': 'Throughout the month, we will be hosting a series of events, workshops, and cultural showcases. Check out our upcoming poster for detailed schedules and featured activities. Let\'s celebrate our diversity and strengthen our community together!',
+            'meet-h': 'WEEKLY GATHERING', 'meet-p1': 'Mondays @ Lunch | Room 244A', 'meet-p2': 'Next Meeting: May 18th, 2026',
+            'fb-title': 'Share Your Feedback', 'fb-sub': 'Your voice helps us make APSC better every day.', 'fb-name': 'Your name', 'fb-email': 'your@email.com', 'fb-msg': 'Tell us what\'s on your mind...', 'fb-btn': 'Submit Message', 'fb-status-loading': 'Sending...', 'fb-status-success': 'Success! Thank you for your message.', 'fb-status-error': 'Submit failed, please try again.', 'fb-name-lbl': 'Name (Optional)', 'fb-email-lbl': 'Email (Optional)', 'fb-msg-lbl': 'Message (Required)',
+            'nav-privacy': 'Privacy Policy', 'nav-terms': 'Terms of Use'
+        },
+        'zh-hans': {
+            'nav-about': '关于我们', 'nav-meeting': '会议安排', 'nav-contact': '联系我们', 'nav-ann': '公告通知', 'nav-support': '获取支持', 'nav-feedback': '反馈', 'nav-donate': '捐赠支持', 'nav-events': '活动展示',
+            'hero-title': '体验文化底蕴\n融入温暖社群', 'cta': '加入 APSC 社团',
+            'intro-tag': '社团介绍', 'intro-h': '探索我们的使命', 'intro-p': '观看我们的社团介绍视频，了解 APSC 的使命、价值观和我们共同打造的充满活力的社区。',
+            'brochure-tag': '社团手册', 'brochure-h': '探索我们的故事', 'brochure-p': '浏览我们全面的社团手册，了解更多关于我们的活动、事件和社区倡议的信息。',
+            'lny-title': '中国新年 2026', 'lny-h': '龙马精神，共迎新岁', 'lny-p': '庆祝农历马年。象征着奔腾的活力与高贵的精神。祝愿我们的社区在新的一年里力量充沛，繁荣昌盛。',
+            'yt-title': '探索我们的传统', 'yt-sub': '观看由我们社团独家制作的春节传统系列视频。',
+            'sponsor-h': '赋能我们的使命', 'sponsor-p': '成为 APSC 背后的驱动力。您的赞助将帮助我们促进文化交流，举办包容性活动，并建立一个更强大、互助的学生社区。让我们共同创造影响力。', 'sponsor-btn': '成为赞助商',
+            'culture-h': '汉字美学之韵', 'culture-p1': '书法是笔墨与心灵的禅意共舞。', 'culture-p2': '每一笔一划都承载着历史。',
+            'events-prev-h': '我们的活动', 'events-prev-p': '探索我们社区举办的丰富多彩的活动与工作坊。', 'events-link': '浏览所有 APSC 活动 →',
+            'aanhpi-h': '庆祝亚太裔传统月', 'aanhpi-p1': '五月是亚裔美国人、夏威夷原住民和太平洋岛民（AANHPI）传统月！加入我们，共同向 AANHPI 社区丰富的文化、历史和贡献致敬。', 'aanhpi-p2': '在整个月里，我们将举办一系列活动、工作坊和文化展示。请查看我们即将发布的海报以了解详细日程和特色活动。让我们共同庆祝多元文化，建设更强大的社区！',
+            'meet-h': '每周会议', 'meet-p1': '每周一午餐时间 | 244A 教室', 'meet-p2': '下一次会议：2026年5月18日',
+            'fb-title': '留下反馈', 'fb-sub': '您的意见帮助我们不断改进 APSC。', 'fb-name': '您的姓名', 'fb-email': '您的邮箱', 'fb-msg': '告诉我们您的想法...', 'fb-btn': '提交留言', 'fb-name-lbl': '姓名（选填）', 'fb-email-lbl': '邮箱（选填）', 'fb-msg-lbl': '内容（必填）',
+            'nav-privacy': '隐私政策', 'nav-terms': '使用条款'
+        },
+        'zh-hant': {
+            'nav-about': '關於我們', 'nav-meeting': '會議安排', 'nav-contact': '聯絡我們', 'nav-ann': '公告通知', 'nav-support': '獲取支持', 'nav-feedback': '回饋', 'nav-donate': '捐贈支持', 'nav-events': '活動展示',
+            'hero-title': '體驗文化底蘊\n融入溫暖社群', 'cta': '加入 APSC 社團',
+            'intro-tag': '社團介紹', 'intro-h': '探索我們的使命', 'intro-p': '觀看我們的社團介紹影片，了解 APSC 的使命、價值觀和我們共同打造的充滿活力的社區。',
+            'brochure-tag': '社团手册', 'brochure-h': '探索我们的故事', 'brochure-p': '浏览我们全面的社团手册，了解更多关于我们的活动、事件和社区倡议的信息。',
+            'lny-title': '中國新年 2026', 'lny-h': '龍馬精神，共迎新歲', 'lny-p': '慶祝農曆馬年。象徵著奔騰的活力與高貴的精神。祝願我們的社區在新的一年裡力量充沛，繁榮昌盛。',
+            'yt-title': '探索我們的傳統', 'yt-sub': '觀看由我們社團獨家製作的春節傳統系列影片。',
+            'sponsor-h': '賦能我們的使命', 'sponsor-p': '成為 APSC 背後的驅動力。您的贊助將幫助我們促進文化交流，舉辦包容性活動，並建立一個更強大、互助的學生社區。讓我們共同創造影響力。', 'sponsor-btn': '成為贊助商',
+            'culture-h': '漢字美學之韻', 'culture-p1': '書法是筆墨與心靈的禪意共舞。', 'culture-p2': '每一筆一劃都承載著歷史。',
+            'events-prev-h': '我們的活動', 'events-prev-p': '探索我們社區舉辦的豐富多彩的活動與工作坊。', 'events-link': '瀏覽所有 APSC 活動 →',
+            'aanhpi-h': '慶祝亞太裔傳統月', 'aanhpi-p1': '五月是亞裔美國人、夏威夷原住民和太平洋島民（AANHPI）傳統月！加入我們，共同向 AANHPI 社區豐富的文化、歷史和貢獻致敬。', 'aanhpi-p2': '在整個月份裡，我們將舉辦一系列活動、工作坊和文化展示。請查看我們即將發佈的海報以了解詳細日程和特色活動。讓我們共同慶祝多元文化，建設更強大的社區！',
+            'meet-h': '每週會議', 'meet-p1': '每週一午餐時間 | 244A 教室', 'meet-p2': '下一次會議：2026年5月18日',
+            'fb-title': '留下回饋', 'fb-sub': '您的意見幫助我們不斷改進 APSC。', 'fb-name': '您的姓名', 'fb-email': '您的信箱', 'fb-msg': '告訴我們您的想法...', 'fb-btn': '提交留言', 'fb-name-lbl': '姓名（選填）', 'fb-email-lbl': '信箱（選填）', 'fb-msg-lbl': '內容（必填）',
+            'nav-privacy': '隱私政策', 'nav-terms': '使用條款'
+        },
+        'ko': {
+            'nav-about': '소개', 'nav-meeting': '회의 일정', 'nav-contact': '문의하기', 'nav-ann': '공지사항', 'nav-support': '지원 받기', 'nav-feedback': '피드백', 'nav-donate': '후원하기', 'nav-events': '이벤트',
+            'hero-title': '문화 경험하기.\n커뮤니티 찾기.', 'cta': '가입하기',
+            'intro-tag': '클럽 소개', 'intro-h': '우리의 사명 발견', 'intro-p': '우리의 클럽 소개 비디오를 시청하고 APSC의 사명, 가치관 및 우리가 함께 구축한 생생한 커뮤니티에 대해 알아보세요.',
+            'brochure-tag': '클럽 브로셔', 'brochure-h': '우리의 이야기 탐험', 'brochure-p': '우리의 포괄적인 클럽 브로셔를 살펴보고 우리의 활동, 이벤트 및 커뮤니티 이니셔티브에 대해 자세히 알아보세요.',
+            'lny-title': '2026년 설날', 'lny-h': '말의 해, 힘찬 시작', 'lny-p': '말의 해를 축하합니다. 말은 활력과 고귀함의 상징입니다. 우리 커뮤니티가 새해에는 힘차고 번영하기를 바랍니다.',
+            'yt-title': '우리의 전통', 'yt-sub': '우리 사회가 만든 설날 전통 시리즈 영상을 시청하세요.',
+            'sponsor-h': '우리의 사명을 지원하세요', 'sponsor-p': 'APSC의 원동력이 되어주세요. 여러분의 후원은 문화 교류를 촉진하고, 포용적인 이벤트를 개최하며, 더 강력하고 지원적인 학생 커뮤니티를 구축하는 데 도움이 됩니다.', 'sponsor-btn': '후원하기',
+            'culture-h': '한자의 미학', 'culture-p1': '서예는 먹과 영혼의 명상적인 춤입니다.', 'culture-p2': '모든 획에는 역사가 담겨 있습니다.',
+            'events-prev-h': '우리의 활동', 'events-prev-p': '우리 커뮤니티가 주최하는 활기찬 이벤트와 워크숍을 발견하세요.', 'events-link': '모든 APSC 이벤트 탐색 →',
+            'aanhpi-h': 'AANHPI 유산의 달 축하', 'aanhpi-p1': '5월은 아시아계 미국인, 하와이 원주민, 태평양 섬 주민 유산의 달입니다!', 'aanhpi-p2': '한 달 동안 일련의 이벤트, 워크숍 및 문화 쇼케이스를 개최할 예정입니다.',
+            'meet-h': '주간 모임', 'meet-p1': '매주 월요일 점심 | 244A 교실', 'meet-p2': '다음 모임: 2026년 5월 18일',
+            'fb-title': '피드백 공유', 'fb-sub': '여러분의 의견은 APSC를 더 나은 곳으로 만드는 데 도움이 됩니다.', 'fb-name': '이름', 'fb-email': '이메일', 'fb-msg': '생각을 알려주세요...', 'fb-btn': '메시지 제출', 'fb-name-lbl': '이름 (선택)', 'fb-email-lbl': '이메일 (선택)', 'fb-msg-lbl': '메시지 (필수)',
+            'nav-privacy': '개인정보 처리방침', 'nav-terms': '이용 약관'
+        },
+        'ja': {
+            'nav-about': '私たちについて', 'nav-meeting': '会議スケジュール', 'nav-contact': 'お問い合わせ', 'nav-ann': 'お知らせ', 'nav-support': 'サポートを受ける', 'nav-feedback': 'フィードバック', 'nav-donate': '寄付する', 'nav-events': 'イベント',
+            'hero-title': '文化を体験しよう。\nコミュニティを見つけよう。', 'cta': '参加する',
+            'intro-tag': 'クラブ紹介', 'intro-h': '私たちの使命を発見', 'intro-p': '私たちのクラブ紹介ビデオをご覧になり、APSCの使命、価値観、コミュニティについて詳しく知ってください。',
+            'brochure-tag': 'クラブブローチャー', 'brochure-h': '私たちの物語を探索', 'brochure-p': '私たちのクラブブローチャーを閲覧し、活動やイベントについて詳しく知ることができます。',
+            'lny-title': '2026年の旧正月', 'lny-h': '馬の年、力強いスタート', 'lny-p': '馬の年を祝います。活力と高貴さの象徴です。新しい年に力強く繁栄することを願っています。',
+            'yt-title': '私たちの伝統', 'yt-sub': '旧正月の伝統に関する独占シリーズ動画を見てください。',
+            'sponsor-h': '私たちの使命を支援してください', 'sponsor-p': 'APSCの原動力になってください。スポンサーシップは文化交流を促進し、学生コミュニティを強化します。', 'sponsor-btn': 'スポンサーになる',
+            'culture-h': '漢字の美学', 'culture-p1': '書道は、墨と魂の瞑想的なダンスです。', 'culture-p2': 'すべてのストロークには歴史が込められています。',
+            'events-prev-h': '私たちの活動', 'events-prev-p': 'コミュニティが主催するイベントやワークショップを発見してください。', 'events-link': 'すべてのAPSCイベントを探索 →',
+            'aanhpi-h': 'AANHPI遺産月を祝う', 'aanhpi-p1': '5月はアジア系アメリカ人、ハワイ先住民、太平洋諸島民の遺産月です！', 'aanhpi-p2': '1か月を通して、イベント、ワークショップ、文化ショーケースを開催します。',
+            'meet-h': '週間集会', 'meet-p1': '毎週月曜日の昼食時 | 244A教室', 'meet-p2': '次回の会議：2026年5月18日',
+            'fb-title': 'フィードバックを共有', 'fb-sub': 'あなたの声はAPSCをより良いものにします。', 'fb-name': 'お名前', 'fb-email': 'メールアドレス', 'fb-msg': 'ご意見をお聞かせください...', 'fb-btn': 'メッセージを送信', 'fb-name-lbl': '名前（任意）', 'fb-email-lbl': 'メール（任意）', 'fb-msg-lbl': 'メッセージ（必須）',
+            'nav-privacy': 'プライバシーポリシー', 'nav-terms': '利用規約'
+        },
+        'es': {
+            'nav-about': 'Sobre Nosotros', 'nav-meeting': 'Reuniones', 'nav-contact': 'Contacto', 'nav-ann': 'Anuncios', 'nav-support': 'Obtener Apoyo', 'nav-feedback': 'Comentarios', 'nav-donate': 'Donar', 'nav-events': 'Eventos',
+            'hero-title': 'Experimenta la Cultura.\nEncuentra tu Comunidad.', 'cta': 'Únete a Nosotros',
+            'intro-tag': 'Introducción del Club', 'intro-h': 'Descubre Nuestra Misión', 'intro-p': 'Mira nuestro video de introducción del club para conocer la misión de APSC y la comunidad vibrante que hemos construido juntos.',
+            'brochure-tag': 'Folleto del Club', 'brochure-h': 'Explora Nuestra Historia', 'brochure-p': 'Explora nuestro folleto del club para conocer más sobre nuestras actividades y eventos.',
+            'lny-title': 'Año Nuevo Lunar 2026', 'lny-h': 'Espíritu del Caballo', 'lny-p': 'Celebrando el Año del Caballo. Un símbolo de energía y nobleza. Deseamos un año de fuerza y prosperidad.',
+            'yt-title': 'Nuestras Tradiciones', 'yt-sub': 'Mira nuestra serie exclusiva sobre las tradiciones del Año Nuevo Lunar.',
+            'sponsor-h': 'Empodera Nuestra Misión', 'sponsor-p': 'Sé una fuerza impulsora detrás de APSC. Tu patrocinio fomenta el intercambio cultural y construye comunidad.', 'sponsor-btn': 'Conviértete en Patrocinador',
+            'culture-h': 'La Estética de Hanzi', 'culture-p1': 'La caligrafía es una danza meditativa de tinta y alma.', 'culture-p2': 'Cada trazo lleva historia.',
+            'events-prev-h': 'Nuestras Actividades', 'events-prev-p': 'Descubre los vibrantes eventos y talleres organizados por nuestra comunidad.', 'events-link': 'Explora todos los Eventos de APSC →',
+            'aanhpi-h': 'Celebra el Mes del Patrimonio AANHPI', 'aanhpi-p1': '¡Mayo es el Mes del Patrimonio AANHPI!', 'aanhpi-p2': 'Estaremos organizando eventos, talleres y exhibiciones culturales durante todo el mes.',
+            'meet-h': 'REUNIÓN SEMANAL', 'meet-p1': 'Lunes @ Almuerzo | Sala 244A', 'meet-p2': 'Próxima Reunión: 18 de mayo de 2026',
+            'fb-title': 'Comparte tus Comentarios', 'fb-sub': 'Tu voz nos ayuda a mejorar APSC cada día.', 'fb-name': 'Tu nombre', 'fb-email': 'Tu correo', 'fb-msg': 'Tu mensaje...', 'fb-btn': 'Enviar Mensaje', 'fb-name-lbl': 'Nombre (Opcional)', 'fb-email-lbl': 'Correo (Opcional)', 'fb-msg-lbl': 'Mensaje (Requerido)',
+            'nav-privacy': 'Política de Privacidad', 'nav-terms': 'Términos de Uso'
+        },
+        'fr': {
+            'nav-about': 'À Propos', 'nav-meeting': 'Réunions', 'nav-contact': 'Contact', 'nav-ann': 'Annonces', 'nav-support': 'Obtenir du Soutien', 'nav-feedback': 'Feedback', 'nav-donate': 'Faire un Don', 'nav-events': 'Événements',
+            'hero-title': 'Vivez la Culture.\nTrouvez Votre Communauté.', 'cta': 'Rejoignez-Nous',
+            'intro-tag': 'Introduction du Club', 'intro-h': 'Découvrez Notre Mission', 'intro-p': 'Regardez notre vidéo d\'introduction pour en savoir plus sur la mission d\'APSC et la communauté vibrante que nous avons construite ensemble.',
+            'brochure-tag': 'Brochure du Club', 'brochure-h': 'Explorez Notre Histoire', 'brochure-p': 'Parcourez notre brochure pour en savoir plus sur nos activités et événements.',
+            'lny-title': 'Nouvel An Lunaire 2026', 'lny-h': 'Esprit du Cheval', 'lny-p': 'Célébrons l\'Année du Cheval, symbole d\'énergie et de noblesse. Bonne année à toute notre communauté.',
+            'yt-title': 'Nos Traditions', 'yt-sub': 'Regardez notre série exclusive sur les traditions du Nouvel An Lunaire.',
+            'sponsor-h': 'Soutenez Notre Mission', 'sponsor-p': 'Devenez une force motrice derrière APSC. Votre parrainage favorise les échanges culturels et renforce notre communauté.', 'sponsor-btn': 'Devenir Parrain',
+            'culture-h': 'L\'Esthétique de Hanzi', 'culture-p1': 'La calligraphie est une danse méditative d\'encre et d\'âme.', 'culture-p2': 'Chaque trait porte l\'histoire.',
+            'events-prev-h': 'Nos Activités', 'events-prev-p': 'Découvrez les événements et ateliers organisés par notre communauté.', 'events-link': 'Explorez tous les Événements APSC →',
+            'aanhpi-h': 'Célébrez le Mois du Patrimoine AANHPI', 'aanhpi-p1': 'Mai est le Mois du Patrimoine AANHPI !', 'aanhpi-p2': 'Nous organisons des événements, ateliers et expositions culturelles tout au long du mois.',
+            'meet-h': 'RASSEMBLEMENT HEBDOMADAIRE', 'meet-p1': 'Lundis @ Déjeuner | Salle 244A', 'meet-p2': 'Prochaine réunion : 18 mai 2026',
+            'fb-title': 'Partagez vos Commentaires', 'fb-sub': 'Votre voix nous aide à améliorer APSC chaque jour.', 'fb-name': 'Votre nom', 'fb-email': 'votre@email.com', 'fb-msg': 'Dites-nous ce que vous pensez...', 'fb-btn': 'Envoyer le Message', 'fb-name-lbl': 'Nom (Optionnel)', 'fb-email-lbl': 'Email (Optionnel)', 'fb-msg-lbl': 'Message (Requis)',
+            'nav-privacy': 'Politique de Confidentialité', 'nav-terms': 'Conditions d\'Utilisation'
+        }
+    };
+
+    function updateLang(lang) {
+        sessionStorage.setItem('selectedLang', lang);
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            btn.classList.toggle('active', btn.getAttribute('onclick').includes(`'${lang}'`));
+        });
+        document.querySelectorAll('[data-key]').forEach(el => {
+            const key = el.getAttribute('data-key');
+            if (i18n[lang] && i18n[lang][key]) {
+                if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+                    el.placeholder = i18n[lang][key];
                 } else {
-                    btn.classList.remove('active');
+                    el.innerText = i18n[lang][key];
                 }
-            });
-
-            document.querySelectorAll('[data-key]').forEach(el => {
-                const key = el.getAttribute('data-key');
-                if (i18n[lang] && i18n[lang][key]) {
-                    // 增加一步判断：如果是输入框则更新 placeholder，否则更新文本
-                    if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
-                        el.placeholder = i18n[lang][key];
-                    } else {
-                        el.innerText = i18n[lang][key];
-                    }
-                }
-            });
-        }
-
-        // 页面加载时自动初始化语言
-        window.addEventListener('DOMContentLoaded', () => {
-            const savedLang = sessionStorage.getItem('selectedLang');
-            if (savedLang && savedLang !== 'en') {
-                updateLang(savedLang);
             }
         });
+    }
 
-        // 汉堡菜单逻辑 (已修复关联)
-        const hamburger = document.getElementById('hamburger-btn');
-        const navMenu = document.getElementById('nav-menu');
-        
-        hamburger.addEventListener('click', () => {
-            hamburger.classList.toggle('active');
-            navMenu.classList.toggle('active');
-        });
-
-        // 点击菜单外的任意地方或链接自动收起菜单
-        document.addEventListener('click', (e) => {
-            if (!hamburger.contains(e.target) && !navMenu.contains(e.target) && navMenu.classList.contains('active')) {
-                hamburger.classList.remove('active');
-                navMenu.classList.remove('active');
-            }
-        });
-
-        // Brochure Carousel Functionality
-        let currentSlide = 0;
-        const totalSlides = 12;
-        const brochureContainer = document.getElementById('brochure-container');
-        const indicators = document.querySelectorAll('.indicator');
-
-        function updateCarousel() {
-            brochureContainer.style.transform = `translateX(-${currentSlide * (100 / totalSlides)}%)`;
-            indicators.forEach((indicator, index) => {
-                indicator.classList.toggle('active', index === currentSlide);
-            });
-        }
-
-        function nextSlide() {
-            currentSlide = (currentSlide + 1) % totalSlides;
-            updateCarousel();
-        }
-
-        function prevSlide() {
-            currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
-            updateCarousel();
-        }
-
-        function goToSlide(slideIndex) {
-            currentSlide = slideIndex;
-            updateCarousel();
-        }
-
-        // Auto-play functionality (optional)
-        let autoPlayInterval = setInterval(nextSlide, 5000); // Change slide every 5 seconds
-
-        // Pause auto-play on hover
-        document.querySelector('.brochure-carousel').addEventListener('mouseenter', () => {
-            clearInterval(autoPlayInterval);
-        });
-
-        // Resume auto-play when mouse leaves
-        document.querySelector('.brochure-carousel').addEventListener('mouseleave', () => {
-            autoPlayInterval = setInterval(nextSlide, 5000);
-        });
-
-        // Keyboard navigation
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowLeft') {
-                prevSlide();
-            } else if (e.key === 'ArrowRight') {
-                nextSlide();
-            }
-        });
+    window.addEventListener('DOMContentLoaded', () => {
+        const savedLang = sessionStorage.getItem('selectedLang');
+        if (savedLang && savedLang !== 'en') updateLang(savedLang);
+    });
     </script>
 </body>
 </html>
