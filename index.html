@@ -20,7 +20,8 @@
             --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { overflow-x: hidden; }
+        * { margin: 0; padding: 0; box-sizing: border-box; min-width: 0; }
         
         body {
             font-family: 'Inter', -apple-system, sans-serif;
@@ -30,7 +31,7 @@
             -webkit-font-smoothing: antialiased;
             scroll-behavior: smooth;
             overflow-x: hidden;
-        }
+        
 
         /* ── PAGE LOAD OVERLAY ── */
         #page-loader {
@@ -273,6 +274,49 @@
         }
         .section-p { color: var(--text-sub); font-size: 1.15rem; margin-bottom: 15px; }
         .img-frame { width: 100%; border-radius: 24px; box-shadow: 0 20px 40px rgba(0,0,0,0.06); }
+
+        /* ── NEW SECTION STYLES ── */
+        .alert-section,
+        .grad-section {
+            background: #f7faff;
+            border: 1px solid rgba(0,86,210,0.12);
+            border-radius: 32px;
+            padding: 56px 48px;
+            box-shadow: 0 24px 60px rgba(0,86,210,0.08);
+            margin-bottom: 120px;
+        }
+        .alert-section .section-title,
+        .grad-section .section-title {
+            margin-bottom: 18px;
+        }
+        .placeholder-box {
+            width: 100%;
+            aspect-ratio: 4 / 3;
+            border: 2px dashed rgba(0,86,210,0.22);
+            border-radius: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #476592;
+            background: rgba(240,247,255,0.8);
+            margin-top: 30px;
+            min-height: 220px;
+        }
+        .placeholder-box span { font-size: 0.98rem; font-weight: 600; text-align: center; }
+        .hero-banner,
+        .hero-banner::before,
+        .hero-banner::after,
+        .wrapper,
+        .alert-section,
+        .grad-section,
+        .video-container,
+        .brochure-carousel,
+        .feedback-section {
+            max-width: 100vw;
+        }
+        .hero-banner { overflow: hidden; }
+        .hero-orbs { max-width: none; }
+        img, iframe, canvas { max-width: 100%; }
 
         /* ── 3D TILT CARD ── */
         .tilt-card {
@@ -604,6 +648,24 @@
     </header>
 
     <main class="wrapper">
+
+        <!-- EML SUPPORT ALERT -->
+        <section class="alert-section reveal reveal-scale">
+            <span class="section-tag" data-key="eml-tag">Advocacy</span>
+            <h2 class="section-title" data-key="eml-title">Standing Up for EML Students in MCPS</h2>
+            <p class="section-p" data-key="eml-p1">Recent MCPS budget cuts have led to large-scale layoffs of support staff serving EML students. EML Therapeutic Counselor positions are being reduced to a historic low of just five counselors, down from an already insufficient 22.</p>
+            <p class="section-p" data-key="eml-p2">This will seriously impact more than 30,000 EML students countywide, creating deep inequity and hardship. APSC members are actively supporting EML Therapeutic Counselors from a student perspective and standing firmly for fairness for the entire MCPS EML community.</p>
+           <img src="EML_BoardMeeting.JPG" style="border-radius: 10px;" alt="EML Board Meeting">
+        </section>
+
+        <!-- GRADUATION CELEBRATION -->
+        <section class="grad-section reveal reveal-scale">
+            <span class="section-tag" data-key="grad-tag">Graduation Celebration</span>
+            <h2 class="section-title" data-key="grad-title">APSC Graduation Party</h2>
+            <p class="section-p" data-key="grad-p1">On May 18, APSC held its annual Grad Party to celebrate the class of 2026 and honor their outstanding contributions. The party featured decorations and a wide selection of food and drinks.</p>
+            <p class="section-p" data-key="grad-p2">It was a successful celebration. APSC wishes all graduates a bright future!</p>
+           <img src="APSC_Grad_2026.JPG" style="border-radius: 10px;" alt="Graduation Party">
+        </section>
 
         <!-- INTRO VIDEO -->
         <section style="text-align: center; margin-bottom: 140px;">
@@ -964,6 +1026,16 @@
             'aanhpi-h': 'Celebrate AANHPI Heritage Month', 'aanhpi-p1': 'May is Asian American, Native Hawaiian, and Pacific Islander Heritage Month! Join us in honoring the rich cultures, histories, and contributions of the AANHPI community.', 'aanhpi-p2': 'Throughout the month, we will be hosting a series of events, workshops, and cultural showcases. Check out our upcoming poster for detailed schedules and featured activities. Let\'s celebrate our diversity and strengthen our community together!',
             'meet-h': 'WEEKLY GATHERING', 'meet-p1': 'Mondays @ Lunch | Room 244A', 'meet-p2': 'Next Meeting: May 18th, 2026',
             'fb-title': 'Share Your Feedback', 'fb-sub': 'Your voice helps us make APSC better every day.', 'fb-name': 'Your name', 'fb-email': 'your@email.com', 'fb-msg': 'Tell us what\'s on your mind...', 'fb-btn': 'Submit Message', 'fb-status-loading': 'Sending...', 'fb-status-success': 'Success! Thank you for your message.', 'fb-status-error': 'Submit failed, please try again.', 'fb-name-lbl': 'Name (Optional)', 'fb-email-lbl': 'Email (Optional)', 'fb-msg-lbl': 'Message (Required)',
+            'eml-tag': 'Advocacy',
+            'eml-title': 'Standing Up for EML Students in MCPS',
+            'eml-p1': 'Recent MCPS budget cuts have led to large-scale layoffs of support staff serving EML students. EML Therapeutic Counselor positions are being reduced to a historic low of just five counselors, down from an already insufficient 22.',
+            'eml-p2': 'This will seriously impact more than 30,000 EML students countywide, creating deep inequity and hardship. APSC members are actively supporting EML Therapeutic Counselors from a student perspective and standing firmly for fairness for the entire MCPS EML community.',
+            'eml-image-placeholder': '4:3 image placeholder for EML support',
+            'grad-tag': 'Graduation Celebration',
+            'grad-title': 'APSC Graduation Party',
+            'grad-p1': 'On May 18, APSC held its annual Grad Party to celebrate the class of 2026 and honor their outstanding contributions. The party featured decorations and a wide selection of food and drinks.',
+            'grad-p2': 'It was a successful celebration. APSC wishes all graduates a bright future!',
+            'grad-image-placeholder': '4:3 image placeholder for Grad Party',
             'nav-privacy': 'Privacy Policy', 'nav-terms': 'Terms of Use'
         },
         'zh-hans': {
@@ -979,6 +1051,16 @@
             'aanhpi-h': '庆祝亚太裔传统月', 'aanhpi-p1': '五月是亚裔美国人、夏威夷原住民和太平洋岛民（AANHPI）传统月！加入我们，共同向 AANHPI 社区丰富的文化、历史和贡献致敬。', 'aanhpi-p2': '在整个月里，我们将举办一系列活动、工作坊和文化展示。请查看我们即将发布的海报以了解详细日程和特色活动。让我们共同庆祝多元文化，建设更强大的社区！',
             'meet-h': '每周会议', 'meet-p1': '每周一午餐时间 | 244A 教室', 'meet-p2': '下一次会议：2026年5月18日',
             'fb-title': '留下反馈', 'fb-sub': '您的意见帮助我们不断改进 APSC。', 'fb-name': '您的姓名', 'fb-email': '您的邮箱', 'fb-msg': '告诉我们您的想法...', 'fb-btn': '提交留言', 'fb-name-lbl': '姓名（选填）', 'fb-email-lbl': '邮箱（选填）', 'fb-msg-lbl': '内容（必填）',
+            'eml-tag': '倡议行动',
+            'eml-title': '为 MCPS 的 EML 学生发声',
+            'eml-p1': '最近 MCPS 的预算削减导致服务 EML 学生的支持人员大规模裁员。EML 心理辅导员岗位将被削减到历史最低，仅剩 5 位，远低于原本就不足的 22 位。',
+            'eml-p2': '这将对全县超过 3 万名 EML 学生造成严重影响，带来巨大的不公平和困扰。APSC 成员正从学生视角积极声援 EML 心理辅导员，坚定地为整个 MCPS 的 EML 社区争取公平。',
+            'eml-image-placeholder': '4:3 图片占位符：EML 支持',
+            'grad-tag': '毕业庆祝',
+            'grad-title': 'APSC 毕业派对',
+            'grad-p1': '5 月 18 日，APSC 举办了一年一度的毕业派对，庆祝 2026 届毕业生并表彰他们的卓越贡献。派对提供了精美装饰和丰富的食物饮品。',
+            'grad-p2': '这是一次成功的派对。APSC 祝愿所有毕业生前程似锦！',
+            'grad-image-placeholder': '4:3 图片占位符：毕业派对',
             'nav-privacy': '隐私政策', 'nav-terms': '使用条款'
         },
         'zh-hant': {
@@ -994,6 +1076,16 @@
             'aanhpi-h': '慶祝亞太裔傳統月', 'aanhpi-p1': '五月是亞裔美國人、夏威夷原住民和太平洋島民（AANHPI）傳統月！加入我們，共同向 AANHPI 社區豐富的文化、歷史和貢獻致敬。', 'aanhpi-p2': '在整個月份裡，我們將舉辦一系列活動、工作坊和文化展示。請查看我們即將發佈的海報以了解詳細日程和特色活動。讓我們共同慶祝多元文化，建設更強大的社區！',
             'meet-h': '每週會議', 'meet-p1': '每週一午餐時間 | 244A 教室', 'meet-p2': '下一次會議：2026年5月18日',
             'fb-title': '留下回饋', 'fb-sub': '您的意見幫助我們不斷改進 APSC。', 'fb-name': '您的姓名', 'fb-email': '您的信箱', 'fb-msg': '告訴我們您的想法...', 'fb-btn': '提交留言', 'fb-name-lbl': '姓名（選填）', 'fb-email-lbl': '信箱（選填）', 'fb-msg-lbl': '內容（必填）',
+            'eml-tag': '倡議行動',
+            'eml-title': '為 MCPS 的 EML 學生發聲',
+            'eml-p1': '最近 MCPS 的預算削減導致服務 EML 學生的支持人員大規模裁員。EML 心理輔導員職位將被削減到歷史最低，僅剩 5 位，遠低於原本就不足的 22 位。',
+            'eml-p2': '這將對全縣超過 3 萬名 EML 學生造成嚴重影響，帶來巨大的不公平和困擾。APSC 成員正從學生視角積極聲援 EML 心理輔導員，堅定地為整個 MCPS 的 EML 社區爭取公平。',
+            'eml-image-placeholder': '4:3 圖片占位符：EML 支持',
+            'grad-tag': '畢業慶祝',
+            'grad-title': 'APSC 畢業派對',
+            'grad-p1': '5 月 18 日，APSC 舉辦了一年一度的畢業派對，慶祝 2026 屆畢業生並表彰他們的卓越貢獻。派對提供了精美裝飾和豐富的食物飲品。',
+            'grad-p2': '這是一次成功的派對。APSC 祝願所有畢業生前程似錦！',
+            'grad-image-placeholder': '4:3 圖片占位符：畢業派對',
             'nav-privacy': '隱私政策', 'nav-terms': '使用條款'
         },
         'ko': {
@@ -1009,6 +1101,16 @@
             'aanhpi-h': 'AANHPI 유산의 달 축하', 'aanhpi-p1': '5월은 아시아계 미국인, 하와이 원주민, 태평양 섬 주민 유산의 달입니다!', 'aanhpi-p2': '한 달 동안 일련의 이벤트, 워크숍 및 문화 쇼케이스를 개최할 예정입니다.',
             'meet-h': '주간 모임', 'meet-p1': '매주 월요일 점심 | 244A 교실', 'meet-p2': '다음 모임: 2026년 5월 18일',
             'fb-title': '피드백 공유', 'fb-sub': '여러분의 의견은 APSC를 더 나은 곳으로 만드는 데 도움이 됩니다.', 'fb-name': '이름', 'fb-email': '이메일', 'fb-msg': '생각을 알려주세요...', 'fb-btn': '메시지 제출', 'fb-name-lbl': '이름 (선택)', 'fb-email-lbl': '이메일 (선택)', 'fb-msg-lbl': '메시지 (필수)',
+            'eml-tag': '옹호 활동',
+            'eml-title': 'MCPS EML 학생들을 응원',
+            'eml-p1': '최근 MCPS 예산 삭감으로 인해 EML 학생들을 지원하는 직원들이 대규모로 감축되고 있습니다. EML 치료 상담사 직책은 역사적 최저치인 단 5명으로 줄어들 예정이며, 원래부터 부족했던 22명에서 감소한 것입니다.',
+            'eml-p2': '이는 카운티 전체 3만 명이 넘는 EML 학생들에게 큰 혼란과 불공평을 초래할 것입니다. APSC 구성원들은 학생의 시각에서 EML 치료 상담사들을 적극 지지하며 MCPS EML 커뮤니티 전체를 위해 공정함을 위해 단호히 싸우고 있습니다.',
+            'eml-image-placeholder': 'EML 지원을 위한 4:3 이미지 자리표시자',
+            'grad-tag': '졸업 파티',
+            'grad-title': 'APSC 졸업 파티',
+            'grad-p1': '5월 18일, APSC는 2026년 졸업생들을 축하하고 그들의 뛰어난 공헌을 기념하기 위해 연례 졸업 파티를 개최했습니다. 파티는 장식과 다양한 음식과 음료를 제공했습니다.',
+            'grad-p2': '이 파티는 성공적이었습니다. APSC는 모든 졸업생들이 밝은 미래를 맞이하길 기원합니다!',
+            'grad-image-placeholder': '졸업 파티 4:3 이미지 자리표시자',
             'nav-privacy': '개인정보 처리방침', 'nav-terms': '이용 약관'
         },
         'ja': {
@@ -1024,6 +1126,16 @@
             'aanhpi-h': 'AANHPI遺産月を祝う', 'aanhpi-p1': '5月はアジア系アメリカ人、ハワイ先住民、太平洋諸島民の遺産月です！', 'aanhpi-p2': '1か月を通して、イベント、ワークショップ、文化ショーケースを開催します。',
             'meet-h': '週間集会', 'meet-p1': '毎週月曜日の昼食時 | 244A教室', 'meet-p2': '次回の会議：2026年5月18日',
             'fb-title': 'フィードバックを共有', 'fb-sub': 'あなたの声はAPSCをより良いものにします。', 'fb-name': 'お名前', 'fb-email': 'メールアドレス', 'fb-msg': 'ご意見をお聞かせください...', 'fb-btn': 'メッセージを送信', 'fb-name-lbl': '名前（任意）', 'fb-email-lbl': 'メール（任意）', 'fb-msg-lbl': 'メッセージ（必須）',
+            'eml-tag': '擁護活動',
+            'eml-title': 'MCPSのEML学生を支援',
+            'eml-p1': '最近のMCPSの予算削減により、EML学生を支援するスタッフの大規模な削減が行われています。EMLセラピューティックカウンセラーのポジションは、もともと不足していた22名から歴史的最低のわずか5名にまで減らされようとしています。',
+            'eml-p2': 'これは、郡内の3万人を超えるEML学生に大きな混乱と不公平をもたらします。APSCのメンバーは学生の視点からEMLセラピューティックカウンセラーを積極的に支援し、MCPSのEMLコミュニティ全体の公正を強く主張しています。',
+            'eml-image-placeholder': 'EML支援の4:3画像プレースホルダー',
+            'grad-tag': '卒業パーティー',
+            'grad-title': 'APSC卒業パーティー',
+            'grad-p1': '5月18日、APSCは2026年度卒業生を祝福し、彼らの卓越した貢献を称えるために年次卒業パーティーを開催しました。パーティーでは飾り付けと豊富な食べ物や飲み物を提供しました。',
+            'grad-p2': '成功したパーティーでした。APSCはすべての卒業生の輝かしい未来を願っています！',
+            'grad-image-placeholder': '4:3画像プレースホルダー：卒業パーティー',
             'nav-privacy': 'プライバシーポリシー', 'nav-terms': '利用規約'
         },
         'es': {
@@ -1039,6 +1151,16 @@
             'aanhpi-h': 'Celebra el Mes del Patrimonio AANHPI', 'aanhpi-p1': '¡Mayo es el Mes del Patrimonio AANHPI!', 'aanhpi-p2': 'Estaremos organizando eventos, talleres y exhibiciones culturales durante todo el mes.',
             'meet-h': 'REUNIÓN SEMANAL', 'meet-p1': 'Lunes @ Almuerzo | Sala 244A', 'meet-p2': 'Próxima Reunión: 18 de mayo de 2026',
             'fb-title': 'Comparte tus Comentarios', 'fb-sub': 'Tu voz nos ayuda a mejorar APSC cada día.', 'fb-name': 'Tu nombre', 'fb-email': 'Tu correo', 'fb-msg': 'Tu mensaje...', 'fb-btn': 'Enviar Mensaje', 'fb-name-lbl': 'Nombre (Opcional)', 'fb-email-lbl': 'Correo (Opcional)', 'fb-msg-lbl': 'Mensaje (Requerido)',
+            'eml-tag': 'Abogacía',
+            'eml-title': 'Apoyando a estudiantes EML en MCPS',
+            'eml-p1': 'Los recortes presupuestarios recientes de MCPS han provocado despidos masivos de personal de apoyo para estudiantes EML. Las posiciones de Consejeros Terapéuticos EML se reducen a un histórico mínimo de tan solo cinco consejeros, desde los ya insuficientes 22.',
+            'eml-p2': 'Esto afectará seriamente a más de 30,000 estudiantes EML en todo el condado, generando una gran injusticia y dificultades. Los miembros de APSC están apoyando activamente a los Consejeros Terapéuticos EML desde la perspectiva estudiantil y luchando firmemente por la equidad de toda la comunidad EML de MCPS.',
+            'eml-image-placeholder': 'Marcador de posición de imagen 4:3 para apoyo EML',
+            'grad-tag': 'Fiesta de Graduación',
+            'grad-title': 'Fiesta de Graduación de APSC',
+            'grad-p1': 'El 18 de mayo, APSC celebró su fiesta anual de graduación para festejar a la clase de 2026 y reconocer sus destacadas contribuciones. La fiesta contó con decoraciones y una amplia selección de comida y bebidas.',
+            'grad-p2': 'Fue una celebración exitosa. ¡APSC desea a todos los graduados un futuro brillante!',
+            'grad-image-placeholder': 'Marcador de posición de imagen 4:3 para la fiesta de graduación',
             'nav-privacy': 'Política de Privacidad', 'nav-terms': 'Términos de Uso'
         },
         'fr': {
@@ -1054,10 +1176,19 @@
             'aanhpi-h': 'Célébrez le Mois du Patrimoine AANHPI', 'aanhpi-p1': 'Mai est le Mois du Patrimoine AANHPI !', 'aanhpi-p2': 'Nous organisons des événements, ateliers et expositions culturelles tout au long du mois.',
             'meet-h': 'RASSEMBLEMENT HEBDOMADAIRE', 'meet-p1': 'Lundis @ Déjeuner | Salle 244A', 'meet-p2': 'Prochaine réunion : 18 mai 2026',
             'fb-title': 'Partagez vos Commentaires', 'fb-sub': 'Votre voix nous aide à améliorer APSC chaque jour.', 'fb-name': 'Votre nom', 'fb-email': 'votre@email.com', 'fb-msg': 'Dites-nous ce que vous pensez...', 'fb-btn': 'Envoyer le Message', 'fb-name-lbl': 'Nom (Optionnel)', 'fb-email-lbl': 'Email (Optionnel)', 'fb-msg-lbl': 'Message (Requis)',
+            'eml-tag': 'Mobilisation',
+            'eml-title': 'Soutien aux étudiants EML de MCPS',
+            'eml-p1': 'Les coupes budgétaires récentes de MCPS ont entraîné des suppressions massives de personnel de soutien aux élèves EML. Les postes de conseillers thérapeutiques EML sont réduits à un niveau historiquement bas de seulement cinq conseillers, contre vingt-deux déjà insuffisants.',
+            'eml-p2': 'Cela affectera gravement plus de 30 000 élèves EML du comté, créant une grande injustice et des difficultés. Les membres d\'APSC soutiennent activement les conseillers thérapeutiques EML du point de vue des étudiants et défendent fermement l\'équité pour l\'ensemble de la communauté EML de MCPS.',
+            'eml-image-placeholder': 'Espace réservé image 4:3 pour le soutien EML',
+            'grad-tag': 'Fête de Graduation',
+            'grad-title': 'Fête de Graduation APSC',
+            'grad-p1': 'Le 18 mai, APSC a organisé sa fête annuelle de remise des diplômes pour célébrer la promotion 2026 et reconnaître leurs contributions exceptionnelles. La fête proposait des décorations ainsi qu\'un large choix de nourriture et de boissons.',
+            'grad-p2': 'Ce fut une célébration réussie. APSC souhaite à tous les diplômés un avenir radieux !',
+            'grad-image-placeholder': 'Espace réservé image 4:3 pour la fête de graduation',
             'nav-privacy': 'Politique de Confidentialité', 'nav-terms': 'Conditions d\'Utilisation'
         }
     };
-
     function updateLang(lang) {
         sessionStorage.setItem('selectedLang', lang);
         document.querySelectorAll('.lang-btn').forEach(btn => {
