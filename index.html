@@ -12,6 +12,8 @@
             --brand-blue: #0056D2;
             --brand-blue-light: #3b82f6;
             --lny-red: #B91C1C;
+            --lang-height: 48px;
+            --nav-height: 72px;
             --text-main: #1d1d1f;
             --text-sub: #6e6e73;
             --bg-body: #ffffff;
@@ -31,23 +33,37 @@
             -webkit-font-smoothing: antialiased;
             scroll-behavior: smooth;
             overflow-x: hidden;
-        
+        }
 
         /* ── PAGE LOAD OVERLAY ── */
         #page-loader {
             position: fixed; inset: 0; z-index: 9999;
-            background: #fff;
-            display: flex; align-items: center; justify-content: center;
-            transition: opacity 0.6s ease, visibility 0.6s ease;
+            background: rgba(255,255,255,0.98);
+            color: var(--text-main); display: flex; flex-direction: column; align-items: center; justify-content: center;
+            transition: opacity 0.35s ease, visibility 0.35s ease;
         }
         #page-loader.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
         .loader-logo {
-            width: 80px;
-            animation: loaderPulse 1s ease-in-out infinite;
+            width: 80px; height: auto; display:block;
         }
-        @keyframes loaderPulse {
-            0%, 100% { transform: scale(1); opacity: 0.8; }
-            50% { transform: scale(1.12); opacity: 1; }
+        .loader-bar {
+            width: 320px; height: 8px; border-radius: 999px;
+            background: rgba(0,0,0,0.06); margin-top: 18px; overflow: hidden;
+        }
+        .loader-progress {
+            width: 6%; height: 100%; border-radius: 999px;
+            background: linear-gradient(90deg, rgba(0,86,210,0.95), rgba(59,130,246,0.9));
+            animation: progressGlow 2.2s linear infinite;
+            box-shadow: none;
+        }
+        .loader-info {
+            margin-top: 12px; font-size: 0.95rem; color: var(--text-sub); font-weight:600;
+            letter-spacing: 0.02em; text-transform: none;
+        }
+        @keyframes progressGlow {
+            0% { transform: translateX(-10%); opacity: 0.9; }
+            50% { transform: translateX(90%); opacity: 1; }
+            100% { transform: translateX(-10%); opacity: 0.9; }
         }
 
         /* ── SCROLL REVEAL ── */
@@ -92,24 +108,25 @@
 
         /* ── NAV ── */
         nav {
-            background: rgba(255,255,255,0.82);
-            backdrop-filter: blur(30px) saturate(180%);
-            -webkit-backdrop-filter: blur(30px) saturate(180%);
-            position: sticky; top: 0; z-index: 1000;
-            border-bottom: 1px solid rgba(0,0,0,0.06);
-            transition: box-shadow 0.4s ease, background 0.4s ease;
+            background: rgba(255,255,255,0.9);
+            backdrop-filter: blur(18px) saturate(160%);
+            -webkit-backdrop-filter: blur(18px) saturate(160%);
+            position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid rgba(0,0,0,0.06);
+            transition: box-shadow 0.35s ease, background 0.35s ease, transform 0.35s ease;
+            display: flex; align-items: center;
         }
         nav.scrolled {
             box-shadow: 0 4px 30px rgba(0,0,0,0.08);
             background: rgba(255,255,255,0.95);
         }
+        /* wrapper padding handled below (consistent with about.html) */
         .nav-container {
-            max-width: 1300px; margin: 0 auto;
+            max-width: 1100px; margin: 0 auto;
             display: flex; justify-content: space-between; align-items: center;
-            padding: 12px 40px; position: relative;
+            padding: 12px 40px; position: relative; width: 100%;
         }
-        .nav-brand-link img { height: 44px; transition: transform 0.3s var(--ease-spring), filter 0.3s ease; }
-        .nav-brand-link img:hover { transform: scale(1.08) rotate(-2deg); filter: drop-shadow(0 4px 12px rgba(0,86,210,0.25)); }
+        .nav-brand-link img { height: 44px; transition: transform 0.25s ease; }
+        .nav-brand-link img:hover { transform: scale(1.05); }
         .nav-links { display: flex; list-style: none; gap: 20px; align-items: center; }
         .nav-links a {
             text-decoration: none; color: var(--text-main); font-size: 13px; font-weight: 500;
@@ -188,24 +205,53 @@
 
         .hero-content { position: relative; z-index: 10; text-align: center; }
         .hero-logo-large {
-            width: 220px; margin-bottom: 25px;
-            animation: logoFloat 6s ease-in-out infinite, logoGlow 3s ease-in-out infinite;
-            transform-origin: center; will-change: transform, filter;
+            width: 160px; margin: 0 auto 25px; display: block;
+            animation: logoFloat 4s ease-in-out infinite;
         }
         @keyframes logoFloat {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            25% { transform: translateY(-10px) rotate(-0.5deg); }
-            75% { transform: translateY(6px) rotate(0.5deg); }
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-12px); }
         }
-        @keyframes logoGlow {
-            0%, 100% { filter: drop-shadow(0 0 0px rgba(0,0,0,0)); }
-            50% { filter: drop-shadow(0 6px 20px rgba(0,0,0,0.18)); }
+
+        .program-highlight {
+            margin-bottom: 90px;
+            padding: 50px 0;
+            background: linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(248,249,255,0.95) 100%);
         }
-        .hero-logo-large:hover {
-            animation: none;
-            transform: scale(1.12) rotate(2deg);
-            filter: drop-shadow(0 8px 24px rgba(0,0,0,0.22));
-            transition: transform 0.4s var(--ease-spring), filter 0.4s ease;
+        .program-highlight-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 32px;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .program-highlight .section-title {
+            font-size: 3rem;
+            max-width: 760px;
+        }
+        .program-highlight .section-p {
+            max-width: 680px;
+            margin-top: 24px;
+        }
+        .program-highlight .photo-frame {
+            border-radius: 24px;
+            overflow: hidden;
+            background: #f8f9ff;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 30px 60px rgba(0,86,210,0.08);
+        }
+        .program-highlight .photo-frame img {
+            width: 100%;
+            height: 100%;
+            aspect-ratio: 16/9;
+            object-fit: cover;
+            object-fit: cover;
+            display: block;
+        }
+        .program-highlight .section-tag {
+            display: inline-flex;
+            margin-bottom: 18px;
         }
 
         /* Hero text animation */
@@ -357,11 +403,14 @@
 
         /* ── VIDEO ── */
         .video-container {
-            position: relative; width: 100%; aspect-ratio: 16/9;
+            position: relative; width: 100%; max-width: 760px; aspect-ratio: 16/9;
             overflow: hidden; border-radius: 24px;
             box-shadow: 0 20px 40px rgba(0,0,0,0.08); background: #000;
             transition: box-shadow 0.4s ease, transform 0.4s ease;
+            margin: 0 auto;
         }
+        .program-highlight .photo-frame { max-width: 640px; margin: 0 auto; border-radius: 12px; overflow: hidden; }
+        .program-highlight .photo-frame img { width: 100%; height: auto; aspect-ratio: 16/9; object-fit: cover; display: block; }
         .video-container:hover {
             box-shadow: 0 30px 80px rgba(0,0,0,0.15);
             transform: scale(1.005);
@@ -451,12 +500,20 @@
 
         /* ── LNY SECTION ── */
         .lny-poster-wrap {
-            width: 100%; max-width: 450px; aspect-ratio: 2/3;
+            width: 100%; max-width: 560px; aspect-ratio: 2/3;
             margin: 0 auto; border-radius: 20px; overflow: hidden;
             box-shadow: 0 30px 60px -15px rgba(0,0,0,0.15);
             border: 1px solid rgba(0,0,0,0.05);
             transition: transform 0.5s var(--ease-spring), box-shadow 0.5s ease;
         }
+
+        .lny-group-wrap {
+            width: 100%; max-width: 720px; aspect-ratio: 16/9; margin: 40px auto 24px;
+            border-radius: 16px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .lny-group-wrap:hover { transform: translateY(-4px); box-shadow: 0 30px 60px rgba(0,0,0,0.12); }
+        .lny-group-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
         .lny-poster-wrap:hover {
             transform: scale(1.03) rotate(0.5deg);
             box-shadow: 0 50px 100px -15px rgba(185,28,28,0.25);
@@ -478,6 +535,13 @@
         /* ── TAG LABEL ── */
         .section-tag {
             color: var(--brand-blue); font-size: 0.9rem; font-weight: 700;
+            position: relative; padding-left: 16px; display: inline-block;
+        }
+        .section-tag::before {
+            content: ''; position: absolute; left: 0; top: 50%; transform: translateY(-50%);
+            width: 8px; height: 8px; background: var(--brand-blue); border-radius: 50%;
+        }
+        .section-tag {
             letter-spacing: 0.15em; text-transform: uppercase;
             display: inline-block; margin-bottom: 15px;
             position: relative;
@@ -593,6 +657,8 @@
     <!-- Page Loader -->
     <div id="page-loader">
         <img src="apsc_new_logo.png" class="loader-logo" alt="Loading...">
+        <div class="loader-bar"><div class="loader-progress"></div></div>
+        <div class="loader-info" data-key="loader-info">Preparing your experience</div>
     </div>
 
     <div class="lang-switcher">
@@ -649,22 +715,18 @@
 
     <main class="wrapper">
 
-        <!-- EML SUPPORT ALERT -->
-        <section class="alert-section reveal reveal-scale">
-            <span class="section-tag" data-key="eml-tag">Advocacy</span>
-            <h2 class="section-title" data-key="eml-title">Standing Up for EML Students in MCPS</h2>
-            <p class="section-p" data-key="eml-p1">Recent MCPS budget cuts have led to large-scale layoffs of support staff serving EML students. EML Therapeutic Counselor positions are being reduced to a historic low of just five counselors, down from an already insufficient 22.</p>
-            <p class="section-p" data-key="eml-p2">This will seriously impact more than 30,000 EML students countywide, creating deep inequity and hardship. APSC members are actively supporting EML Therapeutic Counselors from a student perspective and standing firmly for fairness for the entire MCPS EML community.</p>
-           <img src="EML_BoardMeeting.JPG" style="border-radius: 10px;" alt="EML Board Meeting">
-        </section>
-
-        <!-- GRADUATION CELEBRATION -->
-        <section class="grad-section reveal reveal-scale">
-            <span class="section-tag" data-key="grad-tag">Graduation Celebration</span>
-            <h2 class="section-title" data-key="grad-title">APSC Graduation Party</h2>
-            <p class="section-p" data-key="grad-p1">On May 18, APSC held its annual Grad Party to celebrate the class of 2026 and honor their outstanding contributions. The party featured decorations and a wide selection of food and drinks.</p>
-            <p class="section-p" data-key="grad-p2">It was a successful celebration. APSC wishes all graduates a bright future!</p>
-           <img src="APSC_Grad_2026.JPG" style="border-radius: 10px;" alt="Graduation Party">
+        <section class="program-highlight reveal reveal-scale" id="clcp-section">
+            <span class="section-tag" data-key="clcp-tag">Chinese Language & Culture Program</span>
+            <div class="program-highlight-grid">
+                <div>
+                    <h2 class="section-title" data-key="clcp-title">Chinese Language and Culture Program</h2>
+                    <p class="section-p" data-key="clcp-p1">On June 4, 2026, our Chinese Language and Culture Program concluded a meaningful semester at Snowden Farm Elementary School. Students explored Mandarin, traditional arts, and community learning together.</p>
+                    <p class="section-p" data-key="clcp-p2">Next year, we look forward to returning to Snowden Farm Elementary School and beginning a new chapter at Wilson Wims Elementary School. Stay tuned for more cultural lessons and celebrations.</p>
+                </div>
+                <div class="photo-frame reveal reveal-right">
+                    <img src="CASP26.jpg" alt="Chinese Language and Culture Program photo" data-key="clcp-photo-alt">
+                </div>
+            </div>
         </section>
 
         <!-- INTRO VIDEO -->
@@ -717,18 +779,6 @@
         </section>
 
         <!-- AANHPI -->
-        <section class="grid-section" id="aanhpi-section" style="margin-bottom: 120px;">
-            <div>
-                <h2 class="section-title reveal reveal-left" data-key="aanhpi-h">Celebrate AANHPI Heritage Month</h2>
-                <p class="section-p reveal reveal-left reveal-delay-1" data-key="aanhpi-p1">May is Asian American, Native Hawaiian, and Pacific Islander Heritage Month! Join us in honoring the rich cultures, histories, and contributions of the AANHPI community.</p>
-                <p class="section-p reveal reveal-left reveal-delay-2" data-key="aanhpi-p2">Throughout the month, we will be hosting a series of events, workshops, and cultural showcases. Check out our upcoming poster for detailed schedules and featured activities. Let's celebrate our diversity and strengthen our community together!</p>
-            </div>
-            <div class="img-frame aanhpi-img-wrap tilt-card reveal reveal-right"
-                style="box-shadow: 0 20px 40px rgba(0,0,0,0.05);">
-                <img src="AANHPI_Poster.PNG" alt="AANHPI Heritage Month Poster" style="width: 100%; height: auto; object-fit: contain;">
-            </div>
-        </section>
-        
         <!-- LNY -->
         <section id="lny-section" style="margin-bottom: 120px;">
             <div style="margin: 0 auto; text-align: center;">
@@ -742,11 +792,10 @@
                     <img src="LNY_Poster.png" alt="Year of the Horse Poster">
                 </div>
 
-                <div style="width: 100%; aspect-ratio: 8064/4182; margin: 60px auto 40px; border-radius: 20px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.08); transition: transform 0.4s ease, box-shadow 0.4s ease;" class="reveal"
-                    onmouseover="this.style.transform='scale(1.01)'; this.style.boxShadow='0 30px 60px rgba(0,0,0,0.12)'"
-                    onmouseout="this.style.transform=''; this.style.boxShadow=''">
-                    <img src="Event_LNY4.jpg" alt="Group Picture" style="width: 100%; height: 100%; object-fit: cover;">
-                </div>
+                
+                    <div class="lny-group-wrap reveal">
+                        <img src="Event_LNY4.jpg" alt="Group Picture">
+                    </div>
 
                 <div style="margin-top: 80px;">
                     <h3 class="reveal" style="font-size: 1.8rem; font-weight: 800; margin-bottom: 10px;" data-key="yt-title">Our Traditions</h3>
@@ -843,7 +892,7 @@
             <a href="Terms_of_Use.html" data-key="nav-terms">Terms of Use</a>
         </div>
     </footer>
-
+ <p style="text-align: center; font-size: 12px; color: #666; margin: 20px 0;">Maintained by the APSC Web Team</p>
     <script>
     /* ═══════════════════════════════════════
        PAGE LOADER
@@ -1022,9 +1071,9 @@
             'yt-title': 'Our Traditions', 'yt-sub': 'Watch our club\'s exclusive series on Lunar New Year traditions.',
             'sponsor-h': 'Empower Our Mission', 'sponsor-p': 'Become a driving force behind APSC. Your sponsorship helps us foster cultural exchange, host inclusive events, and build a stronger, more supportive student community. Let\'s create an impact together.', 'sponsor-btn': 'Become a Sponsor',
             'culture-h': 'The Aesthetic of Hanzi', 'culture-p1': 'Calligraphy is a meditative dance of ink and soul.', 'culture-p2': 'Every stroke carries history.',
-            'events-prev-h': 'Our Activities', 'events-prev-p': 'Discover the vibrant events and workshops hosted by our community.', 'events-link': 'Explore all APSC Events →',
+            'events-prev-h': 'Our Activities', 'events-prev-p': 'Discover the vibrant events and workshops hosted by our community.', 'events-link': 'Explore all APSC Events →', 'loader-info': 'Preparing your experience', 'clcp-tag': 'Chinese Language & Culture Program', 'clcp-title': 'Chinese Language and Culture Program', 'clcp-p1': 'On June 4, 2026, our Chinese Language and Culture Program concluded a meaningful semester at Snowden Farm Elementary School. Students explored Mandarin, traditional arts, and community learning together.', 'clcp-p2': 'Next year, we look forward to returning to Snowden Farm Elementary School and beginning a new chapter at Wilson Wims Elementary School. Stay tuned for more cultural lessons and celebrations.', 'clcp-photo-alt': 'Photo of Chinese Language and Culture Program activities',
             'aanhpi-h': 'Celebrate AANHPI Heritage Month', 'aanhpi-p1': 'May is Asian American, Native Hawaiian, and Pacific Islander Heritage Month! Join us in honoring the rich cultures, histories, and contributions of the AANHPI community.', 'aanhpi-p2': 'Throughout the month, we will be hosting a series of events, workshops, and cultural showcases. Check out our upcoming poster for detailed schedules and featured activities. Let\'s celebrate our diversity and strengthen our community together!',
-            'meet-h': 'WEEKLY GATHERING', 'meet-p1': 'Mondays @ Lunch | Room 244A', 'meet-p2': 'Next Meeting: May 18th, 2026',
+            'meet-h': 'WEEKLY GATHERING', 'meet-p1': 'Mondays @ Lunch | Room 244A', 'meet-p2': 'Next Meeting: June 5th, 2026',
             'fb-title': 'Share Your Feedback', 'fb-sub': 'Your voice helps us make APSC better every day.', 'fb-name': 'Your name', 'fb-email': 'your@email.com', 'fb-msg': 'Tell us what\'s on your mind...', 'fb-btn': 'Submit Message', 'fb-status-loading': 'Sending...', 'fb-status-success': 'Success! Thank you for your message.', 'fb-status-error': 'Submit failed, please try again.', 'fb-name-lbl': 'Name (Optional)', 'fb-email-lbl': 'Email (Optional)', 'fb-msg-lbl': 'Message (Required)',
             'eml-tag': 'Advocacy',
             'eml-title': 'Standing Up for EML Students in MCPS',
@@ -1047,9 +1096,9 @@
             'yt-title': '探索我们的传统', 'yt-sub': '观看由我们社团独家制作的春节传统系列视频。',
             'sponsor-h': '赋能我们的使命', 'sponsor-p': '成为 APSC 背后的驱动力。您的赞助将帮助我们促进文化交流，举办包容性活动，并建立一个更强大、互助的学生社区。让我们共同创造影响力。', 'sponsor-btn': '成为赞助商',
             'culture-h': '汉字美学之韵', 'culture-p1': '书法是笔墨与心灵的禅意共舞。', 'culture-p2': '每一笔一划都承载着历史。',
-            'events-prev-h': '我们的活动', 'events-prev-p': '探索我们社区举办的丰富多彩的活动与工作坊。', 'events-link': '浏览所有 APSC 活动 →',
+            'events-prev-h': '我们的活动', 'events-prev-p': '探索我们社区举办的丰富多彩的活动与工作坊。', 'events-link': '浏览所有 APSC 活动 →', 'loader-info': '正在准备您的体验', 'clcp-tag': '中文语言与文化项目', 'clcp-title': 'Snowden Farm 小学本学期项目已圆满结束', 'clcp-p1': '2026年6月4日，我们的中文语言与文化项目在 Snowden Farm 小学顺利完成了一个意义深远的学期。学生们一起探索中文、传统艺术和文化交流。', 'clcp-p2': '明年我们期待重返 Snowden Farm 小学，并与 Wilson Wims 小学开启新的篇章。敬请期待更多文化课程与庆典。', 'clcp-photo-alt': '中文语言与文化项目活动照片',
             'aanhpi-h': '庆祝亚太裔传统月', 'aanhpi-p1': '五月是亚裔美国人、夏威夷原住民和太平洋岛民（AANHPI）传统月！加入我们，共同向 AANHPI 社区丰富的文化、历史和贡献致敬。', 'aanhpi-p2': '在整个月里，我们将举办一系列活动、工作坊和文化展示。请查看我们即将发布的海报以了解详细日程和特色活动。让我们共同庆祝多元文化，建设更强大的社区！',
-            'meet-h': '每周会议', 'meet-p1': '每周一午餐时间 | 244A 教室', 'meet-p2': '下一次会议：2026年5月18日',
+            'meet-h': '每周会议', 'meet-p1': '每周一午餐时间 | 244A 教室', 'meet-p2': '下一次会议：2026年6月5日',
             'fb-title': '留下反馈', 'fb-sub': '您的意见帮助我们不断改进 APSC。', 'fb-name': '您的姓名', 'fb-email': '您的邮箱', 'fb-msg': '告诉我们您的想法...', 'fb-btn': '提交留言', 'fb-name-lbl': '姓名（选填）', 'fb-email-lbl': '邮箱（选填）', 'fb-msg-lbl': '内容（必填）',
             'eml-tag': '倡议行动',
             'eml-title': '为 MCPS 的 EML 学生发声',
@@ -1072,9 +1121,9 @@
             'yt-title': '探索我們的傳統', 'yt-sub': '觀看由我們社團獨家製作的春節傳統系列影片。',
             'sponsor-h': '賦能我們的使命', 'sponsor-p': '成為 APSC 背後的驅動力。您的贊助將幫助我們促進文化交流，舉辦包容性活動，並建立一個更強大、互助的學生社區。讓我們共同創造影響力。', 'sponsor-btn': '成為贊助商',
             'culture-h': '漢字美學之韻', 'culture-p1': '書法是筆墨與心靈的禪意共舞。', 'culture-p2': '每一筆一劃都承載著歷史。',
-            'events-prev-h': '我們的活動', 'events-prev-p': '探索我們社區舉辦的豐富多彩的活動與工作坊。', 'events-link': '瀏覽所有 APSC 活動 →',
+            'events-prev-h': '我們的活動', 'events-prev-p': '探索我們社區舉辦的豐富多彩的活動與工作坊。', 'events-link': '瀏覽所有 APSC 活動 →', 'loader-info': '正在準備您的體驗', 'clcp-tag': '中文語言與文化項目', 'clcp-title': 'Snowden Farm 小學本學期項目已圓滿結束', 'clcp-p1': '2026年6月4日，我們的中文語言與文化項目在 Snowden Farm 小學順利完成了一個意義深遠的學期。學生們一起探索中文、傳統藝術和文化交流。', 'clcp-p2': '明年我們期待重返 Snowden Farm 小學，並與 Wilson Wims 小學開啟新的篇章。敬請期待更多文化課程與慶典。', 'clcp-photo-alt': '中文語言與文化項目活動照片',
             'aanhpi-h': '慶祝亞太裔傳統月', 'aanhpi-p1': '五月是亞裔美國人、夏威夷原住民和太平洋島民（AANHPI）傳統月！加入我們，共同向 AANHPI 社區豐富的文化、歷史和貢獻致敬。', 'aanhpi-p2': '在整個月份裡，我們將舉辦一系列活動、工作坊和文化展示。請查看我們即將發佈的海報以了解詳細日程和特色活動。讓我們共同慶祝多元文化，建設更強大的社區！',
-            'meet-h': '每週會議', 'meet-p1': '每週一午餐時間 | 244A 教室', 'meet-p2': '下一次會議：2026年5月18日',
+            'meet-h': '每週會議', 'meet-p1': '每週一午餐時間 | 244A 教室', 'meet-p2': '下一次會議：2026年6月5日',
             'fb-title': '留下回饋', 'fb-sub': '您的意見幫助我們不斷改進 APSC。', 'fb-name': '您的姓名', 'fb-email': '您的信箱', 'fb-msg': '告訴我們您的想法...', 'fb-btn': '提交留言', 'fb-name-lbl': '姓名（選填）', 'fb-email-lbl': '信箱（選填）', 'fb-msg-lbl': '內容（必填）',
             'eml-tag': '倡議行動',
             'eml-title': '為 MCPS 的 EML 學生發聲',
@@ -1099,7 +1148,7 @@
             'culture-h': '한자의 미학', 'culture-p1': '서예는 먹과 영혼의 명상적인 춤입니다.', 'culture-p2': '모든 획에는 역사가 담겨 있습니다.',
             'events-prev-h': '우리의 활동', 'events-prev-p': '우리 커뮤니티가 주최하는 활기찬 이벤트와 워크숍을 발견하세요.', 'events-link': '모든 APSC 이벤트 탐색 →',
             'aanhpi-h': 'AANHPI 유산의 달 축하', 'aanhpi-p1': '5월은 아시아계 미국인, 하와이 원주민, 태평양 섬 주민 유산의 달입니다!', 'aanhpi-p2': '한 달 동안 일련의 이벤트, 워크숍 및 문화 쇼케이스를 개최할 예정입니다.',
-            'meet-h': '주간 모임', 'meet-p1': '매주 월요일 점심 | 244A 교실', 'meet-p2': '다음 모임: 2026년 5월 18일',
+            'meet-h': '주간 모임', 'meet-p1': '매주 월요일 점심 | 244A 교실', 'meet-p2': '다음 모임: 2026년 6월 5일',
             'fb-title': '피드백 공유', 'fb-sub': '여러분의 의견은 APSC를 더 나은 곳으로 만드는 데 도움이 됩니다.', 'fb-name': '이름', 'fb-email': '이메일', 'fb-msg': '생각을 알려주세요...', 'fb-btn': '메시지 제출', 'fb-name-lbl': '이름 (선택)', 'fb-email-lbl': '이메일 (선택)', 'fb-msg-lbl': '메시지 (필수)',
             'eml-tag': '옹호 활동',
             'eml-title': 'MCPS EML 학생들을 응원',
@@ -1122,9 +1171,9 @@
             'yt-title': '私たちの伝統', 'yt-sub': '旧正月の伝統に関する独占シリーズ動画を見てください。',
             'sponsor-h': '私たちの使命を支援してください', 'sponsor-p': 'APSCの原動力になってください。スポンサーシップは文化交流を促進し、学生コミュニティを強化します。', 'sponsor-btn': 'スポンサーになる',
             'culture-h': '漢字の美学', 'culture-p1': '書道は、墨と魂の瞑想的なダンスです。', 'culture-p2': 'すべてのストロークには歴史が込められています。',
-            'events-prev-h': '私たちの活動', 'events-prev-p': 'コミュニティが主催するイベントやワークショップを発見してください。', 'events-link': 'すべてのAPSCイベントを探索 →',
+            'events-prev-h': '私たちの活動', 'events-prev-p': 'コミュニティが主催するイベントやワークショップを発見してください。', 'events-link': 'すべてのAPSCイベントを探索 →', 'loader-info': 'エクスペリエンスを準備中です', 'clcp-tag': '中国語言語と文化プログラム', 'clcp-title': 'Snowden Farm小学校の学期プログラムが終了しました', 'clcp-p1': '2026年6月4日、私たちの中国語言語と文化プログラムはSnowden Farm小学校で意味のある学期を無事に終えました。生徒たちは一緒に中国語、伝統芸術、コミュニティ学習を体験しました。', 'clcp-p2': '来年はSnowden Farm小学校に戻り、Wilson Wims小学校とともに新しい章を開くことを楽しみにしています。さらなる文化レッスンとお祝いをお楽しみに。', 'clcp-photo-alt': '中国語言語と文化プログラムの活動写真',
             'aanhpi-h': 'AANHPI遺産月を祝う', 'aanhpi-p1': '5月はアジア系アメリカ人、ハワイ先住民、太平洋諸島民の遺産月です！', 'aanhpi-p2': '1か月を通して、イベント、ワークショップ、文化ショーケースを開催します。',
-            'meet-h': '週間集会', 'meet-p1': '毎週月曜日の昼食時 | 244A教室', 'meet-p2': '次回の会議：2026年5月18日',
+            'meet-h': '週間集会', 'meet-p1': '毎週月曜日の昼食時 | 244A教室', 'meet-p2': '次回の会議：2026年6月5日',
             'fb-title': 'フィードバックを共有', 'fb-sub': 'あなたの声はAPSCをより良いものにします。', 'fb-name': 'お名前', 'fb-email': 'メールアドレス', 'fb-msg': 'ご意見をお聞かせください...', 'fb-btn': 'メッセージを送信', 'fb-name-lbl': '名前（任意）', 'fb-email-lbl': 'メール（任意）', 'fb-msg-lbl': 'メッセージ（必須）',
             'eml-tag': '擁護活動',
             'eml-title': 'MCPSのEML学生を支援',
@@ -1147,9 +1196,9 @@
             'yt-title': 'Nuestras Tradiciones', 'yt-sub': 'Mira nuestra serie exclusiva sobre las tradiciones del Año Nuevo Lunar.',
             'sponsor-h': 'Empodera Nuestra Misión', 'sponsor-p': 'Sé una fuerza impulsora detrás de APSC. Tu patrocinio fomenta el intercambio cultural y construye comunidad.', 'sponsor-btn': 'Conviértete en Patrocinador',
             'culture-h': 'La Estética de Hanzi', 'culture-p1': 'La caligrafía es una danza meditativa de tinta y alma.', 'culture-p2': 'Cada trazo lleva historia.',
-            'events-prev-h': 'Nuestras Actividades', 'events-prev-p': 'Descubre los vibrantes eventos y talleres organizados por nuestra comunidad.', 'events-link': 'Explora todos los Eventos de APSC →',
+            'events-prev-h': 'Nuestras Actividades', 'events-prev-p': 'Descubre los vibrantes eventos y talleres organizados por nuestra comunidad.', 'events-link': 'Explora todos los Eventos de APSC →', 'loader-info': 'Preparando tu experiencia', 'clcp-tag': 'Programa de Lengua y Cultura China', 'clcp-title': 'Programa del semestre en Snowden Farm Elementary finalizado', 'clcp-p1': 'El 4 de junio de 2026, nuestro programa de lengua y cultura china concluyó un semestre significativo en Snowden Farm Elementary School. Los estudiantes exploraron mandarín, artes tradicionales y aprendizaje comunitario juntos.', 'clcp-p2': 'El próximo año esperamos regresar a Snowden Farm Elementary School y comenzar un nuevo capítulo en Wilson Wims Elementary School. Mantente atento a más lecciones culturales y celebraciones.', 'clcp-photo-alt': 'Foto de actividades del Programa de Lengua y Cultura China',
             'aanhpi-h': 'Celebra el Mes del Patrimonio AANHPI', 'aanhpi-p1': '¡Mayo es el Mes del Patrimonio AANHPI!', 'aanhpi-p2': 'Estaremos organizando eventos, talleres y exhibiciones culturales durante todo el mes.',
-            'meet-h': 'REUNIÓN SEMANAL', 'meet-p1': 'Lunes @ Almuerzo | Sala 244A', 'meet-p2': 'Próxima Reunión: 18 de mayo de 2026',
+            'meet-h': 'REUNIÓN SEMANAL', 'meet-p1': 'Lunes @ Almuerzo | Sala 244A', 'meet-p2': 'Próxima Reunión: 5 de junio de 2026',
             'fb-title': 'Comparte tus Comentarios', 'fb-sub': 'Tu voz nos ayuda a mejorar APSC cada día.', 'fb-name': 'Tu nombre', 'fb-email': 'Tu correo', 'fb-msg': 'Tu mensaje...', 'fb-btn': 'Enviar Mensaje', 'fb-name-lbl': 'Nombre (Opcional)', 'fb-email-lbl': 'Correo (Opcional)', 'fb-msg-lbl': 'Mensaje (Requerido)',
             'eml-tag': 'Abogacía',
             'eml-title': 'Apoyando a estudiantes EML en MCPS',
@@ -1172,9 +1221,9 @@
             'yt-title': 'Nos Traditions', 'yt-sub': 'Regardez notre série exclusive sur les traditions du Nouvel An Lunaire.',
             'sponsor-h': 'Soutenez Notre Mission', 'sponsor-p': 'Devenez une force motrice derrière APSC. Votre parrainage favorise les échanges culturels et renforce notre communauté.', 'sponsor-btn': 'Devenir Parrain',
             'culture-h': 'L\'Esthétique de Hanzi', 'culture-p1': 'La calligraphie est une danse méditative d\'encre et d\'âme.', 'culture-p2': 'Chaque trait porte l\'histoire.',
-            'events-prev-h': 'Nos Activités', 'events-prev-p': 'Découvrez les événements et ateliers organisés par notre communauté.', 'events-link': 'Explorez tous les Événements APSC →',
+            'events-prev-h': 'Nos Activités', 'events-prev-p': 'Découvrez les événements et ateliers organisés par notre communauté.', 'events-link': 'Explorez tous les Événements APSC →', 'loader-info': 'Préparation de votre expérience', 'clcp-tag': 'Programme de Langue et Culture Chinoise', 'clcp-title': 'Programme du semestre à Snowden Farm Elementary terminé', 'clcp-p1': 'Le 4 juin 2026, notre programme de langue et culture chinoise a conclu un semestre significatif à Snowden Farm Elementary School. Les élèves ont exploré le mandarin, les arts traditionnels et l’apprentissage communautaire ensemble.', 'clcp-p2': 'L’année prochaine, nous avons hâte de revenir à Snowden Farm Elementary School et d’ouvrir un nouveau chapitre à Wilson Wims Elementary School. Restez à l’écoute pour plus de leçons culturelles et de célébrations.', 'clcp-photo-alt': 'Photo des activités du programme de langue et culture chinoise',
             'aanhpi-h': 'Célébrez le Mois du Patrimoine AANHPI', 'aanhpi-p1': 'Mai est le Mois du Patrimoine AANHPI !', 'aanhpi-p2': 'Nous organisons des événements, ateliers et expositions culturelles tout au long du mois.',
-            'meet-h': 'RASSEMBLEMENT HEBDOMADAIRE', 'meet-p1': 'Lundis @ Déjeuner | Salle 244A', 'meet-p2': 'Prochaine réunion : 18 mai 2026',
+            'meet-h': 'RASSEMBLEMENT HEBDOMADAIRE', 'meet-p1': 'Lundis @ Déjeuner | Salle 244A', 'meet-p2': 'Prochaine réunion : 5 juin 2026',
             'fb-title': 'Partagez vos Commentaires', 'fb-sub': 'Votre voix nous aide à améliorer APSC chaque jour.', 'fb-name': 'Votre nom', 'fb-email': 'votre@email.com', 'fb-msg': 'Dites-nous ce que vous pensez...', 'fb-btn': 'Envoyer le Message', 'fb-name-lbl': 'Nom (Optionnel)', 'fb-email-lbl': 'Email (Optionnel)', 'fb-msg-lbl': 'Message (Requis)',
             'eml-tag': 'Mobilisation',
             'eml-title': 'Soutien aux étudiants EML de MCPS',
