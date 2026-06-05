@@ -649,6 +649,26 @@
             .nav-links.active { opacity: 1; transform: translateY(0); pointer-events: auto; }
             .nav-links a { display: block; padding: 15px 0; font-size: 16px; text-align: center; }
             #home-feedback-form > div:first-child { grid-template-columns: 1fr !important; }
+            
+            /* Mobile optimization for Chinese Program section */
+            .program-highlight { padding: 40px 0; margin-bottom: 60px; }
+            .program-highlight-grid { 
+                grid-template-columns: 1fr; 
+                gap: 24px; 
+                max-width: 100%;
+            }
+            .program-highlight .section-title { 
+                font-size: 1.6rem; 
+                max-width: 100%;
+            }
+            .program-highlight .section-p { 
+                max-width: 100%;
+                font-size: 0.95rem;
+            }
+            .program-highlight .photo-frame { 
+                max-width: 100%;
+                border-radius: 16px;
+            }
         }
     </style>
 </head>
