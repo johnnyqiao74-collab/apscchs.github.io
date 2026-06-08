@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>APSC Officer Application</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        background: #f7f8fb;
+        color: #1f2937;
+    }
+
+    header {
+        background: white;
+        padding: 20px 40px;
+        display: flex;
+        align-items: center;
+        border-bottom: 1px solid #e5e7eb;
+    }
+
+    header img {
+        height: 60px;
+        margin-right: 20px;
+    }
+
+    .header-text h1 {
+        margin: 0;
+        font-size: 22px;
+    }
+
+    .header-text p {
+        margin: 4px 0 0;
+        color: #6b7280;
+    }
+
+    .container {
+        max-width: 900px;
+        margin: 30px auto;
+        background: white;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+
+    h2 {
+        margin-top: 30px;
+        border-left: 4px solid #2563eb;
+        padding-left: 10px;
+    }
+
+    label {
+        display: block;
+        margin-top: 15px;
+        font-weight: bold;
+    }
+
+    input, select, textarea {
+        width: 100%;
+        padding: 10px;
+        margin-top: 5px;
+        border: 1px solid #d1d5db;
+        border-radius: 6px;
+        font-size: 14px;
+    }
+
+    .checkbox-group label {
+        font-weight: normal;
+        margin-top: 8px;
+    }
+
+    .note {
+        font-size: 13px;
+        color: #6b7280;
+        margin-top: 5px;
+    }
+
+    .warning {
+        background: #fff7ed;
+        padding: 10px;
+        border-left: 4px solid #f97316;
+        margin-top: 15px;
+        font-size: 14px;
+    }
+
+    button {
+        margin-top: 25px;
+        background: #2563eb;
+        color: white;
+        border: none;
+        padding: 12px 18px;
+        border-radius: 6px;
+        font-size: 15px;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background: #1d4ed8;
+    }
+
+    footer {
+        text-align: center;
+        padding: 30px;
+        font-size: 13px;
+        color: #6b7280;
+    }
+
+    .hidden {
+        display: none;
+    }
+</style>
+</head>
+
+<body>
+
+<header>
+    <img src="APSC_LOGO.png" alt="APSC Logo">
+    <div class="header-text">
+        <h1>Asian Peer Support Club</h1>
+        <p>Officer Application | 2026–2027 School Year</p>
+        <p>Clarksburg High School | Montgomery County, Maryland</p>
+    </div>
+</header>
+
+<div class="container">
+
+    <h2>About APSC</h2>
+    <p>
+        The Asian Peer Support Club (APSC) is a student-led organization dedicated to supporting Asian and multicultural students while facilitating cross-cultural communication within our school community.
+        Through leadership development, service opportunities, and educational initiatives, APSC provides meaningful experiences for members.
+    </p>
+
+    <h2>Eligibility Notice</h2>
+    <div class="warning">
+        President and Vice President applicants must be current APSC members AND meet Active Member requirements:
+        <ul>
+            <li>≥ 70% meeting attendance</li>
+            <li>≥ 80% task completion</li>
+            <li>No disciplinary violations</li>
+        </ul>
+    </div>
+
+    <form action="https://formspree.io/f/xojzdpvp" method="POST" id="applicationForm">
+
+        <h2>Basic Information</h2>
+
+        <label>Full Name *</label>
+        <input name="full_name" required>
+
+        <label>Preferred Name *</label>
+        <input name="preferred_name" required>
+
+        <label>Grade *</label>
+        <select name="grade" required>
+            <option value="">Select</option>
+            <option>9</option>
+            <option>10</option>
+            <option>11</option>
+            <option>12</option>
+        </select>
+
+        <label>MCPS Email *</label>
+        <input name="mcps_email" type="email" required>
+
+        <label>Personal Email (Optional)</label>
+        <input name="personal_email" type="email">
+
+        <label>Phone Number (Optional)</label>
+        <input name="phone">
+
+        <h2>Membership Status</h2>
+
+        <label>Are you currently an APSC member?</label>
+        <select id="memberStatus" name="is_member" required>
+            <option value="">Select</option>
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+        </select>
+
+        <label>Are you an Active Member?</label>
+        <select id="activeStatus" name="is_active_member" required>
+            <option value="">Select</option>
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+            <option value="unsure">Unsure</option>
+        </select>
+
+        <h2>Position Selection</h2>
+
+        <div class="note">You may select up to 2 positions.</div>
+
+        <div class="checkbox-group" id="positions">
+
+            <label><input type="checkbox" name="positions" value="President"> President</label>
+            <label><input type="checkbox" name="positions" value="Vice President"> Vice President</label>
+
+            <label><input type="checkbox" name="positions" value="Secretary"> Secretary</label>
+            <label><input type="checkbox" name="positions" value="Treasurer"> Treasurer</label>
+            <label><input type="checkbox" name="positions" value="Public Relations Officer"> Public Relations Officer</label>
+            <label><input type="checkbox" name="positions" value="Event Coordinator"> Event Coordinator</label>
+            <label><input type="checkbox" name="positions" value="Academic Coordinator"> Academic Coordinator</label>
+            <label><input type="checkbox" name="positions" value="Design & Layout Officer"> Design & Layout Officer</label>
+            <label><input type="checkbox" name="positions" value="IT Support Officer"> IT Support Officer</label>
+
+        </div>
+
+        <h2>Officer Statement</h2>
+
+        <label>Why do you want to serve as an APSC Officer? *</label>
+        <textarea name="motivation" rows="4" required></textarea>
+
+        <label>What goals or improvements would you bring to APSC? *</label>
+        <textarea name="goals" rows="4" required></textarea>
+
+        <label>Describe your leadership or volunteer experience *</label>
+        <textarea name="experience" rows="4" required></textarea>
+
+        <label>Which APSC program interests you most and why? *</label>
+        <textarea name="program_interest" rows="4" required></textarea>
+
+        <div class="warning">
+            Applications close before August 2026. Selected officers will participate in onboarding and transition meetings.
+        </div>
+
+        <button type="submit">Submit Application</button>
+
+    </form>
+</div>
+
+<footer>
+    Asian Peer Support Club<br>
+    Clarksburg High School<br>
+    Montgomery County, Maryland
+</footer>
+
+<script>
+// Limit selection to 2 positions
+const checkboxes = document.querySelectorAll('input[name="positions"]');
+
+checkboxes.forEach(cb => {
+    cb.addEventListener('change', () => {
+        const checked = document.querySelectorAll('input[name="positions"]:checked');
+        if (checked.length > 2) {
+            cb.checked = false;
+            alert("You can only select up to 2 positions.");
+        }
+    });
+});
+
+// Hide President / VP if not eligible
+const memberStatus = document.getElementById("memberStatus");
+const activeStatus = document.getElementById("activeStatus");
+
+function updateEligibility() {
+    const isEligible =
+        memberStatus.value === "yes" &&
+        activeStatus.value === "yes";
+
+    document.querySelectorAll('input[value="President"]').forEach(el => {
+        el.parentElement.style.display = isEligible ? "block" : "none";
+    });
+
+    document.querySelectorAll('input[value="Vice President"]').forEach(el => {
+        el.parentElement.style.display = isEligible ? "block" : "none";
+    });
+}
+
+memberStatus.addEventListener("change", updateEligibility);
+activeStatus.addEventListener("change", updateEligibility);
+</script>
+
+</body>
+</html>
