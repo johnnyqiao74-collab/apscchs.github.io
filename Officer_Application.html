@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>APSC Officer Application</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy:   #0f1c3f;
+    --navy2:  #1a2f5e;
+    --gold:   #d4a843;
+    --gold-lt:#f0d98a;
+    --cream:  #fafaf7;
+    --mist:   #eef1f8;
+    --slate:  #8494b0;
+    --ink:    #1e2a3a;
+    --border: #d8dde8;
+    --warn-bg:#fff8ed;
+    --warn-bd:#e8903a;
+    --radius: 10px;
+  }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--mist);
+    color: var(--ink);
+    min-height: 100vh;
+  }
+
+  /* ── HERO HEADER ─────────────────────────────── */
+  .hero {
+    background: var(--navy);
+    position: relative;
+    overflow: hidden;
+    padding: 0;
+  }
+  .hero-inner {
+    position: relative;
+    z-index: 2;
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 36px 32px 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  /* Cherry blossom SVG accent — signature element */
+  .hero-petals {
+    position: absolute;
+    right: 0; top: 0;
+    height: 100%; width: 420px;
+    z-index: 1;
+    opacity: 0.07;
+    pointer-events: none;
+  }
+  .hero-logo {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+  }
+  .hero-logo img {
+    height: 52px;
+    width: auto;
+    max-width: 260px;
+    object-fit: contain;
+    /* white logo on dark bg — if logo is dark, invert it */
+    filter: brightness(0) invert(1);
+  }
+  .hero-logo-placeholder {
+    font-family: 'Noto Serif', serif;
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--gold);
+    letter-spacing: -1px;
+  }
+  .hero-text {
+    flex: 1;
+  }
+  .hero-eyebrow {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 6px;
+  }
+  .hero-title {
+    font-family: 'Noto Serif', serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.2;
+    margin-bottom: 8px;
+  }
+  .hero-meta {
+    font-size: 13px;
+    color: var(--slate);
+    line-height: 1.6;
+  }
+  .hero-meta span {
+    color: rgba(255,255,255,0.55);
+  }
+  .hero-divider {
+    height: 3px;
+    background: linear-gradient(90deg, var(--gold) 0%, var(--gold-lt) 40%, transparent 100%);
+  }
+
+  /* ── ABOUT BUTTON BAR ─────────────────────────── */
+  .info-bar {
+    background: var(--cream);
+    border-bottom: 1px solid var(--border);
+  }
+  .info-bar-inner {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 14px 32px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .info-bar-label {
+    font-size: 13px;
+    color: var(--slate);
+    font-weight: 500;
+    margin-right: 4px;
+  }
+  .btn-about {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    background: var(--navy);
+    color: #fff;
+    text-decoration: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    transition: background 0.18s, transform 0.12s;
+    border: none;
+    cursor: pointer;
+  }
+  .btn-about:hover {
+    background: var(--navy2);
+    transform: translateY(-1px);
+  }
+  .btn-about svg {
+    opacity: 0.75;
+  }
+  .btn-about-secondary {
+    background: transparent;
+    color: var(--navy);
+    border: 1.5px solid var(--navy);
+  }
+  .btn-about-secondary:hover {
+    background: var(--mist);
+    transform: translateY(-1px);
+  }
+
+  /* ── MAIN LAYOUT ──────────────────────────────── */
+  .page-body {
+    max-width: 960px;
+    margin: 32px auto 0;
+    padding: 0 20px 60px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  /* ── CARDS ────────────────────────────────────── */
+  .card {
+    background: var(--cream);
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    overflow: hidden;
+  }
+  .card-header {
+    padding: 18px 28px 14px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .card-icon {
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    background: var(--navy);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .card-icon svg { color: var(--gold); }
+  .card-title {
+    font-family: 'Noto Serif', serif;
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--navy);
+  }
+  .card-body {
+    padding: 20px 28px 24px;
+  }
+  .card-body p {
+    font-size: 14.5px;
+    line-height: 1.75;
+    color: #3d4f68;
+  }
+
+  /* ── ELIGIBILITY NOTICE ───────────────────────── */
+  .eligibility-box {
+    background: var(--warn-bg);
+    border: 1px solid #f4cfa0;
+    border-left: 4px solid var(--warn-bd);
+    border-radius: var(--radius);
+    padding: 16px 20px;
+  }
+  .eligibility-box .elig-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: #92400e;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .eligibility-box p {
+    font-size: 13.5px;
+    color: #78350f;
+    margin-bottom: 8px;
+  }
+  .eligibility-box ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  .eligibility-box ul li {
+    font-size: 13px;
+    color: #78350f;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .eligibility-box ul li::before {
+    content: '';
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--warn-bd);
+    flex-shrink: 0;
+  }
+
+  /* ── FORM SECTIONS ────────────────────────────── */
+  .form-section {
+    background: var(--cream);
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    overflow: hidden;
+  }
+  .form-section-header {
+    padding: 16px 28px;
+    background: var(--navy);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .form-section-header .step-num {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: var(--gold);
+    text-transform: uppercase;
+  }
+  .form-section-header .section-title {
+    font-family: 'Noto Serif', serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: #fff;
+  }
+  .form-section-body {
+    padding: 24px 28px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  /* ── FORM FIELDS ──────────────────────────────── */
+  .field-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  @media (max-width: 600px) {
+    .field-row { grid-template-columns: 1fr; }
+    .hero-inner { align-items: flex-start; }
+    .info-bar-inner { justify-content: center; }
+  }
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  .field.full { grid-column: 1 / -1; }
+  .field label {
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--navy);
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+  }
+  .field label .req {
+    color: var(--gold);
+    margin-left: 2px;
+  }
+  .field label .opt {
+    font-weight: 400;
+    color: var(--slate);
+    text-transform: none;
+    font-size: 11.5px;
+    margin-left: 4px;
+  }
+  .field input,
+  .field select,
+  .field textarea {
+    width: 100%;
+    padding: 10px 13px;
+    border: 1.5px solid var(--border);
+    border-radius: 7px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    color: var(--ink);
+    background: #fff;
+    transition: border-color 0.15s, box-shadow 0.15s;
+    outline: none;
+    appearance: none;
+  }
+  .field input::placeholder,
+  .field textarea::placeholder { color: #b0bbcb; }
+  .field input:focus,
+  .field select:focus,
+  .field textarea:focus {
+    border-color: var(--navy);
+    box-shadow: 0 0 0 3px rgba(15,28,63,0.08);
+  }
+  .field select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238494b0' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    padding-right: 36px;
+  }
+  .field textarea { resize: vertical; min-height: 100px; }
+  .field-hint {
+    font-size: 11.5px;
+    color: var(--slate);
+    margin-top: 2px;
+  }
+
+  /* ── POSITIONS GRID ───────────────────────────── */
+  .positions-hint {
+    font-size: 12.5px;
+    color: var(--slate);
+    padding: 10px 14px;
+    background: var(--mist);
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    margin-bottom: 4px;
+  }
+  .positions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 10px;
+  }
+  .position-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 11px 14px;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    background: #fff;
+    cursor: pointer;
+    transition: border-color 0.15s, background 0.15s;
+    font-size: 13.5px;
+    color: var(--ink);
+    font-weight: 500;
+    user-select: none;
+  }
+  .position-item:hover {
+    border-color: var(--navy);
+    background: var(--mist);
+  }
+  .position-item input[type="checkbox"] {
+    width: 16px; height: 16px;
+    accent-color: var(--navy);
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+
+  /* ── SUBMIT AREA ──────────────────────────────── */
+  .submit-area {
+    background: var(--cream);
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    padding: 24px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .deadline-notice {
+    font-size: 13px;
+    color: #78350f;
+    background: var(--warn-bg);
+    border: 1px solid #f4cfa0;
+    border-left: 4px solid var(--warn-bd);
+    border-radius: 7px;
+    padding: 12px 16px;
+  }
+  .btn-submit {
+    align-self: flex-start;
+    background: var(--navy);
+    color: #fff;
+    border: none;
+    padding: 13px 32px;
+    border-radius: 8px;
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    transition: background 0.18s, transform 0.12s, box-shadow 0.18s;
+    box-shadow: 0 2px 8px rgba(15,28,63,0.18);
+  }
+  .btn-submit:hover {
+    background: var(--navy2);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 14px rgba(15,28,63,0.25);
+  }
+  .btn-submit svg { opacity: 0.85; }
+
+  /* ── FOOTER ───────────────────────────────────── */
+  footer {
+    background: var(--navy);
+    text-align: center;
+    padding: 28px 20px;
+  }
+  .footer-inner {
+    font-size: 12.5px;
+    color: var(--slate);
+    line-height: 1.8;
+  }
+  .footer-brand {
+    font-family: 'Noto Serif', serif;
+    font-size: 15px;
+    color: rgba(255,255,255,0.7);
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+
+  /* ── HIDDEN ───────────────────────────────────── */
+  .hidden { display: none !important; }
+</style>
+</head>
+<body>
+
+<!-- ── HERO ── -->
+<div class="hero">
+  <!-- Cherry blossom petals SVG (signature element) -->
+  <svg class="hero-petals" viewBox="0 0 420 180" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <g fill="white">
+      <!-- large bloom top-right -->
+      <ellipse cx="340" cy="40" rx="22" ry="9" transform="rotate(-30 340 40)"/>
+      <ellipse cx="362" cy="28" rx="22" ry="9" transform="rotate(15 362 28)"/>
+      <ellipse cx="370" cy="52" rx="22" ry="9" transform="rotate(60 370 52)"/>
+      <ellipse cx="348" cy="65" rx="22" ry="9" transform="rotate(105 348 65)"/>
+      <ellipse cx="325" cy="55" rx="22" ry="9" transform="rotate(-60 325 55)"/>
+      <circle cx="348" cy="47" r="5"/>
+      <!-- smaller bloom mid -->
+      <ellipse cx="240" cy="90" rx="15" ry="6" transform="rotate(-20 240 90)"/>
+      <ellipse cx="256" cy="80" rx="15" ry="6" transform="rotate(25 256 80)"/>
+      <ellipse cx="262" cy="98" rx="15" ry="6" transform="rotate(70 262 98)"/>
+      <ellipse cx="246" cy="108" rx="15" ry="6" transform="rotate(115 246 108)"/>
+      <ellipse cx="229" cy="100" rx="15" ry="6" transform="rotate(-65 229 100)"/>
+      <circle cx="246" cy="94" r="3.5"/>
+      <!-- tiny bloom -->
+      <ellipse cx="390" cy="130" rx="10" ry="4" transform="rotate(10 390 130)"/>
+      <ellipse cx="400" cy="122" rx="10" ry="4" transform="rotate(55 400 122)"/>
+      <ellipse cx="404" cy="135" rx="10" ry="4" transform="rotate(100 404 135)"/>
+      <ellipse cx="394" cy="142" rx="10" ry="4" transform="rotate(145 394 142)"/>
+      <ellipse cx="383" cy="136" rx="10" ry="4" transform="rotate(-45 383 136)"/>
+      <circle cx="394" cy="133" r="2.5"/>
+      <!-- scattered petals -->
+      <ellipse cx="180" cy="30" rx="8" ry="3" transform="rotate(40 180 30)" opacity="0.6"/>
+      <ellipse cx="290" cy="155" rx="6" ry="2.5" transform="rotate(-15 290 155)" opacity="0.5"/>
+      <ellipse cx="150" cy="120" rx="7" ry="3" transform="rotate(60 150 120)" opacity="0.45"/>
+      <ellipse cx="410" cy="80" rx="5" ry="2" transform="rotate(30 410 80)" opacity="0.5"/>
+    </g>
+  </svg>
+
+  <div class="hero-inner">
+    <div class="hero-logo">
+      <a href="https://apscchs.org" target="_blank" rel="noopener">
+        <img src="APSC_LOGO.png" alt="APSC Logo" onerror="this.parentElement.innerHTML='<span class=hero-logo-placeholder>A</span>'">
+      </a>
+    </div>
+    <div class="hero-text">
+      <div class="hero-eyebrow">Officer Application &nbsp;·&nbsp; 2026–2027 School Year</div>
+      <div class="hero-meta">
+        <span>Clarksburg High School</span> &nbsp;·&nbsp; <span>Montgomery County, Maryland</span>
+      </div>
+    </div>
+  </div>
+  <div class="hero-divider"></div>
+</div>
+
+<!-- ── INFO BAR WITH ABOUT BUTTON ── -->
+<div class="info-bar">
+  <div class="info-bar-inner">
+    <span class="info-bar-label">Learn more about APSC:</span>
+    <a href="https://docs.google.com/presentation/d/1PiMYwyMy9kVFe75-U7MDnQk2Ed1yl7CEEodkWluH48I/edit?usp=sharing" class="btn-about btn-about-secondary" target="_blank" rel="noopener">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      About Our Club &amp; Roles
+    </a>
+  </div>
+</div>
+
+<!-- ── PAGE BODY ── -->
+<div class="page-body">
+
+  <!-- About card -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-icon">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--gold)"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      </div>
+      <div class="card-title">About APSC</div>
+    </div>
+    <div class="card-body">
+      <p>The Asian Peer Support Club (APSC) is a student-led organization dedicated to supporting Asian and multicultural students while facilitating cross-cultural communication within our school community. Through leadership development, service opportunities, and educational initiatives, APSC provides meaningful experiences for all members.</p>
+    </div>
+  </div>
+
+  <!-- Eligibility notice -->
+  <div class="eligibility-box">
+    <div class="elig-title">Eligibility Notice</div>
+    <p>President and Vice President applicants must be current APSC members <strong>and</strong> meet Active Member requirements:</p>
+    <ul>
+      <li>≥ 70% meeting attendance</li>
+      <li>≥ 80% task completion</li>
+      <li>No disciplinary violations</li>
+    </ul>
+  </div>
+
+  <!-- ── FORM ── (action / method / id untouched) -->
+  <form action="https://formspree.io/f/xojzdpvp" method="POST" id="applicationForm">
+
+    <!-- Section 1: Basic Info -->
+    <div class="form-section" style="margin-bottom:20px;">
+      <div class="form-section-header">
+        <span class="step-num">Step 1</span>
+        <span class="section-title">Basic Information</span>
+      </div>
+      <div class="form-section-body">
+        <div class="field-row">
+          <div class="field">
+            <label>Full Name <span class="req">*</span></label>
+            <input name="full_name" required placeholder="e.g. Kim Jiwoo">
+          </div>
+          <div class="field">
+            <label>Preferred Name <span class="req">*</span></label>
+            <input name="preferred_name" required placeholder="What you go by">
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label>Grade <span class="req">*</span></label>
+            <select name="grade" required>
+              <option value="">Select grade</option>
+              <option>9</option>
+              <option>10</option>
+              <option>11</option>
+              <option>12</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>MCPS Email <span class="req">*</span></label>
+            <input name="mcps_email" type="email" required placeholder="you@mcpsmd.net">
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label>Personal Email <span class="opt">(optional)</span></label>
+            <input name="personal_email" type="email" placeholder="you@gmail.com">
+          </div>
+          <div class="field">
+            <label>Phone Number <span class="opt">(optional)</span></label>
+            <input name="phone" placeholder="(301) 000-0000">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 2: Membership -->
+    <div class="form-section" style="margin-bottom:20px;">
+      <div class="form-section-header">
+        <span class="step-num">Step 2</span>
+        <span class="section-title">Membership Status</span>
+      </div>
+      <div class="form-section-body">
+        <div class="field-row">
+          <div class="field">
+            <label>Are you currently an APSC member? <span class="req">*</span></label>
+            <select id="memberStatus" name="is_member" required>
+              <option value="">Select</option>
+              <option value="yes">Yes</option>
+              <option value="no">No</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Are you an Active Member? <span class="req">*</span></label>
+            <select id="activeStatus" name="is_active_member" required>
+              <option value="">Select</option>
+              <option value="yes">Yes</option>
+              <option value="no">No</option>
+              <option value="unsure">Unsure</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 3: Positions -->
+    <div class="form-section" style="margin-bottom:20px;">
+      <div class="form-section-header">
+        <span class="step-num">Step 3</span>
+        <span class="section-title">Position Selection</span>
+      </div>
+      <div class="form-section-body">
+        <div class="positions-hint">You may select <strong>up to 2 positions</strong>. President and Vice President only appear if you meet the eligibility requirements above.</div>
+        <div class="positions-grid" id="positions">
+          <label class="position-item"><input type="checkbox" name="positions" value="President"> President</label>
+          <label class="position-item"><input type="checkbox" name="positions" value="Vice President"> Vice President</label>
+          <label class="position-item"><input type="checkbox" name="positions" value="Secretary"> Secretary</label>
+          <label class="position-item"><input type="checkbox" name="positions" value="Treasurer"> Treasurer</label>
+          <label class="position-item"><input type="checkbox" name="positions" value="Public Relations Officer"> Public Relations Officer</label>
+          <label class="position-item"><input type="checkbox" name="positions" value="Event Coordinator"> Event Coordinator</label>
+          <label class="position-item"><input type="checkbox" name="positions" value="Academic Coordinator"> Academic Coordinator</label>
+          <label class="position-item"><input type="checkbox" name="positions" value="Design & Layout Officer"> Design &amp; Layout Officer</label>
+          <label class="position-item"><input type="checkbox" name="positions" value="IT Support Officer"> IT Support Officer</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 4: Officer Statement -->
+    <div class="form-section" style="margin-bottom:20px;">
+      <div class="form-section-header">
+        <span class="step-num">Step 4</span>
+        <span class="section-title">Officer Statement</span>
+      </div>
+      <div class="form-section-body">
+        <div class="field">
+          <label>Why do you want to serve as an APSC Officer? <span class="req">*</span></label>
+          <textarea name="motivation" rows="4" required placeholder="Share your motivation..."></textarea>
+        </div>
+        <div class="field">
+          <label>What goals or improvements would you bring to APSC? <span class="req">*</span></label>
+          <textarea name="goals" rows="4" required placeholder="Describe your vision..."></textarea>
+        </div>
+        <div class="field">
+          <label>Describe your leadership or volunteer experience <span class="req">*</span></label>
+          <textarea name="experience" rows="4" required placeholder="Any clubs, roles, or community service..."></textarea>
+        </div>
+        <div class="field">
+          <label>Which APSC program interests you most and why? <span class="req">*</span></label>
+          <textarea name="program_interest" rows="4" required placeholder="Tell us about the program..."></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- Submit -->
+    <div class="submit-area">
+      <div class="deadline-notice">
+        Applications close before <strong>August 2026</strong>. Selected officers will participate in onboarding and transition meetings.
+      </div>
+      <button type="submit" class="btn-submit">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+        Submit Application
+      </button>
+    </div>
+
+  </form><!-- end form -->
+
+</div><!-- end page-body -->
+
+<footer>
+  <div class="footer-brand">Asian Peer Support Club</div>
+  <div class="footer-inner">
+    Clarksburg High School &nbsp;·&nbsp; Montgomery County, Maryland
+  </div>
+</footer>
+
+<script>
+// Limit selection to 2 positions
+const checkboxes = document.querySelectorAll('input[name="positions"]');
+checkboxes.forEach(cb => {
+    cb.addEventListener('change', () => {
+        const checked = document.querySelectorAll('input[name="positions"]:checked');
+        if (checked.length > 2) {
+            cb.checked = false;
+            alert("You can only select up to 2 positions.");
+        }
+    });
+});
+// Hide President / VP if not eligible
+const memberStatus = document.getElementById("memberStatus");
+const activeStatus = document.getElementById("activeStatus");
+function updateEligibility() {
+    const isEligible =
+        memberStatus.value === "yes" &&
+        activeStatus.value === "yes";
+    document.querySelectorAll('input[value="President"]').forEach(el => {
+        el.parentElement.style.display = isEligible ? "flex" : "none";
+    });
+    document.querySelectorAll('input[value="Vice President"]').forEach(el => {
+        el.parentElement.style.display = isEligible ? "flex" : "none";
+    });
+}
+memberStatus.addEventListener("change", updateEligibility);
+activeStatus.addEventListener("change", updateEligibility);
+</script>
+</body>
+</html>
