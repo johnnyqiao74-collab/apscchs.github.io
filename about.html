@@ -6,6 +6,32 @@
     <title>About Us | Asian Peer Support Club</title>
     <link rel="icon" href="apsc_new_logo.ico" type="image/x-icon">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+        <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+                {"@type":"Question","name":"What is the Asian Peer Support Club?","acceptedAnswer":{"@type":"Answer","text":"The Asian Peer Support Club (APSC) is a student-led organization at Clarksburg High School dedicated to supporting Asian students and creating a welcoming, inclusive community for students from diverse cultural and linguistic backgrounds. We focus on peer support, cultural connection, academic resources, and community engagement."}},
+                {"@type":"Question","name":"What does APSC stand for?","acceptedAnswer":{"@type":"Answer","text":"APSC stands for Asian Peer Support Club."}},
+                {"@type":"Question","name":"Who can join the Asian Peer Support Club?","acceptedAnswer":{"@type":"Answer","text":"APSC is open to all students at Clarksburg High School. You do not need to be Asian to join. Students who are interested in Asian cultures, supporting their peers, or contributing to an inclusive school community are welcome."}},
+                {"@type":"Question","name":"What is the purpose of APSC?","acceptedAnswer":{"@type":"Answer","text":"Our goal is to build a supportive student community where students can connect with their peers, share experiences, access resources, and feel more comfortable navigating school and cultural differences."}},
+                {"@type":"Question","name":"What does APSC do?","acceptedAnswer":{"@type":"Answer","text":"APSC organizes student activities, peer-support programs, cultural and educational events, and community initiatives. Our activities may include language programs, peer mentoring, academic support, cultural events, and opportunities for students to connect with one another."}},
+                {"@type":"Question","name":"Does APSC only support Asian students?","acceptedAnswer":{"@type":"Answer","text":"No. Although APSC focuses on supporting Asian students and addressing experiences that may be particularly relevant to Asian and immigrant students, our programs and community are open to students of all backgrounds."}},
+                {"@type":"Question","name":"Does APSC support English language learners?","acceptedAnswer":{"@type":"Answer","text":"Yes. APSC has initiatives designed to support students who are learning English or adjusting to an English-speaking school environment. One example is our English Conversation Circle (ECC), which provides opportunities for students to practice conversational English and connect with peers."}},
+                {"@type":"Question","name":"What is the English Conversation Circle (ECC)?","acceptedAnswer":{"@type":"Answer","text":"The English Conversation Circle is a peer-support initiative that provides students with opportunities to practice English through conversations with other students. The program is designed to help English learners build confidence in communication while creating connections with their peers."}},
+                {"@type":"Question","name":"Does APSC provide academic support?","acceptedAnswer":{"@type":"Answer","text":"APSC may provide or connect students with peer-based academic resources and support. Our goal is to help students find useful resources and learn from one another."}},
+                {"@type":"Question","name":"Does APSC organize cultural events?","acceptedAnswer":{"@type":"Answer","text":"Yes. Cultural activities are one way APSC helps students learn about and celebrate Asian cultures while encouraging cultural exchange and understanding within the broader school community."}},
+                {"@type":"Question","name":"Is APSC a student-led organization?","acceptedAnswer":{"@type":"Answer","text":"Yes. APSC is primarily student-led. Students participate in planning, organizing, and carrying out club initiatives while following the policies and guidelines of Clarksburg High School."}},
+                {"@type":"Question","name":"How can I join APSC?","acceptedAnswer":{"@type":"Answer","text":"Students interested in joining can follow our club announcements or contact the APSC leadership team for information about meetings, membership, and upcoming activities."}},
+                {"@type":"Question","name":"Do I need to be Asian to join APSC?","acceptedAnswer":{"@type":"Answer","text":"No. APSC welcomes students of all cultural and ethnic backgrounds. What matters most is your interest in supporting peers and contributing positively to the school community."}},
+                {"@type":"Question","name":"Can I volunteer with APSC?","acceptedAnswer":{"@type":"Answer","text":"Yes. Students can participate by helping with events, peer-support programs, educational initiatives, outreach, and other club projects."}},
+                {"@type":"Question","name":"Where is APSC located?","acceptedAnswer":{"@type":"Answer","text":"APSC is based at Clarksburg High School in Montgomery County, Maryland, and primarily serves students within the school community."}},
+                {"@type":"Question","name":"How can I contact APSC?","acceptedAnswer":{"@type":"Answer","text":"You can contact the APSC leadership team through the contact information provided on our website. We welcome questions, collaboration opportunities, and student participation."}},
+                {"@type":"Question","name":"Can other schools or organizations collaborate with APSC?","acceptedAnswer":{"@type":"Answer","text":"Yes. APSC is open to appropriate collaboration opportunities with student organizations, schools, community organizations, and other groups whose goals align with our mission."}},
+                {"@type":"Question","name":"What makes APSC different from a typical cultural club?","acceptedAnswer":{"@type":"Answer","text":"APSC focuses not only on cultural awareness but also on peer support and practical student resources. Our goal is to create programs that help students connect with others, navigate challenges, and participate more confidently in their school community."}}
+            ]
+        }
+        </script>
     
     <style>
         :root {
@@ -118,11 +144,13 @@
         .member-body {
             max-height: 0;
             opacity: 0;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: translateY(-8px);
+            transition: max-height 0.65s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.35s ease, transform 0.65s cubic-bezier(0.22, 1, 0.36, 1), padding-top 0.65s cubic-bezier(0.22, 1, 0.36, 1);
             padding-left: 85px;
             overflow: hidden;
+            will-change: max-height, opacity, transform;
         }
-        .member-card.active .member-body { max-height: none; opacity: 1; padding-top: 15px; }
+        .member-card.active .member-body { max-height: 1200px; opacity: 1; transform: translateY(0); padding-top: 15px; }
         .member-card.active .expand-icon { transform: rotate(45deg); color: var(--brand-blue); }
 
         .member-intro {
@@ -131,6 +159,69 @@
             font-size: 1.1rem;
             line-height: 1.5;
         }
+
+        .faq-section {
+            margin: 100px 0 120px;
+        }
+        .faq-intro {
+            max-width: 760px;
+            color: var(--text-sub);
+            font-size: 1.1rem;
+            margin-bottom: 32px;
+        }
+        .faq-list {
+            display: grid;
+            gap: 12px;
+        }
+        .faq-item {
+            background: #fbfbfd;
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 0 24px;
+            transition: border-color 0.35s ease, box-shadow 0.35s ease, transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+            will-change: transform;
+        }
+        .faq-item:hover { transform: translateY(-2px); }
+        .faq-item[open] {
+            border-color: rgba(0, 86, 210, 0.3);
+            box-shadow: 0 12px 30px rgba(0, 86, 210, 0.08);
+        }
+        .faq-item summary {
+            cursor: pointer;
+            list-style: none;
+            padding: 22px 36px 22px 0;
+            position: relative;
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+        .faq-item summary::-webkit-details-marker { display: none; }
+        .faq-item summary::after {
+            content: '+';
+            position: absolute;
+            right: 0;
+            top: 16px;
+            color: var(--brand-blue);
+            font-size: 1.6rem;
+            font-weight: 400;
+            transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .faq-item[open] summary::after { transform: rotate(45deg); }
+        .faq-answer {
+            max-width: 900px;
+            max-height: 0;
+            margin: 0;
+            padding: 0 36px 0 0;
+            opacity: 0;
+            transform: translateY(-6px);
+            color: var(--text-sub);
+            font-size: 1rem;
+            line-height: 1.75;
+            overflow: hidden;
+            transition: max-height 0.55s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.3s ease, transform 0.55s cubic-bezier(0.22, 1, 0.36, 1), padding-bottom 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+            will-change: max-height, opacity, transform;
+        }
+        .faq-item[open] .faq-answer { max-height: 320px; padding-bottom: 24px; opacity: 1; transform: translateY(0); }
 
         /* Brochure Carousel Styles */
         .brochure-carousel {
@@ -287,6 +378,9 @@
             .btn-donate-nav { margin: 10px 40px; }
             .section-title { font-size: 2.2rem; }
             .member-body { padding-left: 0; }
+            .faq-section { margin: 70px 0 80px; }
+            .faq-item { padding: 0 18px; }
+            .faq-item summary { font-size: 1rem; }
         }
     </style>
 </head>
@@ -339,6 +433,32 @@
                     </div>
                     <p style="text-align: center; margin-top: 30px; font-size: 1rem; color: var(--text-sub); line-height: 1.6; max-width: 750px; margin-left: auto; margin-right: auto;" data-key="video-sub">Watch our exclusive club introduction to discover our mission, values, and the vibrant community we're building together.</p>
                 </div>
+            </div>
+        </section>
+
+        <section class="faq-section" aria-labelledby="faq-title">
+            <span class="section-tag" data-key="faq-tag">Frequently Asked Questions</span>
+            <h2 class="section-title" id="faq-title" data-key="faq-title">Questions About APSC</h2>
+            <p class="faq-intro" data-key="faq-intro">Learn more about the Asian Peer Support Club, our programs, and how students can get involved.</p>
+            <div class="faq-list">
+                <details class="faq-item"><summary>What is the Asian Peer Support Club?</summary><p class="faq-answer">The Asian Peer Support Club (APSC) is a student-led organization at Clarksburg High School dedicated to supporting Asian students and creating a welcoming, inclusive community for students from diverse cultural and linguistic backgrounds. We focus on peer support, cultural connection, academic resources, and community engagement.</p></details>
+                <details class="faq-item"><summary>What does APSC stand for?</summary><p class="faq-answer">APSC stands for Asian Peer Support Club.</p></details>
+                <details class="faq-item"><summary>Who can join the Asian Peer Support Club?</summary><p class="faq-answer">APSC is open to all students at Clarksburg High School. You do not need to be Asian to join. Students who are interested in Asian cultures, supporting their peers, or contributing to an inclusive school community are welcome.</p></details>
+                <details class="faq-item"><summary>What is the purpose of APSC?</summary><p class="faq-answer">Our goal is to build a supportive student community where students can connect with their peers, share experiences, access resources, and feel more comfortable navigating school and cultural differences.</p></details>
+                <details class="faq-item"><summary>What does APSC do?</summary><p class="faq-answer">APSC organizes student activities, peer-support programs, cultural and educational events, and community initiatives. Our activities may include language programs, peer mentoring, academic support, cultural events, and opportunities for students to connect with one another.</p></details>
+                <details class="faq-item"><summary>Does APSC only support Asian students?</summary><p class="faq-answer">No. Although APSC focuses on supporting Asian students and addressing experiences that may be particularly relevant to Asian and immigrant students, our programs and community are open to students of all backgrounds.</p></details>
+                <details class="faq-item"><summary>Does APSC support English language learners?</summary><p class="faq-answer">Yes. APSC has initiatives designed to support students who are learning English or adjusting to an English-speaking school environment. One example is our English Conversation Circle (ECC), which provides opportunities for students to practice conversational English and connect with peers.</p></details>
+                <details class="faq-item"><summary>What is the English Conversation Circle (ECC)?</summary><p class="faq-answer">The English Conversation Circle is a peer-support initiative that provides students with opportunities to practice English through conversations with other students. The program is designed to help English learners build confidence in communication while creating connections with their peers.</p></details>
+                <details class="faq-item"><summary>Does APSC provide academic support?</summary><p class="faq-answer">APSC may provide or connect students with peer-based academic resources and support. Our goal is to help students find useful resources and learn from one another.</p></details>
+                <details class="faq-item"><summary>Does APSC organize cultural events?</summary><p class="faq-answer">Yes. Cultural activities are one way APSC helps students learn about and celebrate Asian cultures while encouraging cultural exchange and understanding within the broader school community.</p></details>
+                <details class="faq-item"><summary>Is APSC a student-led organization?</summary><p class="faq-answer">Yes. APSC is primarily student-led. Students participate in planning, organizing, and carrying out club initiatives while following the policies and guidelines of Clarksburg High School.</p></details>
+                <details class="faq-item"><summary>How can I join APSC?</summary><p class="faq-answer">Students interested in joining can follow our club announcements or contact the APSC leadership team for information about meetings, membership, and upcoming activities.</p></details>
+                <details class="faq-item"><summary>Do I need to be Asian to join APSC?</summary><p class="faq-answer">No. APSC welcomes students of all cultural and ethnic backgrounds. What matters most is your interest in supporting peers and contributing positively to the school community.</p></details>
+                <details class="faq-item"><summary>Can I volunteer with APSC?</summary><p class="faq-answer">Yes. Students can participate by helping with events, peer-support programs, educational initiatives, outreach, and other club projects.</p></details>
+                <details class="faq-item"><summary>Where is APSC located?</summary><p class="faq-answer">APSC is based at Clarksburg High School in Montgomery County, Maryland, and primarily serves students within the school community.</p></details>
+                <details class="faq-item"><summary>How can I contact APSC?</summary><p class="faq-answer">You can contact the APSC leadership team through the contact information provided on our website. We welcome questions, collaboration opportunities, and student participation.</p></details>
+                <details class="faq-item"><summary>Can other schools or organizations collaborate with APSC?</summary><p class="faq-answer">Yes. APSC is open to appropriate collaboration opportunities with student organizations, schools, community organizations, and other groups whose goals align with our mission.</p></details>
+                <details class="faq-item"><summary>What makes APSC different from a typical cultural club?</summary><p class="faq-answer">APSC focuses not only on cultural awareness but also on peer support and practical student resources. Our goal is to create programs that help students connect with others, navigate challenges, and participate more confidently in their school community.</p></details>
             </div>
         </section>
 
@@ -636,6 +756,171 @@ Johnny’s ambition is to scale this community’s impact, fostering a legacy of
             }
         };
 
+  const faqContent = {
+      'zh-hans': {
+          'faq-tag': '常见问题', 'faq-title': '关于 APSC 的问题', 'faq-intro': '了解亚洲同伴支持社、我们的项目，以及学生如何参与其中。',
+          items: [
+              ['什么是亚洲同伴支持社？', '亚洲同伴支持社（APSC）是克拉克斯堡高中的学生组织，致力于支持亚裔学生，并为来自不同文化和语言背景的学生建立友好、包容的社区。我们关注同伴支持、文化联结、学术资源和社区参与。'],
+              ['APSC 代表什么？', 'APSC 代表 Asian Peer Support Club，即亚洲同伴支持社。'],
+              ['谁可以加入亚洲同伴支持社？', 'APSC 向克拉克斯堡高中的所有学生开放。你不需要是亚裔才能加入。对亚洲文化感兴趣、愿意支持同伴或希望建设包容校园社区的学生都欢迎参加。'],
+              ['APSC 的宗旨是什么？', '我们的目标是建立一个相互支持的学生社区，让学生能够与同伴建立联系、分享经历、获取资源，并更自在地应对学校生活和文化差异。'],
+              ['APSC 会开展哪些活动？', 'APSC 组织学生活动、同伴支持项目、文化和教育活动以及社区倡议，包括语言项目、同伴指导、学术支持和促进学生交流的机会。'],
+              ['APSC 只支持亚裔学生吗？', '不。虽然 APSC 重点支持亚裔学生，并关注亚裔及移民学生可能遇到的经历，但我们的项目和社区向所有背景的学生开放。'],
+              ['APSC 支持英语学习者吗？', '支持。APSC 有帮助英语学习者和适应英语学校环境的项目。例如英语会话圈（ECC）就为学生提供练习日常英语并与同伴建立联系的机会。'],
+              ['什么是英语会话圈（ECC）？', '英语会话圈是一个同伴支持项目，学生可以通过与其他学生交谈来练习英语。该项目帮助英语学习者增强交流信心，同时与同伴建立联系。'],
+              ['APSC 提供学术支持吗？', 'APSC 可能提供或帮助学生联系同伴学术资源和支持。我们的目标是帮助学生找到有用的资源，并彼此学习。'],
+              ['APSC 会组织文化活动吗？', '会。文化活动帮助学生了解和庆祝亚洲文化，同时促进更广泛校园社区中的文化交流与理解。'],
+              ['APSC 是学生主导的组织吗？', '是的。APSC 主要由学生主导。学生参与规划、组织和执行社团倡议，同时遵守克拉克斯堡高中的政策和指导方针。'],
+              ['如何加入 APSC？', '有兴趣的学生可以关注社团公告，或联系 APSC 领导团队，了解会议、会员和即将开展的活动。'],
+              ['加入 APSC 必须是亚裔吗？', '不必。APSC 欢迎所有文化和族裔背景的学生。最重要的是你愿意支持同伴，并为校园社区作出积极贡献。'],
+              ['我可以在 APSC 做志愿者吗？', '可以。学生可以通过协助活动、同伴支持项目、教育项目、宣传 outreach 以及其他社团项目来参与。'],
+              ['APSC 位于哪里？', 'APSC 位于马里兰州蒙哥马利县的克拉克斯堡高中，主要服务于学校社区内的学生。'],
+              ['如何联系 APSC？', '你可以通过网站提供的联系信息联系 APSC 领导团队。我们欢迎问题、合作机会和学生参与。'],
+              ['其他学校或组织可以与 APSC 合作吗？', '可以。APSC 愿意与目标一致的学生组织、学校、社区组织和其他团体开展合适的合作。'],
+              ['APSC 与普通文化社团有什么不同？', 'APSC 不仅关注文化认知，也重视同伴支持和实用的学生资源。我们的目标是帮助学生建立联系、应对挑战，并更自信地参与校园社区。']
+          ]
+      },
+      'zh-hant': {
+          'faq-tag': '常見問題', 'faq-title': '關於 APSC 的問題', 'faq-intro': '了解亞洲同伴支持社、我們的項目，以及學生如何參與其中。',
+          items: [
+              ['什麼是亞洲同伴支持社？', '亞洲同伴支持社（APSC）是克拉克斯堡高中的學生組織，致力於支持亞裔學生，並為來自不同文化和語言背景的學生建立友善、包容的社區。我們關注同伴支持、文化連結、學術資源和社區參與。'],
+              ['APSC 代表什麼？', 'APSC 代表 Asian Peer Support Club，即亞洲同伴支持社。'],
+              ['誰可以加入亞洲同伴支持社？', 'APSC 向克拉克斯堡高中的所有學生開放。你不需要是亞裔才能加入。對亞洲文化感興趣、願意支持同伴或希望建設包容校園社區的學生都歡迎參加。'],
+              ['APSC 的宗旨是什麼？', '我們的目標是建立一個相互支持的學生社區，讓學生能夠與同伴建立聯繫、分享經歷、獲取資源，並更自在地應對學校生活和文化差異。'],
+              ['APSC 會開展哪些活動？', 'APSC 組織學生活動、同伴支持項目、文化和教育活動以及社區倡議，包括語言項目、同伴指導、學術支持和促進學生交流的機會。'],
+              ['APSC 只支持亞裔學生嗎？', '不。雖然 APSC 重點支持亞裔學生，並關注亞裔及移民學生可能遇到的經歷，但我們的項目和社區向所有背景的學生開放。'],
+              ['APSC 支持英語學習者嗎？', '支持。APSC 有幫助英語學習者和適應英語學校環境的項目。例如英語會話圈（ECC）就為學生提供練習日常英語並與同伴建立聯繫的機會。'],
+              ['什麼是英語會話圈（ECC）？', '英語會話圈是一個同伴支持項目，學生可以通過與其他學生交談來練習英語。該項目幫助英語學習者增強交流信心，同時與同伴建立聯繫。'],
+              ['APSC 提供學術支持嗎？', 'APSC 可能提供或幫助學生聯繫同伴學術資源和支持。我們的目標是幫助學生找到有用的資源，並彼此學習。'],
+              ['APSC 會組織文化活動嗎？', '會。文化活動幫助學生了解和慶祝亞洲文化，同時促進更廣泛校園社區中的文化交流與理解。'],
+              ['APSC 是學生主導的組織嗎？', '是的。APSC 主要由學生主導。學生參與規劃、組織和執行社團倡議，同時遵守克拉克斯堡高中的政策和指導方針。'],
+              ['如何加入 APSC？', '有興趣的學生可以關注社團公告，或聯繫 APSC 領導團隊，了解會議、會員和即將開展的活動。'],
+              ['加入 APSC 必須是亞裔嗎？', '不必。APSC 歡迎所有文化和族裔背景的學生。最重要的是你願意支持同伴，並為校園社區作出積極貢獻。'],
+              ['我可以在 APSC 做志願者嗎？', '可以。學生可以通過協助活動、同伴支持項目、教育項目、宣傳 outreach 以及其他社團項目來參與。'],
+              ['APSC 位於哪裡？', 'APSC 位於馬里蘭州蒙哥馬利縣的克拉克斯堡高中，主要服務於學校社區內的學生。'],
+              ['如何聯繫 APSC？', '你可以通過網站提供的聯繫信息聯繫 APSC 領導團隊。我們歡迎問題、合作機會和學生參與。'],
+              ['其他學校或組織可以與 APSC 合作嗎？', '可以。APSC 願意與目標一致的學生組織、學校、社區組織和其他團體開展合適的合作。'],
+              ['APSC 與普通文化社團有什麼不同？', 'APSC 不僅關注文化認知，也重視同伴支持和實用的學生資源。我們的目標是幫助學生建立聯繫、應對挑戰，並更自信地參與校園社區。']
+          ]
+      },
+      'ko': {
+          'faq-tag': '자주 묻는 질문', 'faq-title': 'APSC에 대한 질문', 'faq-intro': 'Asian Peer Support Club과 프로그램, 그리고 학생들이 참여하는 방법을 알아보세요.',
+          items: [
+              ['Asian Peer Support Club이란 무엇인가요?', 'Asian Peer Support Club(APSC)은 Clarksburg High School의 학생 주도 조직으로, 아시아계 학생들을 지원하고 다양한 문화와 언어적 배경을 가진 학생들을 위한 따뜻하고 포용적인 공동체를 만듭니다.'],
+              ['APSC는 무엇을 뜻하나요?', 'APSC는 Asian Peer Support Club을 뜻합니다.'],
+              ['누가 APSC에 가입할 수 있나요?', 'Clarksburg High School의 모든 학생이 가입할 수 있습니다. 아시아계 학생일 필요는 없습니다. 아시아 문화에 관심이 있거나 또래를 돕고 싶은 모든 학생을 환영합니다.'],
+              ['APSC의 목적은 무엇인가요?', '학생들이 서로 연결되고 경험을 나누며 자원을 이용하고 학교와 문화적 차이에 더 편안하게 적응할 수 있는 지원 공동체를 만드는 것이 목표입니다.'],
+              ['APSC는 어떤 일을 하나요?', '학생 활동, 또래 지원 프로그램, 문화 및 교육 행사, 지역사회 프로젝트를 진행합니다. 언어 프로그램, 멘토링, 학업 지원과 교류 기회가 포함될 수 있습니다.'],
+              ['APSC는 아시아계 학생만 지원하나요?', '아니요. 아시아계 및 이민자 학생에게 관련된 경험을 중점적으로 다루지만 모든 배경의 학생에게 프로그램과 공동체가 열려 있습니다.'],
+              ['영어 학습자를 지원하나요?', '네. 영어를 배우거나 영어 학교 환경에 적응하는 학생을 위한 활동이 있습니다. English Conversation Circle(ECC)은 회화 연습과 또래 교류의 기회를 제공합니다.'],
+              ['English Conversation Circle(ECC)이란 무엇인가요?', 'ECC는 학생들이 다른 학생들과 대화하며 영어를 연습하는 또래 지원 프로그램입니다. 의사소통 자신감을 키우고 친구를 사귀는 데 도움을 줍니다.'],
+              ['학업 지원을 제공하나요?', '또래 기반 학업 자료와 지원을 제공하거나 연결해 드릴 수 있습니다. 학생들이 유용한 자료를 찾고 서로 배우도록 돕는 것이 목표입니다.'],
+              ['문화 행사를 개최하나요?', '네. 문화 활동을 통해 아시아 문화를 배우고 기념하며 학교 공동체의 문화 교류와 이해를 높입니다.'],
+              ['APSC는 학생 주도 조직인가요?', '네. 학생들이 클럽 활동을 계획하고 조직하며 실행하고, Clarksburg High School의 정책과 지침을 따릅니다.'],
+              ['APSC에 어떻게 가입하나요?', '클럽 공지를 확인하거나 APSC 리더십 팀에 연락하여 모임, 회원 가입 및 예정된 활동에 대해 알아보세요.'],
+              ['아시아계 학생이어야 가입할 수 있나요?', '아니요. 모든 문화와 인종적 배경의 학생을 환영합니다. 또래를 돕고 학교 공동체에 긍정적으로 기여하려는 마음이 가장 중요합니다.'],
+              ['APSC에서 자원봉사할 수 있나요?', '네. 행사, 또래 지원, 교육 활동, 홍보 및 기타 클럽 프로젝트를 도우며 참여할 수 있습니다.'],
+              ['APSC는 어디에 있나요?', 'APSC는 메릴랜드주 몽고메리 카운티의 Clarksburg High School을 기반으로 하며 학교 공동체의 학생들을 주로 지원합니다.'],
+              ['APSC에 어떻게 연락하나요?', '웹사이트에 안내된 연락처를 통해 APSC 리더십 팀에 연락할 수 있습니다. 질문, 협력 및 학생 참여를 환영합니다.'],
+              ['다른 학교나 단체가 APSC와 협력할 수 있나요?', '네. 목표가 APSC의 사명과 맞는 학생 단체, 학교, 지역사회 단체 및 다른 조직과의 적절한 협력을 환영합니다.'],
+              ['APSC는 일반적인 문화 클럽과 어떻게 다른가요?', '문화 인식뿐 아니라 또래 지원과 실질적인 학생 자원에도 초점을 둡니다. 학생들이 연결되고 어려움을 극복하며 학교 공동체에 자신 있게 참여하도록 돕습니다.']
+          ]
+      },
+      'ja': {
+          'faq-tag': 'よくある質問', 'faq-title': 'APSCについて', 'faq-intro': 'Asian Peer Support Club、私たちの活動、そして参加方法についてご紹介します。',
+          items: [
+              ['Asian Peer Support Clubとは何ですか？', 'Asian Peer Support Club（APSC）は、アジア系の生徒を支援し、多様な文化や言語的背景を持つ生徒のために温かく包摂的なコミュニティを作る、Clarksburg High Schoolの生徒主導組織です。'],
+              ['APSCは何の略ですか？', 'APSCはAsian Peer Support Clubの略です。'],
+              ['誰がAPSCに参加できますか？', 'Clarksburg High Schoolのすべての生徒が参加できます。アジア系である必要はありません。アジア文化に関心がある人、仲間を支えたい人、包摂的な学校を作りたい人を歓迎します。'],
+              ['APSCの目的は何ですか？', '生徒が仲間とつながり、経験を共有し、必要な情報を得て、学校生活や文化の違いにより安心して対応できる支援コミュニティを作ることです。'],
+              ['APSCは何をしていますか？', '生徒向け活動、ピアサポート、文化・教育イベント、地域活動を行います。言語プログラム、ピアメンタリング、学習支援、交流の機会などがあります。'],
+              ['APSCはアジア系の生徒だけを支援しますか？', 'いいえ。アジア系や移民の生徒に関わる経験を重視していますが、活動とコミュニティはすべての背景の生徒に開かれています。'],
+              ['英語学習者を支援していますか？', 'はい。英語を学んでいる生徒や英語の学校環境に慣れている生徒を支援する活動があります。English Conversation Circle（ECC）では会話練習と交流ができます。'],
+              ['English Conversation Circle（ECC）とは何ですか？', 'ECCは、生徒同士の会話を通して英語を練習するピアサポート活動です。英語学習者の自信を高め、仲間とのつながりを作ります。'],
+              ['学習支援はありますか？', 'ピアベースの学習資料や支援を提供、または紹介する場合があります。生徒が役立つ資料を見つけ、互いに学べるようにすることが目標です。'],
+              ['文化イベントを開催しますか？', 'はい。文化活動を通してアジアの文化を学び、祝い、学校全体で文化交流と理解を深めます。'],
+              ['APSCは生徒主導の組織ですか？', 'はい。生徒が活動の計画、運営、実施に参加し、Clarksburg High Schoolの方針とガイドラインに従います。'],
+              ['APSCにはどうすれば参加できますか？', 'クラブのお知らせを確認するか、APSCのリーダーシップチームに連絡して、集まり、会員登録、今後の活動について尋ねてください。'],
+              ['アジア系でないと参加できませんか？', 'いいえ。すべての文化的・民族的背景の生徒を歓迎します。仲間を支え、学校コミュニティに貢献したいという気持ちが大切です。'],
+              ['APSCでボランティアできますか？', 'はい。イベント、ピアサポート、教育活動、広報、その他のクラブプロジェクトを手伝って参加できます。'],
+              ['APSCはどこにありますか？', 'APSCはメリーランド州モンゴメリー郡のClarksburg High Schoolを拠点とし、主に学校コミュニティの生徒を支援しています。'],
+              ['APSCにはどう連絡できますか？', 'ウェブサイトに掲載されている連絡先からAPSCのリーダーシップチームに連絡できます。質問、協力、参加を歓迎します。'],
+              ['他の学校や団体はAPSCと協力できますか？', 'はい。使命を共有する生徒団体、学校、地域団体などとの適切な協力を歓迎します。'],
+              ['APSCは一般的な文化クラブと何が違いますか？', '文化理解だけでなく、ピアサポートと実用的な生徒向けリソースにも力を入れています。生徒がつながり、課題に対応し、学校に自信を持って参加できるよう支援します。']
+          ]
+      },
+      'es': {
+          'faq-tag': 'Preguntas frecuentes', 'faq-title': 'Preguntas sobre APSC', 'faq-intro': 'Conoce el Asian Peer Support Club, nuestros programas y cómo pueden participar los estudiantes.',
+          items: [
+              ['¿Qué es el Asian Peer Support Club?', 'El Asian Peer Support Club (APSC) es una organización estudiantil de Clarksburg High School dedicada a apoyar a los estudiantes asiáticos y crear una comunidad acogedora e inclusiva para estudiantes de diversos orígenes culturales y lingüísticos.'],
+              ['¿Qué significa APSC?', 'APSC significa Asian Peer Support Club.'],
+              ['¿Quién puede unirse a APSC?', 'Todos los estudiantes de Clarksburg High School pueden unirse. No es necesario ser asiático. Damos la bienvenida a quienes se interesen por las culturas asiáticas, quieran apoyar a sus compañeros o contribuir a una escuela inclusiva.'],
+              ['¿Cuál es el propósito de APSC?', 'Queremos crear una comunidad estudiantil de apoyo donde los estudiantes puedan conectarse, compartir experiencias, acceder a recursos y sentirse más cómodos al enfrentar diferencias escolares y culturales.'],
+              ['¿Qué hace APSC?', 'Organizamos actividades estudiantiles, programas de apoyo entre pares, eventos culturales y educativos e iniciativas comunitarias, como programas de idiomas, mentoría, apoyo académico y oportunidades para conectarse.'],
+              ['¿APSC apoya solamente a estudiantes asiáticos?', 'No. Aunque nos enfocamos en estudiantes asiáticos y experiencias relevantes para estudiantes asiáticos e inmigrantes, nuestros programas y nuestra comunidad están abiertos a todos.'],
+              ['¿APSC apoya a estudiantes que aprenden inglés?', 'Sí. Tenemos iniciativas para estudiantes que aprenden inglés o se adaptan a una escuela de habla inglesa. El English Conversation Circle (ECC) ofrece práctica de conversación y conexión con compañeros.'],
+              ['¿Qué es el English Conversation Circle (ECC)?', 'ECC es una iniciativa de apoyo entre pares donde los estudiantes practican inglés conversando con otros estudiantes. Ayuda a desarrollar confianza y conexiones.'],
+              ['¿APSC ofrece apoyo académico?', 'APSC puede ofrecer o conectar a los estudiantes con recursos y apoyo académico entre pares. Nuestro objetivo es ayudarles a encontrar recursos útiles y aprender unos de otros.'],
+              ['¿APSC organiza eventos culturales?', 'Sí. Las actividades culturales ayudan a aprender y celebrar las culturas asiáticas y promueven el intercambio y la comprensión cultural en toda la escuela.'],
+              ['¿APSC es una organización dirigida por estudiantes?', 'Sí. Los estudiantes participan en la planificación, organización y realización de iniciativas, siguiendo las políticas y normas de Clarksburg High School.'],
+              ['¿Cómo puedo unirme a APSC?', 'Sigue los anuncios del club o contacta al equipo de liderazgo de APSC para obtener información sobre reuniones, membresía y próximas actividades.'],
+              ['¿Tengo que ser asiático para unirme?', 'No. APSC recibe a estudiantes de todos los orígenes culturales y étnicos. Lo más importante es querer apoyar a los compañeros y contribuir positivamente a la comunidad escolar.'],
+              ['¿Puedo ser voluntario en APSC?', 'Sí. Puedes ayudar en eventos, programas de apoyo, iniciativas educativas, difusión y otros proyectos del club.'],
+              ['¿Dónde se encuentra APSC?', 'APSC tiene su sede en Clarksburg High School, en el condado de Montgomery, Maryland, y sirve principalmente a los estudiantes de la comunidad escolar.'],
+              ['¿Cómo puedo contactar a APSC?', 'Puedes contactar al equipo de liderazgo mediante la información de contacto de nuestro sitio web. Aceptamos preguntas, colaboraciones y participación estudiantil.'],
+              ['¿Pueden colaborar otras escuelas u organizaciones?', 'Sí. APSC está abierto a colaboraciones apropiadas con organizaciones estudiantiles, escuelas, organizaciones comunitarias y grupos cuyos objetivos coincidan con nuestra misión.'],
+              ['¿Qué diferencia a APSC de un club cultural típico?', 'APSC se enfoca no solo en la conciencia cultural, sino también en el apoyo entre pares y recursos prácticos. Ayudamos a los estudiantes a conectarse, enfrentar desafíos y participar con más confianza.']
+          ]
+      },
+      'fr': {
+          'faq-tag': 'Questions fréquentes', 'faq-title': 'Questions sur l’APSC', 'faq-intro': 'Découvrez l’Asian Peer Support Club, nos programmes et la manière dont les élèves peuvent participer.',
+          items: [
+              ['Qu’est-ce que l’Asian Peer Support Club ?', 'L’Asian Peer Support Club (APSC) est une organisation dirigée par les élèves de Clarksburg High School. Elle soutient les élèves asiatiques et crée une communauté accueillante et inclusive pour les élèves de diverses cultures et langues.'],
+              ['Que signifie APSC ?', 'APSC signifie Asian Peer Support Club.'],
+              ['Qui peut rejoindre l’APSC ?', 'Tous les élèves de Clarksburg High School peuvent rejoindre l’APSC. Il n’est pas nécessaire d’être asiatique. Les élèves intéressés par les cultures asiatiques, le soutien entre pairs ou une école inclusive sont les bienvenus.'],
+              ['Quel est le but de l’APSC ?', 'Notre objectif est de créer une communauté étudiante solidaire où les élèves peuvent se rencontrer, partager leurs expériences, accéder à des ressources et mieux gérer les différences scolaires et culturelles.'],
+              ['Que fait l’APSC ?', 'L’APSC organise des activités étudiantes, des programmes de soutien entre pairs, des événements culturels et éducatifs et des initiatives communautaires, notamment des programmes linguistiques, du mentorat et du soutien scolaire.'],
+              ['L’APSC soutient-il uniquement les élèves asiatiques ?', 'Non. Même si nous nous concentrons sur les élèves asiatiques et immigrés, nos programmes et notre communauté sont ouverts aux élèves de toutes origines.'],
+              ['L’APSC soutient-il les élèves qui apprennent l’anglais ?', 'Oui. Certaines initiatives aident les élèves qui apprennent l’anglais ou s’adaptent à un environnement scolaire anglophone. L’English Conversation Circle (ECC) offre des occasions de pratiquer l’anglais et de rencontrer des pairs.'],
+              ['Qu’est-ce que l’English Conversation Circle (ECC) ?', 'L’ECC est une initiative de soutien entre pairs où les élèves pratiquent l’anglais en discutant avec d’autres élèves. Elle aide à renforcer la confiance et les liens entre pairs.'],
+              ['L’APSC propose-t-il un soutien scolaire ?', 'L’APSC peut proposer ou recommander des ressources et un soutien scolaire entre pairs. Notre objectif est d’aider les élèves à trouver des ressources utiles et à apprendre les uns des autres.'],
+              ['L’APSC organise-t-il des événements culturels ?', 'Oui. Les activités culturelles permettent de découvrir et de célébrer les cultures asiatiques tout en favorisant les échanges et la compréhension dans toute l’école.'],
+              ['L’APSC est-il une organisation dirigée par les élèves ?', 'Oui. Les élèves participent à la planification, à l’organisation et à la réalisation des initiatives, conformément aux règles de Clarksburg High School.'],
+              ['Comment rejoindre l’APSC ?', 'Suivez les annonces du club ou contactez l’équipe dirigeante de l’APSC pour connaître les réunions, l’adhésion et les prochaines activités.'],
+              ['Dois-je être asiatique pour rejoindre l’APSC ?', 'Non. L’APSC accueille les élèves de toutes origines culturelles et ethniques. L’essentiel est de vouloir soutenir ses pairs et contribuer positivement à la communauté scolaire.'],
+              ['Puis-je être bénévole auprès de l’APSC ?', 'Oui. Vous pouvez aider lors d’événements, de programmes de soutien, d’initiatives éducatives, d’actions de communication et d’autres projets du club.'],
+              ['Où se trouve l’APSC ?', 'L’APSC est basé à Clarksburg High School, dans le comté de Montgomery, au Maryland, et sert principalement les élèves de la communauté scolaire.'],
+              ['Comment contacter l’APSC ?', 'Vous pouvez contacter l’équipe dirigeante grâce aux coordonnées indiquées sur notre site. Nous accueillons les questions, les collaborations et la participation des élèves.'],
+              ['D’autres écoles ou organisations peuvent-elles collaborer avec l’APSC ?', 'Oui. L’APSC est ouvert aux collaborations appropriées avec des organisations étudiantes, des écoles, des associations communautaires et des groupes partageant notre mission.'],
+              ['Qu’est-ce qui distingue l’APSC d’un club culturel classique ?', 'L’APSC ne se limite pas à la sensibilisation culturelle : il met aussi l’accent sur le soutien entre pairs et les ressources pratiques. Nous aidons les élèves à créer des liens, relever des défis et participer avec confiance.']
+          ]
+      }
+  };
+
+  const defaultFaq = {
+      'faq-tag': document.querySelector('[data-key="faq-tag"]').innerText,
+      'faq-title': document.querySelector('[data-key="faq-title"]').innerText,
+      'faq-intro': document.querySelector('[data-key="faq-intro"]').innerText,
+      items: Array.from(document.querySelectorAll('.faq-item')).map(item => [
+          item.querySelector('summary').innerText,
+          item.querySelector('.faq-answer').innerText
+      ])
+  };
+
+  function updateFaq(lang) {
+      const content = faqContent[lang] || defaultFaq;
+      ['faq-tag', 'faq-title', 'faq-intro'].forEach(key => {
+          const element = document.querySelector(`[data-key="${key}"]`);
+          if (element) element.innerText = content[key];
+      });
+      document.querySelectorAll('.faq-item').forEach((item, index) => {
+          const translation = content.items[index];
+          if (!translation) return;
+          item.querySelector('summary').innerText = translation[0];
+          item.querySelector('.faq-answer').innerText = translation[1];
+      });
+  }
+
   function updateLang(lang) {
         // 保存到会话存储 (关闭标签页后消失)
         sessionStorage.setItem('selectedLang', lang);
@@ -657,6 +942,7 @@ Johnny’s ambition is to scale this community’s impact, fostering a legacy of
                 el.innerText = i18n[lang][key];
             }
         });
+        updateFaq(lang);
     }
 
     // 4. 页面加载时自动初始化

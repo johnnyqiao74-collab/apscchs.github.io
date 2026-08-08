@@ -6,6 +6,7 @@
     <title>Asian Peer Support Club | APSC</title>
     <link rel="icon" href="apsc_new_logo.ico" type="image/x-icon">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=DM+Serif+Display:ital@0;1&family=Satisfy&display=swap" rel="stylesheet">
     
     <style>
         :root {
@@ -22,7 +23,7 @@
             --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
-        html { overflow-x: hidden; }
+        html { overflow-x: clip; }
         * { margin: 0; padding: 0; box-sizing: border-box; min-width: 0; }
         
         body {
@@ -32,7 +33,7 @@
             line-height: 1.7;
             -webkit-font-smoothing: antialiased;
             scroll-behavior: smooth;
-            overflow-x: hidden;
+            overflow-x: clip;
         }
 
         /* ── SCROLL REVEAL ── */
@@ -80,7 +81,8 @@
             background: rgba(255,255,255,0.9);
             backdrop-filter: blur(18px) saturate(160%);
             -webkit-backdrop-filter: blur(18px) saturate(160%);
-            position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid rgba(0,0,0,0.06);
+            position: -webkit-sticky; position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid rgba(0,0,0,0.06);
+            align-self: flex-start;
             transition: box-shadow 0.35s ease, background 0.35s ease, transform 0.35s ease;
             display: flex; align-items: center;
         }
@@ -101,12 +103,12 @@
             text-decoration: none; color: var(--text-main); font-size: 13px; font-weight: 500;
             transition: color 0.3s ease; position: relative;
         }
-        .nav-links a:not(.btn-donate-nav)::after {
+        .nav-links a:not(.btn-donate-nav):not(.btn-signin-nav)::after {
             content: ''; position: absolute; bottom: -2px; left: 0; right: 0;
             height: 1px; background: var(--brand-blue);
             transform: scaleX(0); transition: transform 0.3s ease; transform-origin: left;
         }
-        .nav-links a:not(.btn-donate-nav):hover::after { transform: scaleX(1); }
+        .nav-links a:not(.btn-donate-nav):not(.btn-signin-nav):hover::after { transform: scaleX(1); }
         .nav-links a:hover { color: var(--brand-blue); }
         .btn-donate-nav {
             border: 1px solid var(--brand-blue); padding: 6px 15px;
@@ -118,6 +120,22 @@
             transform: scale(1.05) !important; box-shadow: 0 6px 20px rgba(0,86,210,0.3) !important;
         }
         .btn-donate-nav::after { display: none !important; }
+        .btn-signin-nav {
+            border: 1px solid rgba(82, 98, 115, 0.28);
+            padding: 5px 12px;
+            border-radius: 999px;
+            color: #526273 !important;
+            font-size: 12px !important;
+            letter-spacing: 0.01em;
+            transition: border-color 0.3s ease, color 0.3s ease, background 0.3s ease, transform 0.3s ease !important;
+        }
+        .btn-signin-nav:hover {
+            border-color: rgba(0, 86, 210, 0.42);
+            background: rgba(0, 86, 210, 0.05);
+            color: var(--brand-blue) !important;
+            transform: translateY(-1px);
+        }
+        .btn-signin-nav::after { display: none !important; }
 
         .hamburger { display: none; cursor: pointer; width: 30px; height: 20px; position: relative; z-index: 1001; }
         .hamburger span { display: block; width: 100%; height: 2px; background-color: var(--text-main); position: absolute; transition: var(--transition); border-radius: 2px; }
@@ -183,44 +201,73 @@
         }
 
         .program-highlight {
+            position: relative;
+            isolation: isolate;
+            overflow: visible;
             margin-bottom: 90px;
-            padding: 50px 0;
-            background: linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(248,249,255,0.95) 100%);
+            padding: 108px 56px 82px;
+            border: 0;
+            border-radius: 0;
+            background: transparent;
+            box-shadow: none;
+            text-align: center;
         }
+        .program-highlight::before {
+            content: '';
+            position: absolute;
+            z-index: 0;
+            inset: -9% 4%;
+            border-radius: 50%;
+            background: radial-gradient(ellipse at center, rgba(255, 226, 145, 0.86) 0%, rgba(255, 205, 112, 0.68) 30%, rgba(125, 211, 202, 0.44) 52%, rgba(255, 255, 255, 0.2) 72%, rgba(255, 255, 255, 0) 100%);
+            filter: blur(18px);
+            opacity: 1;
+            pointer-events: none;
+        }
+        .program-highlight::after {
+            content: none;
+        }
+        .program-highlight .section-tag {
+            position: relative;
+            z-index: 1;
+            color: #075d68;
+            margin-bottom: 18px;
+        }
+        .program-highlight .section-tag::before { background: #075d68; }
         .program-highlight-grid {
-            display: grid;
-            grid-template-columns: 1.2fr 0.8fr;
-            gap: 32px;
-            align-items: center;
-            max-width: 1200px;
+            position: relative;
+            z-index: 1;
+            display: block;
+            max-width: 820px;
             margin: 0 auto;
         }
         .program-highlight .section-title {
-            font-size: 3rem;
-            max-width: 760px;
+            display: inline-block;
+            max-width: 820px;
+            margin: 0 auto 22px;
+            padding-top: 0.18em;
+            color: #063c4a;
+            font-family: 'Satisfy', 'Brush Script MT', cursive;
+            font-size: clamp(4rem, 9vw, 8.2rem);
+            font-weight: 400;
+            letter-spacing: 0;
+            line-height: 1.18;
+            text-shadow: 0 4px 14px rgba(6, 60, 74, 0.12);
+            clip-path: inset(0 100% 0 0);
+            animation: summerTitleWrite 3.4s cubic-bezier(0.65, 0, 0.35, 1) 0.35s both;
+            will-change: clip-path, transform, opacity;
         }
         .program-highlight .section-p {
-            max-width: 680px;
-            margin-top: 24px;
+            max-width: 700px;
+            margin: 18px auto 0;
+            color: #155866;
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: clamp(1.35rem, 2.3vw, 1.85rem);
+            font-weight: 600;
+            line-height: 1.2;
         }
-        .program-highlight .photo-frame {
-            border-radius: 24px;
-            overflow: hidden;
-            background: #f8f9ff;
-            border: 1px solid var(--border-color);
-            box-shadow: 0 30px 60px rgba(0,86,210,0.08);
-        }
-        .program-highlight .photo-frame img {
-            width: 100%;
-            height: 100%;
-            aspect-ratio: 16/9;
-            object-fit: cover;
-            object-fit: cover;
-            display: block;
-        }
-        .program-highlight .section-tag {
-            display: inline-flex;
-            margin-bottom: 18px;
+        @keyframes summerTitleWrite {
+            from { opacity: 0; clip-path: inset(0 100% 0 0); transform: translateX(-12px); }
+            to { opacity: 1; clip-path: inset(0 0 0 0); transform: translateX(0); }
         }
 
         /* Hero text animation */
@@ -290,184 +337,8 @@
         .section-p { color: var(--text-sub); font-size: 1.15rem; margin-bottom: 15px; }
         .img-frame { width: 100%; border-radius: 24px; box-shadow: 0 20px 40px rgba(0,0,0,0.06); }
 
-        /* ── OFFICER APPLICATION SECTION ── */
-        .officer-app {
-            display: grid;
-            grid-template-columns: 1.1fr 0.9fr;
-            gap: 32px;
-            align-items: center;
-            margin-bottom: 100px;
-            background: linear-gradient(180deg, rgba(245,248,255,0.95), rgba(255,255,255,0.94));
-            border: 1px solid rgba(0,86,210,0.12);
-            border-radius: 28px;
-            padding: 48px;
-            box-shadow: 0 28px 70px rgba(0,86,210,0.08);
-        }
-        .officer-app .officer-copy {
-            max-width: 620px;
-        }
-        .officer-app .officer-copy .section-title {
-            margin-bottom: 20px;
-            font-size: 2.8rem;
-        }
-        .officer-app .officer-copy .section-p {
-            margin-bottom: 22px;
-            font-size: 1.12rem;
-            color: var(--text-sub);
-            line-height: 1.8;
-        }
-        .officer-app .officer-copy .officer-actions {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 16px;
-            align-items: center;
-        }
-        .officer-app .officer-actions .cta-btn {
-            padding: 16px 36px;
-            font-size: 0.95rem;
-            border-radius: 999px;
-        }
-        .poster-card {
-            display: block;
-            width: 100%;
-            aspect-ratio: 3 / 4;
-            border-radius: 28px;
-            overflow: hidden;
-            background: linear-gradient(180deg, #eef6ff 0%, #fff 100%);
-            border: 1px solid rgba(0,86,210,0.14);
-            box-shadow: 0 24px 50px rgba(0,86,210,0.08);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            text-decoration: none;
-            color: inherit;
-            position: relative;
-        }
-        .poster-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 30px 70px rgba(0,86,210,0.12);
-        }
-        /* Removed overlay text and tinting for poster per request */
-        .poster-card::before,
-        .poster-card::after {
-            content: none !important;
-            display: none !important;
-            background: transparent !important;
-            pointer-events: none !important;
-        }
-        .sr-only {
-            position: absolute !important;
-            width: 1px; height: 1px; padding: 0; margin: -1px;
-            overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap;
-            border: 0;
-        }
-        .poster-tag {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            padding: 10px 18px;
-            border-radius: 999px;
-            background: rgba(0,86,210,0.1);
-            color: var(--brand-blue);
-            font-weight: 700;
-            font-size: 0.78rem;
-            text-transform: uppercase;
-            letter-spacing: 0.18em;
-            margin-bottom: 14px;
-        }
-        .officer-app .poster-note {
-            margin-top: 18px;
-            font-size: 0.95rem;
-            color: var(--text-sub);
-            line-height: 1.65;
-        }
-
-        /* Poster card styles for officer application */
-        .poster-card {
-            display: block;
-            width: 360px;
-            aspect-ratio: 3 / 4;
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: 0 20px 40px rgba(0,86,210,0.08);
-            background: #fff;
-            position: relative;
-            text-decoration: none;
-            transition: transform 0.25s ease, box-shadow 0.25s ease;
-            margin-left: 50px;
-        }
-        .poster-card:hover { transform: translateY(-6px); box-shadow: 0 28px 60px rgba(0,86,210,0.12); }
-        .poster-card img { width: 100%; height: 100%; object-fit: cover; display: block; }
-        /* poster CTA removed per request: no overlay text on poster */
-
-        /* ── MODAL POPUP ── */
-        .modal-overlay {
-            position: fixed; inset: 0; z-index: 10050;
-            background: rgba(10, 20, 41, 0.65);
-            display: flex; align-items: center; justify-content: center;
-            padding: 24px;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.25s ease, visibility 0.25s ease;
-        }
-        .modal-overlay.show {
-            opacity: 1;
-            visibility: visible;
-        }
-        .modal-panel {
-            width: min(640px, 100%);
-            background: #fff;
-            border-radius: 28px;
-            padding: 38px 34px;
-            box-shadow: 0 40px 80px rgba(10,20,41,0.18);
-            position: relative;
-            overflow: hidden;
-        }
-        .modal-close {
-            position: absolute; top: 18px; right: 18px;
-            width: 36px; height: 36px;
-            border: none; border-radius: 50%;
-            background: rgba(0,0,0,0.05);
-            color: var(--text-main); font-size: 24px; line-height: 1;
-            cursor: pointer; transition: background 0.2s ease;
-        }
-        .modal-close:hover { background: rgba(0,0,0,0.12); }
-        .modal-panel .modal-tag {
-            display: inline-flex; align-items: center; gap: 8px;
-            padding: 10px 16px; border-radius: 999px;
-            background: rgba(0,86,210,0.08); color: var(--brand-blue);
-            font-size: 0.8rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase;
-            margin-bottom: 20px;
-        }
-        .modal-panel .modal-title {
-            font-size: 2.1rem; font-weight: 800; line-height: 1.08;
-            margin-bottom: 18px;
-        }
-        .modal-panel .modal-copy {
-            color: var(--text-sub); line-height: 1.8; font-size: 1rem;
-            margin-bottom: 26px;
-        }
-        .modal-panel .modal-note {
-            font-size: 0.95rem; color: #475569; line-height: 1.7;
-            margin-bottom: 28px;
-        }
-        .modal-panel .modal-btn {
-            display: inline-flex; align-items: center; gap: 10px;
-            background: var(--brand-blue); color: #fff;
-            padding: 16px 32px; border-radius: 999px;
-            text-decoration: none; font-weight: 700;
-            transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
-        }
-        .modal-panel .modal-btn:hover {
-            background: #003c8f;
-            transform: translateY(-1px);
-            box-shadow: 0 18px 40px rgba(0,86,210,0.25);
-        }
-
         /* ── RESPONSIVE UPDATES ── */
         @media (max-width: 900px) {
-            .officer-app { grid-template-columns: 1fr; padding: 32px; }
-            .officer-app .officer-copy .section-title { font-size: 2.3rem; }
-            .poster-card { width: 100%; max-width: 100%; margin-left: 0; }
         }
         .alert-section,
         .grad-section {
@@ -798,7 +669,7 @@
             #home-feedback-form > div:first-child { grid-template-columns: 1fr !important; }
             
             /* Mobile optimization for Chinese Program section */
-            .program-highlight { padding: 40px 0; margin-bottom: 60px; }
+            .program-highlight { padding: 82px 20px 62px; margin-bottom: 60px; }
             .program-highlight-grid { 
                 grid-template-columns: 1fr; 
                 gap: 24px; 
@@ -843,6 +714,7 @@
                 <li><a href="announcements.html" data-key="nav-ann">Announcements</a></li>
                 <li><a href="support.html" data-key="nav-support">Get Support</a></li>
                 <li><a href="guestbook.html" data-key="nav-feedback">Feedback</a></li>
+                <li><a href="https://apscchs.org/app" class="btn-signin-nav" data-key="nav-signin">Sign in</a></li>
                 <li><a href="#support" class="btn-donate-nav" data-key="nav-donate">Donate</a></li>
             </ul>
         </div>
@@ -875,31 +747,12 @@
 
     <main class="wrapper">
 
-        <section class="officer-app reveal reveal-scale" id="officer-application-section">
-            <div class="officer-copy">
-                <span class="section-tag" data-key="officer-tag">2026–2027 Officer Application</span>
-                <h2 class="section-title" data-key="officer-title">APSC Officer applications are open now.</h2>
-                <p class="section-p" data-key="officer-p1">The 2026–2027 officer application is open and closes on July 31, 2026. Both current members and non-members are encouraged to apply.</p>
-                <p class="section-p" data-key="officer-p2">We warmly welcome everyone to join our community and shape APSC as we grow together.</p>
-                <div class="officer-actions">
-                    <a class="cta-btn" href="https://apscchs.org/Officer_Application" target="_blank" rel="noopener" data-key="officer-btn">Apply by 7/31/2026</a>
-                </div>
-            </div>
-            <a class="poster-card" href="https://apscchs.org/Officer_Application" target="_blank" rel="noopener">
-                <img src="Officer_Application_Poster.PNG" alt="2026-2027 Officer Application Poster" data-key="officer-poster-alt">
-            </a>
-        </section>
-
         <section class="program-highlight reveal reveal-scale" id="clcp-section">
-            <span class="section-tag" data-key="clcp-tag">Chinese Language & Culture Program</span>
             <div class="program-highlight-grid">
                 <div>
-                    <h2 class="section-title" data-key="clcp-title">Chinese Language and Culture Program</h2>
-                    <p class="section-p" data-key="clcp-p1">On June 4, 2026, our Chinese Language and Culture Program concluded a meaningful semester at Snowden Farm Elementary School. Students explored Mandarin, traditional arts, and community learning together.</p>
-                    <p class="section-p" data-key="clcp-p2">Next year, we look forward to returning to Snowden Farm Elementary School and beginning a new chapter at Wilson Wims Elementary School. Stay tuned for more cultural lessons and celebrations.</p>
-                </div>
-                <div class="photo-frame reveal reveal-right">
-                    <img src="CASP26.jpg" alt="Chinese Language and Culture Program photo" data-key="clcp-photo-alt">
+                    <h2 class="section-title" data-key="summer-title">Happy Summer</h2>
+                    <p class="section-p" data-key="summer-p1">Wishing our APSC community a bright, joyful, and unforgettable summer.</p>
+                    <p class="section-p" data-key="summer-p2">Rest well, explore freely, and return ready for a new season of connection, culture, and friendship.</p>
                 </div>
             </div>
         </section>
@@ -1054,16 +907,6 @@
         </section>
     </main>
 
-    <div id="officer-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="officer-modal-title">
-        <div class="modal-panel">
-            <button class="modal-close" aria-label="Close officer application notice">×</button>
-            <span class="modal-tag" data-key="popup-tag">Officer Application</span>
-            <h2 class="modal-title" id="officer-modal-title" data-key="popup-title">APSC is now accepting 2026–2027 officer applications.</h2>
-            <p class="modal-copy" data-key="popup-body">Our officer application is open for everyone. Current members and non-members are both welcome to apply. Join our community and help build APSC together.</p>
-            <p class="modal-note" data-key="popup-note">Deadline: July 31, 2026. Apply now to share your voice, leadership, and ideas for the coming year.</p>
-            <a class="modal-btn" href="https://apscchs.org/Officer_Application" target="_blank" rel="noopener" data-key="popup-btn">Go to Application</a>
-        </div>
-    </div>
     <footer class="reveal">
         <div class="social-icons">
             <a href="https://www.instagram.com/cburg_apsc/" target="_blank"><img src="instagram_icon.png" alt="Instagram"></a>
@@ -1235,26 +1078,6 @@
     });
 
     /* ═══════════════════════════════════════
-       OFFICER APPLICATION POPUP
-    ═══════════════════════════════════════ */
-    const officerModal = document.getElementById('officer-modal');
-    const modalClose = officerModal.querySelector('.modal-close');
-    function showOfficerModal() {
-        if (!sessionStorage.getItem('officerModalDismissed')) {
-            officerModal.classList.add('show');
-        }
-    }
-    function hideOfficerModal() {
-        officerModal.classList.remove('show');
-        sessionStorage.setItem('officerModalDismissed', 'true');
-    }
-    modalClose.addEventListener('click', hideOfficerModal);
-    officerModal.addEventListener('click', (event) => {
-        if (event.target === officerModal) hideOfficerModal();
-    });
-    window.addEventListener('DOMContentLoaded', showOfficerModal);
-
-    /* ═══════════════════════════════════════
        i18n TRANSLATIONS
     ═══════════════════════════════════════ */
     const i18n = {
@@ -1281,7 +1104,6 @@
             'grad-p1': 'On May 18, APSC held its annual Grad Party to celebrate the class of 2026 and honor their outstanding contributions. The party featured decorations and a wide selection of food and drinks.',
             'grad-p2': 'It was a successful celebration. APSC wishes all graduates a bright future!',
             'grad-image-placeholder': '4:3 image placeholder for Grad Party',
-            'officer-tag': '2026–2027 Officer Application', 'officer-title': 'APSC Officer applications are open now.', 'officer-p1': 'The 2026–2027 officer application is open and closes on July 31, 2026. Both current members and non-members are encouraged to apply.', 'officer-p2': 'We warmly welcome everyone to join our community and shape APSC as we grow together.', 'officer-btn': 'Apply by 7/31/2026', 'poster-cta': 'Open the officer application poster', 'popup-tag': 'Officer Application', 'popup-title': 'APSC is now accepting 2026–2027 officer applications.', 'popup-body': 'Our officer application is open for everyone. Current members and non-members are both welcome to apply. Join our community and help build APSC together.', 'popup-note': 'Deadline: July 31, 2026. Apply now to share your voice, leadership, and ideas for the coming year.', 'popup-btn': 'Go to Application', 'nav-privacy': 'Privacy Policy', 'nav-terms': 'Terms of Use'
         },
         'zh-hans': {            'nav-about': '关于我们', 'nav-meeting': '会议安排', 'nav-contact': '联系我们', 'nav-ann': '公告通知', 'nav-support': '获取支持', 'nav-feedback': '反馈', 'nav-donate': '捐赠支持', 'nav-events': '活动展示',
             'hero-title': '体验文化底蕴\n融入温暖社群', 'cta': '加入 APSC 社团',
@@ -1305,7 +1127,6 @@
             'grad-p1': '5 月 18 日，APSC 举办了一年一度的毕业派对，庆祝 2026 届毕业生并表彰他们的卓越贡献。派对提供了精美装饰和丰富的食物饮品。',
             'grad-p2': '这是一次成功的派对。APSC 祝愿所有毕业生前程似锦！',
             'grad-image-placeholder': '4:3 图片占位符：毕业派对',
-            'officer-tag': '2026–2027 官员申请', 'officer-title': 'APSC 官员申请现已开放。', 'officer-p1': '2026–2027 年度官员申请现在开放，截止日期为 2026 年 7 月 31 日。欢迎现有成员和非成员申请。', 'officer-p2': '我们诚挚欢迎大家加入我们的社区，共同建设并发展 APSC。', 'officer-btn': '7/31/2026 前申请', 'poster-cta': '打开官员申请海报', 'popup-tag': '官员申请', 'popup-title': 'APSC 现正接受 2026–2027 年度官员申请。', 'popup-body': '我们的官员申请面向所有人开放。现有成员和非成员均可申请。加入我们的社区，共同构建 APSC。', 'popup-note': '截止日期：2026 年 7 月 31 日。立即申请，分享你的声音、领导力和来年的想法。', 'popup-btn': '前往申请', 'nav-privacy': '隐私政策', 'nav-terms': '使用条款'
         },
         'zh-hant': {            'nav-about': '關於我們', 'nav-meeting': '會議安排', 'nav-contact': '聯絡我們', 'nav-ann': '公告通知', 'nav-support': '獲取支持', 'nav-feedback': '回饋', 'nav-donate': '捐贈支持', 'nav-events': '活動展示',
             'hero-title': '體驗文化底蘊\n融入溫暖社群', 'cta': '加入 APSC 社團',
@@ -1329,7 +1150,6 @@
             'grad-p1': '5 月 18 日，APSC 舉辦了一年一度的畢業派對，慶祝 2026 屆畢業生並表彰他們的卓越貢獻。派對提供了精美裝飾和豐富的食物飲品。',
             'grad-p2': '這是一次成功的派對。APSC 祝願所有畢業生前程似錦！',
             'grad-image-placeholder': '4:3 圖片占位符：畢業派對',
-            'officer-tag': '2026–2027 官員申請', 'officer-title': 'APSC 官員申請現已開放。', 'officer-p1': '2026–2027 年度官員申請現在開放，截止日期為 2026 年 7 月 31 日。歡迎現有成員和非成員申請。', 'officer-p2': '我們誠摯歡迎大家加入我們的社區，共同建設並發展 APSC。', 'officer-btn': '7/31/2026 前申請', 'poster-cta': '打開官員申請海報', 'popup-tag': '官員申請', 'popup-title': 'APSC 現正接受 2026–2027 年度官員申請。', 'popup-body': '我們的官員申請面向所有人開放。現有成員和非成員均可申請。加入我們的社區，共同構建 APSC。', 'popup-note': '截止日期：2026 年 7 月 31 日。立即申請，分享你的聲音、領導力和來年的想法。', 'popup-btn': '前往申請',
             'nav-privacy': '隱私政策', 'nav-terms': '使用條款'
         },
         'ko': {
@@ -1355,7 +1175,6 @@
             'grad-p1': '5월 18일, APSC는 2026년 졸업생들을 축하하고 그들의 뛰어난 공헌을 기념하기 위해 연례 졸업 파티를 개최했습니다. 파티는 장식과 다양한 음식과 음료를 제공했습니다.',
             'grad-p2': '이 파티는 성공적이었습니다. APSC는 모든 졸업생들이 밝은 미래를 맞이하길 기원합니다!',
             'grad-image-placeholder': '졸업 파티 4:3 이미지 자리표시자',
-            'officer-tag': '2026–2027 임원 지원', 'officer-title': 'APSC 임원 지원이 지금 열렸습니다.', 'officer-p1': '2026–2027 임원 지원이 열렸으며 마감일은 2026년 7월 31일입니다. 현재 회원과 비회원 모두 지원할 수 있습니다.', 'officer-p2': '모두가 우리 커뮤니티에 참여하여 함께 APSC를 성장시킬 수 있기를 환영합니다.', 'officer-btn': '7/31/2026까지 지원하기', 'poster-cta': '임원 지원 포스터 열기', 'popup-tag': '임원 지원', 'popup-title': 'APSC에서 2026–2027 임원 지원을 접수 중입니다.', 'popup-body': '우리의 임원 지원은 모두에게 열려 있습니다. 현재 회원과 비회원 모두 지원을 환영합니다. 커뮤니티에 참여하여 APSC를 함께 만들어 주세요.', 'popup-note': '마감일: 2026년 7월 31일. 지금 지원하여 당신의 목소리와 리더십, 내년 계획을 공유하세요.', 'popup-btn': '지원하러 가기',
             'nav-privacy': '개인정보 처리방침', 'nav-terms': '이용 약관'
         },
         'ja': {
@@ -1381,7 +1200,6 @@
             'grad-p1': '5月18日、APSCは2026年度卒業生を祝福し、彼らの卓越した貢献を称えるために年次卒業パーティーを開催しました。パーティーでは飾り付けと豊富な食べ物や飲み物を提供しました。',
             'grad-p2': '成功したパーティーでした。APSCはすべての卒業生の輝かしい未来を願っています！',
             'grad-image-placeholder': '4:3画像プレースホルダー：卒業パーティー',
-                        'officer-tag': '2026–2027役員申請', 'officer-title': 'APSCの役員募集が開始されました。', 'officer-p1': '2026–2027年度の役員応募が開始され、締め切りは2026年7月31日です。現在のメンバーと非メンバーの両方が応募できます。', 'officer-p2': '誰もがコミュニティに参加し、共にAPSCを育てることを歓迎します。', 'officer-btn': '2026年7月31日までに応募する', 'poster-cta': '役員応募ポスターを開く', 'popup-tag': '役員応募', 'popup-title': 'APSCは2026–2027年度役員応募を受け付けています。', 'popup-body': '役員応募はどなたでもご利用いただけます。現在のメンバーと非メンバーの両方が歓迎されます。コミュニティに参加して、共にAPSCを築きましょう。', 'popup-note': '締め切り：2026年7月31日。今すぐ応募して、あなたの声、リーダーシップ、そして来年のアイデアを共有してください。', 'popup-btn': '応募ページへ',
             'nav-privacy': 'プライバシーポリシー', 'nav-terms': '利用規約'
         },
         'es': {
@@ -1407,7 +1225,6 @@
             'grad-p1': 'El 18 de mayo, APSC celebró su fiesta anual de graduación para festejar a la clase de 2026 y reconocer sus destacadas contribuciones. La fiesta contó con decoraciones y una amplia selección de comida y bebidas.',
             'grad-p2': 'Fue una celebración exitosa. ¡APSC desea a todos los graduados un futuro brillante!',
             'grad-image-placeholder': 'Marcador de posición de imagen 4:3 para la fiesta de graduación',
-            'officer-tag': 'Solicitud de Oficial 2026–2027', 'officer-title': 'Las solicitudes de oficial de APSC ya están abiertas.', 'officer-p1': 'La solicitud de oficial 2026–2027 está abierta y cierra el 31 de julio de 2026. Tanto miembros como no miembros están invitados a aplicar.', 'officer-p2': 'Damos la bienvenida a todos a unirse a nuestra comunidad y construir APSC juntos.', 'officer-btn': 'Aplica antes del 31/7/2026', 'poster-cta': 'Abrir el póster de la solicitud de oficial', 'popup-tag': 'Solicitud de Oficial', 'popup-title': 'APSC está aceptando solicitudes de oficial 2026–2027.', 'popup-body': 'Nuestra solicitud de oficial está abierta para todos. Tanto miembros actuales como no miembros son bienvenidos. Únete a nuestra comunidad y ayuda a construir APSC juntos.', 'popup-note': 'Fecha límite: 31 de julio de 2026. Solicita ahora para compartir tu voz, liderazgo e ideas para el próximo año.', 'popup-btn': 'Ir a la solicitud',
             'nav-privacy': 'Política de Privacidad', 'nav-terms': 'Términos de Uso'
         },
         'fr': {
@@ -1433,10 +1250,70 @@
             'grad-p1': 'Le 18 mai, APSC a organisé sa fête annuelle de remise des diplômes pour célébrer la promotion 2026 et reconnaître leurs contributions exceptionnelles. La fête proposait des décorations ainsi qu\'un large choix de nourriture et de boissons.',
             'grad-p2': 'Ce fut une célébration réussie. APSC souhaite à tous les diplômés un avenir radieux !',
             'grad-image-placeholder': 'Espace réservé image 4:3 pour la fête de graduation',
-            'officer-tag': 'Candidature pour les postes de direction 2026–2027', 'officer-title': 'Les candidatures aux postes de direction APSC sont désormais ouvertes.', 'officer-p1': 'La candidature pour les postes de direction 2026–2027 est ouverte et se termine le 31 juillet 2026. Les membres actuels et les non-membres sont invités à postuler.', 'officer-p2': 'Nous accueillons chaleureusement tout le monde à rejoindre notre communauté et à aider à construire APSC ensemble.', 'officer-btn': 'Postulez avant le 31/07/2026', 'poster-cta': 'Ouvrir l\'affiche de candidature', 'popup-tag': 'Candidature aux postes de direction', 'popup-title': 'APSC accepte désormais les candidatures pour les postes de direction 2026–2027.', 'popup-body': 'Notre candidature aux postes de direction est ouverte à tous. Les membres actuels et les non-membres sont les bienvenus pour postuler. Rejoignez notre communauté et aidez à construire APSC ensemble.', 'popup-note': 'Date limite : 31 juillet 2026. Postulez maintenant pour partager votre voix, votre leadership et vos idées pour l\'année à venir.', 'popup-btn': 'Aller à la candidature',
             'nav-privacy': 'Politique de Confidentialité', 'nav-terms': 'Conditions d\'Utilisation'
         }
     };
+    const signInContent = {
+        'en': 'Sign in',
+        'zh-hans': '登录',
+        'zh-hant': '登入',
+        'ko': '로그인',
+        'ja': 'サインイン',
+        'es': 'Iniciar sesión',
+        'fr': 'Se connecter'
+    };
+
+    function updateSignIn(lang) {
+        const signInButton = document.querySelector('[data-key="nav-signin"]');
+        if (signInButton) signInButton.innerText = signInContent[lang] || signInContent.en;
+    }
+
+    const summerContent = {
+        'en': {
+            'summer-title': 'Happy Summer',
+            'summer-p1': 'Wishing our APSC community a bright, joyful, and unforgettable summer.',
+            'summer-p2': 'Rest well, explore freely, and return ready for a new season of connection, culture, and friendship.'
+        },
+        'zh-hans': {
+            'summer-title': '夏日快乐',
+            'summer-p1': '祝愿 APSC 社区度过一个明亮、快乐而难忘的夏天。',
+            'summer-p2': '好好休息，自由探索，以全新的状态迎接充满联结、文化与友谊的新季节。'
+        },
+        'zh-hant': {
+            'summer-title': '夏日快樂',
+            'summer-p1': '祝願 APSC 社區度過一個明亮、快樂而難忘的夏天。',
+            'summer-p2': '好好休息，自由探索，以全新的狀態迎接充滿聯繫、文化與友誼的新季節。'
+        },
+        'ko': {
+            'summer-title': '행복한 여름 보내세요',
+            'summer-p1': 'APSC 커뮤니티 모두가 밝고 즐거운 잊지 못할 여름을 보내길 바랍니다.',
+            'summer-p2': '충분히 쉬고 자유롭게 탐험하며, 연결과 문화와 우정이 가득한 새로운 계절을 맞이할 준비를 해요.'
+        },
+        'ja': {
+            'summer-title': '楽しい夏を',
+            'summer-p1': 'APSCコミュニティの皆さんが、明るく楽しく忘れられない夏を過ごせますように。',
+            'summer-p2': 'ゆっくり休み、自由に楽しみ、つながりと文化と友情に満ちた新しい季節を迎えましょう。'
+        },
+        'es': {
+            'summer-title': 'Feliz verano',
+            'summer-p1': 'Les deseamos a todos en la comunidad de APSC un verano brillante, alegre e inolvidable.',
+            'summer-p2': 'Descansen, exploren libremente y regresen listos para una nueva temporada de conexión, cultura y amistad.'
+        },
+        'fr': {
+            'summer-title': 'Bel été',
+            'summer-p1': 'Nous souhaitons à toute la communauté APSC un été lumineux, joyeux et inoubliable.',
+            'summer-p2': 'Reposez-vous, explorez librement et revenez prêts pour une nouvelle saison de liens, de culture et d’amitié.'
+        }
+    };
+
+    function updateSummer(lang) {
+        const content = summerContent[lang] || summerContent.en;
+        Object.entries(content).forEach(([key, value]) => {
+            const element = document.querySelector(`[data-key="${key}"]`);
+            if (element) element.innerText = value;
+        });
+    }
+
     function updateLang(lang) {
         sessionStorage.setItem('selectedLang', lang);
         document.querySelectorAll('.lang-btn').forEach(btn => {
@@ -1452,6 +1329,8 @@
                 }
             }
         });
+        updateSignIn(lang);
+        updateSummer(lang);
     }
 
     window.addEventListener('DOMContentLoaded', () => {
