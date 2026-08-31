@@ -45,6 +45,8 @@
         .lang-btn.active { color: var(--lny-red); font-weight: 700; } 
 
         /* --- 导航栏 --- */
+        .portal-notice {...}
+
         nav {
             background: rgba(255,255,255,0.9);
             backdrop-filter: blur(25px);
@@ -229,6 +231,14 @@
         <button class="lang-btn" onclick="updateLang('fr')">FRANÇAIS</button>
     </div>
 
+    <div class="portal-notice">
+        <div class="portal-notice-inner">
+            <span class="portal-badge">New</span>
+            <span>My APSC Portal is officially live.</span>
+            <a href="https://apscchs.org/app" target="_blank" rel="noopener">Sign in</a>
+        </div>
+    </div>
+
     <nav>
         <div class="nav-container">
             <a href="index.html" class="nav-brand-link"><img src="APSC_LOGO.png" alt="APSC Logo"></a>
@@ -241,6 +251,7 @@
                 <li><a href="announcements.html" data-key="nav-announcement">Announcements</a></li>
                 <li><a href="support.html" data-key="nav-support">Get Support</a></li>
                 <li><a href="guestbook.html" data-key="nav-feedback">Feedback</a></li>
+                <li><a href="https://apscchs.org/app" class="btn-signin-nav" data-key="nav-signin" target="_blank" rel="noopener">Sign in</a></li>
                 <li><a href="index.html#support" class="btn-donate-nav" data-key="nav-donate">Donate</a></li>
             </ul>
         </div>

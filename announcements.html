@@ -36,6 +36,23 @@
         }
         .lang-btn.active { color: var(--brand-blue); }
 
+        .portal-notice {
+            background: linear-gradient(135deg, rgba(0,86,210,0.06), rgba(51,65,85,0.02));
+            border-bottom: 1px solid rgba(0,86,210,0.1);
+            padding: 12px 0;
+        }
+        .portal-notice-inner {
+            max-width: 1180px; margin: 0 auto; padding: 0 40px; display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: wrap; text-align: center;
+            color: var(--text-main); font-size: 13px; font-weight: 600;
+        }
+        .portal-notice .portal-badge {
+            display: inline-flex; align-items: center; justify-content: center; padding: 4px 10px; border-radius: 999px; background: rgba(0,86,210,0.1); color: var(--brand-blue); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase;
+        }
+        .portal-notice a {
+            color: var(--brand-blue); text-decoration: none; font-weight: 700; border-bottom: 1px solid rgba(0,86,210,0.4);
+        }
+        .portal-notice a:hover { opacity: 0.82; }
+
         nav {
             background: rgba(255,255,255,0.85); backdrop-filter: blur(25px);
             position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid var(--border-color);
@@ -235,6 +252,14 @@
         <button class="lang-btn" onclick="updateLang('fr')">FRANÇAIS</button>
     </div>
 
+    <div class="portal-notice">
+        <div class="portal-notice-inner">
+            <span class="portal-badge">New</span>
+            <span>My APSC Portal is officially live.</span>
+            <a href="https://apscchs.org/app" target="_blank" rel="noopener">Sign in</a>
+        </div>
+    </div>
+
     <nav>
         <div class="nav-container">
             <a href="index.html" class="nav-brand-link"><img src="APSC_LOGO.png" alt="APSC Logo"></a>
@@ -248,6 +273,7 @@
                 <li><a href="announcements.html" data-key="nav-ann" style="color: var(--brand-blue);">Announcements</a></li>
                 <li><a href="support.html" data-key="nav-support">Get Support</a></li>
                 <li><a href="guestbook.html" data-key="nav-feedback">Feedback</a></li>
+                <li><a href="https://apscchs.org/app" class="btn-signin-nav" data-key="nav-signin" target="_blank" rel="noopener">Sign in</a></li>
                 <li><a href="index.html#support" class="btn-donate-nav" data-key="nav-donate">Donate</a></li>
             </ul>
         </div>

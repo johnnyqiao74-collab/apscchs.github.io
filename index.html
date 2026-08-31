@@ -72,6 +72,12 @@
             transform: scaleX(0); transition: transform 0.3s ease;
         }
         .lang-btn.active { color: var(--brand-blue); }
+
+        .portal-notice { background: linear-gradient(135deg, rgba(0,86,210,0.06), rgba(51,65,85,0.02)); border-bottom: 1px solid rgba(0,86,210,0.1); padding: 12px 0; }
+        .portal-notice-inner { max-width: 1180px; margin: 0 auto; padding: 0 40px; display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: wrap; text-align: center; color: var(--text-main); font-size: 13px; font-weight: 600; }
+        .portal-notice .portal-badge { display: inline-flex; align-items: center; justify-content: center; padding: 4px 10px; border-radius: 999px; background: rgba(0,86,210,0.1); color: var(--brand-blue); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; }
+        .portal-notice a { color: var(--brand-blue); text-decoration: none; font-weight: 700; border-bottom: 1px solid rgba(0,86,210,0.4); }
+        .portal-notice a:hover { opacity: 0.82; }
         .lang-btn.active::after,
         .lang-btn:hover::after { transform: scaleX(1); }
         .lang-btn:hover { color: var(--brand-blue); }
@@ -701,6 +707,13 @@
         <button class="lang-btn" onclick="updateLang('ja')">日本語</button>
         <button class="lang-btn" onclick="updateLang('es')">ESPAÑOL</button>
         <button class="lang-btn" onclick="updateLang('fr')">FRANÇAIS</button>
+    </div>
+    <div class="portal-notice">
+        <div class="portal-notice-inner">
+            <span class="portal-badge">New</span>
+            <span>My APSC Portal is officially live.</span>
+            <a href="https://apscchs.org/app" target="_blank" rel="noopener">Sign in</a>
+        </div>
     </div>
 
     <nav id="main-nav">
