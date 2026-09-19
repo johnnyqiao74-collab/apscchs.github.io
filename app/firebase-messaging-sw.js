@@ -17,7 +17,7 @@ messaging.onBackgroundMessage((payload) => {
   const title = payload.notification?.title || "My APSC Portal";
   const options = {
     body: payload.notification?.body || "You have a new portal update.",
-    icon: "/app/favicon.svg",
+    icon: "/app/unnamed.png",
     data: { url: payload.fcmOptions?.link || "/app/" }
   };
 
