@@ -4,7 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Asian Peer Support Club | APSC</title>
-    <link rel="icon" href="apsc_new_logo.ico" type="image/x-icon">
+    <link rel="stylesheet" href="header.css">
+    <script src="header.js" defer></script>
+    <link rel="icon" type="image/png" href="unnamed.png?v=20260928">
+    <link rel="apple-touch-icon" href="unnamed.png?v=20260928">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=DM+Serif+Display:ital@0;1&family=Satisfy&display=swap" rel="stylesheet">
     
@@ -56,13 +59,17 @@
 
         /* ── LANG SWITCHER ── */
         .lang-switcher {
-            background: #fff; padding: 12px 0; text-align: center;
-            border-bottom: 1px solid var(--border-color);
+            display: flex; align-items: center; justify-content: center; flex-wrap: wrap;
+            gap: 2px 4px; padding: 10px 12px;
+            background: rgba(255,255,255,0.68);
+            backdrop-filter: blur(18px) saturate(160%);
+            -webkit-backdrop-filter: blur(18px) saturate(160%);
+            border-bottom: 1px solid rgba(255,255,255,0.72);
             position: relative; z-index: 100;
         }
         .lang-btn {
             background: none; border: none; font-size: 10px; font-weight: 600;
-            letter-spacing: 0.1em; color: var(--text-sub); margin: 0 10px;
+            letter-spacing: 0.1em; color: var(--text-sub); margin: 0 8px; padding: 4px 2px;
             cursor: pointer; transition: var(--transition);
             position: relative;
         }
@@ -73,28 +80,42 @@
         }
         .lang-btn.active { color: var(--brand-blue); }
 
-        .portal-notice { background: linear-gradient(135deg, rgba(0,86,210,0.06), rgba(51,65,85,0.02)); border-bottom: 1px solid rgba(0,86,210,0.1); padding: 12px 0; }
-        .portal-notice-inner { max-width: 1180px; margin: 0 auto; padding: 0 40px; display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: wrap; text-align: center; color: var(--text-main); font-size: 13px; font-weight: 600; }
-        .portal-notice .portal-badge { display: inline-flex; align-items: center; justify-content: center; padding: 4px 10px; border-radius: 999px; background: rgba(0,86,210,0.1); color: var(--brand-blue); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; }
-        .portal-notice a { color: var(--brand-blue); text-decoration: none; font-weight: 700; border-bottom: 1px solid rgba(0,86,210,0.4); }
-        .portal-notice a:hover { opacity: 0.82; }
+        .portal-notice {
+            display: flex; justify-content: center; padding: 8px 16px;
+            background: rgba(255,255,255,0.54);
+            backdrop-filter: blur(18px) saturate(160%);
+            -webkit-backdrop-filter: blur(18px) saturate(160%);
+            border-bottom: 1px solid rgba(255,255,255,0.72);
+        }
+        .portal-notice-inner { display: flex; align-items: center; justify-content: center; }
+        .portal-button {
+            display: inline-flex; align-items: center; gap: 9px;
+            padding: 8px 15px; border: 1px solid rgba(0,86,210,0.22);
+            border-radius: 999px; background: rgba(255,255,255,0.58);
+            box-shadow: 0 4px 16px rgba(19,52,86,0.08);
+            color: var(--brand-blue); font-size: 12px; font-weight: 700;
+            text-decoration: none; transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .portal-button::after { content: '\2197'; font-size: 14px; line-height: 1; }
+        .portal-button:hover { background: rgba(255,255,255,0.9); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(19,52,86,0.14); }
+        .portal-button:focus-visible { outline: 2px solid var(--brand-blue); outline-offset: 3px; }
         .lang-btn.active::after,
         .lang-btn:hover::after { transform: scaleX(1); }
         .lang-btn:hover { color: var(--brand-blue); }
 
         /* ── NAV ── */
         nav {
-            background: rgba(255,255,255,0.9);
-            backdrop-filter: blur(18px) saturate(160%);
-            -webkit-backdrop-filter: blur(18px) saturate(160%);
+            background: rgba(255,255,255,0.68);
+            backdrop-filter: blur(22px) saturate(170%);
+            -webkit-backdrop-filter: blur(22px) saturate(170%);
             position: -webkit-sticky; position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid rgba(0,0,0,0.06);
             align-self: flex-start;
             transition: box-shadow 0.35s ease, background 0.35s ease, transform 0.35s ease;
             display: flex; align-items: center;
         }
         nav.scrolled {
-            box-shadow: 0 4px 30px rgba(0,0,0,0.08);
-            background: rgba(255,255,255,0.95);
+            box-shadow: 0 8px 28px rgba(20,35,55,0.08);
+            background: rgba(255,255,255,0.82);
         }
         /* wrapper padding handled below (consistent with about.html) */
         .nav-container {
@@ -696,6 +717,7 @@
             }
         }
     </style>
+    <link rel="stylesheet" href="header.css">
 </head>
 <body>
 
@@ -710,9 +732,7 @@
     </div>
     <div class="portal-notice">
         <div class="portal-notice-inner">
-            <span class="portal-badge">New</span>
-            <span>My APSC Portal is officially live.</span>
-            <a href="https://apscchs.org/app" target="_blank" rel="noopener">Sign in</a>
+            <a class="portal-button" href="https://apscchs.org/app" target="_blank" rel="noopener">Open My APSC Portal</a>
         </div>
     </div>
 
@@ -760,16 +780,6 @@
     </header>
 
     <main class="wrapper">
-
-        <section class="program-highlight reveal reveal-scale" id="clcp-section">
-            <div class="program-highlight-grid">
-                <div>
-                    <h2 class="section-title" data-key="summer-title">Welcome Back</h2>
-                    <p class="section-p" data-key="summer-p1">We’re excited to welcome our APSC community back for a new school year.</p>
-                    <p class="section-p" data-key="summer-p2">Let’s reconnect, learn together, and make this semester full of growth, culture, and unforgettable memories.</p>
-                </div>
-            </div>
-        </section>
 
         <!-- INTRO VIDEO -->
         <section style="text-align: center; margin-bottom: 140px;">
@@ -889,7 +899,7 @@
         <section class="meeting-box reveal reveal-scale" id="meeting-section">
             <h3 style="color: var(--brand-blue); margin-bottom: 15px; font-weight: 700; letter-spacing: 0.1em;" data-key="meet-h">WEEKLY GATHERING</h3>
             <p style="font-size: 1.6rem; font-weight: 700; color: var(--text-main);" data-key="meet-p1">Mondays @ Lunch | Room 244A</p>
-            <p style="font-size: 1rem; color: var(--text-sub); margin-top: 15px;" data-key="meet-p2">Next Meeting: T.B.D <br><br>Welcome Back!</p>
+            <p style="font-size: 1rem; color: var(--text-sub); margin-top: 15px;" data-key="meet-p2">Next Meeting: T.B.D</p>
         </section>
 
         <!-- FEEDBACK -->
@@ -1282,52 +1292,6 @@
         if (signInButton) signInButton.innerText = signInContent[lang] || signInContent.en;
     }
 
-    const summerContent = {
-        'en': {
-            'summer-title': 'Welcome Back',
-            'summer-p1': 'We’re excited to welcome our APSC community back for a new school year.',
-            'summer-p2': 'Let’s reconnect, learn together, and make this semester full of growth, culture, and unforgettable memories.'
-        },
-        'zh-hans': {
-            'summer-title': '欢迎回来',
-            'summer-p1': '我们很高兴再次迎接 APSC 社区回到新学年的学习与成长中。',
-            'summer-p2': '让我们重新相聚、共同学习，并在这个学期里充满成长、文化与难忘回忆。'
-        },
-        'zh-hant': {
-            'summer-title': '歡迎回來',
-            'summer-p1': '我們很高興再次迎接 APSC 社區回到新學年的學習與成長中。',
-            'summer-p2': '讓我們重新相聚、共同學習，並在這個學期裡充滿成長、文化與難忘回憶。'
-        },
-        'ko': {
-            'summer-title': '다시 오신 것을 환영합니다',
-            'summer-p1': 'APSC 커뮤니티가 새로운 학기를 맞이할 수 있게 기쁘게 환영합니다.',
-            'summer-p2': '다시 만나 함께 배우고 성장하며, 이번 학기를 문화와 추억으로 가득 채워봐요.'
-        },
-        'ja': {
-            'summer-title': 'ようこそ戻ってきて',
-            'summer-p1': 'APSCコミュニティのみんなが新しい学期を迎えられるのを嬉しく思います。',
-            'summer-p2': '再会し、共に学び、この学期を成長と文化と忘れられない思い出で満たしましょう。'
-        },
-        'es': {
-            'summer-title': 'Bienvenido de nuevo',
-            'summer-p1': 'Nos alegra dar la bienvenida a la comunidad de APSC de regreso para un nuevo año escolar.',
-            'summer-p2': 'Reconectemos, aprendamos juntos y hagamos de este semestre una temporada de crecimiento, cultura y recuerdos inolvidables.'
-        },
-        'fr': {
-            'summer-title': 'Bienvenue de retour',
-            'summer-p1': 'Nous sommes ravis de souhaiter la bienvenue à la communauté APSC pour une nouvelle année scolaire.',
-            'summer-p2': 'Reconnectons-nous, apprenons ensemble et faisons de ce semestre une période de croissance, de culture et de souvenirs inoubliables.'
-        }
-    };
-
-    function updateSummer(lang) {
-        const content = summerContent[lang] || summerContent.en;
-        Object.entries(content).forEach(([key, value]) => {
-            const element = document.querySelector(`[data-key="${key}"]`);
-            if (element) element.innerText = value;
-        });
-    }
-
     function updateLang(lang) {
         sessionStorage.setItem('selectedLang', lang);
         document.querySelectorAll('.lang-btn').forEach(btn => {
@@ -1344,7 +1308,6 @@
             }
         });
         updateSignIn(lang);
-        updateSummer(lang);
     }
 
     window.addEventListener('DOMContentLoaded', () => {

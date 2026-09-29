@@ -1,0 +1,2790 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAT Vocab Pro System</title>
+    <link rel="icon" type="image/png" href="unnamed.png?v=20260928">
+    <link rel="apple-touch-icon" href="unnamed.png?v=20260928">
+    <link rel="stylesheet" href="header.css">
+    <script src="header.js" defer></script>
+    <style>
+        :root {
+            --bg: #f0f4f8;
+            --card-bg: #ffffff;
+            --primary: #2b6cb0;
+            --primary-hover: #2c5282;
+            --accent: #e53e3e;
+            --success: #38a169;
+            --text-main: #2d3748;
+            --text-muted: #718096;
+            --border: #e2e8f0;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background-color: var(--bg);
+            color: var(--text-main);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 { margin-top: 0; color: var(--primary); }
+
+        /* Navigation */
+        .nav {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .nav button {
+            background-color: var(--card-bg);
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.2s;
+        }
+        .nav button.active, .nav button:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        /* Container */
+        .container {
+            width: 100%;
+            max-width: 600px;
+            background: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            padding: 24px;
+            box-sizing: border-box;
+            min-height: 400px;
+            position: relative;
+        }
+
+        /* Flashcard Mode */
+        .flashcard-area { display: none; text-align: center; }
+        .word-title { font-size: 2.5em; font-weight: bold; color: var(--primary); margin-bottom: 5px; }
+        .respelling { color: var(--text-muted); font-style: italic; margin-bottom: 20px; }
+        .definition-en { font-size: 1.1em; color: var(--text-main); margin-bottom: 10px; font-weight: 500; }
+        .definition-cn { font-size: 1.2em; color: var(--accent); margin-bottom: 20px; }
+        .sentences { text-align: left; font-size: 0.95em; line-height: 1.5; color: var(--text-muted); background: var(--bg); padding: 15px; border-radius: 8px;}
+        .sentences ul { margin: 0; padding-left: 20px; }
+        .sentences li { margin-bottom: 8px; }
+
+        /* Spelling Mode */
+        .spelling-area { display: none; text-align: center; }
+        .spell-hint { font-size: 1.1em; margin-bottom: 20px; line-height: 1.5;}
+        input[type="text"] {
+            width: 80%;
+            padding: 12px;
+            font-size: 1.2em;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        input[type="text"]:focus { outline: none; border-color: var(--primary); }
+
+        /* MCQ Mode */
+        .mcq-area { display: none; }
+        .mcq-word { font-size: 2em; text-align: center; color: var(--primary); margin-bottom: 20px; font-weight: bold;}
+        .option-btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 10px;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            text-align: left;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background 0.2s;
+        }
+        .option-btn:hover { background: #e2e8f0; }
+        .option-btn.correct { background: var(--success); color: white; border-color: var(--success); }
+        .option-btn.wrong { background: var(--accent); color: white; border-color: var(--accent); }
+
+        /* Review Mode */
+        .review-area { display: none; }
+        .review-list { list-style: none; padding: 0; }
+        .review-list li {
+            padding: 10px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* Controls */
+        .controls { display: flex; justify-content: space-between; margin-top: 20px; }
+        .btn-action {
+            background-color: var(--primary); color: white; border: none; padding: 10px 20px;
+            border-radius: 8px; cursor: pointer; font-size: 1em; font-weight: bold;
+        }
+        .btn-action:hover { background-color: var(--primary-hover); }
+        .feedback { font-weight: bold; margin-top: 15px; min-height: 24px; text-align: center;}
+        
+        .show { display: block !important; }
+    </style>
+</head>
+<body>
+
+    <h1>SAT Vocab Pro</h1>
+    <div class="nav">
+        <button id="nav-flash" class="active" onclick="switchMode('flash')">Flashcards</button>
+        <button id="nav-spell" onclick="switchMode('spell')">Spelling Quiz</button>
+        <button id="nav-mcq" onclick="switchMode('mcq')">MCQ Practice</button>
+        <button id="nav-review" onclick="switchMode('review')">Needs Review (<span id="review-count">0</span>)</button>
+    </div>
+
+    <div class="container">
+        <div id="area-flash" class="flashcard-area show">
+            <div id="flash-front">
+                <div class="word-title" id="f-word">Word</div>
+                <div class="respelling" id="f-respelling">[respelling]</div>
+                <button class="btn-action" style="margin-top:40px;" onclick="toggleFlashcard()">Show Meaning & Sentences</button>
+            </div>
+            <div id="flash-back" style="display:none;">
+                <div class="definition-cn" id="f-cn">中文释义</div>
+                <div class="definition-en" id="f-en">English Definition</div>
+                <div class="sentences">
+                    <strong>Examples:</strong>
+                    <ul id="f-sentences"></ul>
+                </div>
+                <button class="btn-action" style="margin-top:20px;" onclick="nextFlashcard()">Next Word ➡</button>
+            </div>
+        </div>
+
+        <div id="area-spell" class="spelling-area">
+            <h3>Spell the Word</h3>
+            <div class="spell-hint">
+                <strong style="color: var(--accent);" id="s-cn">中文</strong><br>
+                <span id="s-en" style="color: var(--text-muted);">English def</span>
+            </div>
+            <input type="text" id="s-input" placeholder="Type word here..." autocomplete="off">
+            <div class="controls" style="justify-content: center;">
+                <button class="btn-action" onclick="checkSpelling()">Check</button>
+                <button class="btn-action" style="margin-left: 10px; background-color: var(--text-muted);" onclick="nextSpelling()">Skip/Next</button>
+            </div>
+            <div id="s-feedback" class="feedback"></div>
+        </div>
+
+        <div id="area-mcq" class="mcq-area">
+            <h3>Choose the correct meaning</h3>
+            <div class="mcq-word" id="m-word">Word</div>
+            <div id="m-options"></div>
+            <div class="controls" style="justify-content: flex-end;">
+                <button class="btn-action" onclick="nextMCQ()">Next ➡</button>
+            </div>
+            <div id="m-feedback" class="feedback"></div>
+        </div>
+
+        <div id="area-review" class="review-area">
+            <h3>Needs Review (Spelled Incorrectly)</h3>
+            <p style="font-size: 0.9em; color: var(--text-muted);">Words you misspell are automatically added here.</p>
+            <ul class="review-list" id="r-list"></ul>
+        </div>
+    </div>
+
+    <script>
+        // 词库数据 (Database) - First 10 words fully enriched
+        const vocabData = [
+            {
+                word: "Turrets", respelling: "TUR-its", cn: "n. 炮塔; 角塔",
+                en: "A small tower on top of a larger tower or at the corner of a building or wall.",
+                sentences: [
+                    "The ancient castle was heavily fortified with stone turrets.",
+                    "Archers positioned themselves in the turrets to defend the city.",
+                    "The tank rotated its turrets to aim at the approaching enemy.",
+                    "She admired the Victorian house with its decorative turrets.",
+                    "The battleship was equipped with twin gun turrets."
+                ], failed: false
+            },
+            {
+                word: "Plunge", respelling: "pluhnj", cn: "n. 跳水 v. 扎；骤降",
+                en: "To fall or jump suddenly from a high place; a sudden decrease in value.",
+                sentences: [
+                    "The stock market saw a sudden plunge after the news broke.",
+                    "He took a deep breath and decided to plunge into the icy water.",
+                    "Temperatures are expected to plunge over the weekend.",
+                    "The car lost control and plunged off the cliff.",
+                    "She took the plunge and started her own business."
+                ], failed: false
+            },
+            {
+                word: "Sway", respelling: "sway", cn: "n.&v. 摇摆; 影响",
+                en: "To move slowly from side to side; to control or influence someone.",
+                sentences: [
+                    "The trees began to sway gently in the evening breeze.",
+                    "He tried to sway the jury with his emotional closing argument.",
+                    "Under the sway of the dictator, the country suffered greatly.",
+                    "The tall building is designed to sway slightly during an earthquake.",
+                    "Don't let their negative opinions sway your decision."
+                ], failed: false
+            },
+            {
+                word: "Restrain", respelling: "ri-STRAYN", cn: "v. 抑制 = ban",
+                en: "To prevent someone or something from doing something; to keep under control.",
+                sentences: [
+                    "He had to restrain his anger when dealing with the rude customer.",
+                    "The police officer used handcuffs to restrain the suspect.",
+                    "You must restrain your dog while walking in the public park.",
+                    "The government tried to restrain inflation by raising interest rates.",
+                    "She could barely restrain her excitement upon hearing the good news."
+                ], failed: false
+            },
+            {
+                word: "Inception", respelling: "in-SEP-shuhn", cn: "n. 开端 = kickoff",
+                en: "The establishment or starting point of an institution or activity.",
+                sentences: [
+                    "Since its inception in 2010, the company has grown rapidly.",
+                    "She has been involved with the project from its very inception.",
+                    "The inception of the internet changed the world forever.",
+                    "The club has won three championships since its inception.",
+                    "We need to review the data collected since the inception of the trial."
+                ], failed: false
+            },
+            {
+                word: "Proliferate", respelling: "proh-LIF-uh-rayt", cn: "v. 增生；扩散",
+                en: "To increase rapidly in numbers; multiply.",
+                sentences: [
+                    "Rumors tend to proliferate quickly on social media platforms.",
+                    "In the warm weather, bacteria can proliferate rapidly in food.",
+                    "Fast food restaurants have proliferated across the globe.",
+                    "The number of online streaming services continues to proliferate.",
+                    "Cellular damage caused the abnormal cells to proliferate."
+                ], failed: false
+            },
+            {
+                word: "Adjacent", respelling: "uh-JAY-suhnt", cn: "a. 临近的",
+                en: "Next to or adjoining something else.",
+                sentences: [
+                    "They live in a house adjacent to the railway station.",
+                    "The new shopping mall is adjacent to the community park.",
+                    "Please find your seats in the adjacent room.",
+                    "The two adjacent angles form a straight line.",
+                    "Her office is adjacent to the CEO's suite."
+                ], failed: false
+            },
+            {
+                word: "Gentrification", respelling: "jen-truh-fi-KAY-shuhn", cn: "n. 士绅化",
+                en: "The process whereby the character of a poor urban area is changed by wealthier people moving in.",
+                sentences: [
+                    "Gentrification has driven up rent prices in the historic neighborhood.",
+                    "Many long-time residents were displaced due to rapid gentrification.",
+                    "The new artisan coffee shops are a clear sign of gentrification.",
+                    "Urban planners debate the pros and cons of gentrification.",
+                    "Gentrification brought new businesses but destroyed the local culture."
+                ], failed: false
+            },
+            {
+                word: "Noxious", respelling: "NOK-shuhs", cn: "a. 有害的",
+                en: "Harmful, poisonous, or very unpleasant.",
+                sentences: [
+                    "The factory was fined for releasing noxious fumes into the air.",
+                    "They had to wear masks to protect themselves from the noxious gases.",
+                    "The plant produces a noxious liquid that can cause skin burns.",
+                    "Noxious weeds are overtaking the native plants in the garden.",
+                    "The burning plastic emitted a highly noxious odor."
+                ], failed: false
+            },
+            {
+                word: "Vague", respelling: "vayg", cn: "a. 模糊的",
+                en: "Of uncertain, indefinite, or unclear character or meaning.",
+                sentences: [
+                    "The instructions he gave us were too vague to follow.",
+                    "I only have a vague memory of my early childhood.",
+                    "The politician gave a vague answer to avoid controversy.",
+                    "Through the fog, she could see the vague outline of a ship.",
+                    "He felt a vague sense of unease as he entered the dark room."
+                ], failed: false
+            },
+            {
+                word: "Absurd", respelling: "uhb-SURD", cn: "a. 荒诞的",
+                en: "Wildly unreasonable, illogical, or inappropriate.",
+                sentences: [
+                    "The idea that the earth is flat is completely absurd.",
+                    "We were faced with an absurd situation that made everyone laugh.",
+                    "The fees they charge for such basic services are just absurd.",
+                    "She made an absurd claim about having met time travelers.",
+                    "The plot of the movie was so absurd that it was hard to watch."
+                ], failed: false
+            },
+            {
+                word: "Sublimate", respelling: "SUHB-luh-mayt", cn: "v. 升华",
+                en: "To divert or modify (an instinctual impulse) into a culturally higher or socially more acceptable activity.",
+                sentences: [
+                    "He managed to sublimate his aggressive impulses into competitive sports.",
+                    "Artists often sublimate their personal pain into their creative masterpieces.",
+                    "It is highly recommended to sublimate your anger into a vigorous workout.",
+                    "She sublimated her desire for revenge into a massive drive for career success.",
+                    "The psychologist explained how humans sublimate unacceptable urges daily."
+                ], failed: false
+            },
+            {
+                word: "Fume", respelling: "fyoom", cn: "n. 烟雾 v. 熏；冒烟；(生闷气)",
+                en: "Gas, smoke, or vapor that smells strongly or is dangerous to inhale; to feel or show great anger.",
+                sentences: [
+                    "The noxious factory fumes were polluting the entire neighborhood.",
+                    "She sat in her office, fuming about the unfair criticism she received.",
+                    "He was fuming with anger after the board meeting was canceled.",
+                    "Toxic fumes rapidly filled the laboratory after the chemical spill.",
+                    "The dark exhaust fumes from the old truck were suffocating."
+                ], failed: false
+            },
+            {
+                word: "Metallic", respelling: "muh-TAL-ik", cn: "a. 金属质感的",
+                en: "Relating to or resembling metal or metals.",
+                sentences: [
+                    "The new sports car features a sleek, metallic blue paint job.",
+                    "She heard a loud metallic clank coming from the engine room.",
+                    "The alien spacecraft had a smooth, metallic surface.",
+                    "This fabric has a shiny metallic thread woven into it.",
+                    "The tap water in that old building has a strange metallic taste."
+                ], failed: false
+            },
+            {
+                word: "Turquoise", respelling: "TUR-kwoyz", cn: "n. 绿松石；蓝绿色",
+                en: "A greenish-blue color or a semi-precious stone of this color.",
+                sentences: [
+                    "The Caribbean sea is famous for its crystal-clear turquoise waters.",
+                    "She wore a beautiful silver necklace embedded with a large turquoise.",
+                    "The interior designer painted the bedroom walls a calming turquoise.",
+                    "Turquoise has been prized as a gem and ornamental stone for thousands of years.",
+                    "The artist blended blue and green to achieve the perfect turquoise hue."
+                ], failed: false
+            },
+            {
+                word: "Indicative", respelling: "in-DIK-uh-tiv", cn: "a. 指示性的",
+                en: "Serving as a sign or indication of something.",
+                sentences: [
+                    "These recent market trends are indicative of an upcoming economic boom.",
+                    "Her sudden silence was indicative of her deep disagreement.",
+                    "The rash is indicative of a severe allergic reaction.",
+                    "Such aggressive behavior is often indicative of deeper psychological issues.",
+                    "The poll results are indicative of how the public feels about the new policy."
+                ], failed: false
+            },
+            {
+                word: "Cyber skills", respelling: "SY-ber skilz", cn: "n. 网络技能",
+                en: "Abilities related to computer technology, internet navigation, and digital security.",
+                sentences: [
+                    "Modern jobs increasingly require advanced cyber skills from applicants.",
+                    "The training program is designed to boost the cyber skills of elderly citizens.",
+                    "Good cyber skills are essential to protect your personal information online.",
+                    "The hackers demonstrated sophisticated cyber skills during the breach.",
+                    "Schools must teach basic cyber skills to prepare students for the digital age."
+                ], failed: false
+            },
+            {
+                word: "Hassle", respelling: "HAS-uhl", cn: "n. 麻烦 v. 烦扰",
+                en: "Irritating inconvenience or a prolonged argument.",
+                sentences: [
+                    "Getting a visa for that country can be a real hassle.",
+                    "I don't want to go through the hassle of moving to a new apartment again.",
+                    "My boss has been hassling me all week about the quarterly report.",
+                    "Booking the tickets online saved us a lot of time and hassle.",
+                    "Traveling with young children can sometimes be a bit of a hassle."
+                ], failed: false
+            },
+            {
+                word: "Billboard", respelling: "BIL-bord", cn: "n. 广告牌",
+                en: "A large outdoor board for displaying advertisements.",
+                sentences: [
+                    "The company rented a massive billboard on the highway to promote its new phone.",
+                    "Electronic billboards in Times Square are incredibly bright at night.",
+                    "They painted over the old billboard with a fresh, modern design.",
+                    "Billboard advertising remains an effective way to reach daily commuters.",
+                    "The controversial billboard was taken down after public complaints."
+                ], failed: false
+            },
+            {
+                word: "Collision", respelling: "kuh-LIZH-uhn", cn: "n. 碰撞",
+                en: "An instance of one moving object or person striking violently against another.",
+                sentences: [
+                    "The two cars were involved in a head-on collision on the icy road.",
+                    "Air traffic control works hard to prevent any mid-air collision.",
+                    "The debate felt like a collision of two completely different ideologies.",
+                    "Luckily, no one was seriously injured in the rear-end collision.",
+                    "The collision between the asteroid and the planet created a massive crater."
+                ], failed: false
+            },
+            {
+                word: "Downright", respelling: "DOWN-ryt", cn: "adv. 彻头彻尾地 a. 明白的",
+                en: "(Of something bad or unpleasant) utter; complete; completely.",
+                sentences: [
+                    "His behavior at the dinner party was downright rude.",
+                    "It's not just a bad idea; it's a downright dangerous one.",
+                    "She was downright furious when she found out they lied to her.",
+                    "The movie wasn't just boring, it was downright offensive.",
+                    "That is a downright lie, and you know it."
+                ], failed: false
+            },
+            {
+                word: "Patent", respelling: "PAT-nt", cn: "a./n./v. （取得）专利（权）；明白的",
+                en: "Easily recognizable; obvious (adj); a government authority conferring a right or title (n).",
+                sentences: [
+                    "The inventor filed a patent for his revolutionary new battery design.",
+                    "Her claim that she didn't know about the rule was a patent lie.",
+                    "The company holds the exclusive patent for this medical device.",
+                    "It was patent to everyone in the room that he was uncomfortable.",
+                    "They decided to patent the software before releasing it to the public."
+                ], failed: false
+            },
+            {
+                word: "Explicit", respelling: "ik-SPLIS-it", cn: "a. 明确的",
+                en: "Stated clearly and in detail, leaving no room for confusion or doubt.",
+                sentences: [
+                    "The teacher gave explicit instructions on how to format the essay.",
+                    "The movie was rated R due to its explicit language and violence.",
+                    "She was very explicit about what she expected from her team.",
+                    "The contract includes an explicit clause regarding early termination.",
+                    "He explicitly told them not to open the box until his birthday."
+                ], failed: false
+            },
+            {
+                word: "Implicit", respelling: "im-PLIS-it", cn: "a. 隐式的；含蓄的；盲从的",
+                en: "Implied though not plainly expressed; with no qualification or question; absolute.",
+                sentences: [
+                    "There was an implicit agreement that they would split the profits equally.",
+                    "The criticism in his voice was subtle but implicit.",
+                    "A soldier must have implicit trust in their commanding officer.",
+                    "Implicit biases can affect how we unconsciously treat other people.",
+                    "Her silence was taken as an implicit approval of the plan."
+                ], failed: false
+            },
+            {
+                word: "Retain", respelling: "ri-TAYN", cn: "v. 保留；存",
+                en: "Continue to have something; keep possession of.",
+                sentences: [
+                    "The company must retain its top talent to remain competitive.",
+                    "These old brick walls retain a lot of heat during the summer.",
+                    "He managed to retain his title as the world chess champion.",
+                    "You should retain all your receipts for tax purposes.",
+                    "Despite her age, she retains a sharp memory and quick wit."
+                ], failed: false
+            },
+            {
+                word: "Corny", respelling: "KOR-nee", cn: "a. 老套的",
+                en: "Trite, banal, or mawkishly sentimental.",
+                sentences: [
+                    "He always tells the same corny jokes at family gatherings.",
+                    "I know it sounds corny, but I truly believe love conquers all.",
+                    "The romantic comedy was full of corny dialogue and clichés.",
+                    "She gave him a corny greeting card for Valentine's Day.",
+                    "Despite its corny plot, the movie was surprisingly entertaining."
+                ], failed: false
+            },
+            {
+                word: "Deprive", respelling: "di-PRYV", cn: "v. 剥夺",
+                en: "Deny a person or place the possession or use of something.",
+                sentences: [
+                    "The tyrant sought to deprive the citizens of their basic human rights.",
+                    "Lack of sleep will deprive your brain of the rest it needs.",
+                    "He claimed the new law would deprive him of his livelihood.",
+                    "The drought has deprived the region of its main water source.",
+                    "You cannot deprive a child of a proper education."
+                ], failed: false
+            },
+            {
+                word: "Bespectacled", respelling: "bih-SPEK-tuh-kuhld", cn: "a. 戴眼镜的",
+                en: "Wearing glasses.",
+                sentences: [
+                    "A quiet, bespectacled man sat in the corner reading a massive book.",
+                    "The bespectacled professor delivered a brilliant lecture on quantum physics.",
+                    "The author is easily recognizable by his bespectacled face and thick beard.",
+                    "She was a smart, bespectacled girl who loved spending time in the library.",
+                    "The bespectacled clerk stamped my passport without looking up."
+                ], failed: false
+            },
+            {
+                word: "Interpret", respelling: "in-TUR-prit", cn: "v. 解释；口译",
+                en: "Explain the meaning of (information, words, or actions).",
+                sentences: [
+                    "It is difficult to interpret the confusing data without more context.",
+                    "How you interpret the poem depends heavily on your personal experiences.",
+                    "She was hired to interpret for the visiting diplomats.",
+                    "The lawyer interpreted the contract in favor of her client.",
+                    "His smile was interpreted as a sign of agreement."
+                ], failed: false
+            },
+            {
+                word: "Tangibly", respelling: "TAN-juh-blee", cn: "adv. 切实地",
+                en: "In a way that can be perceived by touch or is clear and definite.",
+                sentences: [
+                    "The tension in the room was tangibly thick.",
+                    "The new management has tangibly improved the company's profits.",
+                    "We need to see tangibly how this policy benefits the community.",
+                    "Her hard work paid off tangibly when she received the promotion.",
+                    "The consequences of climate change are now affecting us tangibly."
+                ], failed: false
+            },
+            {
+                word: "Skeptical", respelling: "SKEP-ti-kuhl", cn: "a. 怀疑的",
+                en: "Not easily convinced; having doubts or reservations.",
+                sentences: [
+                    "Many scientists remain skeptical about the new discovery.",
+                    "The public is increasingly skeptical of election promises.",
+                    "She gave him a skeptical look when he explained his excuse.",
+                    "I'm skeptical that the project will be finished on time.",
+                    "He was skeptical of the claim that the product could cure everything."
+                ], failed: false
+            },
+            {
+                word: "Ambiguous", respelling: "am-BIG-yoo-uhs", cn: "a. 模棱两可的; 不明确的",
+                en: "Open to more than one interpretation; not having one obvious meaning.",
+                sentences: [
+                    "The ending of the movie was deliberately ambiguous.",
+                    "His instructions were so ambiguous that no one knew what to do.",
+                    "The law is written in ambiguous language that causes confusion.",
+                    "She gave an ambiguous answer to avoid taking a side.",
+                    "An ambiguous contract can lead to expensive legal battles."
+                ], failed: false
+            },
+            {
+                word: "Anomalous", respelling: "uh-NOM-uh-luhs", cn: "a. 异常的; 不规则的",
+                en: "Deviating from what is standard, normal, or expected.",
+                sentences: [
+                    "The scientists observed an anomalous result in the experiment.",
+                    "Such a cold winter is anomalous for this tropical region.",
+                    "The computer program flagged the anomalous data entry.",
+                    "He was in an anomalous position as both a judge and a witness.",
+                    "We need to investigate these anomalous readings immediately."
+                ], failed: false
+            },
+            {
+                word: "Complement", respelling: "KOM-pluh-muhnt", cn: "v. 补充; 辅佐 n. 补足物",
+                en: "A thing that completes or brings to perfection.",
+                sentences: [
+                    "The red wine was chosen to complement the flavor of the steak.",
+                    "Her skills as a designer perfectly complement his marketing expertise.",
+                    "The new tie was the perfect complement to his dark suit.",
+                    "Strawberries and cream are a classic complement to each other.",
+                    "The music was designed to complement the atmosphere of the film."
+                ], failed: false
+            },
+            {
+                word: "Compliment", respelling: "KOM-pluh-muhnt", cn: "n.&v. 称赞; 恭维",
+                en: "A polite expression of praise or admiration.",
+                sentences: [
+                    "She received many compliments on her elegant performance.",
+                    "He tried to compliment her on her work, but he felt nervous.",
+                    "I take it as a compliment that you want to follow my advice.",
+                    "The chef came out to accept the compliments of the diners.",
+                    "Please give my compliments to the host for a lovely evening."
+                ], failed: false
+            },
+            {
+                word: "Candid", respelling: "KAN-did", cn: "a. 坦率的; 正直的",
+                en: "Truthful and straightforward; frank.",
+                sentences: [
+                    "The politician gave a candid interview about his past mistakes.",
+                    "I want you to be completely candid with me about your feelings.",
+                    "The photographer captured a candid shot of the children laughing.",
+                    "His candid feedback helped me improve my presentation significantly.",
+                    "She is known for her candid and sometimes blunt opinions."
+                ], failed: false
+            },
+            {
+                word: "Coincide", respelling: "koh-in-SYD", cn: "v. 同时发生; 相符",
+                en: "Occur at or during the same time; correspond in nature.",
+                sentences: [
+                    "The publication of the book was timed to coincide with the movie release.",
+                    "Our interests don't always coincide, but we remain good friends.",
+                    "The heavy rain happened to coincide with the outdoor wedding.",
+                    "Her views on education coincide with the current school policy.",
+                    "Does your schedule coincide with the meeting times?"
+                ], failed: false
+            },
+            {
+                word: "Complacent", respelling: "kuhm-PLAY-suhnt", cn: "a. 自满的; 得意的",
+                en: "Showing smug or uncritical satisfaction with oneself or one's achievements.",
+                sentences: [
+                    "We cannot afford to become complacent despite our recent success.",
+                    "The champion lost the match because he had become too complacent.",
+                    "A complacent attitude toward safety can lead to serious accidents.",
+                    "She had a complacent smile on her face after winning the prize.",
+                    "The company went bankrupt because it was complacent about its competition."
+                ], failed: false
+            },
+            {
+                word: "Concede", respelling: "kuhn-SEED", cn: "v. 承认(为真); 让步",
+                en: "Admit that something is true or valid after first denying it.",
+                sentences: [
+                    "After the evidence was shown, he had to concede that he was wrong.",
+                    "The candidate refused to concede the election until every vote was counted.",
+                    "I am willing to concede that your plan might work under certain conditions.",
+                    "They finally conceded defeat after hours of intense negotiation.",
+                    "She conceded a point to her opponent during the debate."
+                ], failed: false
+            },
+            {
+                word: "Deference", respelling: "DEF-er-uhnss", cn: "n. 顺从; 尊重",
+                en: "Humble submission and respect.",
+                sentences: [
+                    "He addressed the judge with great deference and politeness.",
+                    "In deference to the grieving family, the party was canceled.",
+                    "The young soldiers showed proper deference to their superior officers.",
+                    "Out of deference to my parents, I decided to attend the local college.",
+                    "The tradition is still followed today in deference to the past."
+                ], failed: false
+            },
+            {
+                word: "Eloquent", respelling: "EL-uh-kwuhnt", cn: "a. 雄辩的; 有说服力的",
+                en: "Fluent or persuasive in speaking or writing.",
+                sentences: [
+                    "The president gave an eloquent speech that inspired the nation.",
+                    "His eyes were more eloquent than any words he could have spoken.",
+                    "She is an eloquent advocate for the rights of the disabled.",
+                    "The book is an eloquent defense of traditional cultural values.",
+                    "He was respected for his eloquent and logical arguments."
+                ], failed: false
+            },
+            {
+                word: "Empirical", respelling: "em-PIR-i-kuhl", cn: "a. 经验主义的; 以观察或实验为依据的",
+                en: "Based on observation or experience rather than theory or pure logic.",
+                sentences: [
+                    "They provided empirical evidence to support their scientific theory.",
+                    "The study is based on empirical data collected over ten years.",
+                    "We need empirical proof before we can change the safety regulations.",
+                    "His conclusions were reached through empirical observation, not guesswork.",
+                    "The philosopher debated the value of empirical knowledge versus intuition."
+                ], failed: false
+            },
+            {
+                word: "Enumerate", respelling: "i-NOO-muh-rayt", cn: "v. 列举; 枚举",
+                en: "Mention a number of things one by one.",
+                sentences: [
+                    "The speaker proceeded to enumerate the benefits of the new law.",
+                    "She enumerated the reasons why she was resigning from her post.",
+                    "There are too many instances to enumerate in a short report.",
+                    "The document enumerates all the items included in the sale.",
+                    "He carefully enumerated each point of the argument."
+                ], failed: false
+            },
+            {
+                word: "Fluctuate", respelling: "FLUHK-choo-ayt", cn: "v. 波动; 涨落",
+                en: "Rise and fall irregularly in number or amount.",
+                sentences: [
+                    "Trade levels fluctuate significantly from month to month.",
+                    "The patient's temperature continued to fluctuate throughout the night.",
+                    "Gas prices fluctuate based on global oil supply and demand.",
+                    "Her moods seem to fluctuate between extreme joy and deep sadness.",
+                    "The value of the currency has fluctuated wildly this year."
+                ], failed: false
+            },
+            {
+                word: "Hypothetical", respelling: "hy-puh-THET-i-kuhl", cn: "a. 假设的",
+                en: "Based on or serving as a hypothesis; supposed but not necessarily true.",
+                sentences: [
+                    "Let's look at a hypothetical situation where the company loses its main client.",
+                    "The question she asked was purely hypothetical and not about a real person.",
+                    "Scientists often work with hypothetical models to predict future events.",
+                    "I don't want to waste time discussing hypothetical problems that may never happen.",
+                    "The lawyer used a hypothetical example to explain the complex law."
+                ], failed: false
+            },
+            {
+                word: "Incite", respelling: "in-SYT", cn: "v. 煽动; 刺激",
+                en: "Encourage or stir up (violent or unlawful behavior).",
+                sentences: [
+                    "The speaker was accused of trying to incite a riot.",
+                    "His insulting remarks were intended to incite an angry reaction.",
+                    "They were arrested for using social media to incite violence.",
+                    "It is a crime to incite others to break the law.",
+                    "The news story served to incite further public outrage."
+                ], failed: false
+            },
+            {
+                word: "Judicious", respelling: "joo-DISH-uhs", cn: "a. 明智的; 判断正确的",
+                en: "Having, showing, or done with good judgment or sense.",
+                sentences: [
+                    "We should make a judicious use of our limited natural resources.",
+                    "A judicious investment now could lead to a wealthy retirement.",
+                    "The editor made judicious cuts to the manuscript to make it shorter.",
+                    "The success of the mission depended on the judicious choice of a leader.",
+                    "He is known for his judicious and fair treatment of all employees."
+                ], failed: false
+            },
+            {
+                word: "Lucrative", respelling: "LOO-kruh-tiv", cn: "a. 获利的; 有利可图的",
+                en: "Producing a great deal of profit.",
+                sentences: [
+                    "The professional athlete signed a very lucrative contract with the team.",
+                    "She decided to leave her teaching job for a more lucrative career in law.",
+                    "Real estate can be a lucrative business if you know the market well.",
+                    "The company found a lucrative market for its products in Southeast Asia.",
+                    "His invention proved to be extremely lucrative in the long run."
+                ], failed: false
+            },
+            {
+                word: "Malleable", respelling: "MAL-ee-uh-buhl", cn: "a. 可塑的; 易受影响的",
+                en: "Able to be hammered or pressed permanently out of shape without breaking; easily influenced.",
+                sentences: [
+                    "Gold is one of the most malleable metals in existence.",
+                    "The minds of young children are highly malleable and easily influenced.",
+                    "Lead is a soft and malleable material used in various industries.",
+                    "A good actor needs to have a malleable face and voice.",
+                    "The clay was malleable enough to be shaped into a beautiful vase."
+                ], failed: false
+            },
+            {
+                word: "Novel", respelling: "NOV-uhl", cn: "a. 新奇的; 新颖的",
+                en: "New or unusual in an interesting way.",
+                sentences: [
+                    "The computer scientist came up with a novel solution to the coding error.",
+                    "The restaurant's menu features many novel combinations of flavors.",
+                    "It was a novel idea to use recycled plastic to build entire houses.",
+                    "The virus was a novel strain that doctors had never seen before.",
+                    "Traveling by balloon was a novel experience for the whole family."
+                ], failed: false
+            },
+            {
+                word: "Obsolete", respelling: "ob-suh-LEET", cn: "a. 废弃的；过时的",
+                en: "No longer produced or used; out of date.",
+                sentences: [
+                    "New technology has made my old computer almost obsolete.",
+                    "Traditional film cameras were rendered obsolete by digital photography.",
+                    "The company decided to replace all the obsolete machinery in the factory.",
+                    "He used an obsolete word that most people no longer understand.",
+                    "The plan became obsolete before it could even be implemented."
+                ], failed: false
+            },
+            {
+                word: "Paradox", respelling: "PAR-uh-doks", cn: "n. 悖论；自相矛盾的人或事",
+                en: "A seemingly absurd or self-contradictory statement that may prove to be true.",
+                sentences: [
+                    "It is a strange paradox that the more he earns, the less he saves.",
+                    "The 'grandfather paradox' is a famous problem in time travel theories.",
+                    "He is a paradox: a very successful businessman who hates money.",
+                    "The poem explores the paradox of finding freedom through discipline.",
+                    "That the quietest student is also the best debater seems like a paradox."
+                ], failed: false
+            },
+            {
+                word: "Pensive", respelling: "PEN-siv", cn: "a. 沉思的；忧心忡忡的",
+                en: "Engaged in, involving, or reflecting deep or serious thought.",
+                sentences: [
+                    "She sat by the window in a pensive mood, staring at the rain.",
+                    "The pensive look on his face suggested he was worried about something.",
+                    "He wrote a pensive essay about the future of humanity.",
+                    "After the long meeting, the director remained quiet and pensive.",
+                    "The painting depicts a pensive young woman holding a letter."
+                ], failed: false
+            },
+            {
+                word: "Plausible", respelling: "PLAW-zuh-buhl", cn: "a. 似乎合理的",
+                en: "(Of an argument or statement) seeming reasonable or probable.",
+                sentences: [
+                    "Her explanation for the delay sounded perfectly plausible to the jury.",
+                    "Scientists are looking for a plausible explanation for the sudden weather change.",
+                    "It is plausible that the two events are connected, but we lack proof.",
+                    "The plot of the thriller was exciting but not entirely plausible.",
+                    "He gave a plausible excuse for missing the deadline."
+                ], failed: false
+            },
+            {
+                word: "Pragmatic", respelling: "prag-MAT-ik", cn: "a. 实际的；务实的",
+                en: "Dealing with things sensibly and realistically based on practical considerations.",
+                sentences: [
+                    "She took a pragmatic approach to solving the budget crisis.",
+                    "In business, you must be pragmatic rather than idealistic.",
+                    "The leader made a pragmatic decision to compromise with the opposition.",
+                    "A pragmatic person focuses on what works, not just on theory.",
+                    "We need a pragmatic solution to the traffic problems in the city."
+                ], failed: false
+            },
+            {
+                word: "Precedent", respelling: "PRES-i-duhnt", cn: "n. 先例；惯例",
+                en: "An earlier event or action that is regarded as an example or guide.",
+                sentences: [
+                    "The judge's ruling set a legal precedent for future privacy cases.",
+                    "There is no historical precedent for a crisis of this magnitude.",
+                    "The company broke with precedent and promoted a very young employee.",
+                    "Scholars searched the archives to find a precedent for the new law.",
+                    "If we allow this now, it will create a dangerous precedent."
+                ], failed: false
+            },
+            {
+                word: "Prudent", respelling: "PROO-duhnt", cn: "a. 谨慎的；精明的",
+                en: "Acting with or showing care and thought for the future.",
+                sentences: [
+                    "It would be prudent to save some money for unexpected emergencies.",
+                    "The manager made a prudent investment that paid off years later.",
+                    "He is a prudent traveler who always checks the weather before leaving.",
+                    "It's not prudent to discuss confidential matters in a public place.",
+                    "She gave him some prudent advice about his career choices."
+                ], failed: false
+            },
+            {
+                word: "Qualitative", respelling: "KWOL-i-tay-tiv", cn: "a. 定性的；性质上的",
+                en: "Relating to, measuring, or measured by the quality of something.",
+                sentences: [
+                    "The researchers conducted a qualitative study on consumer behavior.",
+                    "We need to focus on qualitative improvements, not just producing more.",
+                    "Qualitative analysis helps us understand why people make certain choices.",
+                    "There has been a qualitative change in the way we communicate online.",
+                    "The survey included qualitative feedback from the participants."
+                ], failed: false
+            },
+            {
+                word: "Quantitative", respelling: "KWON-ti-tay-tiv", cn: "a. 定量的；数量上的",
+                en: "Relating to, measuring, or measured by the quantity of something.",
+                sentences: [
+                    "The report provides quantitative data on the city's population growth.",
+                    "Scientists use quantitative methods to measure chemical reactions.",
+                    "A quantitative assessment showed a 20% increase in productivity.",
+                    "The exam focuses on both qualitative and quantitative reasoning.",
+                    "She is an expert in quantitative research and statistics."
+                ], failed: false
+            },
+            {
+                word: "Quirk", respelling: "kwurk", cn: "n. 奇事；怪癖",
+                en: "A peculiar behavioral habit.",
+                sentences: [
+                    "Everyone has a little quirk that makes them unique.",
+                    "By a strange quirk of fate, they met again twenty years later.",
+                    "One of his quirks is that he only writes with green ink.",
+                    "The old car has a few quirks, but it still runs perfectly.",
+                    "She has a funny quirk of tilting her head when she's thinking."
+                ], failed: false
+            },
+            {
+                word: "Radical", respelling: "RAD-i-kuhl", cn: "a. 激进的；根本的",
+                en: "Relating to or affecting the fundamental nature of something.",
+                sentences: [
+                    "The company underwent a radical transformation to survive the crisis.",
+                    "He proposed a radical plan to eliminate poverty in the region.",
+                    "Her ideas were considered too radical for the conservative board.",
+                    "We need to make radical changes to our environmental policies.",
+                    "The invention of the steam engine led to radical social changes."
+                ], failed: false
+            },
+            {
+                word: "Refute", respelling: "ri-FYOOT", cn: "v. 反驳；驳斥",
+                en: "Prove (a statement or theory) to be wrong or false; disprove.",
+                sentences: [
+                    "The lawyer worked hard to refute the testimony of the witness.",
+                    "New evidence has been found to refute the old scientific theory.",
+                    "He attempted to refute the claims made in the newspaper article.",
+                    "It is difficult to refute the logic of her argument.",
+                    "She spoke eloquently to refute the accusations against her."
+                ], failed: false
+            },
+            {
+                word: "Relevant", respelling: "REL-uh-vuhnt", cn: "a. 相关的；切题的",
+                en: "Closely connected or appropriate to what is being done or considered.",
+                sentences: [
+                    "Please include all relevant information in your application.",
+                    "The witness's past was not relevant to the current court case.",
+                    "Students should learn skills that are relevant to the modern job market.",
+                    "Is that comment really relevant to our discussion?",
+                    "The book remains relevant even though it was written 50 years ago."
+                ], failed: false
+            },
+            {
+                word: "Reluctant", respelling: "ri-LUHK-tuhnt", cn: "a. 不情愿的；勉强的",
+                en: "Unwilling and hesitant; disinclined.",
+                sentences: [
+                    "She was reluctant to admit that she had made a mistake.",
+                    "The cat was reluctant to come out from under the sofa.",
+                    "They were reluctant participants in the new government program.",
+                    "He gave a reluctant smile when he heard the funny story.",
+                    "Many people are reluctant to change their long-held habits."
+                ], failed: false
+            },
+            {
+                word: "Scrutinize", respelling: "SKROO-tuh-nyz", cn: "v. 详细检查；细看",
+                en: "Examine or inspect closely and thoroughly.",
+                sentences: [
+                    "The customs officer began to scrutinize the traveler's documents.",
+                    "Researchers must scrutinize the data for any possible errors.",
+                    "The public has the right to scrutinize how tax money is spent.",
+                    "Every detail of the contract was scrutinized by the legal team.",
+                    "She scrutinized her reflection in the mirror before leaving."
+                ], failed: false
+            },
+            {
+                word: "Solidarity", respelling: "sol-i-DAR-i-tee", cn: "n. 团结；一致",
+                en: "Unity or agreement of feeling or action among individuals.",
+                sentences: [
+                    "The community showed great solidarity during the difficult times.",
+                    "Workers went on strike to show solidarity with their fired colleagues.",
+                    "The march was organized as a gesture of solidarity with the victims.",
+                    "National solidarity is essential for overcoming a major crisis.",
+                    "He expressed his solidarity with the movement through a social media post."
+                ], failed: false
+            },
+            {
+                word: "Speculate", respelling: "SPEK-yuh-layt", cn: "v. 推测；投机",
+                en: "Form a theory about a subject without firm evidence.",
+                sentences: [
+                    "Scientists can only speculate about what lies inside a black hole.",
+                    "The newspapers began to speculate about the prince's secret wedding.",
+                    "I don't want to speculate on the cause of the accident until we have facts.",
+                    "He lost a lot of money speculating on the stock market.",
+                    "It is interesting to speculate how different the world would be today."
+                ], failed: false
+            },
+            {
+                word: "Static", respelling: "STAT-ik", cn: "a. 静态的；静止的",
+                en: "Lacking in movement, action, or change.",
+                sentences: [
+                    "The population of the small village has remained static for decades.",
+                    "A static character in a story does not change or grow over time.",
+                    "The economy is currently static, with no growth or decline.",
+                    "There was a lot of static on the radio during the thunderstorm.",
+                    "She stood static with fear as the bear approached."
+                ], failed: false
+            },
+            {
+                word: "Substantiate", respelling: "suhb-STAN-shee-ayt", cn: "v. 证实；证明",
+                en: "Provide evidence to support or prove the truth of.",
+                sentences: [
+                    "You need to provide documents to substantiate your claim for a refund.",
+                    "The police are looking for witnesses to substantiate his alibi.",
+                    "There is no evidence to substantiate the rumors of his resignation.",
+                    "Can you substantiate your theory with any experimental data?",
+                    "Her findings were later substantiated by a team of independent experts."
+                ], failed: false
+            },
+            {
+                word: "Tactful", respelling: "TAKT-fuhl", cn: "a. 机智的；圆滑的；有分寸的",
+                en: "Showing skill and sensitivity in dealing with others or difficult issues.",
+                sentences: [
+                    "He gave a tactful answer to avoid hurting anyone's feelings.",
+                    "A diplomat must be very tactful when discussing sensitive borders.",
+                    "It wasn't very tactful of you to bring up his recent divorce.",
+                    "She is known for being tactful and professional in tense situations.",
+                    "The nurse was very tactful when explaining the bad news to the family."
+                ], failed: false
+            },
+            {
+                word: "Tentative", respelling: "TEN-tuh-tiv", cn: "a. 试验性的；暂定的",
+                en: "Not certain or fixed; done without confidence; hesitant.",
+                sentences: [
+                    "We have reached a tentative agreement, pending further review.",
+                    "She took a few tentative steps onto the thin ice.",
+                    "The project has a tentative completion date of next October.",
+                    "He offered a tentative smile, unsure of how he would be received.",
+                    "These are just tentative plans and are subject to change."
+                ], failed: false
+            },
+            {
+                word: "Transparent", respelling: "trans-PAIR-uhnt", cn: "a. 透明的；显然的",
+                en: "Allowing light to pass through so that objects behind can be distinctly seen; easy to perceive or detect.",
+                sentences: [
+                    "The water in the mountain stream was crystal clear and transparent.",
+                    "The company promised to be more transparent about its hiring process.",
+                    "He told a transparent lie that nobody in the room believed.",
+                    "The window is made of a special transparent plastic, not glass.",
+                    "Her motives for helping us were entirely transparent."
+                ], failed: false
+            },
+            {
+                word: "Ubiquitous", respelling: "yoo-BIK-wi-tuhs", cn: "a. 无处不在的",
+                en: "Present, appearing, or found everywhere.",
+                sentences: [
+                    "Cell phones have become ubiquitous in modern society.",
+                    "The ubiquitous fog made driving extremely dangerous that morning.",
+                    "Fast food chains are ubiquitous in almost every major city.",
+                    "He seems to have a ubiquitous influence on the local art scene.",
+                    "The song became ubiquitous, playing on every radio station for months."
+                ], failed: false
+            },
+            {
+                word: "Unprecedented", respelling: "uhn-PRES-i-den-tid", cn: "a. 空前的；史无前例的",
+                en: "Never done or known before.",
+                sentences: [
+                    "The government took unprecedented steps to stabilize the economy.",
+                    "The museum saw an unprecedented number of visitors this summer.",
+                    "Winning four gold medals in one day was an unprecedented achievement.",
+                    "We are facing an unprecedented crisis that requires a global solution.",
+                    "The scale of the destruction caused by the storm was unprecedented."
+                ], failed: false
+            },
+            {
+                word: "Validate", respelling: "VAL-i-dayt", cn: "v. 证实；使生效",
+                en: "Check or prove the validity or accuracy of; make or declare legally valid.",
+                sentences: [
+                    "The laboratory results helped to validate his original theory.",
+                    "You need to have your parking ticket validated at the front desk.",
+                    "His feelings were validated when his friends agreed with his concerns.",
+                    "The court's decision will validate the new environmental law.",
+                    "We need more data to validate the effectiveness of this new drug."
+                ], failed: false
+            },
+            {
+                word: "Viable", respelling: "VY-uh-buhl", cn: "a. 可行的；能养活的",
+                en: "Capable of working successfully; feasible.",
+                sentences: [
+                    "Is the project economically viable in the long term?",
+                    "We need to find a viable alternative to fossil fuels.",
+                    "The business plan was not considered viable by the investors.",
+                    "After the surgery, the doctors confirmed the organ was still viable.",
+                    "There are no viable solutions that satisfy everyone involved."
+                ], failed: false
+            },
+            {
+                word: "Warrant", respelling: "WAWR-uhnt", cn: "v. 保证；证明…正当 n. 授权",
+                en: "Justify or necessitate (a certain course of action).",
+                sentences: [
+                    "The police had a warrant to search the suspect's house.",
+                    "The situation is serious, but it doesn't warrant such a drastic reaction.",
+                    "I can warrant that this information is 100% accurate.",
+                    "These minor repairs don't warrant a full replacement of the system.",
+                    "The judge refused to issue a warrant due to lack of evidence."
+                ], failed: false
+            },
+            {
+                word: "Yield", respelling: "yeeld", cn: "v. 出产；屈服 n. 产量",
+                en: "Produce or provide; give way to arguments, demands, or pressure.",
+                sentences: [
+                    "The new farming techniques will yield a much larger harvest.",
+                    "He refused to yield to the pressure from his competitors.",
+                    "The investment is expected to yield a high rate of return.",
+                    "You must yield to oncoming traffic when entering the highway.",
+                    "Their research yielded some very surprising and useful results."
+                ], failed: false
+            },
+            {
+                word: "Adversarial", respelling: "ad-ver-SAIR-ee-uhl", cn: "a. 对抗的；对手的",
+                en: "Involving or characterized by conflict or opposition.",
+                sentences: [
+                    "The two nations have had an adversarial relationship for decades.",
+                    "In an adversarial legal system, lawyers argue for their own side.",
+                    "He adopted an adversarial tone during the press conference.",
+                    "The debate became increasingly adversarial as the night went on.",
+                    "They had to move past their adversarial history to work together."
+                ], failed: false
+            },
+            {
+                word: "Advocate", respelling: "AD-vuh-kayt", cn: "v. 提倡 n. 拥护者",
+                en: "Publicly recommend or support; a person who publicly supports a cause.",
+                sentences: [
+                    "The organization advocates for the rights of all workers.",
+                    "He is a strong advocate of alternative energy sources.",
+                    "She has spent her life advocating for better public education.",
+                    "The doctor advocated a more balanced diet and regular exercise.",
+                    "As an advocate for the environment, he refuses to use plastic bags."
+                ], failed: false
+            },
+            {
+                word: "Allude", respelling: "uh-LOOD", cn: "v. 暗指；影射",
+                en: "Suggest or call attention to indirectly; hint at.",
+                sentences: [
+                    "He didn't mention the problem directly, but he alluded to it.",
+                    "The author alludes to several historical events in her novel.",
+                    "I'm not sure what you are alluding to by that comment.",
+                    "In her speech, she alluded to the difficulties of the past year.",
+                    "The painting seems to allude to themes of loss and recovery."
+                ], failed: false
+            },
+            {
+                word: "Altercation", respelling: "awl-ter-KAY-shuhn", cn: "n. 争吵",
+                en: "A noisy argument or disagreement, especially in public.",
+                sentences: [
+                    "The two drivers got into a heated altercation after the accident.",
+                    "He was arrested following a physical altercation outside the bar.",
+                    "A minor altercation broke out between the fans of the two teams.",
+                    "The meeting ended abruptly after an altercation between the board members.",
+                    "She tried to avoid any altercation with her neighbors over the fence."
+                ], failed: false
+            },
+            {
+                word: "Ambivalence", respelling: "am-BIV-uh-luhnss", cn: "n. 矛盾心理",
+                en: "The state of having mixed feelings or contradictory ideas about something.",
+                sentences: [
+                    "She felt a certain ambivalence toward her new job offer.",
+                    "His ambivalence about the wedding was obvious to his friends.",
+                    "The public's ambivalence toward the law made it hard to enforce.",
+                    "I struggle with my ambivalence about moving to a different city.",
+                    "The movie explores the protagonist's ambivalence toward his father."
+                ], failed: false
+            },
+            {
+                word: "Annihilate", respelling: "uh-NY-uh-layt", cn: "v. 歼灭；毁灭",
+                en: "Destroy utterly; obliterate.",
+                sentences: [
+                    "The forest fire threatened to annihilate several small villages.",
+                    "The enemy army was completely annihilated in the final battle.",
+                    "He wanted to annihilate the competition and become the market leader.",
+                    "A nuclear explosion would annihilate everything within a ten-mile radius.",
+                    "They used powerful chemicals to annihilate the invasive weeds."
+                ], failed: false
+            },
+            {
+                word: "Antipathy", respelling: "an-TIP-uh-thee", cn: "n. 反感；厌恶",
+                en: "A deep-seated feeling of dislike; aversion.",
+                sentences: [
+                    "There has always been a strong antipathy between the two families.",
+                    "He made no attempt to hide his antipathy toward the new manager.",
+                    "Her natural antipathy to crowds made her avoid busy shopping malls.",
+                    "The two political parties share a mutual antipathy for each other's policies.",
+                    "Despite his antipathy to exercise, he started going to the gym."
+                ], failed: false
+            },
+            {
+                word: "Apex", respelling: "AY-peks", cn: "n. 顶点",
+                en: "The top or highest part of something, especially one forming a point.",
+                sentences: [
+                    "The climbers finally reached the apex of the mountain at dawn.",
+                    "At the apex of her career, she was the most famous actress in the world.",
+                    "The apex of the pyramid was covered in pure gold.",
+                    "The eagle circled high above, near the apex of the cliff.",
+                    "The festival represents the apex of the city's cultural calendar."
+                ], failed: false
+            },
+            {
+                word: "Apprehension", respelling: "ap-ri-HEN-shuhn", cn: "n. 忧虑；逮捕",
+                en: "Anxiety or fear that something bad will happen; the action of arresting someone.",
+                sentences: [
+                    "She felt a sense of apprehension as she entered the dark building.",
+                    "The apprehension of the suspect took place late last night.",
+                    "He faced his upcoming surgery with deep apprehension.",
+                    "There is widespread apprehension about the new tax laws.",
+                    "Her apprehension turned into relief when she saw the test results."
+                ], failed: false
+            },
+            {
+                word: "Articulate", respelling: "ar-TIK-yuh-layt", cn: "v. 清楚地说 a. 善于表达的",
+                en: "(Of a person) able to speak confidently and clearly; express an idea fluently.",
+                sentences: [
+                    "She is an articulate speaker who can explain complex ideas simply.",
+                    "He struggled to articulate his feelings during the interview.",
+                    "The report provides an articulate argument for social reform.",
+                    "You need to articulate each word clearly when you are on stage.",
+                    "A good lawyer must be articulate and highly persuasive."
+                ], failed: false
+            },
+            {
+                word: "Assert", respelling: "uh-SURT", cn: "v. 断言；声称；维护(权利)",
+                en: "State a fact or belief confidently and forcefully.",
+                sentences: [
+                    "The company continues to assert that its products are safe.",
+                    "She had to assert her authority when the students became rowdy.",
+                    "He asserted his innocence throughout the entire trial.",
+                    "You must learn to assert yourself in difficult business negotiations.",
+                    "The document asserts the right of every citizen to free speech."
+                ], failed: false
+            },
+            {
+                word: "Austere", respelling: "aw-STEER", cn: "a. 严厉的；简朴的",
+                en: "Severe or strict in manner, attitude, or appearance; without luxuries.",
+                sentences: [
+                    "The monk lived a very austere life in a small mountain cell.",
+                    "The courtroom had an austere atmosphere that made everyone nervous.",
+                    "Her style of dress is quite austere, mostly in black and gray.",
+                    "The government introduced austere measures to reduce the national debt.",
+                    "He was an austere man who rarely smiled or made jokes."
+                ], failed: false
+            },
+            {
+                word: "Benevolent", respelling: "buh-NEV-uh-luhnt", cn: "a. 仁慈的",
+                en: "Well meaning and kindly.",
+                sentences: [
+                    "The hospital was founded by a benevolent local businessman.",
+                    "He had a benevolent smile that put everyone at ease.",
+                    "The king was known as a benevolent ruler who cared for his people.",
+                    "They received a benevolent donation from an anonymous source.",
+                    "She is involved in several benevolent organizations that help the poor."
+                ], failed: false
+            },
+            {
+                word: "Bittersweet", respelling: "BIT-er-sweet", cn: "a. 有苦有乐的",
+                en: "Arousing pleasure tinged with sadness or pain.",
+                sentences: [
+                    "Graduation was a bittersweet moment for most of the students.",
+                    "Moving to a new city was a bittersweet experience for her.",
+                    "The movie had a bittersweet ending that left the audience in tears.",
+                    "He had bittersweet memories of the house where he grew up.",
+                    "It was a bittersweet victory, as many teammates were injured."
+                ], failed: false
+            },
+            {
+                word: "Bolster", respelling: "BOHL-ster", cn: "v. 支持；鼓舞",
+                en: "Support or strengthen; prop up.",
+                sentences: [
+                    "The new evidence helped to bolster the prosecutor's case.",
+                    "He took a deep breath to bolster his courage before the speech.",
+                    "The government took steps to bolster the failing economy.",
+                    "Winning the first game helped bolster the team's confidence.",
+                    "She used extra pillows to bolster herself up in bed."
+                ], failed: false
+            },
+            {
+                word: "Brawl", respelling: "brawl", cn: "n.&v. 斗殴",
+                en: "A rough or noisy fight or quarrel.",
+                sentences: [
+                    "A massive brawl broke out in the parking lot after the game.",
+                    "He was injured in a drunken brawl outside the nightclub.",
+                    "The peaceful protest quickly turned into a violent brawl.",
+                    "Police were called to break up a brawl between rival gangs.",
+                    "The two brothers are always brawling over something petty."
+                ], failed: false
+            },
+            {
+                word: "Brevity", respelling: "BREV-i-tee", cn: "n. 简洁",
+                en: "Concise and exact use of words in writing or speech; shortness of time.",
+                sentences: [
+                    "The professor praised the student for the brevity of his essay.",
+                    "In business writing, brevity is often more important than style.",
+                    "The brevity of the meeting was a relief to everyone involved.",
+                    "She is famous for the brevity and wit of her poems.",
+                    "I'll keep my comments brief for the sake of brevity."
+                ], failed: false
+            },
+            {
+                word: "Capitulate", respelling: "kuh-PICH-uh-layt", cn: "v. 投降；屈服",
+                en: "Cease to resist an opponent or an unwelcome demand; surrender.",
+                sentences: [
+                    "The army was forced to capitulate after weeks of being surrounded.",
+                    "The city finally capitulated to the enemy forces after a long siege.",
+                    "The government refused to capitulate to the hijackers' demands.",
+                    "He eventually capitulated and agreed to his wife's plan.",
+                    "They will never capitulate, no matter how much pressure you apply."
+                ], failed: false
+            },
+            {
+                word: "Civic", respelling: "SIV-ik", cn: "a. 市民的；公民的",
+                en: "Relating to a city or town, especially its administration; municipal.",
+                sentences: [
+                    "Voting is considered an important civic duty for every citizen.",
+                    "The new library is a great source of civic pride for the town.",
+                    "The mayor is working to improve civic engagement among young people.",
+                    "They held a meeting at the civic center to discuss the new park.",
+                    "She received an award for her long history of civic service."
+                ], failed: false
+            },
+            {
+                word: "Coarse", respelling: "kors", cn: "a. 粗糙的；下俗的",
+                en: "Rough or loose in texture or grain; (of a person) rude or vulgar.",
+                sentences: [
+                    "The walls were made of coarse stone that was rough to the touch.",
+                    "He was criticized for his coarse language and aggressive behavior.",
+                    "The sand on this beach is very coarse compared to the other one.",
+                    "She wore a sweater made of coarse wool that felt itchy.",
+                    "The comedian's jokes were a bit too coarse for my liking."
+                ], failed: false
+            },
+            {
+                word: "Coherent", respelling: "koh-HEER-uhnt", cn: "a. 连贯的",
+                en: "(Of an argument, theory, or policy) logical and consistent.",
+                sentences: [
+                    "He was so nervous that he struggled to give a coherent explanation.",
+                    "The government needs a more coherent policy on climate change.",
+                    "She presented a coherent argument that convinced the entire board.",
+                    "The various parts of the plan fit together in a coherent way.",
+                    "The dream didn't make sense; it wasn't a coherent story."
+                ], failed: false
+            },
+            {
+                word: "Comparable", respelling: "KOM-pruh-buhl", cn: "a. 可比较的；类似的",
+                en: "(Of a person or thing) able to be likened to another; similar.",
+                sentences: [
+                    "The two products are comparable in terms of quality and price.",
+                    "Her situation is not really comparable to mine; we have different lives.",
+                    "The damage from the storm was comparable to that of a small earthquake.",
+                    "These two cars offer comparable performance at a similar cost.",
+                    "Is there a comparable version of this software for Mac users?"
+                ], failed: false
+            },
+            {
+                word: "Competent", respelling: "KOM-pi-tuhnt", cn: "a. 有能力的",
+                en: "Having the necessary ability, knowledge, or skill to do something successfully.",
+                sentences: [
+                    "She is a highly competent lawyer who wins most of her cases.",
+                    "We need to hire a competent mechanic to fix the engine.",
+                    "He is competent in three different languages.",
+                    "The manager is competent enough to handle the daily operations.",
+                    "I don't feel competent to make such a major decision alone."
+                ], failed: false
+            },
+            {
+                word: "Condone", respelling: "kuhn-DOHN", cn: "v. 宽恕；纵容",
+                en: "Accept and allow (behavior that is considered wrong) to continue.",
+                sentences: [
+                    "The school does not condone bullying in any form.",
+                    "By staying silent, you are seen to condone their illegal actions.",
+                    "The coach made it clear that he would not condone poor sportsmanship.",
+                    "Terrorism is an act that no civilized society can condone.",
+                    "I cannot condone your behavior, even though I understand your reasons."
+                ], failed: false
+            },
+            {
+                word: "Conducive", respelling: "kuhn-DOO-siv", cn: "a. 有助于…的",
+                en: "Making a certain situation or outcome likely or possible.",
+                sentences: [
+                    "The quiet atmosphere of the library is conducive to studying.",
+                    "A healthy diet and regular exercise are conducive to a long life.",
+                    "His aggressive management style is not conducive to team building.",
+                    "Small class sizes are more conducive to effective learning.",
+                    "The dark room was conducive to a good night's sleep."
+                ], failed: false
+            },
+            {
+                word: "Confine", respelling: "kuhn-FYN", cn: "v. 限制",
+                en: "Keep or restrict someone or something within certain limits.",
+                sentences: [
+                    "Please confine your comments to the topic we are discussing.",
+                    "The prisoner was confined to a small cell for 23 hours a day.",
+                    "The disease was confined to a small area of the country.",
+                    "I will confine my speech to just ten minutes.",
+                    "The heavy snow confined us to the house for the entire weekend."
+                ], failed: false
+            },
+            {
+                word: "Consecutive", respelling: "kuhn-SEK-yuh-tiv", cn: "a. 连贯的；连续的",
+                en: "Following continuously; in unbroken or logical sequence.",
+                sentences: [
+                    "It rained for five consecutive days last week.",
+                    "She has won the championship for three consecutive years.",
+                    "Please number the pages in consecutive order.",
+                    "The team suffered four consecutive losses in the tournament.",
+                    "He was absent for two consecutive meetings."
+                ], failed: false
+            },
+            {
+                word: "Controversial", respelling: "kon-truh-VUR-shuhl", cn: "a. 有争议的",
+                en: "Giving rise or likely to give rise to public disagreement.",
+                sentences: [
+                    "The new law on immigration remains highly controversial.",
+                    "The director is famous for making controversial and provocative films.",
+                    "It was a controversial decision that sparked protests across the city.",
+                    "He is a controversial figure who is both loved and hated by many.",
+                    "The book's ending was very controversial among fans."
+                ], failed: false
+            },
+            {
+                word: "Conventional", respelling: "kuhn-VEN-shuh-nl", cn: "a. 传统的；常规的",
+                en: "Based on or in accordance with what is generally done or believed.",
+                sentences: [
+                    "She decided to take a conventional path and become a doctor.",
+                    "The artist rejected conventional methods and used digital tools instead.",
+                    "He lives a very conventional life with a 9-to-5 job and a family.",
+                    "The medicine is more effective than conventional treatments.",
+                    "They had a conventional wedding in a church."
+                ], failed: false
+            },
+            {
+                word: "Convey", respelling: "kuhn-VAY", cn: "v. 传达；运输",
+                en: "Transport or carry to a place; make (an idea, impression, or feeling) known.",
+                sentences: [
+                    "Please convey my best wishes to your family.",
+                    "The author uses metaphors to convey the character's sadness.",
+                    "The trucks were used to convey the supplies to the mountain village.",
+                    "Her face failed to convey any emotion during the announcement.",
+                    "How can I best convey the urgency of the situation to them?"
+                ], failed: false
+            },
+            {
+                word: "Counterproductive", respelling: "kown-ter-pruh-DUHK-tiv", cn: "a. 适得其反的",
+                en: "Having an effect that is opposite to the one intended.",
+                sentences: [
+                    "Arguing with them now would be completely counterproductive.",
+                    "The new tax policy proved to be counterproductive to economic growth.",
+                    "Strict punishments can sometimes be counterproductive for children.",
+                    "It is counterproductive to work when you are too tired to think.",
+                    "His constant criticism was counterproductive to the team's morale."
+                ], failed: false
+            },
+            {
+                word: "Culmination", respelling: "kuhl-muh-NAY-shuhn", cn: "n. 顶点；高潮",
+                en: "The highest or climactic point of something, especially attained after a long time.",
+                sentences: [
+                    "The concert was the culmination of months of hard work and practice.",
+                    "Winning the championship was the culmination of his athletic career.",
+                    "The book is the culmination of ten years of research.",
+                    "The firework display was the perfect culmination to the festival.",
+                    "His promotion was the culmination of his efforts to improve the company."
+                ], failed: false
+            },
+            {
+                word: "Decree", respelling: "di-KREE", cn: "n./v. 法令；判决",
+                en: "An official order issued by a legal authority; to order something officially.",
+                sentences: [
+                    "The government issued a decree forbidding all public gatherings.",
+                    "The court's decree ended the long-standing dispute between the neighbors.",
+                    "The king decreed that all citizens must pay a new harvest tax.",
+                    "According to the presidential decree, the state of emergency is now over.",
+                    "The new law was established by a royal decree in the 18th century."
+                ], failed: false
+            },
+            {
+                word: "Deficient", respelling: "di-FISH-uhnt", cn: "a. 不足的；有缺陷的",
+                en: "Not having enough of a specified quality or ingredient; lacking.",
+                sentences: [
+                    "The patient's diet was found to be deficient in essential vitamins.",
+                    "The report was criticized for being deficient in concrete evidence.",
+                    "Many old buildings have deficient fire safety systems.",
+                    "If your iron levels are deficient, you may feel constantly tired.",
+                    "The team's performance was deficient in both speed and strategy."
+                ], failed: false
+            },
+            {
+                word: "Demur", respelling: "di-MUR", cn: "v. 反对；推辞",
+                en: "Raise doubts or objections; show reluctance.",
+                sentences: [
+                    "Normally she would demur, but this time she agreed immediately.",
+                    "The lawyer demurred at the judge's suggestion to settle out of court.",
+                    "He wanted to join the army, but his parents demurred.",
+                    "I suggested a weekend trip, but my colleagues demurred due to work.",
+                    "She accepted the promotion without demur."
+                ], failed: false
+            },
+            {
+                word: "Deplete", respelling: "di-PLEET", cn: "v. 耗尽；减少",
+                en: "Use up the supply or resources of.",
+                sentences: [
+                    "Wars quickly deplete the country's financial and human resources.",
+                    "The long drought has depleted the water levels in the local reservoir.",
+                    "We must find new energy sources before we deplete our oil reserves.",
+                    "Intensive farming can deplete the soil of its natural nutrients.",
+                    "His savings were severely depleted after the medical emergency."
+                ], failed: false
+            },
+            {
+                word: "Desolate", respelling: "DES-uh-lit", cn: "a. 荒凉的；孤独的",
+                en: "(Of a place) deserted of people and in a state of bleak emptiness.",
+                sentences: [
+                    "The landscape was desolate and rocky, with no signs of life.",
+                    "She felt desolate after all her friends moved away from the city.",
+                    "The abandoned factory stood as a desolate reminder of better times.",
+                    "The explorers trekked across the desolate ice fields of the Arctic.",
+                    "A desolate wind howled through the empty streets of the ghost town."
+                ], failed: false
+            },
+            {
+                word: "Despair", respelling: "di-SPAIR", cn: "n./v. 绝望",
+                en: "The complete loss or absence of hope.",
+                sentences: [
+                    "He gave up the search in despair after looking for hours.",
+                    "The poem captures the poet's deep despair over the lost war.",
+                    "Don't despair; we will find a solution to this problem eventually.",
+                    "Her face showed a look of utter despair when she saw the results.",
+                    "The economic crisis drove many small business owners to despair."
+                ], failed: false
+            },
+            {
+                word: "Detached", respelling: "di-TACHT", cn: "a. 超然的；客观的；分离的",
+                en: "Separate or disconnected; aloof and objective.",
+                sentences: [
+                    "The scientist observed the experiment with a detached interest.",
+                    "The house has a detached garage located behind the main building.",
+                    "He remained detached from the family drama, refusing to take sides.",
+                    "A judge must remain detached and fair during a legal trial.",
+                    "She took a detached view of the situation to avoid getting emotional."
+                ], failed: false
+            },
+            {
+                word: "Dilemma", respelling: "di-LEM-uh", cn: "n. 困境；进退两难",
+                en: "A situation in which a difficult choice has to be made between alternatives.",
+                sentences: [
+                    "He faced a dilemma: tell the truth and lose his job, or lie.",
+                    "The government is in a dilemma over how to lower taxes and debt.",
+                    "The moral dilemma of the story kept the readers thinking for days.",
+                    "I'm in a bit of a dilemma about which college offer to accept.",
+                    "This new technology creates a dilemma for privacy advocates."
+                ], failed: false
+            },
+            {
+                word: "Diligence", respelling: "DIL-i-juhnss", cn: "n. 勤奋",
+                en: "Careful and persistent work or effort.",
+                sentences: [
+                    "The student's diligence in her studies earned her a scholarship.",
+                    "Due diligence is required before signing any major business contract.",
+                    "His success is the result of years of hard work and diligence.",
+                    "The detective showed great diligence in following every small clue.",
+                    "She worked with such diligence that the project was finished early."
+                ], failed: false
+            },
+            {
+                word: "Diminish", respelling: "di-MIN-ish", cn: "v. 减少；削弱",
+                en: "Make or become less.",
+                sentences: [
+                    "The medicine helped to diminish the pain in his leg.",
+                    "We should not diminish the importance of their contribution.",
+                    "The noise of the train gradually diminished as it moved away.",
+                    "His influence within the company began to diminish after the scandal.",
+                    "The threat of a storm has diminished over the last few hours."
+                ], failed: false
+            },
+            {
+                word: "Dire", respelling: "dy-er", cn: "a. 可怕的；紧急的",
+                en: "(Of a situation or event) extremely serious or urgent.",
+                sentences: [
+                    "The country is in dire need of food and medical supplies.",
+                    "If we don't act now, the consequences for the environment will be dire.",
+                    "The refugees were living in dire conditions with no clean water.",
+                    "He received a dire warning that his business was about to fail.",
+                    "The movie received dire reviews from almost every major critic."
+                ], failed: false
+            },
+            {
+                word: "Discord", respelling: "DIS-kord", cn: "n. 不和；不一致",
+                en: "Disagreement between people; lack of harmony.",
+                sentences: [
+                    "There was much discord within the committee regarding the new budget.",
+                    "Marital discord can have a negative impact on children's health.",
+                    "The sudden noise created a moment of discord in the peaceful room.",
+                    "The political debate was filled with discord and personal attacks.",
+                    "He tried to sow discord among his enemies to weaken them."
+                ], failed: false
+            },
+            {
+                word: "Disdain", respelling: "dis-DAYN", cn: "n. 蔑视",
+                en: "The feeling that someone is unworthy of one's consideration or respect.",
+                sentences: [
+                    "She looked at the messy room with a look of pure disdain.",
+                    "He has a total disdain for modern art and prefers the classics.",
+                    "The aristocrat treated the servants with cold disdain.",
+                    "She showed her disdain by ignoring his questions entirely.",
+                    "His disdain for authority often got him into trouble at school."
+                ], failed: false
+            },
+            {
+                word: "Dismay", respelling: "dis-MAY", cn: "n. 沮丧；惊慌",
+                en: "Consternation and distress, typically caused by something unexpected.",
+                sentences: [
+                    "To her dismay, she found that her car had been towed.",
+                    "The news of the factory closing was received with great dismay.",
+                    "He looked at the mountain of paperwork with a feeling of dismay.",
+                    "The fans watched in dismay as their team lost in the final minute.",
+                    "The sudden change in policy caused dismay among the employees."
+                ], failed: false
+            },
+            {
+                word: "Disparage", respelling: "di-SPAR-ij", cn: "v. 贬低；轻视",
+                en: "Regard or represent as being of little worth.",
+                sentences: [
+                    "He never misses a chance to disparage his competitor's work.",
+                    "You should not disparage the efforts of those who are trying to help.",
+                    "The critic's review disparaged the actor's performance as amateur.",
+                    "She felt hurt when her boss disparaged her ideas in front of the team.",
+                    "It is common for rivals to disparage each other during an election."
+                ], failed: false
+            },
+            {
+                word: "Dispatch", respelling: "di-SPACH", cn: "v. 派遣；迅速处理",
+                en: "Send off to a destination; deal with a task quickly and efficiently.",
+                sentences: [
+                    "The general decided to dispatch a messenger to the front lines.",
+                    "Rescue teams were dispatched to the site of the earthquake.",
+                    "She dispatched the pile of letters in less than an hour.",
+                    "The business owner dispatched the problem with impressive speed.",
+                    "The police were dispatched to investigate the suspicious noise."
+                ], failed: false
+            },
+            {
+                word: "Diversification", respelling: "di-vur-suh-fi-KAY-shuhn", cn: "n. 多样化",
+                en: "The action of making or becoming more varied.",
+                sentences: [
+                    "Investment advisors always recommend the diversification of your portfolio.",
+                    "The company's diversification into new markets helped it survive.",
+                    "Agricultural diversification is necessary to protect against crop failure.",
+                    "The city's economy needs more diversification beyond just tourism.",
+                    "The diversification of the curriculum allows students more choices."
+                ], failed: false
+            },
+            {
+                word: "Doctrine", respelling: "DOK-trin", cn: "n. 教条；主义",
+                en: "A belief or set of beliefs held and taught by a group or party.",
+                sentences: [
+                    "The Monroe Doctrine shaped American foreign policy for many years.",
+                    "The church's doctrine on this matter has remained unchanged for centuries.",
+                    "He was a firm believer in the doctrine of free trade.",
+                    "The legal doctrine of 'fair use' is essential for educators.",
+                    "Soldiers are trained according to a strict military doctrine."
+                ], failed: false
+            },
+            {
+                word: "Dominion", respelling: "duh-MIN-yuhn", cn: "n. 统治权；领土",
+                en: "Sovereignty or control; the territory of a government.",
+                sentences: [
+                    "The empire held dominion over vast territories across three continents.",
+                    "Man's dominion over nature is a common theme in literature.",
+                    "They sought to escape the dominion of the tyrannical ruler.",
+                    "The tiny island was once under the dominion of the British crown.",
+                    "The rebel forces fought to end the foreign dominion of their land."
+                ], failed: false
+            },
+            {
+                word: "Dreary", respelling: "DREER-ee", cn: "a. 沉闷的；枯燥的",
+                en: "Dull, bleak, and lifeless; depressing.",
+                sentences: [
+                    "It was a dreary winter day with gray skies and constant drizzle.",
+                    "He has a dreary job in a windowless office in the basement.",
+                    "The movie was a dreary drama that seemed to go on forever.",
+                    "She lived a dreary life until she decided to travel the world.",
+                    "The town looks quite dreary now that the main street shops are closed."
+                ], failed: false
+            },
+            {
+                word: "Dubious", respelling: "DOO-bee-uhs", cn: "a. 可疑的；犹豫不决的",
+                en: "Hesitating or doubting; not to be relied upon; suspect.",
+                sentences: [
+                    "The salesman made some dubious claims about the product's benefits.",
+                    "I am dubious about his ability to finish the project on time.",
+                    "He has the dubious distinction of being the first person fired this year.",
+                    "The gold coin turned out to be a dubious counterfeit.",
+                    "She gave him a dubious look when he said he was an expert pilot."
+                ], failed: false
+            },
+            {
+                word: "Eccentric", respelling: "ik-SEN-trik", cn: "a. 古怪的 n. 怪人",
+                en: "(Of a person or behavior) unconventional and slightly strange.",
+                sentences: [
+                    "The eccentric billionaire lived in a house shaped like a shoe.",
+                    "My aunt has some eccentric habits, like talking to her plants.",
+                    "The artist was known for his eccentric style and colorful hats.",
+                    "It was an eccentric choice of music for a funeral.",
+                    "Despite being an eccentric, he was loved by everyone in the village."
+                ], failed: false
+            },
+            {
+                word: "Egregious", respelling: "i-GREE-juhs", cn: "a. 极坏的；令人震惊的",
+                en: "Outstandingly bad; shocking.",
+                sentences: [
+                    "The lawyer pointed out several egregious errors in the contract.",
+                    "It was an egregious violation of the students' privacy.",
+                    "The company was fined for its egregious disregard for safety rules.",
+                    "Leaving the doors unlocked was an egregious mistake.",
+                    "The movie was criticized for its egregious use of stereotypes."
+                ], failed: false
+            },
+            {
+                word: "Elicit", respelling: "i-LIS-it", cn: "v. 引起；诱出",
+                en: "Evoke or draw out a response from someone.",
+                sentences: [
+                    "The teacher's question failed to elicit any response from the class.",
+                    "The comedian's jokes elicited roars of laughter from the audience.",
+                    "They tried to elicit information from the suspect during the interview.",
+                    "The new policy is expected to elicit strong protests from the union.",
+                    "Her performance elicited a standing ovation from the crowd."
+                ], failed: false
+            },
+            {
+                word: "Eminent", respelling: "EM-uh-nuhnt", cn: "a. 杰出的；著名的",
+                en: "Famous and respected within a particular profession.",
+                sentences: [
+                    "The eminent scientist was invited to speak at the global summit.",
+                    "He is an eminent authority on the history of the Roman Empire.",
+                    "We are waiting for the arrival of several eminent guests.",
+                    "Her eminent career in medicine spanned over forty years.",
+                    "The prize is only awarded to the most eminent writers of the year."
+                ], failed: false
+            },
+            {
+                word: "Emit", respelling: "i-MIT", cn: "v. 发出；放射",
+                en: "Produce and discharge (something, especially gas or radiation).",
+                sentences: [
+                    "The chimney continued to emit thick black smoke into the air.",
+                    "The machine began to emit a strange high-pitched sound.",
+                    "Stars emit light and heat through nuclear fusion.",
+                    "The flower emits a sweet fragrance that attracts bees.",
+                    "Certain rocks can emit low levels of natural radiation."
+                ], failed: false
+            },
+            {
+                word: "Emphatic", respelling: "em-FAT-ik", cn: "a. 强调的；坚决的",
+                en: "Showing or giving emphasis; expressing something forcibly.",
+                sentences: [
+                    "He was emphatic that the meeting should not be delayed again.",
+                    "The team's 5-0 victory was an emphatic statement of their skill.",
+                    "She gave an emphatic 'No' when asked if she would resign.",
+                    "The report makes an emphatic case for more environmental funding.",
+                    "The director was emphatic about the need for total silence on set."
+                ], failed: false
+            },
+            {
+                word: "Endow", respelling: "en-DOW", cn: "v. 资助；赋予",
+                en: "Provide with a quality or asset; bequeath an income to an institution.",
+                sentences: [
+                    "The wealthy alumnus decided to endow a new scholarship fund.",
+                    "Nature has endowed her with a beautiful singing voice.",
+                    "The university is well endowed thanks to generous donations.",
+                    "He was endowed with a great sense of humor and a kind heart.",
+                    "The foundation was set up to endow medical research projects."
+                ], failed: false
+            },
+            {
+                word: "Endure", respelling: "en-DOOR", cn: "v. 忍受；持久",
+                en: "Suffer something painful patiently; remain in existence; last.",
+                sentences: [
+                    "The prisoners had to endure terrible conditions for many years.",
+                    "Her influence as a writer will endure for generations to come.",
+                    "I don't know how they can endure such extreme heat every day.",
+                    "The old bridge has endured many storms over the last century.",
+                    "A great work of art must be able to endure the test of time."
+                ], failed: false
+            },
+            {
+                word: "Entail", respelling: "en-TAYL", cn: "v. 牵涉；使必要",
+                en: "Involve something as a necessary or inevitable consequence.",
+                sentences: [
+                    "The new job will entail a lot of travel across the country.",
+                    "Building a new house entails a huge financial commitment.",
+                    "What exactly does the role of project manager entail?",
+                    "Repairing the engine will entail taking the whole car apart.",
+                    "A successful career often entails making personal sacrifices."
+                ], failed: false
+            },
+            {
+                word: "Entrenched", respelling: "en-TRENCHT", cn: "a. 根深蒂固的",
+                en: "(Of an attitude or habit) firmly established and difficult to change.",
+                sentences: [
+                    "The company has to deal with deeply entrenched bureaucratic problems.",
+                    "These traditions are entrenched in the local culture.",
+                    "It is hard to change entrenched opinions about politics.",
+                    "The idea was so entrenched in his mind that he couldn't see the truth.",
+                    "The soldiers were entrenched in their positions, waiting for the attack."
+                ], failed: false
+            },
+            {
+                word: "Envy", respelling: "EN-vee", cn: "n./v. 羡慕；嫉妒",
+                en: "A feeling of discontented longing aroused by someone else's luck.",
+                sentences: [
+                    "She couldn't help but feel a pang of envy at her friend's success.",
+                    "Their beautiful garden was the envy of the entire neighborhood.",
+                    "He envied his brother's ability to stay calm under pressure.",
+                    "I don't envy you the task of telling the boss the bad news.",
+                    "Envy can destroy a friendship if it isn't kept in check."
+                ], failed: false
+            },
+            {
+                word: "Erratic", respelling: "i-RAT-ik", cn: "a. 不稳定的；古怪的",
+                en: "Not even or regular in pattern or movement; unpredictable.",
+                sentences: [
+                    "The car's erratic behavior suggested a problem with the steering.",
+                    "She has been having erratic sleep patterns lately.",
+                    "The stock market's erratic movements have made investors nervous.",
+                    "He is a brilliant but erratic player who can be great or terrible.",
+                    "The weather has been quite erratic this spring, with snow and sun."
+                ], failed: false
+            },
+            {
+                word: "Establish", respelling: "uh-STAB-lish", cn: "v. 建立；确立",
+                en: "Set up (an organization or system) on a permanent basis.",
+                sentences: [
+                    "The company was established in 1920 by a group of engineers.",
+                    "The police are trying to establish the timeline of the crime.",
+                    "It took several years to establish a successful branch in London.",
+                    "We need to establish some ground rules before the meeting begins.",
+                    "She has established herself as one of the best lawyers in the city."
+                ], failed: false
+            },
+            {
+                word: "Exacerbate", respelling: "ig-ZAS-er-bayt", cn: "v. 加剧；恶化",
+                en: "Make (a problem or bad situation) worse.",
+                sentences: [
+                    "The high humidity only served to exacerbate his breathing problems.",
+                    "His rude comments only exacerbated the tension in the room.",
+                    "Cutting the budget will only exacerbate the current crisis.",
+                    "The cold weather exacerbated her joint pain.",
+                    "Don't try to help if you're only going to exacerbate the situation."
+                ], failed: false
+            },
+            {
+                word: "Excel", respelling: "ik-SEL", cn: "v. 擅长；胜过",
+                en: "Be exceptionally good at or proficient in an activity or subject.",
+                sentences: [
+                    "She has always excelled in mathematics and science.",
+                    "The school encourages students to excel in both sports and academics.",
+                    "As a baker, he excels at creating beautiful wedding cakes.",
+                    "He excelled himself in the final exam, getting the highest grade.",
+                    "The team excels at defensive play but needs help with scoring."
+                ], failed: false
+            },
+            {
+                word: "Exert", respelling: "ig-ZURT", cn: "v. 运用；施加",
+                en: "Apply or bring to bear (a force, influence, or quality).",
+                sentences: [
+                    "You need to exert more pressure to get the lid off the jar.",
+                    "The moon exerts a powerful gravitational pull on the Earth.",
+                    "He tried to exert his influence to get his son a job.",
+                    "She had to exert all her strength to push the car out of the mud.",
+                    "Peer pressure can exert a strong influence on teenagers."
+                ], failed: false
+            },
+            {
+                word: "Exhilarating", respelling: "ig-ZIL-uh-ray-ting", cn: "a. 令人兴奋的",
+                en: "Making one feel very happy, animated, or elated; thrilling.",
+                sentences: [
+                    "A fast ride on a motorcycle can be truly exhilarating.",
+                    "It was an exhilarating experience to stand on top of the mountain.",
+                    "The team's last-minute victory was exhilarating for the fans.",
+                    "The fresh mountain air was exhilarating after weeks in the city.",
+                    "She found the challenge of the new job to be exhilarating."
+                ], failed: false
+            },
+            {
+                word: "Expend", respelling: "ik-SPEND", cn: "v. 花费；消耗",
+                en: "Spend or use up (a resource such as money, time, or energy).",
+                sentences: [
+                    "You shouldn't expend too much energy on things you can't change.",
+                    "The government has expended a lot of money on the new highway.",
+                    "Athletes expend a huge amount of calories during a marathon.",
+                    "We need to expend more effort if we want to finish on time.",
+                    "Don't expend your breath trying to argue with him."
+                ], failed: false
+            },
+            {
+                word: "Exploit", respelling: "ik-SPLOYT", cn: "v. 利用；剥削 n. 勋绩",
+                en: "Make full use of a resource; use a person in an unfair way.",
+                sentences: [
+                    "The company was accused of trying to exploit its workers.",
+                    "We should look for ways to exploit the new technology.",
+                    "The hackers tried to exploit a weakness in the computer's security.",
+                    "The movie is about the heroic exploits of a famous spy.",
+                    "He managed to exploit the situation to his own advantage."
+                ], failed: false
+            },
+            {
+                word: "Facilitate", respelling: "fuh-SIL-i-tayt", cn: "v. 促进；使便利",
+                en: "Make (an action or process) easy or easier.",
+                sentences: [
+                    "The new software is designed to facilitate better communication.",
+                    "The moderator's role is to facilitate the discussion between the two groups.",
+                    "Cutting taxes can facilitate economic growth in the short term.",
+                    "The structured environment helped to facilitate learning for the children.",
+                    "Our goal is to facilitate a smooth transition for all employees."
+                ], failed: false
+            },
+            {
+                word: "Ferociously", respelling: "fuh-ROH-shuhs-lee", cn: "adv. 凶猛地；激烈地",
+                en: "In a savagely fierce, cruel, or violent manner.",
+                sentences: [
+                    "The mother bear ferociously guarded her cubs from the intruder.",
+                    "The wind blew ferociously throughout the night, shaking the house.",
+                    "The two teams competed ferociously for the championship title.",
+                    "He ferociously defended his ideas during the debate.",
+                    "The fire spread ferociously across the dry plains."
+                ], failed: false
+            },
+            {
+                word: "Flourish", respelling: "FLUR-ish", cn: "v. 茂盛；繁荣 n. 华丽辞藻",
+                en: "(Of a person, animal, or other living organism) grow or develop in a healthy or vigorous way.",
+                sentences: [
+                    "Plants will flourish if they are given enough sunlight and water.",
+                    "The arts began to flourish during the peaceful reign of the king.",
+                    "The small business flourished despite the difficult economy.",
+                    "He signed his name with a grand flourish at the end of the letter.",
+                    "A culture cannot flourish without freedom of expression."
+                ], failed: false
+            },
+            {
+                word: "Forsake", respelling: "for-SAYK", cn: "v. 抛弃；放弃",
+                en: "Abandon (someone or something).",
+                sentences: [
+                    "He decided to forsake his career in finance to become a monk.",
+                    "She promised never to forsake her friends, no matter what happened.",
+                    "The city was forseen to be forsaken after the factory closed.",
+                    "You shouldn't forsake your principles just to fit in with the crowd.",
+                    "He felt forsaken by his family when they didn't support his dream."
+                ], failed: false
+            },
+            {
+                word: "Fortify", respelling: "FOR-tuh-fy", cn: "v. 加固；强化",
+                en: "Strengthen (a place) with defensive works so as to protect it against attack.",
+                sentences: [
+                    "The soldiers worked through the night to fortify the camp.",
+                    "The juice is fortified with extra vitamins and minerals.",
+                    "He ate a heavy breakfast to fortify himself for the long hike.",
+                    "We need to fortify the walls before the storm arrives.",
+                    "They took steps to fortify the company's position in the market."
+                ], failed: false
+            },
+            {
+                word: "Foster", respelling: "FAW-ster", cn: "v. 培养；促进",
+                en: "Encourage or promote the development of (something, typically something regarded as good).",
+                sentences: [
+                    "The teacher worked hard to foster a sense of community in the classroom.",
+                    "The government introduced new policies to foster innovation.",
+                    "They decided to foster a child who needed a stable home.",
+                    "Music can help foster a better understanding between different cultures.",
+                    "The company aims to foster creativity among its employees."
+                ], failed: false
+            },
+            {
+                word: "Fraught", respelling: "frawt", cn: "a. 充满的（尤指不快、风险）；担心的",
+                en: "(Of a situation or course of action) filled with or destined to result in (something undesirable).",
+                sentences: [
+                    "The journey through the mountains was fraught with danger.",
+                    "Her relationship with her mother was often fraught with tension.",
+                    "The decision was fraught with political consequences.",
+                    "He had a fraught expression on his face as he waited for the results.",
+                    "The negotiations were fraught from the very beginning."
+                ], failed: false
+            },
+            {
+                word: "Fundamental", respelling: "fuhn-duh-MEN-tl", cn: "a. 基本的；根本的",
+                en: "Forming a necessary base or core; of central importance.",
+                sentences: [
+                    "Freedom of speech is a fundamental human right.",
+                    "The two scientists had a fundamental disagreement over the data.",
+                    "We need to make fundamental changes to the way we use energy.",
+                    "The book explains the fundamental principles of economics.",
+                    "Hard work is fundamental to achieving success in any field."
+                ], failed: false
+            },
+            {
+                word: "Galvanize", respelling: "GAL-vuh-nyz", cn: "v. 刺激；激起（采取行动）",
+                en: "Shock or excite (someone) into taking action.",
+                sentences: [
+                    "The tragedy served to galvanize the community into action.",
+                    "His speech was intended to galvanize the workers to fight for their rights.",
+                    "The threat of a lawsuit galvanized the company to fix the problem.",
+                    "She managed to galvanize her team to finish the project on time.",
+                    "The news of the discovery galvanized the scientific world."
+                ], failed: false
+            },
+            {
+                word: "Hostile", respelling: "HOS-tl", cn: "a. 敌对的",
+                en: "Unfriendly; antagonistic.",
+                sentences: [
+                    "The crowd became hostile when the speaker refused to answer questions.",
+                    "They were forced to land the plane in a hostile territory.",
+                    "The company launched a hostile takeover bid for its competitor.",
+                    "The environment in the desert is extremely hostile to life.",
+                    "He gave me a hostile look and walked away without saying a word."
+                ], failed: false
+            },
+            {
+                word: "Ignominious", respelling: "ig-nuh-MIN-ee-uhs", cn: "a. 可耻的；丢脸的",
+                en: "Deserving or causing public disgrace or shame.",
+                sentences: [
+                    "The party suffered an ignominious defeat in the local elections.",
+                    "He made an ignominious exit from the company after the scandal.",
+                    "The failure of the mission was an ignominious end to his career.",
+                    "It was an ignominious moment for the world champion.",
+                    "The treaty was seen as an ignominious surrender by the public."
+                ], failed: false
+            },
+            {
+                word: "Impart", respelling: "im-PART", cn: "v. 给予；告知；传授",
+                en: "Make (information) known; communicate.",
+                sentences: [
+                    "The teacher's job is to impart knowledge to the students.",
+                    "The spices impart a unique flavor to the traditional dish.",
+                    "He refused to impart any secrets about his secret project.",
+                    "A good mentor will impart wisdom gained from years of experience.",
+                    "The white walls impart a sense of space and light to the room."
+                ], failed: false
+            },
+            {
+                word: "Impartial", respelling: "im-PAR-shuhl", cn: "a. 公正的；不偏不倚的",
+                en: "Treating all rivals or disputants equally; fair and just.",
+                sentences: [
+                    "A judge must remain completely impartial during a trial.",
+                    "The news report aimed to provide an impartial account of the events.",
+                    "It is difficult to remain impartial when your own friends are involved.",
+                    "We need an impartial observer to settle this disagreement.",
+                    "The committee was chosen for its reputation for being impartial."
+                ], failed: false
+            },
+            {
+                word: "Imposing", respelling: "im-POH-zing", cn: "a. 壮丽的；令人难忘的",
+                en: "Grand and impressive in appearance.",
+                sentences: [
+                    "The cathedral is an imposing building that dominates the city skyline.",
+                    "He was an imposing figure, standing over six feet tall.",
+                    "The company moved into a new and imposing headquarters downtown.",
+                    "She has an imposing personality that commands respect.",
+                    "The mountain range provided an imposing backdrop for the village."
+                ], failed: false
+            },
+            {
+                word: "Improvise", respelling: "IM-pruh-vyz", cn: "v. 即兴创作；临时凑合",
+                en: "Create and perform (music, drama, or verse) spontaneously.",
+                sentences: [
+                    "I forgot my speech, so I had to improvise the whole thing.",
+                    "The jazz musicians began to improvise a beautiful melody.",
+                    "We didn't have a tent, so we had to improvise a shelter out of branches.",
+                    "She is brilliant at improvising solutions to unexpected problems.",
+                    "The actors had to improvise when one of them forgot their lines."
+                ], failed: false
+            },
+            {
+                word: "Impudence", respelling: "IM-pyuh-duhnss", cn: "n. 厚颜无耻；鲁莽",
+                en: "The quality of being impudent; impertinence.",
+                sentences: [
+                    "The teacher was shocked by the student's impudence in class.",
+                    "He had the impudence to ask for a raise after being late every day.",
+                    "Her impudence made it difficult for others to work with her.",
+                    "I cannot believe the impudence of that salesperson!",
+                    "The child's impudence was a result of having no boundaries."
+                ], failed: false
+            },
+            {
+                word: "Inadvertent", respelling: "in-ad-VUR-tuhnt", cn: "a. 疏忽的；非故意的",
+                en: "Not resulting from or achieved through deliberate planning.",
+                sentences: [
+                    "The deletion of the files was entirely inadvertent.",
+                    "He made an inadvertent comment that offended his boss.",
+                    "The law was changed to prevent inadvertent errors in the future.",
+                    "An inadvertent mistake in the calculations led to a major delay.",
+                    "She gave an inadvertent sigh of relief when the meeting ended."
+                ], failed: false
+            },
+            {
+                word: "Inconceivable", respelling: "in-kuhn-SEE-vuh-buhl", cn: "a. 难以置信的",
+                en: "Not capable of being imagined or grasped mentally; unbelievable.",
+                sentences: [
+                    "It was inconceivable to her that he could have lied.",
+                    "The amount of damage caused by the storm was inconceivable.",
+                    "A world without the internet is almost inconceivable to young people.",
+                    "It seems inconceivable that we will ever finish this much work.",
+                    "The success of the project was once thought to be inconceivable."
+                ], failed: false
+            },
+            {
+                word: "Indiscriminate", respelling: "in-di-SKRIM-uh-nit", cn: "a. 不加区分的；随意的",
+                en: "Done at random or without careful judgment.",
+                sentences: [
+                    "The indiscriminate use of pesticides can harm the environment.",
+                    "The bombs caused indiscriminate destruction in the city center.",
+                    "He was criticized for his indiscriminate choice of friends.",
+                    "The virus attacks cells in an indiscriminate manner.",
+                    "Indiscriminate shopping led to her massive credit card debt."
+                ], failed: false
+            },
+            {
+                word: "Indulge", respelling: "in-DUHLJ", cn: "v. 放纵；纵容",
+                en: "Allow oneself to enjoy the pleasure of.",
+                sentences: [
+                    "Sometimes it's okay to indulge in a little dark chocolate.",
+                    "He decided to indulge his passion for painting after he retired.",
+                    "She indulged the child with too many toys and sweets.",
+                    "I'm going to indulge myself with a long, hot bath tonight.",
+                    "The hotel is a perfect place to indulge in luxury and relaxation."
+                ], failed: false
+            },
+            {
+                word: "Infer", respelling: "in-FUR", cn: "v. 推断",
+                en: "Deduce or conclude (information) from evidence and reasoning.",
+                sentences: [
+                    "From the evidence, we can infer that the fire was accidental.",
+                    "I managed to infer his true feelings from his tone of voice.",
+                    "What can we infer from the results of the latest survey?",
+                    "It is incorrect to infer that silence always means agreement.",
+                    "The reader is left to infer the ending of the story."
+                ], failed: false
+            },
+            {
+                word: "Inherent", respelling: "in-HEER-uhnt", cn: "a. 固有的；内在的",
+                en: "Existing in something as a permanent, essential, or characteristic attribute.",
+                sentences: [
+                    "There are inherent risks in any form of surgery.",
+                    "The desire for freedom is inherent in all human beings.",
+                    "She has an inherent ability to make people feel at ease.",
+                    "We need to address the problems inherent in the current system.",
+                    "The beauty of the landscape is inherent to its wild nature."
+                ], failed: false
+            },
+            {
+                word: "Inhibit", respelling: "in-HIB-it", cn: "v. 抑制；阻止",
+                en: "Hinder, restrain, or prevent (an action or process).",
+                sentences: [
+                    "The cold weather can inhibit the growth of certain plants.",
+                    "Lack of funding will inhibit the progress of the research.",
+                    "Fear can often inhibit people from trying new things.",
+                    "The drug is designed to inhibit the production of a specific hormone.",
+                    "Strict rules can sometimes inhibit a student's creativity."
+                ], failed: false
+            },
+            {
+                word: "Innovative", respelling: "IN-uh-vay-tiv", cn: "a. 创新的",
+                en: "(Of a product, idea, etc.) featuring new methods; advanced and original.",
+                sentences: [
+                    "The company is famous for its innovative approach to design.",
+                    "We need to find innovative solutions to the problem of plastic waste.",
+                    "The teacher used innovative methods to keep the students engaged.",
+                    "The new smartphone features several innovative technologies.",
+                    "He was praised for his innovative contributions to the field of medicine."
+                ], failed: false
+            },
+            {
+                word: "Insatiable", respelling: "in-SAY-shuh-buhl", cn: "a. 贪得无厌的",
+                en: "(Of an appetite or desire) impossible to satisfy.",
+                sentences: [
+                    "He has an insatiable appetite for adventure and travel.",
+                    "The public's demand for celebrity news seems to be insatiable.",
+                    "She has an insatiable curiosity about the history of the universe.",
+                    "His drive for power and wealth was completely insatiable.",
+                    "The fire was insatiable, consuming everything in its path."
+                ], failed: false
+            },
+            {
+                word: "Inversion", respelling: "in-VUR-zhuhn", cn: "n. 倒置；反转",
+                en: "A reversal of the normal order, position, or relationship of things.",
+                sentences: [
+                    "The poem uses word inversion to create a specific rhythm.",
+                    "A temperature inversion caused the fog to stay in the valley.",
+                    "The movie features a clever inversion of the classic hero story.",
+                    "In grammar, inversion often occurs in the form of a question.",
+                    "The results showed an inversion of the expected market trends."
+                ], failed: false
+            },
+            {
+                word: "Invoke", respelling: "in-VOHK", cn: "v. 调用；祈求；恳求",
+                en: "Cite or appeal to (someone or something) as an authority for an action.",
+                sentences: [
+                    "The president decided to invoke emergency powers to handle the crisis.",
+                    "The lawyer invoked a little-known law to defend her client.",
+                    "Ancient sailors would invoke the gods for a safe journey.",
+                    "The program allows you to invoke several different functions.",
+                    "Her performance was intended to invoke a sense of nostalgia."
+                ], failed: false
+            },
+            {
+                word: "Irreconcilable", respelling: "i-rek-uhn-SY-luh-buhl", cn: "a. 不可调和的",
+                en: "Any of two or more ideas or facts that are mutually incompatible.",
+                sentences: [
+                    "The two parties have irreconcilable differences over the new budget.",
+                    "His actions are irreconcilable with his stated beliefs.",
+                    "The court ruled that the couple had irreconcilable differences.",
+                    "It is hard to bridge the gap between such irreconcilable views.",
+                    "The data showed irreconcilable conflicts that could not be explained."
+                ], failed: false
+            },
+            {
+                word: "Lament", respelling: "luh-MENT", cn: "v.&n. 哀悼；痛惜",
+                en: "A passionate expression of grief or sorrow; to mourn.",
+                sentences: [
+                    "The poet wrote a beautiful lament for his lost friend.",
+                    "Many citizens lament the loss of the city's historic buildings.",
+                    "She sat alone, lamenting her past mistakes.",
+                    "The song is a haunting lament for a bygone era.",
+                    "He constantly laments the fact that he never learned to play piano."
+                ], failed: false
+            },
+            {
+                word: "Locomotion", respelling: "loh-kuh-MOH-shuhn", cn: "n. 运动；移动",
+                en: "Movement or the ability to move from one place to another.",
+                sentences: [
+                    "Walking is the most basic form of human locomotion.",
+                    "The study examines the different methods of locomotion in insects.",
+                    "The steam engine revolutionized locomotion in the 19th century.",
+                    "Wheelchairs provide a means of locomotion for people with disabilities.",
+                    "The injury significantly limited his locomotion for several weeks."
+                ], failed: false
+            },
+            {
+                word: "Malicious", respelling: "muh-LISH-uhs", cn: "a. 怀有恶意的",
+                en: "Intending or intended to do harm.",
+                sentences: [
+                    "The company was targeted by a malicious software attack.",
+                    "He was accused of spreading malicious rumors about his coworkers.",
+                    "The damage to the building was a result of a malicious act of vandalism.",
+                    "She received a malicious email that tried to steal her password.",
+                    "It is important to protect your computer from malicious websites."
+                ], failed: false
+            },
+            {
+                word: "Modest", respelling: "MOD-ist", cn: "a. 谦虚的；适度的",
+                en: "Unassuming or moderate in the estimation of one's abilities or achievements.",
+                sentences: [
+                    "Despite his great success, he remains a very modest man.",
+                    "The company reported a modest increase in profits this quarter.",
+                    "They live in a modest house on the outskirts of the city.",
+                    "She is too modest to talk about her heroic actions during the fire.",
+                    "The proposal was for a modest expansion of the local library."
+                ], failed: false
+            },
+            {
+                word: "Momentous", respelling: "moh-MEN-tuhs", cn: "a. 重大的",
+                en: "(Of a decision, event, or change) of great importance or significance.",
+                sentences: [
+                    "The signing of the peace treaty was a momentous occasion.",
+                    "She faced the momentous task of leading the country through a war.",
+                    "The invention of the internet was a momentous event in human history.",
+                    "It was a momentous decision that would change his life forever.",
+                    "The scientists made a momentous discovery about the nature of space."
+                ], failed: false
+            },
+            {
+                word: "Nuance", respelling: "NOO-ahnss", cn: "n. 细微差别",
+                en: "A subtle difference in or shade of meaning, expression, or sound.",
+                sentences: [
+                    "The actor's performance was full of subtle nuances.",
+                    "It is important to understand the nuances of the local culture.",
+                    "The translator missed the subtle nuance of the original poem.",
+                    "He explained the nuances of the law to the interested students.",
+                    "The painting features a rich variety of color and nuance."
+                ], failed: false
+            },
+            {
+                word: "Null", respelling: "nuhl", cn: "a. 无效的；零的",
+                en: "Having no legal or binding force; invalid.",
+                sentences: [
+                    "The contract was declared null and void by the judge.",
+                    "The experiment's results were null, as no change was observed.",
+                    "A null set in mathematics is a set that contains no elements.",
+                    "His objections were null because he had no standing in the case.",
+                    "The system returns a null value if no matching record is found."
+                ], failed: false
+            },
+            {
+                word: "Objectivity", respelling: "ob-jek-TIV-i-tee", cn: "n. 客观性",
+                en: "The quality of being objective and not influenced by personal feelings.",
+                sentences: [
+                    "Journalists must strive for total objectivity in their reporting.",
+                    "The judge's objectivity was questioned due to his past relationship with the defendant.",
+                    "Scientific research requires a high degree of objectivity.",
+                    "He tried to maintain his objectivity despite his personal interest in the case.",
+                    "The report was praised for its balance and objectivity."
+                ], failed: false
+            },
+            {
+                word: "Obscure", respelling: "uhb-SKYOOR", cn: "a. 模糊的；无名的 v. 使模糊",
+                en: "Not discovered or known about; uncertain; to keep from being seen.",
+                sentences: [
+                    "The origins of the ancient language remain obscure.",
+                    "The peak of the mountain was obscured by thick clouds.",
+                    "He is an obscure poet whose work was only discovered after his death.",
+                    "The technical jargon only served to obscure the meaning of the report.",
+                    "She lived an obscure life in a small village in the mountains."
+                ], failed: false
+            },
+            {
+                word: "Omnipotent", respelling: "om-NIP-uh-tuhnt", cn: "a. 全能的",
+                en: "(Of a deity) having unlimited power; able to do anything.",
+                sentences: [
+                    "In many religions, the creator is seen as an omnipotent being.",
+                    "The dictator behaved as if he were an omnipotent ruler.",
+                    "No human leader should ever be considered omnipotent.",
+                    "The poem explores the idea of an omnipotent and all-knowing god.",
+                    "The child imagined himself as an omnipotent superhero."
+                ], failed: false
+            },
+            {
+                word: "Ornate", respelling: "or-NAYT", cn: "a. 华丽的",
+                en: "Made in an intricate shape or decorated with complex patterns.",
+                sentences: [
+                    "The room was decorated with ornate furniture and gold mirrors.",
+                    "The author is known for his ornate and descriptive writing style.",
+                    "The cathedral's ornate ceiling took decades to complete.",
+                    "She wore an ornate necklace that had been in her family for years.",
+                    "The garden featured ornate fountains and marble statues."
+                ], failed: false
+            },
+            {
+                word: "Oust", respelling: "owst", cn: "v. 驱逐；罢黜",
+                en: "Drive out or expel (someone) from a position or place.",
+                sentences: [
+                    "The board of directors voted to oust the CEO after the scandal.",
+                    "The rebel forces managed to oust the dictator from power.",
+                    "He was ousted from the committee for leaking confidential information.",
+                    "The team's latest loss could oust them from the tournament.",
+                    "They are working together to oust the corrupt local officials."
+                ], failed: false
+            },
+            {
+                word: "Paramount", respelling: "PAIR-uh-mownt", cn: "a. 最重要的；至高无上的",
+                en: "More important than anything else; supreme.",
+                sentences: [
+                    "In this emergency, the safety of the children is paramount.",
+                    "The interests of the nation must remain paramount over personal gain.",
+                    "Reliability is of paramount importance when choosing a new car.",
+                    "The health and well-being of our employees are paramount to our success.",
+                    "Protection of the environment is a paramount concern for the local council."
+                ], failed: false
+            },
+            {
+                word: "Peculiar", respelling: "puh-KYOOL-yer", cn: "a. 奇怪的；特有的",
+                en: "Strange or odd; unusual; particular; special.",
+                sentences: [
+                    "She has a peculiar way of laughing that makes everyone else join in.",
+                    "The meat had a peculiar smell, so we decided not to eat it.",
+                    "This type of building style is peculiar to the southern regions of the country.",
+                    "He noticed a peculiar look in her eyes as she told the story.",
+                    "The tradition is peculiar to this small village and nowhere else."
+                ], failed: false
+            },
+            {
+                word: "Perish", respelling: "PER-ish", cn: "v. 毁灭；死亡；腐烂",
+                en: "Suffer death, typically in a violent, sudden, or untimely way.",
+                sentences: [
+                    "Thousands of trees perished in the massive forest fire last summer.",
+                    "Without water, many crops will perish during the long drought.",
+                    "The old empire perished centuries ago, leaving only ruins.",
+                    "Fresh fruit will quickly perish if it is not kept in the refrigerator.",
+                    "The explorer's name will never perish from the pages of history."
+                ], failed: false
+            },
+            {
+                word: "Pervasive", respelling: "per-VAY-siv", cn: "a. 普遍的；渗透的",
+                en: "(Especially of an unwelcome influence or physical effect) spreading widely throughout an area or a group of people.",
+                sentences: [
+                    "The smell of fresh coffee was pervasive throughout the entire house.",
+                    "Social media has a pervasive influence on the lives of teenagers today.",
+                    "Corruption remains a pervasive problem in the country's legal system.",
+                    "A sense of gloom was pervasive in the office after the bad news.",
+                    "The company has a pervasive culture of innovation and creativity."
+                ], failed: false
+            },
+            {
+                word: "Petrify", respelling: "PET-ruh-fy", cn: "v. 使石化；使吓呆",
+                en: "Make (someone) so frightened that they are unable to move or think.",
+                sentences: [
+                    "The thought of speaking in public used to petrify him.",
+                    "The sight of the giant snake petrified the small children.",
+                    "Over millions of years, the fallen wood began to petrify into stone.",
+                    "She stood petrified as the car sped toward her.",
+                    "Horror movies always petrify me, but I still like watching them."
+                ], failed: false
+            },
+            {
+                word: "Pinnacle", respelling: "PIN-uh-kuhl", cn: "n. 顶峰；顶点",
+                en: "The most successful point; the culmination.",
+                sentences: [
+                    "Winning the Oscar was the pinnacle of her acting career.",
+                    "He reached the pinnacle of his profession at the age of forty.",
+                    "The mountain's snowy pinnacle was visible from miles away.",
+                    "The cathedral is considered the pinnacle of Gothic architecture.",
+                    "The team's victory represented the pinnacle of their hard work."
+                ], failed: false
+            },
+            {
+                word: "Postulate", respelling: "POS-chuh-layt", cn: "v. 假定；要求",
+                en: "Suggest or assume the existence, fact, or truth of (something) as a basis for reasoning, discussion, or belief.",
+                sentences: [
+                    "Many economists postulate that low taxes lead to higher growth.",
+                    "Newton's laws of motion postulate that objects will remain at rest unless acted upon.",
+                    "The theory postulates that life might exist on other planets.",
+                    "We can postulate that the crime was committed by someone who knew the house.",
+                    "The scientist's work was based on several basic postulates."
+                ], failed: false
+            },
+            {
+                word: "Potent", respelling: "POH-tuhnt", cn: "a. 有效的；强有力的",
+                en: "Having great power, influence, or effect.",
+                sentences: [
+                    "The doctor prescribed a potent medicine to fight the infection.",
+                    "The image of the starving child was a potent symbol of the crisis.",
+                    "His speech was a potent reminder of the need for social reform.",
+                    "The smell of the perfume was very potent and filled the room.",
+                    "The new law provides a potent tool for fighting environmental crime."
+                ], failed: false
+            },
+            {
+                word: "Predecessor", respelling: "PRED-uh-ses-er", cn: "n. 前任；前辈",
+                en: "A person who held a job or office before the current holder.",
+                sentences: [
+                    "The new president's policies are very different from those of his predecessor.",
+                    "My predecessor in this role left a very organized filing system.",
+                    "The latest model of the car is much faster than its predecessor.",
+                    "He spent months studying the work of his predecessors in the field.",
+                    "The factory was built on the site of its smaller predecessor."
+                ], failed: false
+            },
+            {
+                word: "Prescribe", respelling: "pruh-SKRYB", cn: "v. 开处方；规定",
+                en: "State authoritatively that (a medicine or treatment) should be taken; stipulate.",
+                sentences: [
+                    "The doctor decided to prescribe a course of antibiotics for the cough.",
+                    "The law prescribes a heavy fine for anyone caught littering.",
+                    "Education is the best medicine for the problems prescribed by poverty.",
+                    "The textbook prescribes a specific method for solving these equations.",
+                    "Do not take more than the amount prescribed by your physician."
+                ], failed: false
+            },
+            {
+                word: "Principle", respelling: "PRIN-suh-puhl", cn: "n. 原则；原理",
+                en: "A fundamental truth or proposition that serves as the foundation for a system of belief or behavior.",
+                sentences: [
+                    "She is a woman of strong principles and would never lie.",
+                    "The machine works on the principle of centrifugal force.",
+                    "It's not the money that matters; it's the principle of the thing.",
+                    "The basic principles of democracy include free and fair elections.",
+                    "He refused to compromise his moral principles for a promotion."
+                ], failed: false
+            },
+            {
+                word: "Prohibit", respelling: "proh-HIB-it", cn: "v. 禁止",
+                en: "Formally forbid (something) by law, rule, or other authority.",
+                sentences: [
+                    "The new law will prohibit smoking in all public parks.",
+                    "The high cost of the equipment prohibits many small schools from buying it.",
+                    "Signs were put up to prohibit parking in front of the building.",
+                    "International treaties prohibit the use of chemical weapons.",
+                    "My parents prohibit me from staying out after midnight on school nights."
+                ], failed: false
+            },
+            {
+                word: "Prompt", respelling: "prompt", cn: "v. 促使；提示 a. 敏捷的",
+                en: "(Of an event or fact) cause or bring about (an action or feeling); done without delay.",
+                sentences: [
+                    "The teacher's questions were designed to prompt a discussion.",
+                    "The accident prompted a review of the company's safety procedures.",
+                    "We need to be prompt if we want to get good seats for the show.",
+                    "Thank you for your prompt response to my email.",
+                    "The actor forgot his lines and needed a prompt from the director."
+                ], failed: false
+            },
+            {
+                word: "Promulgate", respelling: "PROM-uhl-gayt", cn: "v. 颁布；传播",
+                en: "Promote or make widely known (an idea or cause); put (a law or decree) into effect.",
+                sentences: [
+                    "The new constitution was promulgated after months of negotiation.",
+                    "The organization works to promulgate the values of peace and equality.",
+                    "The government will promulgate the new safety regulations next week.",
+                    "He used his social media platform to promulgate his controversial views.",
+                    "The doctrine was promulgated by the church in the 12th century."
+                ], failed: false
+            },
+            {
+                word: "Propagate", respelling: "PROP-uh-gayt", cn: "v. 繁殖；传播",
+                en: "Breed specimens of (a plant, animal, etc.) by natural processes from the parent stock; spread an idea.",
+                sentences: [
+                    "The mission of the group is to propagate the Christian faith.",
+                    "You can propagate this plant easily by taking a small cutting.",
+                    "Sound waves propagate more quickly through water than through air.",
+                    "The internet allows people to propagate information—and misinformation—rapidly.",
+                    "The insects propagate quickly in the warm, humid climate."
+                ], failed: false
+            },
+            {
+                word: "Prosper", respelling: "PROS-per", cn: "v. 繁荣；成功",
+                en: "Flourish physically; grow strong and healthy; be successful.",
+                sentences: [
+                    "The small town began to prosper after the new factory opened.",
+                    "We hope that our new business will prosper in the coming years.",
+                    "A child needs a stable environment to truly prosper and grow.",
+                    "The nation prospered under the wise leadership of the king.",
+                    "Local artists have prospered thanks to the new community center."
+                ], failed: false
+            },
+            {
+                word: "Provocative", respelling: "pruh-VOK-uh-tiv", cn: "a. 挑衅的；启发性的",
+                en: "Causing annoyance, anger, or another strong reaction, especially deliberately; arousing thought.",
+                sentences: [
+                    "The artist is known for his provocative and controversial paintings.",
+                    "His provocative remarks led to a heated argument in the meeting.",
+                    "The book raises many provocative questions about the future of technology.",
+                    "She wore a provocative dress that drew everyone's attention.",
+                    "The teacher used a provocative example to start the class discussion."
+                ], failed: false
+            },
+            {
+                word: "Punitive", respelling: "PYOO-ni-tiv", cn: "a. 惩罚性的",
+                en: "Inflicting or intended as punishment.",
+                sentences: [
+                    "The court imposed punitive damages on the company for its negligence.",
+                    "The government introduced punitive taxes on luxury imports.",
+                    "He faced punitive measures after breaking the school's code of conduct.",
+                    "The team received a punitive penalty for a late substitution.",
+                    "Punitive action will be taken against anyone found guilty of cheating."
+                ], failed: false
+            },
+            {
+                word: "Quench", respelling: "kwench", cn: "v. 解渴；扑灭；抑制",
+                en: "Satisfy (one's thirst) by drinking; extinguish (a fire).",
+                sentences: [
+                    "There is nothing like a cold glass of water to quench your thirst.",
+                    "Firefighters worked for hours to quench the flames of the warehouse fire.",
+                    "He tried to quench his curiosity by reading every book on the subject.",
+                    "The sudden rain helped to quench the heat of the summer afternoon.",
+                    "She could not quench her desire for revenge against her enemies."
+                ], failed: false
+            },
+            {
+                word: "Ramify", respelling: "RAM-uh-fy", cn: "v. 分叉；成网状",
+                en: "Form branches or subdivisions; branch out.",
+                sentences: [
+                    "The river begins to ramify as it enters the wide valley.",
+                    "The decision will ramify through all levels of the organization.",
+                    "The nerves ramify throughout the entire body to transmit signals.",
+                    "His business interests have begun to ramify into several different industries.",
+                    "The complex legal case continues to ramify and become more difficult."
+                ], failed: false
+            },
+            {
+                word: "Rash", respelling: "rash", cn: "a. 轻率的；鲁莽的 n. 疹子",
+                en: "Displaying or proceeding from a lack of careful consideration of the possible consequences.",
+                sentences: [
+                    "Don't make any rash decisions that you might regret later.",
+                    "It was a rash move to quit his job without having another one lined up.",
+                    "She realized her rash comments had hurt her best friend's feelings.",
+                    "The boy developed a red rash on his arms after playing in the woods.",
+                    "A rash of bank robberies has occurred in the city over the last month."
+                ], failed: false
+            },
+            {
+                word: "Ratify", respelling: "RAT-uh-fy", cn: "v. 批准；认可",
+                en: "Sign or give formal consent to (a treaty, contract, or agreement), making it officially valid.",
+                sentences: [
+                    "The senate is expected to ratify the new trade agreement tomorrow.",
+                    "The countries met in Geneva to ratify the international treaty.",
+                    "The union members voted to ratify the new three-year contract.",
+                    "A change to the constitution must be ratified by at least 38 states.",
+                    "The board met to ratify the decision made by the committee."
+                ], failed: false
+            },
+            {
+                word: "Rebut", respelling: "ri-BUHT", cn: "v. 反驳；驳斥",
+                en: "Claim or prove that (evidence or an accusation) is false.",
+                sentences: [
+                    "The lawyer was given a chance to rebut the testimony of the witness.",
+                    "He wrote a letter to the editor to rebut the claims made in the article.",
+                    "It is difficult to rebut such a well-documented and logical argument.",
+                    "She spoke for twenty minutes to rebut the criticism of her research.",
+                    "The team provided new data to rebut the findings of the earlier study."
+                ], failed: false
+            },
+            {
+                word: "Recede", respelling: "ri-SEED", cn: "v. 后退；减弱",
+                en: "Go or move back or further away from a previous position.",
+                sentences: [
+                    "The floodwaters began to recede after the rain finally stopped.",
+                    "As the boat pulled away, the coastline slowly began to recede.",
+                    "The threat of a strike has started to recede as negotiations continue.",
+                    "His hairline had begun to recede, making his forehead look larger.",
+                    "The painful memories of the accident finally began to recede with time."
+                ], failed: false
+            },
+            {
+                word: "Reciprocate", respelling: "ri-SIP-ruh-kayt", cn: "v. 酬答；互换；往复运动",
+                en: "Respond to (a gesture or action) by making a corresponding one.",
+                sentences: [
+                    "She was kind to him, but he did not reciprocate her feelings.",
+                    "We were invited to their house for dinner, and we hope to reciprocate soon.",
+                    "The two countries agreed to reciprocate by lowering their import taxes.",
+                    "He felt it was important to reciprocate the help he had received.",
+                    "The engine's pistons reciprocate inside the cylinders to provide power."
+                ], failed: false
+            },
+            {
+                word: "Reform", respelling: "ri-FORM", cn: "v.&n. 改革；改造",
+                en: "Make changes in (something, typically a social, political, or economic institution or practice) in order to improve it.",
+                sentences: [
+                    "The government is planning to reform the national healthcare system.",
+                    "Prisoners are often given educational opportunities to help them reform.",
+                    "He is a strong advocate for the reform of the country's tax laws.",
+                    "The new law was a major step toward social reform.",
+                    "She worked hard to reform the way the organization handled complaints."
+                ], failed: false
+            },
+            {
+                word: "Reiterate", respelling: "ree-IT-uh-rayt", cn: "v. 重申；反复地说",
+                en: "Say, state, or perform again or repeatedly.",
+                sentences: [
+                    "Let me reiterate that the deadline for the project is Friday.",
+                    "The teacher had to reiterate the instructions several times to the class.",
+                    "He reiterated his commitment to the company's long-term goals.",
+                    "The doctor reiterated the importance of taking the medicine on time.",
+                    "I want to reiterate how much I appreciate all of your help."
+                ], failed: false
+            },
+            {
+                word: "Reminisce", respelling: "rem-uh-NISS", cn: "v. 追忆；怀旧",
+                en: "Indulge in enjoyable recollection of past events.",
+                sentences: [
+                    "The old friends spent the evening reminiscing about their college days.",
+                    "My grandfather loves to reminisce about his time in the navy.",
+                    "We sat by the fire, reminiscing about the wonderful trips we had taken.",
+                    "The book is a collection of essays reminiscing about life in the 1950s.",
+                    "It was fun to reminisce about the music and fashion of our youth."
+                ], failed: false
+            },
+            {
+                word: "Repudiate", respelling: "ri-PYOO-dee-ayt", cn: "v. 拒绝；否定；断绝关系",
+                en: "Refuse to accept or be associated with; deny the truth or validity of.",
+                sentences: [
+                    "The candidate was forced to repudiate the comments made by his advisor.",
+                    "The government has decided to repudiate the national debt.",
+                    "She chose to repudiate her former beliefs and join a new movement.",
+                    "The evidence was so strong that he could not repudiate the findings.",
+                    "He was expelled from the group and they publicly repudiated him."
+                ], failed: false
+            },
+            {
+                word: "Retention", respelling: "ri-TEN-shuhn", cn: "n. 保留；记忆力",
+                en: "The continued possession, use, or control of something; the fact of keeping something in one's memory.",
+                sentences: [
+                    "The company is focused on the retention of its most talented employees.",
+                    "The study found that visual aids can significantly improve student retention.",
+                    "Good customer service is essential for the retention of long-term clients.",
+                    "The soil's moisture retention is important for the growth of the crops.",
+                    "The patient's short-term memory retention was affected by the accident."
+                ], failed: false
+            }
+        ];
+
+        let currentIndex = 0;
+        let mcqAnswer = "";
+
+        // UI Routing
+        function switchMode(mode) {
+            document.querySelectorAll('.nav button').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(`nav-${mode}`).classList.add('active');
+            
+            document.querySelectorAll('.container > div').forEach(div => div.classList.remove('show'));
+            document.getElementById(`area-${mode}`).classList.add('show');
+
+            if (mode === 'flash') loadFlashcard();
+            if (mode === 'spell') loadSpelling();
+            if (mode === 'mcq') loadMCQ();
+            if (mode === 'review') loadReview();
+        }
+
+        // --- FLASHCARD MODE ---
+        function loadFlashcard() {
+            document.getElementById('flash-front').style.display = 'block';
+            document.getElementById('flash-back').style.display = 'none';
+            
+            const wordObj = vocabData[currentIndex];
+            document.getElementById('f-word').innerText = wordObj.word;
+            document.getElementById('f-respelling').innerText = `[ ${wordObj.respelling} ]`;
+            document.getElementById('f-cn').innerText = wordObj.cn;
+            document.getElementById('f-en').innerText = wordObj.en;
+            
+            const ul = document.getElementById('f-sentences');
+            ul.innerHTML = '';
+            wordObj.sentences.forEach(s => {
+                let li = document.createElement('li');
+                li.innerText = s;
+                ul.appendChild(li);
+            });
+        }
+
+        function toggleFlashcard() {
+            document.getElementById('flash-front').style.display = 'none';
+            document.getElementById('flash-back').style.display = 'block';
+        }
+
+        function nextFlashcard() {
+            currentIndex = (currentIndex + 1) % vocabData.length;
+            loadFlashcard();
+        }
+
+        // --- SPELLING MODE ---
+        function loadSpelling() {
+            const wordObj = vocabData[currentIndex];
+            document.getElementById('s-cn').innerText = wordObj.cn;
+            document.getElementById('s-en').innerText = wordObj.en;
+            document.getElementById('s-input').value = '';
+            document.getElementById('s-feedback').innerText = '';
+            document.getElementById('s-feedback').style.color = '';
+            document.getElementById('s-input').focus();
+        }
+
+        function checkSpelling() {
+            const input = document.getElementById('s-input').value.trim().toLowerCase();
+            const correctWord = vocabData[currentIndex].word.toLowerCase();
+            const feedback = document.getElementById('s-feedback');
+
+            if (input === correctWord) {
+                feedback.innerText = "Correct! ✅";
+                feedback.style.color = "var(--success)";
+                setTimeout(nextSpelling, 1000);
+            } else {
+                feedback.innerHTML = `Incorrect ❌. The word is <strong>${vocabData[currentIndex].word}</strong>`;
+                feedback.style.color = "var(--accent)";
+                vocabData[currentIndex].failed = true; // Mark as failed
+                updateReviewCount();
+            }
+        }
+
+        function nextSpelling() {
+            currentIndex = (currentIndex + 1) % vocabData.length;
+            loadSpelling();
+        }
+
+        document.getElementById('s-input').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') checkSpelling();
+        });
+
+        // --- MCQ MODE ---
+        function loadMCQ() {
+            const wordObj = vocabData[currentIndex];
+            document.getElementById('m-word').innerText = wordObj.word;
+            document.getElementById('m-feedback').innerText = '';
+            
+            // Get 1 correct and 3 random wrong definitions
+            let options = [{ cn: wordObj.cn, correct: true }];
+            let wrongPool = vocabData.filter(v => v.word !== wordObj.word);
+            // Shuffle wrong pool
+            wrongPool.sort(() => 0.5 - Math.random());
+            
+            for(let i=0; i<3 && i<wrongPool.length; i++){
+                options.push({ cn: wrongPool[i].cn, correct: false });
+            }
+            
+            // Shuffle options
+            options.sort(() => 0.5 - Math.random());
+            
+            const optionsDiv = document.getElementById('m-options');
+            optionsDiv.innerHTML = '';
+            options.forEach(opt => {
+                let btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.innerText = opt.cn;
+                btn.onclick = () => handleMCQClick(btn, opt.correct, wordObj.cn);
+                optionsDiv.appendChild(btn);
+            });
+        }
+
+        function handleMCQClick(btn, isCorrect, correctCn) {
+            // Disable all buttons
+            const btns = document.querySelectorAll('.option-btn');
+            btns.forEach(b => b.style.pointerEvents = 'none');
+
+            const feedback = document.getElementById('m-feedback');
+            if (isCorrect) {
+                btn.classList.add('correct');
+                feedback.innerText = "Correct! ✅";
+                feedback.style.color = "var(--success)";
+                setTimeout(nextMCQ, 1000);
+            } else {
+                btn.classList.add('wrong');
+                feedback.innerText = `Incorrect ❌. Correct answer: ${correctCn}`;
+                feedback.style.color = "var(--accent)";
+                vocabData[currentIndex].failed = true;
+                updateReviewCount();
+            }
+        }
+
+        function nextMCQ() {
+            currentIndex = (currentIndex + 1) % vocabData.length;
+            loadMCQ();
+        }
+
+        // --- REVIEW MODE ---
+        function updateReviewCount() {
+            const count = vocabData.filter(v => v.failed).length;
+            document.getElementById('review-count').innerText = count;
+        }
+
+        function loadReview() {
+            const list = document.getElementById('r-list');
+            list.innerHTML = '';
+            const failedWords = vocabData.filter(v => v.failed);
+            
+            if(failedWords.length === 0) {
+                list.innerHTML = "<li style='color:var(--success); justify-content:center;'>Great job! No words to review.</li>";
+                return;
+            }
+
+            failedWords.forEach(wordObj => {
+                let li = document.createElement('li');
+                li.innerHTML = `<strong>${wordObj.word}</strong> <span>${wordObj.cn}</span>`;
+                list.appendChild(li);
+            });
+        }
+
+        // Initialize
+        loadFlashcard();
+        updateReviewCount();
+    </script>
+</body>
+</html>
