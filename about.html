@@ -143,41 +143,48 @@
         }
         .social-mentions a { color: var(--brand-blue); text-decoration: none; font-weight: 600; }
 
-        /* --- 团队折叠设计 --- */
-        .team-container { margin-top: 60px; display: flex; flex-direction: column; gap: 15px; }
+        /* --- Leadership team --- */
+        .team-container { max-width: 1120px; margin: 100px auto 120px; }
+        .team-container > .section-title { margin-bottom: 36px; }
+        #member-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
         .member-card {
-            background: #fbfbfd;
-            border-radius: 20px;
-            padding: 24px;
-            border: 1px solid var(--border-color);
-            cursor: pointer;
-            transition: var(--transition);
+            display: flex; flex-direction: column; justify-content: space-between; gap: 26px;
+            min-height: 220px; padding: 24px;
+            border: 1px solid #e3eaf0; border-top: 3px solid var(--brand-blue);
+            border-radius: 8px; background: #fff;
+            box-shadow: 0 8px 24px rgba(27, 52, 76, 0.045);
+            transition: transform 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease;
         }
-        .member-card:hover { border-color: #d2d2d7; background: #f5f5f7; }
-
-        .member-header { display: flex; align-items: center; gap: 20px; }
-        .member-avatar { width: 65px; height: 65px; border-radius: 50%; object-fit: cover; background: #eee; }
-        .member-meta h3 { font-size: 1.3rem; font-weight: 700; color: var(--text-main); }
-        .member-position { font-size: 0.85rem; color: var(--brand-blue); font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; }
-        .expand-icon { margin-left: auto; font-size: 24px; color: var(--text-sub); transition: var(--transition); }
-
-        .member-body {
-            max-height: 0;
-            opacity: 0;
-            transform: translateY(-8px);
-            transition: max-height 0.65s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.35s ease, transform 0.65s cubic-bezier(0.22, 1, 0.36, 1), padding-top 0.65s cubic-bezier(0.22, 1, 0.36, 1);
-            padding-left: 85px;
-            overflow: hidden;
-            will-change: max-height, opacity, transform;
+        .member-card:hover { transform: translateY(-3px); border-color: #cbd8e4; box-shadow: 0 14px 30px rgba(27, 52, 76, 0.09); }
+        .member-featured {
+            grid-column: span 2; display: grid;
+            grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+            align-items: center; gap: 30px;
+            background: linear-gradient(135deg, #f1f6fb, #fff 72%);
         }
-        .member-card.active .member-body { max-height: 1200px; opacity: 1; transform: translateY(0); padding-top: 15px; }
-        .member-card.active .expand-icon { transform: rotate(45deg); color: var(--brand-blue); }
+        .member-heading { display: flex; align-items: center; gap: 16px; }
+        .member-monogram {
+            display: grid; flex: 0 0 54px; width: 54px; height: 54px;
+            place-items: center; border: 1px solid #d7e3ed; border-radius: 8px;
+            background: #eaf2f8; color: #17496f; font-size: 15px; font-weight: 700;
+        }
+        .member-featured .member-monogram { flex-basis: 68px; width: 68px; height: 68px; font-size: 18px; }
+        .member-position { display: block; margin-bottom: 5px; color: #28638e; font-size: 10px; font-weight: 700; line-height: 1.4; text-transform: uppercase; }
+        .member-meta h3 { color: var(--text-main); font-size: 1.2rem; font-weight: 700; line-height: 1.25; }
+        .member-fun-fact { padding-top: 16px; border-top: 1px solid #e5ebf0; }
+        .member-featured .member-fun-fact { padding: 0 0 0 22px; border-top: 0; border-left: 1px solid #dbe5ed; }
+        .fun-fact-label { display: block; margin-bottom: 7px; color: #687b8b; font-size: 10px; font-weight: 700; text-transform: uppercase; }
+        .member-fun-fact p { margin: 0; color: #394b5a; font-size: 14px; line-height: 1.55; }
 
-        .member-intro {
-            font-family: 'Times New Roman', Times, serif;
-            color: var(--text-sub);
-            font-size: 1.1rem;
-            line-height: 1.5;
+        @media (max-width: 900px) {
+            #member-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        }
+        @media (max-width: 600px) {
+            .team-container { margin: 72px auto 84px; }
+            #member-list { grid-template-columns: 1fr; gap: 12px; }
+            .member-card { min-height: 0; padding: 20px; }
+            .member-featured { grid-column: auto; grid-template-columns: 1fr; gap: 22px; }
+            .member-featured .member-fun-fact { padding: 16px 0 0; border-top: 1px solid #dbe5ed; border-left: 0; }
         }
 
         .faq-section {
@@ -397,7 +404,6 @@
             .nav-links a { display: block; padding: 15px 0; font-size: 16px; text-align: center; }
             .btn-donate-nav { margin: 10px 40px; }
             .section-title { font-size: 2.2rem; }
-            .member-body { padding-left: 0; }
             .faq-section { margin: 70px 0 80px; }
             .faq-item { padding: 0 18px; }
             .faq-item summary { font-size: 1rem; }
@@ -491,111 +497,67 @@
             </div>
         </section>
 
-        <section class="team-container">
+        <section class="team-container" aria-labelledby="team-title">
             <span class="section-tag" data-key="tag-team">Our Leadership</span>
-            <h2 class="section-title" data-key="team-h">Meet the Team</h2>
-            
+            <h2 class="section-title" id="team-title" data-key="team-h">Meet the Team</h2>
+
             <div id="member-list">
-                <div class="member-card" onclick="toggleMember(this)">
-                    <div class="member-header">
-                        <img src="member_image.jpg" class="member-avatar">
-                        <div class="member-meta"><h3>Johnny Qiao</h3><span class="member-position" data-key="pos-pres">President</span></div>
-                        <div class="expand-icon">+</div>
+                <article class="member-card member-featured">
+                    <div class="member-heading">
+                        <span class="member-monogram" aria-hidden="true">JQ</span>
+                        <div class="member-meta"><span class="member-position">President</span><h3>Johnny Qiao</h3></div>
                     </div>
-                    <div class="member-body"><div class="member-intro" data-key="intro-johnny">Johnny is the Founder and currently serving his second consecutive term as President of the Asian Peer Support Club. A dedicated high school leader with a proven track record in organizational management—having previously directed a performance troupe—Johnny established this club with a profound vision: to bridge the gap between cultural transition and personal success. <br><br>
-Under Johnny’s leadership, the organization serves as a cornerstone for students navigating the complexities of a new country and school environment. His mission is to cultivate a premier, inclusive sanctuary where students aren't just adjusting, but are empowered to learn, love, and grow. Johnny is steadfast in his commitment to radical inclusivity, ensuring that the diverse voices of the community are not only heard but are instrumental in shaping the club’s trajectory. <br><br>
-To institutionalize this vision, Johnny leads through the RISE framework:
-<br><br>
-Resilience: Fortifying the ability of peers to navigate and overcome systemic and personal challenges.
-<br><br>
-Integration: Facilitating seamless cultural and academic transitions for new members.
-<br><br>
-Support: Providing a robust infrastructure of peer-to-peer emotional and social resources.
-<br><br>
-Equity: Championing a platform where every individual has equal access to opportunity and influence.
-<br><br>
-Johnny’s ambition is to scale this community’s impact, fostering a legacy of excellence and belonging that will endure for years to come. He invites all who share this vision to join the movement in elevating our community to unprecedented heights.</div></div>
-                </div>
-                <div class="member-card" onclick="toggleMember(this)">
-                    <div class="member-header">
-                        <img src="member_image.jpg" class="member-avatar">
-                        <div class="member-meta"><h3>Vicky Zhuo</h3><span class="member-position" data-key="pos-vp">Vice President</span></div>
-                        <div class="expand-icon">+</div>
+                    <div class="member-fun-fact"><span class="fun-fact-label">Fun fact</span><p>I'm always working on my next big idea.</p></div>
+                </article>
+                <article class="member-card">
+                    <div class="member-heading">
+                        <span class="member-monogram" aria-hidden="true">VZ</span>
+                        <div class="member-meta"><span class="member-position">Vice President</span><h3>Vicky Zhuo</h3></div>
                     </div>
-                    <div class="member-body"><div class="member-intro" data-key="intro-vicky">She enjoys art and music. She excels in Math, Chinese, and English. If you need help in these areas, don’t hesitate to ask her.</div></div>
-                </div>
-                <div class="member-card" onclick="toggleMember(this)">
-                    <div class="member-header">
-                        <img src="member_image.jpg" class="member-avatar">
-                        <div class="member-meta"><h3>Jason Qiao</h3><span class="member-position" data-key="pos-sec">Secretary</span></div>
-                        <div class="expand-icon">+</div>
+                    <div class="member-fun-fact"><span class="fun-fact-label">Fun fact</span><p>I enjoy drawing and listening to music.</p></div>
+                </article>
+                <article class="member-card">
+                    <div class="member-heading">
+                        <span class="member-monogram" aria-hidden="true">JQ</span>
+                        <div class="member-meta"><span class="member-position">Secretary &amp; Treasurer</span><h3>Jason Qiao</h3></div>
                     </div>
-                    <div class="member-body"><div class="member-intro" data-key="intro-jason">He is skilled at basketball. If you need assistance with Chinese or Maths, feel free to reach out to him.</div></div>
-                </div>
-                <div class="member-card" onclick="toggleMember(this)">
-                    <div class="member-header">
-                        <img src="member_image.jpg" class="member-avatar">
-                        <div class="member-meta"><h3>Maddox Cherry</h3><span class="member-position" data-key="pos-pr">Public Relations Officer</span></div>
-                        <div class="expand-icon">+</div>
+                    <div class="member-fun-fact"><span class="fun-fact-label">Fun fact</span><p>I love shooting hoops.</p></div>
+                </article>
+                <article class="member-card">
+                    <div class="member-heading">
+                        <span class="member-monogram" aria-hidden="true">SF</span>
+                        <div class="member-meta"><span class="member-position">Public Relations &amp; IT Support</span><h3>Sophia Fleming</h3></div>
                     </div>
-                    <div class="member-body"><div class="member-intro" data-key="intro-maddox">He has visited China for a pickleball cultural exchange. He enjoys playing baseball, and is skilled in English, history, and athletics. He can also fly a plane!</div></div>
-                </div>
-                <div class="member-card" onclick="toggleMember(this)">
-                    <div class="member-header">
-                        <img src="member_image.jpg" class="member-avatar">
-                        <div class="member-meta"><h3>Ziye Zhou</h3><span class="member-position" data-key="pos-pr">Public Relations Officer</span></div>
-                        <div class="expand-icon">+</div>
+                    <div class="member-fun-fact"><span class="fun-fact-label">Fun fact</span><p>In second grade, I watched a penguin documentary every day.</p></div>
+                </article>
+                <article class="member-card">
+                    <div class="member-heading">
+                        <span class="member-monogram" aria-hidden="true">ZZ</span>
+                        <div class="member-meta"><span class="member-position">Public Relations</span><h3>Ziye Zhou</h3></div>
                     </div>
-                    <div class="member-body"><div class="member-intro" data-key="intro-ziye">He excels in sports and all subjects, especially Chinese. If you need help with any subject, don’t hesitate to ask him.</div></div>
-                </div>
-                <div class="member-card" onclick="toggleMember(this)">
-                    <div class="member-header">
-                        <img src="member_image.jpg" class="member-avatar">
-                        <div class="member-meta"><h3>Jinxi Zheng</h3><span class="member-position" data-key="pos-tre">Treasurer</span></div>
-                        <div class="expand-icon">+</div>
+                    <div class="member-fun-fact"><span class="fun-fact-label">Fun fact</span><p>I'm a big fan of video games.</p></div>
+                </article>
+                <article class="member-card">
+                    <div class="member-heading">
+                        <span class="member-monogram" aria-hidden="true">AM</span>
+                        <div class="member-meta"><span class="member-position">Event Coordinator</span><h3>Amya Miller</h3></div>
                     </div>
-                    <div class="member-body"><div class="member-intro" data-key="intro-jinxi">He is good at sports and all subjects, especially Chinese. If you need help with any subject, feel free to ask him!</div></div>
-                </div>
-                <div class="member-card" onclick="toggleMember(this)">
-                    <div class="member-header">
-                        <img src="member_image.jpg" class="member-avatar">
-                        <div class="member-meta"><h3>Jonathan Wang</h3><span class="member-position" data-key="pos-ac">Academic Coordinator</span></div>
-                        <div class="expand-icon">+</div>
+                    <div class="member-fun-fact"><span class="fun-fact-label">Fun fact</span><p>I love learning about new cultures, and I'm always happy to lend a hand.</p></div>
+                </article>
+                <article class="member-card">
+                    <div class="member-heading">
+                        <span class="member-monogram" aria-hidden="true">YL</span>
+                        <div class="member-meta"><span class="member-position">Event Coordinator</span><h3>Yu Lin</h3></div>
                     </div>
-                    <div class="member-body"><div class="member-intro" data-key="intro-jonathan"></div></div>
-                </div>
-                <div class="member-card" onclick="toggleMember(this)">
-                    <div class="member-header">
-                        <img src="member_image.jpg" class="member-avatar">
-                        <div class="member-meta"><h3>Yu Lin</h3><span class="member-position" data-key="pos-ec">Event Coordinator</span></div>
-                        <div class="expand-icon">+</div>
+                    <div class="member-fun-fact"><span class="fun-fact-label">Fun fact</span><p>I love making people laugh.</p></div>
+                </article>
+                <article class="member-card">
+                    <div class="member-heading">
+                        <span class="member-monogram" aria-hidden="true">HL</span>
+                        <div class="member-meta"><span class="member-position">Event Coordinator</span><h3>Haoxuan Lin</h3></div>
                     </div>
-                    <div class="member-body"><div class="member-intro" data-key="intro-yulin">He enjoys playing video games and chatting with friends in his free time. He has also tried helping classmates join APSC because he hopes to support students who are in need. Through this club, he hopes to learn new knowledge and skills, and he looks forward to working with everyone to make the club bigger, better, and stronger. He is very happy to meet everyone, and he appreciates your guidance and support!</div></div>
-                </div>
-                   <div class="member-card" onclick="toggleMember(this)">
-                    <div class="member-header">
-                        <img src="member_image.jpg" class="member-avatar">
-                        <div class="member-meta"><h3>Emily Portillo</h3><span class="member-position" data-key="pos-ec">Event Coordinator</span></div>
-                        <div class="expand-icon">+</div>
-                    </div>
-                    <div class="member-body"><div class="member-intro" data-key="intro-emily"></div></div>
-                </div>
-                <div class="member-card" onclick="toggleMember(this)">
-                    <div class="member-header">
-                        <img src="member_image.jpg" class="member-avatar">
-                        <div class="member-meta"><h3>Vincent Zhuo</h3><span class="member-position" data-key="pos-it">IT Support Officer</span></div>
-                        <div class="expand-icon">+</div>
-                    </div>
-                    <div class="member-body"><div class="member-intro" data-key="intro-vincent">He loves reading. Feel free to discuss your favorite books with him anytime! He can also help with subjects including Mathematics, English, and more.</div></div>
-                </div>
-                <div class="member-card" onclick="toggleMember(this)">
-                    <div class="member-header">
-                        <img src="member_image.jpg" class="member-avatar">
-                        <div class="member-meta"><h3>Emily Oakes</h3><span class="member-position" data-key="pos-des">Designer</span></div>
-                        <div class="expand-icon">+</div>
-                    </div>
-                    <div class="member-body"><div class="member-intro" data-key="intro-emily"></div></div>
-                </div>
+                    <div class="member-fun-fact"><span class="fun-fact-label">Fun fact</span><p>I'm always listening to music.</p></div>
+                </article>
             </div>
         </section>
 
@@ -994,10 +956,6 @@ Johnny’s ambition is to scale this community’s impact, fostering a legacy of
         function closeMenu() {
             hamburger.classList.remove('active');
             navMenu.classList.remove('active');
-        }
-
-        function toggleMember(card) {
-            card.classList.toggle('active');
         }
 
         // Brochure Carousel Functionality
