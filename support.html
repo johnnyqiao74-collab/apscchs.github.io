@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Get Support | APSC</title>
+    <meta name="description" content="Find peer support and student resources from APSC at Clarksburg High School, including English conversation opportunities and ways to connect.">
+    <link rel="canonical" href="https://apscchs.org/support.html">
     <link rel="stylesheet" href="header.css">
     <script src="header.js" defer></script>
     <link rel="icon" type="image/png" href="unnamed.png?v=20260928">
@@ -74,15 +76,16 @@
 
         /* --- 主要内容 --- */
         .wrapper { max-width: 800px; margin: 0 auto; padding: 60px 40px 100px; }
-        .page-header { text-align: center; margin-bottom: 50px; }
+        .page-header { text-align: left; margin-bottom: 24px; }
         .page-header h1 { font-size: 3rem; font-weight: 800; letter-spacing: -0.05em; margin-bottom: 15px; }
         
-        .disclaimer-box { background: #fff0f0; border: 1px solid #fedbdbe8; color: #d70015; padding: 20px; border-radius: 12px; margin-bottom: 40px; font-size: 0.9rem; display: flex; align-items: center; gap: 15px; }
+        .disclaimer-box { background: #f1f5f4; border: 1px solid #dce6e2; color: #42575d; padding: 16px 18px; border-radius: 8px; margin-bottom: 30px; font-size: 0.9rem; display: grid; grid-template-columns: 1fr; gap: 4px; }
+        .disclaimer-box strong { color: #18343d; font-size: 0.82rem; letter-spacing: 0.04em; }
         
-        .support-form-container { background: var(--bg-card); border: 1px solid var(--border-color); padding: 40px; border-radius: 24px; }
+        .support-form-container { background: #fff; border: 1px solid #dce6e2; padding: 32px; border-radius: 10px; box-shadow: 0 12px 32px rgba(24,52,61,0.05); }
         .form-group { margin-bottom: 25px; }
         .form-label { display: block; font-size: 0.9rem; font-weight: 600; margin-bottom: 8px; }
-        .form-input, .form-select, .form-textarea { width: 100%; padding: 12px 16px; border-radius: 12px; border: 1px solid var(--border-color); font-family: inherit; outline: none; transition: var(--transition); }
+        .form-input, .form-select, .form-textarea { width: 100%; min-height: 48px; padding: 12px 14px; border-radius: 6px; border: 1px solid #cbd8d4; background: #fff; font: inherit; outline: none; transition: var(--transition); }
         .form-input:focus, .form-textarea:focus { border-color: var(--brand-blue); box-shadow: 0 0 0 4px rgba(0,86,210,0.1); }
 
         /* --- 自定义复选框样式 --- */
@@ -97,16 +100,32 @@
         .agree-text a { color: var(--brand-blue); text-decoration: none; font-weight: 500; transition: var(--transition); }
         .agree-text a:hover { text-decoration: underline; }
 
-        .btn-submit { width: 100%; padding: 14px; background: var(--brand-blue); color: #fff; border: none; border-radius: 12px; font-weight: 600; cursor: pointer; transition: var(--transition); }
+        .btn-submit { width: 100%; padding: 14px; background: var(--brand-blue); color: #fff; border: none; border-radius: 6px; font-weight: 700; cursor: pointer; transition: var(--transition); }
         .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,86,210,0.2); }
         .btn-submit:disabled { background: #ccc; cursor: not-allowed; transform: none; box-shadow: none; }
 
         /* --- 资源列表 --- */
-        .resources-section { margin-top: 60px; }
-        .resource-card { display: flex; justify-content: space-between; align-items: center; padding: 20px; background: #fff; border: 1px solid var(--border-color); border-radius: 16px; margin-bottom: 15px; text-decoration: none; color: inherit; transition: var(--transition); }
-        .resource-card:hover { border-color: var(--brand-blue); transform: translateX(5px); }
-        .res-name { font-weight: 600; }
-        .res-contact { color: var(--brand-blue); font-size: 0.9rem; font-weight: 600; }
+        .resources-section { margin: 0 0 54px; }
+        .section-heading { margin: 0 0 8px; font-size: 1.8rem; color: #18343d; }
+        .section-intro { max-width: 68ch; margin-bottom: 22px; color: #52666d; font-size: 0.95rem; }
+        .resource-group + .resource-group { margin-top: 34px; }
+        .resource-group h3 { margin: 0 0 12px; color: #52666d; font-size: 0.76rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; }
+        .resource-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+        .resource-card { display: flex; min-width: 0; flex-direction: column; justify-content: space-between; gap: 14px; min-height: 150px; padding: 18px; background: #fff; border: 1px solid #dce6e2; border-radius: 8px; text-decoration: none; color: inherit; transition: border-color 0.18s ease, background 0.18s ease, transform 0.18s ease; }
+        .resource-card:hover { border-color: #8eaaa3; background: #fbfcfb; transform: translateY(-2px); }
+        .resource-card-primary { background: #edf4f1; border-color: #bfcfc9; }
+        .resource-card-primary:hover { background: #e6f0ec; }
+        .resource-title { display: block; margin-bottom: 5px; color: #18343d; font-size: 1rem; font-weight: 700; line-height: 1.35; }
+        .resource-description { display: block; color: #52666d; font-size: 0.86rem; line-height: 1.55; }
+        .resource-action { display: flex; align-items: center; justify-content: space-between; gap: 8px; color: #0056d2; font-size: 0.88rem; font-weight: 700; }
+        .resource-action::after { content: '\2197'; }
+        .resource-actions a { color: #0056d2; text-decoration: none; }
+        .resource-actions a:hover { text-decoration: underline; }
+        .resource-actions a:focus-visible { outline: 2px solid rgba(0,86,210,0.4); outline-offset: 3px; }
+        .resource-card:focus-visible { outline: 3px solid rgba(0,86,210,0.35); outline-offset: 3px; }
+        .support-form-heading { margin-bottom: 24px; }
+        .support-form-heading h2 { margin-bottom: 6px; color: #18343d; font-size: 1.65rem; }
+        .support-form-heading p { color: #52666d; font-size: 0.93rem; }
 
         /* --- Footer --- */
         footer { padding: 80px 0 60px; border-top: 1px solid var(--border-color); text-align: center; background: #fbfbfd; }
@@ -307,6 +326,11 @@
             box-shadow: 0 7px 20px rgba(0,86,210,0.26);
         }
 
+        html body .page-header h1 { margin-bottom: 10px; font-size: 2.65rem; }
+        html body .page-header > p { max-width: 62ch; font-size: 1rem; }
+        html body .btn-guidance-open { margin: 12px 0 0; padding: 4px 0; border: 0; border-radius: 0; background: transparent; box-shadow: none; color: #0056d2; font-size: 0.88rem; text-decoration: underline; text-underline-offset: 3px; }
+        html body .btn-guidance-open:hover { background: transparent; box-shadow: none; transform: none; }
+
         @keyframes fadeInUp {
             0% { opacity: 0; transform: translateY(20px) scale(0.96); }
             100% { opacity: 1; transform: translateY(0) scale(1); }
@@ -320,6 +344,22 @@
             .guidance-grid { grid-template-columns: 1fr; gap: 12px; }
             .guidance-card { padding: 14px 12px 14px; }
             .guidance-body p { margin-bottom: 10px; font-size: 0.92rem; }
+        }
+
+        @media (max-width: 600px) {
+            html body .wrapper { padding: 28px 20px 64px; }
+            html body .page-header { margin-bottom: 18px; }
+            html body .page-header h1 { max-width: 15ch; font-size: 2.15rem; }
+            html body .page-header > p { font-size: 0.94rem; line-height: 1.6; }
+            html body .btn-guidance-open { margin-top: 8px; }
+            html body .disclaimer-box { margin-bottom: 24px; padding: 13px 14px; font-size: 0.83rem; line-height: 1.55; }
+            html body .section-heading { font-size: 1.55rem; }
+            html body .section-intro { margin-bottom: 16px; font-size: 0.88rem; }
+            html body .resources-section { margin-bottom: 36px; }
+            .resource-grid { grid-template-columns: 1fr; }
+            .resource-card { min-height: 0; }
+            .support-form-container { padding: 22px 18px; }
+            .page-header h1 { font-size: 2.35rem; }
         }
 
         @media (max-width: 900px) {
@@ -376,7 +416,7 @@
         </div>
     </nav>
 
-    <div class="guidance-modal-overlay" id="guidanceModal" role="dialog" aria-modal="true" aria-label="Support Guidance">
+    <div class="guidance-modal-overlay" id="guidanceModal" role="dialog" aria-modal="true" aria-label="Support Guidance" aria-hidden="true">
         <div class="guidance-modal">
             <div class="guidance-header">
                 <h2 data-key="guidance-title">Support Guidance Cards</h2>
@@ -397,11 +437,90 @@
         </header>
 
         <div class="disclaimer-box">
-            <span>⚠️</span>
-            <span data-key="sup-disclaimer">Important: We provide peer support, not professional medical advice. If you are in immediate danger, call 911 or a crisis hotline.</span>
+            <strong data-key="urgent-label">Need immediate help?</strong>
+            <span data-key="sup-disclaimer">If you or someone else is in immediate danger, call 911. For emotional distress or suicidal thoughts, call or text 988. APSC provides peer support, not professional or emergency care.</span>
         </div>
 
-        <div class="support-form-container">
+        <section class="resources-section" aria-labelledby="urgent-resources-title">
+            <h2 class="section-heading" id="urgent-resources-title" data-key="urgent-title">Immediate support</h2>
+            <p class="section-intro" data-key="urgent-intro">Free, confidential options are available. Choose the way that feels easiest: call, text, or chat.</p>
+            <div class="resource-grid">
+                <article class="resource-card resource-card-primary">
+                    <span><span class="resource-title" data-key="res-988-title">988 Suicide &amp; Crisis Lifeline</span><span class="resource-description" data-key="res-988-desc">Free, confidential support, 24/7. Call or text 988 for mental health, substance use, or emotional distress.</span></span>
+                    <span class="resource-action resource-actions"><a href="tel:988" data-key="res-call-988">Call 988</a><a href="sms:988" data-key="res-text-988">Text 988</a></span>
+                </article>
+                <a class="resource-card" href="https://988lifeline.org/chat/" target="_blank" rel="noopener noreferrer">
+                    <span><span class="resource-title" data-key="res-chat-title">988 online chat</span><span class="resource-description" data-key="res-chat-desc">Connect with a trained 988 counselor online, any time.</span></span>
+                    <span class="resource-action" data-key="res-start-chat">Start a chat</span>
+                </a>
+                <a class="resource-card" href="sms:741741?&amp;body=HOME" target="_self">
+                    <span><span class="resource-title" data-key="res-text-title">Crisis Text Line</span><span class="resource-description" data-key="res-text-desc">Text HOME to 741741 for free, confidential support from a trained volunteer, 24/7.</span></span>
+                    <span class="resource-action" data-key="res-text-home">Text HOME to 741741</span>
+                </a>
+                <a class="resource-card" href="tel:911" target="_self">
+                    <span><span class="resource-title" data-key="res-911-title">Emergency services</span><span class="resource-description" data-key="res-911-desc">Call 911 if someone is in immediate danger or needs urgent medical help.</span></span>
+                    <span class="resource-action" data-key="res-call-911">Call 911</span>
+                </a>
+            </div>
+        </section>
+
+        <section class="resources-section" aria-labelledby="local-resources-title">
+            <h2 class="section-heading" id="local-resources-title" data-key="res-title">Local and school resources</h2>
+            <p class="section-intro" data-key="local-intro">For ongoing support, start with a trusted adult, school counselor, or local service. You do not have to figure it out alone.</p>
+            <div class="resource-group">
+                <h3 data-key="county-heading">Montgomery County</h3>
+                <div class="resource-grid">
+                    <a class="resource-card" href="tel:+12407774000" target="_self">
+                        <span><span class="resource-title" data-key="res-county-center-title">Montgomery County Crisis Center</span><span class="resource-description" data-key="res-county-center-desc">County crisis support, 24 hours a day, 365 days a year. 1301 Piccard Drive, Rockville.</span></span>
+                        <span class="resource-action">240-777-4000</span>
+                    </a>
+                    <a class="resource-card" href="tel:+13017382255" target="_self">
+                        <span><span class="resource-title" data-key="res-county-line-title">Montgomery County Crisis Hotline</span><span class="resource-description" data-key="res-county-line-desc">Call for local crisis support and guidance.</span></span>
+                        <span class="resource-action">301-738-2255</span>
+                    </a>
+                    <a class="resource-card" href="https://211md.org/resources/mental-health/" target="_blank" rel="noopener noreferrer">
+                        <span><span class="resource-title" data-key="res-211-title">211 Maryland</span><span class="resource-description" data-key="res-211-desc">Free, confidential help finding mental health, family, food, housing, and other local services. Translation is available.</span></span>
+                        <span class="resource-action" data-key="res-search-local">Find local help</span>
+                    </a>
+                    <a class="resource-card" href="https://211md.org/about/text-messages/mdyoungminds/" target="_blank" rel="noopener noreferrer">
+                        <span><span class="resource-title" data-key="res-youngminds-title">MDYoungMinds for teens</span><span class="resource-description" data-key="res-youngminds-desc">A Maryland teen mental-health text program with supportive messages. Text MDYoungMinds to 898-211.</span></span>
+                        <span class="resource-action" data-key="res-program-info">Program information</span>
+                    </a>
+                </div>
+            </div>
+            <div class="resource-group">
+                <h3 data-key="school-heading">Clarksburg High School</h3>
+                <div class="resource-grid">
+                    <a class="resource-card" href="https://www.montgomeryschoolsmd.org/schools/clarksburghs/counseling/" target="_blank" rel="noopener noreferrer">
+                        <span><span class="resource-title" data-key="res-school-counseling-title">CHS Counseling Office</span><span class="resource-description" data-key="res-school-counseling-desc">Students can request an appointment through the Counseling Office or visit before school, at lunch, or after school.</span></span>
+                        <span class="resource-action">240-740-6020</span>
+                    </a>
+                    <a class="resource-card" href="https://www.montgomeryschoolsmd.org/schools/clarksburghs/bullyingresource/" target="_blank" rel="noopener noreferrer">
+                        <span><span class="resource-title" data-key="res-bullying">CHS Bullying &amp; Harassment Reporting</span><span class="resource-description" data-key="res-bullying-desc">Report bullying to a staff member and find the school reporting form and resources.</span></span>
+                        <span class="resource-action" data-key="res-link">Visit school site</span>
+                    </a>
+                </div>
+            </div>
+            <div class="resource-group">
+                <h3 data-key="national-heading">Trusted national resources</h3>
+                <div class="resource-grid">
+                    <a class="resource-card" href="https://www.stopbullying.gov/resources/get-help-now" target="_blank" rel="noopener noreferrer">
+                        <span><span class="resource-title" data-key="res-stopbullying-title">StopBullying.gov</span><span class="resource-description" data-key="res-stopbullying-desc">Official guidance for teens, families, and schools on what to do about bullying and cyberbullying.</span></span>
+                        <span class="resource-action" data-key="res-read-guide">Read the guide</span>
+                    </a>
+                    <a class="resource-card" href="https://findtreatment.gov/" target="_blank" rel="noopener noreferrer">
+                        <span><span class="resource-title" data-key="res-treatment-title">FindTreatment.gov</span><span class="resource-description" data-key="res-treatment-desc">SAMHSA's confidential directory for mental health and substance use treatment services.</span></span>
+                        <span class="resource-action" data-key="res-find-care">Find care</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section class="support-form-container" aria-labelledby="support-form-title">
+            <header class="support-form-heading">
+                <h2 id="support-form-title" data-key="form-title">Ask APSC for peer support</h2>
+                <p data-key="form-intro">This form goes to the APSC student team. It is not monitored for emergencies and is not a substitute for professional care.</p>
+            </header>
             <form id="supportForm">
                 <div class="form-group">
                     <label class="form-label" data-key="lbl-name">Name (Optional)</label>
@@ -418,26 +537,7 @@
                         <option value="social" data-key="opt-social">Social Support</option>
                         <option value="mental" data-key="opt-mental">Emotional Support</option>
                         <option value="other" data-key="opt-other">Other</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label class="form-label" data-key="lbl-msg">How can we help?</label>
-                    <textarea name="message" id="msgInput" class="form-textarea" placeholder="Tell us what's going on..."></textarea>
-                </div>
-
-                <div class="form-group checkbox-group">
-                    <label class="checkbox-container">
-                        <input type="checkbox" name="agree_terms" required>
-                        <span class="checkmark"></span>
-                        <span class="agree-text" data-key="lbl-agree">
-                            I have read and agree to the <a href="Privacy_Policy.html" target="_blank">Privacy Policy</a> and <a href="Terms_of_Use.html" target="_blank">Terms of Use</a>.
-                        </span>
-                    </label>
-                </div>
-
-                <button type="submit" id="submitBtn" class="btn-submit" data-key="btn-send">Send Request</button>
-            </form>
-        </div>
+                    </section>
 
         <div class="resources-section">
             <h2 style="margin-bottom: 25px;" data-key="res-title">External Resources</h2>
@@ -506,6 +606,9 @@
                 body: new FormData(form)
             })
             .then(response => {
+                if (!response.ok) {
+                    throw new Error('Support request failed');
+                }
                 alert("Success! Your request has been sent. We will contact you as soon as possible.");
                 form.reset();
             })
@@ -588,16 +691,18 @@
         function openGuidanceModal() {
             if (!modalOverlay) return;
             renderGuidanceCards();
+            modalOverlay.setAttribute('aria-hidden', 'false');
             const modal = modalOverlay.querySelector('.guidance-modal');
             if (modal) {
                 modal.classList.remove('close-animation');
             }
             modalOverlay.style.display = 'flex';
             modalOverlay.classList.add('active');
+            modalCloseBtn?.focus();
         }
 
         function closeGuidanceModal() {
-            if (!modalOverlay) return;
+            if (!modalOverlay || !modalOverlay.classList.contains('active')) return;
             const modal = modalOverlay.querySelector('.guidance-modal');
             if (modal) {
                 modal.classList.add('close-animation');
@@ -605,7 +710,9 @@
             setTimeout(() => {
                 modalOverlay.classList.remove('active');
                 modalOverlay.style.display = 'none';
+                modalOverlay.setAttribute('aria-hidden', 'true');
                 if (modal) modal.classList.remove('close-animation');
+                openGuidanceBtn?.focus();
             }, 340);
         }
 
@@ -624,79 +731,191 @@
         const i18n = {
             'en': {
                 'nav-home': 'Home', 'nav-about': 'About', 'nav-meetings': 'Meetings', 'nav-support': 'Get Support', 'nav-ann': 'Announcements', 'nav-feedback': 'Feedback', 'nav-contact': 'Contact', 'nav-donate': 'Donate', 'nav-privacy': 'Privacy Policy', 'nav-terms': 'Terms of Use', 'nav-events': 'Events',
+                'nav-signin': 'Sign in',
                 'sup-title': 'We Are Here For You', 'sup-sub': 'Whether it\'s academic stress, social challenges, or you just need someone to talk to, APSC is here to listen.',
+                'urgent-label': 'Need immediate help?', 'urgent-title': 'Immediate support', 'urgent-intro': 'Free, confidential options are available. Choose the way that feels easiest: call, text, or chat.',
+                'res-988-title': '988 Suicide & Crisis Lifeline', 'res-988-desc': 'Free, confidential support, 24/7. Call or text 988 for mental health, substance use, or emotional distress.', 'res-call-988': 'Call 988', 'res-text-988': 'Text 988',
+                'res-chat-title': '988 online chat', 'res-chat-desc': 'Connect with a trained 988 counselor online, any time.', 'res-start-chat': 'Start a chat',
+                'res-text-title': 'Crisis Text Line', 'res-text-desc': 'Text HOME to 741741 for free, confidential support from a trained volunteer, 24/7.', 'res-text-home': 'Text HOME to 741741',
+                'res-911-title': 'Emergency services', 'res-911-desc': 'Call 911 if someone is in immediate danger or needs urgent medical help.', 'res-call-911': 'Call 911',
+                'local-intro': 'For ongoing support, start with a trusted adult, school counselor, or local service. You do not have to figure it out alone.', 'county-heading': 'Montgomery County',
+                'res-county-center-title': 'Montgomery County Crisis Center', 'res-county-center-desc': 'County crisis support, 24 hours a day, 365 days a year. 1301 Piccard Drive, Rockville.',
+                'res-county-line-title': 'Montgomery County Crisis Hotline', 'res-county-line-desc': 'Call for local crisis support and guidance.',
+                'res-211-title': '211 Maryland', 'res-211-desc': 'Free, confidential help finding mental health, family, food, housing, and other local services. Translation is available.', 'res-search-local': 'Find local help',
+                'res-youngminds-title': 'MDYoungMinds for teens', 'res-youngminds-desc': 'A Maryland teen mental-health text program with supportive messages. Text MDYoungMinds to 898-211.', 'res-program-info': 'Program information',
+                'school-heading': 'Clarksburg High School', 'res-school-counseling-title': 'CHS Counseling Office', 'res-school-counseling-desc': 'Students can request an appointment through the Counseling Office or visit before school, at lunch, or after school.',
+                'res-bullying-desc': 'Report bullying to a staff member and find the school reporting form and resources.', 'national-heading': 'Trusted national resources',
+                'res-stopbullying-title': 'StopBullying.gov', 'res-stopbullying-desc': 'Official guidance for teens, families, and schools on what to do about bullying and cyberbullying.', 'res-read-guide': 'Read the guide',
+                'res-treatment-title': 'FindTreatment.gov', 'res-treatment-desc': 'SAMHSA\'s confidential directory for mental health and substance use treatment services.', 'res-find-care': 'Find care',
+                'form-title': 'Ask APSC for peer support', 'form-intro': 'This form goes to the APSC student team. It is not monitored for emergencies and is not a substitute for professional care.',
                 'guidance-title': 'Support Guidance Cards', 'guidance-intro': 'Please choose a card below to explore quick suggestions and support pathways first. If immediate help is needed, use the crisis contacts below.', 'btn-guidance-open': 'Open Support Guidance Cards',
-                'sup-disclaimer': 'Important: We provide peer support, not professional medical advice. If you are in immediate danger, call 911 or a crisis hotline.',
+                'sup-disclaimer': 'If you or someone else is in immediate danger, call 911. For emotional distress or suicidal thoughts, call or text 988. APSC provides peer support, not professional or emergency care.',
                 'lbl-name': 'Name (Optional)', 'lbl-contact': 'Contact Info (Email/Phone)', 'lbl-type': 'Type of Support', 'lbl-msg': 'How can we help?',
                 'ph-name': 'Your name', 'ph-contact': 'How can we reach you?', 'ph-msg': 'Tell us what\'s going on...',
                 'opt-academic': 'Academic Support', 'opt-social': 'Social Support', 'opt-mental': 'Emotional Support', 'opt-other': 'Other',
-                'btn-send': 'Send Request', 'res-title': 'External Resources', 'res-bullying': 'CHS Bullying & Harassment Reporting', 'res-link': 'Visit Site →', 'res-hotline': 'National Crisis Hotline', 'res-mfjc': 'Montgomery Family Justice Center',
+                'btn-send': 'Send Request', 'res-title': 'Local and school resources', 'res-bullying': 'CHS Bullying & Harassment Reporting', 'res-link': 'Visit school site', 'res-hotline': 'National Crisis Hotline', 'res-mfjc': 'Montgomery Family Justice Center',
                 'lbl-agree': 'I have read and agree to the <a href="Privacy_Policy.html" target="_blank">Privacy Policy</a> and <a href="Terms_of_Use.html" target="_blank">Terms of Use</a>.'
             },
             'zh-hans': {
                 'nav-home': '首页', 'nav-about': '关于我们', 'nav-meetings': '会议安排', 'nav-support': '获取帮助', 'nav-ann': '公告通知', 'nav-feedback': '反馈', 'nav-contact': '联系我们', 'nav-donate': '捐赠支持', 'nav-privacy': '隐私政策', 'nav-terms': '使用条款', 'nav-events': '活动展示',
+                'nav-signin': '登录',
                 'sup-title': '我们在这里支持你', 'sup-sub': '无论是学业压力、社交困扰，还是只想找人倾诉，APSC 都在这里倾听。',
+                'urgent-label': '需要立即帮助？', 'urgent-title': '紧急支持', 'urgent-intro': '可获得免费、保密的帮助。选择最方便的方式：电话、短信或在线聊天。',
+                'res-988-title': '988 自杀与危机生命线', 'res-988-desc': '全天候免费保密支持。遇到心理健康、物质使用或情绪困扰时，可拨打或短信发送 988。', 'res-call-988': '拨打 988', 'res-text-988': '短信发送 988',
+                'res-chat-title': '988 在线聊天', 'res-chat-desc': '随时在线联系经过培训的 988 咨询员。', 'res-start-chat': '开始聊天',
+                'res-text-title': '危机短信热线', 'res-text-desc': '向 741741 发送 HOME，可全天候免费联系受训志愿者并获得保密支持。', 'res-text-home': '发送 HOME 至 741741',
+                'res-911-title': '紧急服务', 'res-911-desc': '如果有人正处于危险中或需要紧急医疗帮助，请拨打 911。', 'res-call-911': '拨打 911',
+                'local-intro': '持续获得帮助可从可信任的成年人、学校辅导员或本地服务开始。你不必独自解决。', 'county-heading': '蒙哥马利县',
+                'res-county-center-title': '蒙哥马利县危机中心', 'res-county-center-desc': '全年每天 24 小时提供县级危机支持。地址：Rockville，1301 Piccard Drive。',
+                'res-county-line-title': '蒙哥马利县危机热线', 'res-county-line-desc': '拨打电话获得本地危机支持与指引。',
+                'res-211-title': '马里兰 211', 'res-211-desc': '免费保密查找心理健康、家庭、食物、住房等本地服务，并提供翻译。', 'res-search-local': '查找本地帮助',
+                'res-youngminds-title': '青少年 MDYoungMinds', 'res-youngminds-desc': '马里兰州青少年心理健康短信项目。发送 MDYoungMinds 至 898-211。', 'res-program-info': '项目详情',
+                'school-heading': 'Clarksburg 高中', 'res-school-counseling-title': 'CHS 学校辅导办公室', 'res-school-counseling-desc': '可通过辅导办公室预约，也可在上学前、午餐时间或放学后前往。',
+                'res-bullying-desc': '向学校工作人员报告霸凌，并查看学校报告表和相关资源。', 'national-heading': '可信赖的全国性资源',
+                'res-stopbullying-title': 'StopBullying.gov', 'res-stopbullying-desc': '为青少年、家庭和学校提供霸凌与网络霸凌应对指南。', 'res-read-guide': '阅读指南',
+                'res-treatment-title': 'FindTreatment.gov', 'res-treatment-desc': 'SAMHSA 提供的心理健康与物质使用治疗服务保密目录。', 'res-find-care': '查找服务',
+                'form-title': '向 APSC 寻求同伴支持', 'form-intro': '此表单会发送给 APSC 学生团队，不用于紧急求助，也不能替代专业服务。',
                 'guidance-title': '支持建议卡', 'guidance-intro': '请从下方卡片中选择，先查看快捷建议和支持途径。如需紧急援助，请使用危机联系方式。', 'btn-guidance-open': '打开支持建议卡',
-                'sup-disclaimer': '重要提示：我们提供同伴互助，而非专业医疗建议。如果你处于紧急危险中，请立即拨打 911 或危机热线。',
+                'sup-disclaimer': '如果你或他人正处于危险中，请拨打 911。遇到情绪困扰或有自杀念头时，请拨打或短信发送 988。APSC 提供同伴支持，不提供专业或紧急服务。',
                 'lbl-name': '姓名 (可选)', 'lbl-contact': '联系方式 (邮箱/电话)', 'lbl-type': '帮助类型', 'lbl-msg': '我们需要如何帮助你？',
                 'ph-name': '你的姓名', 'ph-contact': '如何联系你？', 'ph-msg': '请告诉我们发生了什么...',
                 'opt-academic': '学业支持', 'opt-social': '社交支持', 'opt-mental': '情感支持', 'opt-other': '其他',
-                'btn-send': '发送请求', 'res-title': '外部资源', 'res-bullying': 'CHS 霸凌和骚扰投诉页面', 'res-link': '访问官网 →', 'res-hotline': '国家危机热线', 'res-mfjc': '蒙哥马利家庭司法中心',
+                'btn-send': '发送请求', 'res-title': '本地与学校资源', 'res-bullying': 'CHS 霸凌和骚扰投诉页面', 'res-link': '访问学校网站', 'res-hotline': '国家危机热线', 'res-mfjc': '蒙哥马利家庭司法中心',
                 'lbl-agree': '我已阅读并同意 <a href="Privacy_Policy.html" target="_blank">隐私政策</a> 和 <a href="Terms_of_Use.html" target="_blank">使用条款</a>。'
             },
             'zh-hant': {
                 'nav-home': '首頁', 'nav-about': '關於我們', 'nav-meetings': '會議安排', 'nav-support': '獲取幫助', 'nav-ann': '公告通知', 'nav-feedback': '回饋', 'nav-contact': '聯繫我們', 'nav-donate': '捐贈支持', 'nav-privacy': '隱私政策', 'nav-terms': '使用條款', 'nav-events': '活動展示',
+                'nav-signin': '登入',
                 'sup-title': '我們在這裡支持你', 'sup-sub': '無論是學業壓力、社交困擾，還是只想找人傾訴，APSC 都在這裡傾聽。',
+                'urgent-label': '需要立即協助？', 'urgent-title': '緊急支援', 'urgent-intro': '可獲得免費且保密的協助。選擇最方便的方式：電話、簡訊或線上聊天。',
+                'res-988-title': '988 自殺與危機生命線', 'res-988-desc': '全天候免費保密支援。遇到心理健康、物質使用或情緒困擾時，可撥打或簡訊傳送 988。', 'res-call-988': '撥打 988', 'res-text-988': '簡訊傳送 988',
+                'res-chat-title': '988 線上聊天', 'res-chat-desc': '隨時在線聯絡受過訓練的 988 諮詢員。', 'res-start-chat': '開始聊天',
+                'res-text-title': '危機簡訊專線', 'res-text-desc': '傳送 HOME 至 741741，可全天候免費聯絡受訓志工並獲得保密支援。', 'res-text-home': '傳送 HOME 至 741741',
+                'res-911-title': '緊急服務', 'res-911-desc': '如果有人正處於危險中或需要緊急醫療協助，請撥打 911。', 'res-call-911': '撥打 911',
+                'local-intro': '持續獲得協助可從可信任的成年人、學校輔導員或本地服務開始。你不必獨自面對。', 'county-heading': '蒙哥馬利郡',
+                'res-county-center-title': '蒙哥馬利郡危機中心', 'res-county-center-desc': '全年每天 24 小時提供郡級危機支援。地址：Rockville，1301 Piccard Drive。',
+                'res-county-line-title': '蒙哥馬利郡危機專線', 'res-county-line-desc': '致電以獲得本地危機支援與指引。',
+                'res-211-title': '馬里蘭 211', 'res-211-desc': '免費保密查找心理健康、家庭、食物、住房等本地服務，並提供翻譯。', 'res-search-local': '尋找本地協助',
+                'res-youngminds-title': '青少年 MDYoungMinds', 'res-youngminds-desc': '馬里蘭州青少年心理健康簡訊計畫。傳送 MDYoungMinds 至 898-211。', 'res-program-info': '計畫詳情',
+                'school-heading': 'Clarksburg 高中', 'res-school-counseling-title': 'CHS 學校輔導辦公室', 'res-school-counseling-desc': '可透過輔導辦公室預約，也可於上學前、午餐時間或放學後前往。',
+                'res-bullying-desc': '向學校教職員通報霸凌，並查看學校通報表與相關資源。', 'national-heading': '可信賴的全國性資源',
+                'res-stopbullying-title': 'StopBullying.gov', 'res-stopbullying-desc': '為青少年、家庭與學校提供霸凌及網路霸凌應對指南。', 'res-read-guide': '閱讀指南',
+                'res-treatment-title': 'FindTreatment.gov', 'res-treatment-desc': 'SAMHSA 提供的心理健康與物質使用治療服務保密目錄。', 'res-find-care': '尋找服務',
+                'form-title': '向 APSC 尋求同伴支援', 'form-intro': '此表單會傳送給 APSC 學生團隊，不用於緊急求助，也不能取代專業服務。',
                 'guidance-title': '支持建議卡', 'guidance-intro': '請從下方卡片中選擇，先查看快捷建議和支持途徑。如需緊急援助，請使用危機聯絡方式。', 'btn-guidance-open': '打開支持建議卡',
-                'sup-disclaimer': '重要提示：我們提供同伴互助，而非專業醫療建議。如果你處於緊急危險中，請立即撥打 911 或危機熱線。',
+                'sup-disclaimer': '如果你或他人正處於危險中，請撥打 911。遇到情緒困擾或有自殺念頭時，請撥打或簡訊傳送 988。APSC 提供同伴支援，不提供專業或緊急服務。',
                 'lbl-name': '姓名 (可選)', 'lbl-contact': '聯繫方式 (郵箱/電話)', 'lbl-type': '幫助類型', 'lbl-msg': '我們需要如何幫助你？',
                 'ph-name': '你的姓名', 'ph-contact': '如何聯繫你？', 'ph-msg': '請告訴我們發生了什麼...',
                 'opt-academic': '學業支持', 'opt-social': '社交支持', 'opt-mental': '情感支持', 'opt-other': '其他',
-                'btn-send': '發送請求', 'res-title': '外部資源', 'res-bullying': 'CHS 霸凌和騷擾投訴頁面', 'res-link': '訪問官網 →', 'res-hotline': '國家危機熱線', 'res-mfjc': '蒙哥馬利家庭司法中心',
+                'btn-send': '發送請求', 'res-title': '本地與學校資源', 'res-bullying': 'CHS 霸凌和騷擾投訴頁面', 'res-link': '造訪學校網站', 'res-hotline': '國家危機熱線', 'res-mfjc': '蒙哥馬利家庭司法中心',
                 'lbl-agree': '我已閱讀並同意 <a href="Privacy_Policy.html" target="_blank">隱私政策</a> 和 <a href="Terms_of_Use.html" target="_blank">使用條款</a>。'
             },
             'ko': {
                 'nav-home': '홈', 'nav-about': '소개', 'nav-meetings': '회의', 'nav-support': '지원 받기', 'nav-ann': '공지사항', 'nav-feedback': '피드백', 'nav-contact': '문의하기', 'nav-donate': '기부하기', 'nav-privacy': '개인정보처리방침', 'nav-terms': '이용약관', 'nav-events': '이벤트',
+                'nav-signin': '로그인',
                 'sup-title': '우리는 당신을 위해 여기 있습니다', 'sup-sub': '학업 스트레스, 사회적 도전 또는 단지 누군가와 이야기하고 싶을 때, APSC는 당신의 이야기를 듣기 위해 여기 있습니다.',
+                'urgent-label': '즉시 도움이 필요하신가요?', 'urgent-title': '긴급 지원', 'urgent-intro': '무료 비밀 지원을 받을 수 있습니다. 전화, 문자 또는 채팅 중 편한 방법을 선택하세요.',
+                'res-988-title': '988 자살·위기 상담전화', 'res-988-desc': '정신 건강, 약물 사용 또는 정서적 위기에 대해 24시간 무료 비밀 상담을 받을 수 있습니다.', 'res-call-988': '988 전화', 'res-text-988': '988 문자',
+                'res-chat-title': '988 온라인 채팅', 'res-chat-desc': '언제든지 훈련된 988 상담사와 온라인으로 연결하세요.', 'res-start-chat': '채팅 시작',
+                'res-text-title': '위기 문자 상담', 'res-text-desc': 'HOME을 741741로 보내면 훈련된 상담 자원봉사자와 무료로 24시간 비밀 상담을 할 수 있습니다.', 'res-text-home': 'HOME을 741741로 문자',
+                'res-911-title': '응급 서비스', 'res-911-desc': '누군가 즉각적인 위험에 있거나 긴급한 의료 도움이 필요하면 911에 전화하세요.', 'res-call-911': '911 전화',
+                'local-intro': '지속적인 지원은 믿을 수 있는 성인, 학교 상담실 또는 지역 서비스를 통해 시작하세요. 혼자 해결할 필요는 없습니다.', 'county-heading': '몽고메리 카운티',
+                'res-county-center-title': '몽고메리 카운티 위기 센터', 'res-county-center-desc': '연중무휴 24시간 위기 지원을 제공합니다. 주소: Rockville, 1301 Piccard Drive.',
+                'res-county-line-title': '몽고메리 카운티 위기 핫라인', 'res-county-line-desc': '지역 위기 지원과 안내를 받으려면 전화하세요.',
+                'res-211-title': '메릴랜드 211', 'res-211-desc': '정신 건강, 가족, 식품, 주거 및 기타 지역 서비스를 무료로 비밀리에 찾을 수 있습니다. 통역도 제공됩니다.', 'res-search-local': '지역 도움 찾기',
+                'res-youngminds-title': '청소년 MDYoungMinds', 'res-youngminds-desc': '메릴랜드 청소년 정신 건강 문자 프로그램입니다. MDYoungMinds를 898-211로 보내세요.', 'res-program-info': '프로그램 정보',
+                'school-heading': '클락스버그 고등학교', 'res-school-counseling-title': 'CHS 상담실', 'res-school-counseling-desc': '상담실에서 예약하거나 등교 전, 점심시간 또는 방과 후에 방문할 수 있습니다.',
+                'res-bullying-desc': '교직원에게 괴롭힘을 신고하고 학교 신고 양식과 자료를 확인하세요.', 'national-heading': '신뢰할 수 있는 전국 자료',
+                'res-stopbullying-title': 'StopBullying.gov', 'res-stopbullying-desc': '괴롭힘과 사이버 괴롭힘에 대한 청소년, 가족 및 학교용 공식 안내입니다.', 'res-read-guide': '안내 읽기',
+                'res-treatment-title': 'FindTreatment.gov', 'res-treatment-desc': 'SAMHSA의 정신 건강 및 약물 사용 치료 서비스 비밀 검색 디렉터리입니다.', 'res-find-care': '치료 찾기',
+                'form-title': 'APSC 동료 지원 요청', 'form-intro': '이 양식은 APSC 학생 팀에 전달됩니다. 응급 상황을 위한 것이 아니며 전문적인 치료를 대신하지 않습니다.',
                 'guidance-title': '지원 가이드 카드', 'guidance-intro': '아래 카드에서 빠른 제안과 지원 경로를 먼저 확인하세요. 즉각적인 도움이 필요하면 위기 연락처를 사용하세요.', 'btn-guidance-open': '지원 가이드 카드 열기',
-                'sup-disclaimer': '중요: 우리는 동료 지원을 제공하며 전문적인 의료 조언을 제공하지 않습니다. 즉각적인 위험에 처한 경우 911 또는 위기 핫라인에 전화하십시오.',
+                'sup-disclaimer': '본인이나 다른 사람이 즉각적인 위험에 처하면 911에 전화하세요. 정서적 위기나 자살 생각이 있으면 988에 전화하거나 문자를 보내세요. APSC는 동료 지원을 제공하며 전문 또는 응급 서비스를 제공하지 않습니다.',
                 'lbl-name': '이름 (선택 사항)', 'lbl-contact': '연락처 정보 (이메일/전화)', 'lbl-type': '지원 유형', 'lbl-msg': '어떻게 도와드릴까요?',
                 'ph-name': '당신의 이름', 'ph-contact': '어떻게 연락할 수 있나요?', 'ph-msg': '무슨 일이 일어나고 있는지 알려주세요...',
                 'opt-academic': '학업 지원', 'opt-social': '사회적 지원', 'opt-mental': '정서적 지원', 'opt-other': '기타',
-                'btn-send': '요청 보내기', 'res-title': '외부 자원', 'res-bullying': 'CHS 괴롭힘 및 괴롭힘 신고', 'res-link': '사이트 방문 →', 'res-hotline': '국가 위기 핫라인', 'res-mfjc': '몬트고메리 가족 사법 센터',
+                'btn-send': '요청 보내기', 'res-title': '지역 및 학교 지원', 'res-bullying': 'CHS 괴롭힘 및 괴롭힘 신고', 'res-link': '학교 사이트 방문', 'res-hotline': '국가 위기 핫라인', 'res-mfjc': '몬트고메리 가족 사법 센터',
                 'lbl-agree': '<a href="Privacy_Policy.html" target="_blank">개인정보처리방침</a> 및 <a href="Terms_of_Use.html" target="_blank">이용약관</a>을 읽고 이에 동의합니다.'
             },
             'ja': {
                 'nav-home': 'ホーム', 'nav-about': '私たちについて', 'nav-meetings': '会議', 'nav-support': 'サポートを受ける', 'nav-ann': 'お知らせ', 'nav-feedback': 'フィードバック', 'nav-contact': 'お問い合わせ', 'nav-donate': '寄付する', 'nav-privacy': 'プライバシーポリシー', 'nav-terms': '利用規約', 'nav-events': 'イベント',
+                'nav-signin': 'サインイン',
                 'sup-title': '私たちはあなたのためにここにいます', 'sup-sub': '学業のストレス、社会的な課題、またはただ誰かと話したい場合でも、APSCはあなたの話を聞くためにここにいます。',
+                'urgent-label': 'すぐに助けが必要ですか？', 'urgent-title': '緊急時の支援', 'urgent-intro': '無料で秘密が守られる支援があります。電話、テキスト、チャットから選べます。',
+                'res-988-title': '988 自殺・危機相談窓口', 'res-988-desc': '心の健康、物質使用、感情的な危機について、24時間いつでも無料・秘密厳守で相談できます。', 'res-call-988': '988に電話', 'res-text-988': '988にテキスト',
+                'res-chat-title': '988 オンラインチャット', 'res-chat-desc': '訓練を受けた988相談員にいつでもオンラインで相談できます。', 'res-start-chat': 'チャットを開始',
+                'res-text-title': '危機相談テキストライン', 'res-text-desc': 'HOMEを741741に送信すると、訓練を受けた相談員から無料で24時間サポートを受けられます。', 'res-text-home': 'HOMEを741741に送信',
+                'res-911-title': '緊急サービス', 'res-911-desc': '誰かが差し迫った危険にある場合や緊急の医療支援が必要な場合は911に電話してください。', 'res-call-911': '911に電話',
+                'local-intro': '継続的な支援は、信頼できる大人、学校カウンセラー、または地域サービスに相談してください。一人で抱える必要はありません。', 'county-heading': 'モンゴメリー郡',
+                'res-county-center-title': 'モンゴメリー郡危機センター', 'res-county-center-desc': '年中無休、24時間の危機支援。住所：Rockville, 1301 Piccard Drive。',
+                'res-county-line-title': 'モンゴメリー郡危機ホットライン', 'res-county-line-desc': '地域の危機支援と案内について電話で相談できます。',
+                'res-211-title': 'メリーランド211', 'res-211-desc': '心の健康、家族、食料、住居など地域サービスを無料・秘密厳守で探せます。通訳も利用できます。', 'res-search-local': '地域の支援を探す',
+                'res-youngminds-title': '10代向け MDYoungMinds', 'res-youngminds-desc': 'メリーランド州の若者向けメンタルヘルス・テキストプログラムです。MDYoungMindsを898-211に送信してください。', 'res-program-info': 'プログラム情報',
+                'school-heading': 'クラークスバーグ高校', 'res-school-counseling-title': 'CHS カウンセリング室', 'res-school-counseling-desc': 'カウンセリング室で予約するか、登校前、昼休み、放課後に相談できます。',
+                'res-bullying-desc': '学校職員にいじめを報告し、学校の報告フォームや資料を確認できます。', 'national-heading': '信頼できる全国の情報',
+                'res-stopbullying-title': 'StopBullying.gov', 'res-stopbullying-desc': 'いじめやネットいじめへの対応について、若者、家族、学校向けの公式情報です。', 'res-read-guide': 'ガイドを読む',
+                'res-treatment-title': 'FindTreatment.gov', 'res-treatment-desc': 'SAMHSAによる心の健康・物質使用の治療サービス検索です。秘密は守られます。', 'res-find-care': '治療先を探す',
+                'form-title': 'APSCのピアサポートを依頼', 'form-intro': 'このフォームはAPSCの生徒チームに届きます。緊急時の窓口ではなく、専門的なケアの代わりにもなりません。',
                 'guidance-title': 'サポートガイドカード', 'guidance-intro': '以下のカードから、すぐに使える提案と支援の流れを確認してください。緊急の場合は危機連絡先を利用してください。', 'btn-guidance-open': 'サポートガイドカードを開く',
-                'sup-disclaimer': '重要：私たちはピアサポートを提供しており、専門的な医療アドバイスは提供していません。緊急の危険にさらされている場合は、911または危機ホットラインに電話してください。',
+                'sup-disclaimer': 'あなたや誰かが差し迫った危険にある場合は911に電話してください。心の危機や自殺を考えている場合は988に電話またはテキストしてください。APSCはピアサポートを提供しており、専門・緊急サービスではありません。',
                 'lbl-name': '名前（任意）', 'lbl-contact': '連絡先情報（メール/電話）', 'lbl-type': 'サポートの種類', 'lbl-msg': 'どのようにお手伝いできますか？',
                 'ph-name': 'あなたの名前', 'ph-contact': 'どのように連絡できますか？', 'ph-msg': '何が起こっているのか教えてください...',
                 'opt-academic': '学業サポート', 'opt-social': '社会的サポート', 'opt-mental': '感情的サポート', 'opt-other': 'その他',
-                'btn-send': 'リクエストを送信', 'res-title': '外部リソース', 'res-bullying': 'CHS いじめ・嫌がらせの報告', 'res-link': 'サイトを訪問 →', 'res-hotline': '全国危機ホットライン', 'res-mfjc': 'モンゴメリー家族司法センター',
+                'btn-send': 'リクエストを送信', 'res-title': '地域・学校の支援窓口', 'res-bullying': 'CHS いじめ・嫌がらせの報告', 'res-link': '学校サイトを見る', 'res-hotline': '全国危機ホットライン', 'res-mfjc': 'モンゴメリー家族司法センター',
                 'lbl-agree': '<a href="Privacy_Policy.html" target="_blank">プライバシーポリシー</a> と <a href="Terms_of_Use.html" target="_blank">利用規約</a> を読み、これに同意します。'
             },
             'es': {
                 'nav-home': 'Inicio', 'nav-about': 'Acerca de', 'nav-meetings': 'Reuniones', 'nav-support': 'Obtener Apoyo', 'nav-ann': 'Anuncios', 'nav-feedback': 'Comentarios', 'nav-contact': 'Contacto', 'nav-donate': 'Donar', 'nav-privacy': 'Política de Privacidad', 'nav-terms': 'Términos de Uso', 'nav-events': 'Eventos',
+                'nav-signin': 'Iniciar sesión',
                 'sup-title': 'Estamos aquí para ti', 'sup-sub': 'Ya sea estrés académico, desafíos sociales o si solo necesitas alguien con quien hablar, APSC está aquí para escucharte.',
+                'urgent-label': '¿Necesitas ayuda inmediata?', 'urgent-title': 'Apoyo inmediato', 'urgent-intro': 'Hay opciones gratuitas y confidenciales. Elige la forma más fácil: llamada, mensaje o chat.',
+                'res-988-title': 'Línea 988 de Suicidio y Crisis', 'res-988-desc': 'Apoyo gratuito y confidencial las 24 horas. Llama o envía un mensaje al 988 por salud mental, consumo de sustancias o angustia emocional.', 'res-call-988': 'Llamar al 988', 'res-text-988': 'Enviar mensaje al 988',
+                'res-chat-title': 'Chat en línea 988', 'res-chat-desc': 'Conéctate en cualquier momento con un consejero capacitado de 988.', 'res-start-chat': 'Iniciar chat',
+                'res-text-title': 'Línea de mensajes de crisis', 'res-text-desc': 'Envía HOME al 741741 para recibir apoyo gratuito y confidencial de un voluntario capacitado, las 24 horas.', 'res-text-home': 'Envía HOME al 741741',
+                'res-911-title': 'Servicios de emergencia', 'res-911-desc': 'Llama al 911 si alguien está en peligro inmediato o necesita atención médica urgente.', 'res-call-911': 'Llamar al 911',
+                'local-intro': 'Para recibir apoyo continuo, empieza con un adulto de confianza, un consejero escolar o un servicio local. No tienes que resolverlo a solas.', 'county-heading': 'Condado de Montgomery',
+                'res-county-center-title': 'Centro de Crisis del Condado de Montgomery', 'res-county-center-desc': 'Apoyo de crisis del condado, 24 horas al día, todo el año. Dirección: 1301 Piccard Drive, Rockville.',
+                'res-county-line-title': 'Línea de Crisis del Condado de Montgomery', 'res-county-line-desc': 'Llama para recibir orientación y apoyo local durante una crisis.',
+                'res-211-title': '211 Maryland', 'res-211-desc': 'Ayuda gratuita y confidencial para encontrar servicios locales de salud mental, familia, alimentos y vivienda. Hay traducción disponible.', 'res-search-local': 'Buscar ayuda local',
+                'res-youngminds-title': 'MDYoungMinds para adolescentes', 'res-youngminds-desc': 'Programa de mensajes de salud mental para jóvenes de Maryland. Envía MDYoungMinds al 898-211.', 'res-program-info': 'Información del programa',
+                'school-heading': 'Clarksburg High School', 'res-school-counseling-title': 'Oficina de Consejería de CHS', 'res-school-counseling-desc': 'Puedes pedir una cita en la oficina o acudir antes de clases, durante el almuerzo o después de clases.',
+                'res-bullying-desc': 'Reporta el acoso a un miembro del personal y consulta el formulario y los recursos de la escuela.', 'national-heading': 'Recursos nacionales confiables',
+                'res-stopbullying-title': 'StopBullying.gov', 'res-stopbullying-desc': 'Orientación oficial para adolescentes, familias y escuelas sobre el acoso y el ciberacoso.', 'res-read-guide': 'Leer la guía',
+                'res-treatment-title': 'FindTreatment.gov', 'res-treatment-desc': 'Directorio confidencial de SAMHSA para servicios de tratamiento de salud mental y consumo de sustancias.', 'res-find-care': 'Buscar atención',
+                'form-title': 'Solicitar apoyo entre pares de APSC', 'form-intro': 'Este formulario llega al equipo estudiantil de APSC. No se supervisa para emergencias ni sustituye la atención profesional.',
                 'guidance-title': 'Tarjetas de Orientación de Apoyo', 'guidance-intro': 'Elige una tarjeta abajo para ver sugerencias rápidas y vías de apoyo primero. Si necesitas ayuda inmediata, usa los contactos de crisis.', 'btn-guidance-open': 'Abrir tarjetas de orientación',
-                'sup-disclaimer': 'Importante: Proporcionamos apoyo entre pares, no asesoramiento médico profesional. Si estás en peligro inmediato, llama al 911 o a una línea directa de crisis.',
+                'sup-disclaimer': 'Si tú u otra persona están en peligro inmediato, llama al 911. Para angustia emocional o pensamientos suicidas, llama o envía un mensaje al 988. APSC ofrece apoyo entre pares, no atención profesional ni de emergencia.',
                 'lbl-name': 'Nombre (Opcional)', 'lbl-contact': 'Información de Contacto (Correo/Teléfono)', 'lbl-type': 'Tipo de Apoyo', 'lbl-msg': '¿Cómo podemos ayudarte?',
                 'ph-name': 'Tu nombre', 'ph-contact': '¿Cómo podemos contactarte?', 'ph-msg': 'Cuéntanos qué está pasando...',
                 'opt-academic': 'Apoyo Académico', 'opt-social': 'Apoyo Social', 'opt-mental': 'Apoyo Emocional', 'opt-other': 'Otro',
-                'btn-send': 'Enviar Solicitud', 'res-title': 'Recursos Externos', 'res-bullying': 'Reporte de Acoso Escolar y Hostigamiento', 'res-link': 'Visitar Sitio →', 'res-hotline': 'Línea Directa Nacional de Crisis', 'res-mfjc': 'Centro de Justicia Familiar de Montgomery', 
+                'btn-send': 'Enviar Solicitud', 'res-title': 'Recursos locales y escolares', 'res-bullying': 'Reporte de Acoso Escolar y Hostigamiento', 'res-link': 'Visitar sitio escolar', 'res-hotline': 'Línea Directa Nacional de Crisis', 'res-mfjc': 'Centro de Justicia Familiar de Montgomery', 
                 'lbl-agree': 'He leído y acepto la <a href="Privacy_Policy.html" target="_blank">Política de Privacidad</a> y los <a href="Terms_of_Use.html" target="_blank">Términos de Uso</a>.'
             },
             'fr': {
                 'nav-home': 'Accueil', 'nav-about': 'À propos', 'nav-meetings': 'Réunions', 'nav-support': 'Obtenir de l\'aide', 'nav-ann': 'Annonces', 'nav-feedback': 'Feedback', 'nav-contact': 'Contact', 'nav-donate': 'Faire un don', 'nav-privacy': 'Confidentialité', 'nav-terms': 'Conditions d\'utilisation', 'nav-events': 'Événements',
+                'nav-signin': 'Se connecter',
                 'sup-title': 'Nous sommes là pour vous', 'sup-sub': 'Que ce soit le stress académique, les défis sociaux ou si vous avez simplement besoin de parler à quelqu\'un, APSC est là pour vous écouter.',
+                'urgent-label': 'Besoin d’aide immédiate ?', 'urgent-title': 'Soutien immédiat', 'urgent-intro': 'Des options gratuites et confidentielles sont disponibles. Choisissez : appel, texto ou clavardage.',
+                'res-988-title': 'Ligne 988 de prévention du suicide et de crise', 'res-988-desc': 'Soutien gratuit et confidentiel, 24 h/24. Appelez ou textez le 988 pour toute détresse émotionnelle, de santé mentale ou liée aux substances.', 'res-call-988': 'Appeler le 988', 'res-text-988': 'Texter le 988',
+                'res-chat-title': 'Clavardage en ligne 988', 'res-chat-desc': 'Échangez en ligne avec un conseiller 988 formé, à tout moment.', 'res-start-chat': 'Démarrer le clavardage',
+                'res-text-title': 'Ligne de crise par texto', 'res-text-desc': 'Textez HOME au 741741 pour un soutien gratuit et confidentiel, 24 h/24.', 'res-text-home': 'Texter HOME au 741741',
+                'res-911-title': 'Services d’urgence', 'res-911-desc': 'Appelez le 911 si une personne est en danger immédiat ou nécessite des soins médicaux urgents.', 'res-call-911': 'Appeler le 911',
+                'local-intro': 'Pour un soutien continu, adressez-vous à un adulte de confiance, à un conseiller scolaire ou à un service local. Vous n’avez pas à gérer cela seul.', 'county-heading': 'Comté de Montgomery',
+                'res-county-center-title': 'Centre de crise du comté de Montgomery', 'res-county-center-desc': 'Soutien de crise du comté, 24 h/24 toute l’année. Adresse : 1301 Piccard Drive, Rockville.',
+                'res-county-line-title': 'Ligne de crise du comté de Montgomery', 'res-county-line-desc': 'Appelez pour obtenir des conseils et un soutien local en situation de crise.',
+                'res-211-title': '211 Maryland', 'res-211-desc': 'Aide gratuite et confidentielle pour trouver des services locaux de santé mentale, famille, alimentation et logement. Interprétation disponible.', 'res-search-local': 'Trouver de l’aide locale',
+                'res-youngminds-title': 'MDYoungMinds pour les ados', 'res-youngminds-desc': 'Programme de textos sur la santé mentale pour les jeunes du Maryland. Textez MDYoungMinds au 898-211.', 'res-program-info': 'Infos sur le programme',
+                'school-heading': 'Clarksburg High School', 'res-school-counseling-title': 'Bureau de counseling de CHS', 'res-school-counseling-desc': 'Prenez rendez-vous au bureau ou passez avant les cours, pendant le déjeuner ou après les cours.',
+                'res-bullying-desc': 'Signalez l’intimidation à un membre du personnel et consultez le formulaire et les ressources de l’école.', 'national-heading': 'Ressources nationales fiables',
+                'res-stopbullying-title': 'StopBullying.gov', 'res-stopbullying-desc': 'Conseils officiels pour les adolescents, les familles et les écoles sur l’intimidation et la cyberintimidation.', 'res-read-guide': 'Lire le guide',
+                'res-treatment-title': 'FindTreatment.gov', 'res-treatment-desc': 'Répertoire confidentiel de la SAMHSA pour les services de santé mentale et de traitement des dépendances.', 'res-find-care': 'Trouver des soins',
+                'form-title': 'Demander le soutien par les pairs d’APSC', 'form-intro': 'Ce formulaire est transmis à l’équipe étudiante d’APSC. Il ne traite pas les urgences et ne remplace pas des soins professionnels.',
                 'guidance-title': 'Cartes de Support', 'guidance-intro': 'Choisissez une carte ci-dessous pour explorer d\'abord des suggestions rapides et des parcours de soutien. En cas d\'urgence, utilisez les contacts de crise.', 'btn-guidance-open': 'Ouvrir les cartes de support',
-                'sup-disclaimer': 'Important : Nous fournissons un soutien par les pairs, pas des conseils médicaux professionnels. Si vous êtes en danger immédiat, appelez le 911 ou une ligne d\'assistance en cas de crise.',
+                'sup-disclaimer': 'Si vous ou une autre personne êtes en danger immédiat, appelez le 911. En cas de détresse émotionnelle ou de pensées suicidaires, appelez ou textez le 988. APSC offre un soutien par les pairs, pas des soins professionnels ou d’urgence.',
                 'lbl-name': 'Nom (Optionnel)', 'lbl-contact': 'Infos de contact', 'lbl-type': 'Type de soutien', 'lbl-msg': 'Comment pouvons-nous vous aider ?', 
                 'ph-name': 'Votre nom', 'ph-contact': 'Comment vous joindre ?', 'ph-msg': 'Dites-nous tout...',
                 'opt-academic': 'Soutien académique', 'opt-social': 'Soutien social', 'opt-mental': 'Soutien émotionnel', 'opt-other': 'Autre',
-                'btn-send': 'Envoyer', 'res-title': 'Ressources externes', 'res-bullying': 'Signalement de harcèlement', 'res-link': 'Visiter le site →', 'res-hotline': 'Ligne de crise nationale', 'res-mfjc': 'Centre de justice familiale de Montgomery',
+                'btn-send': 'Envoyer', 'res-title': 'Ressources locales et scolaires', 'res-bullying': 'Signalement de harcèlement', 'res-link': 'Voir le site de l’école', 'res-hotline': 'Ligne de crise nationale', 'res-mfjc': 'Centre de justice familiale de Montgomery',
                 'lbl-agree': 'J\'ai lu et j\'accepte la <a href="Privacy_Policy.html" target="_blank">Politique de confidentialité</a> et les <a href="Terms_of_Use.html" target="_blank">Conditions d\'utilisation</a>.'
             }
         };
@@ -732,7 +951,6 @@
         window.addEventListener('DOMContentLoaded', () => {
             const savedLang = sessionStorage.getItem('selectedLang') || 'en';
             updateLang(savedLang);
-            openGuidanceModal();
         });
     </script>
 </body>
